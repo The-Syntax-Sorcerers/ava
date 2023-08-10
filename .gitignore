@@ -39,6 +39,23 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Documented Flask ignores
+venv/
+
+*.pyc
+__pycache__/
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+
 # New Added
 .idea/
 venv
+flaskr/__pycache__

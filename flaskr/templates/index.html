@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>ToDo App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>ToDo List</h1>
+        <form action="/add" method="POST">
+            <input type="text" name="content" placeholder="Enter a task...">
+            <button type="submit">Add</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
