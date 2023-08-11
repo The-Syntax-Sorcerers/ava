@@ -216,6 +216,7 @@ li a:hover {
 
 button.button:hover {
     background-color: #2766cc;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
 }
 
 .sign-in-button {
@@ -262,5 +263,12 @@ button.button:hover {
         width: 100%;
         display: block;
         margin-bottom: 20px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .login-background-container {
+        width: 100%;
     }
 }
