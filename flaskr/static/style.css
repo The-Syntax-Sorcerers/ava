@@ -172,6 +172,7 @@ li a:hover {
     display: flex;
     justify-content: center;
     align-items: end;
+    font-size: 3vh;
 }
 
 .login-form-container {
@@ -201,6 +202,7 @@ li a:hover {
     border-radius: 3px;
     margin-bottom: 5px;
     border-radius: 10px;
+    font-size: 3vh;
 }
 
 .button {
@@ -209,7 +211,7 @@ li a:hover {
     justify-content: center;
     align-items: center;
     padding: 8px;
-    font-size: 22px;
+    font-size: 4vh;
     border-radius: 10px;
     height: 100%;
     border: none;
@@ -226,11 +228,17 @@ button.button:hover {
     flex: 1;
 }
 
+.forgot-password-link {
+    margin: 5px 0 0 0;
+    font-size: 2vh;
+}
+
 .divider {
     display: flex;
     align-items: center;
     --inner-divider-gap: 75px;
     margin: 20px 0;
+    font-size: 2vh;
 }
 
 /* Creates horizontal page divider lines around an element*/
@@ -247,10 +255,6 @@ button.button:hover {
 
 .divider::after {
     margin-left: var(--inner-divider-gap);
-}
-
-.forgot-password-link {
-    margin: 5px 0 0 0;
 }
 
 .sign-up-button {
