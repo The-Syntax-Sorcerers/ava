@@ -144,6 +144,14 @@ li a:hover {
     width: 95%;
 }
 
+.login-description, .login-form > input {
+    font-size: 3vh;
+}
+
+.divider, .forgot-password-link {
+    font-size: 2vh;
+}
+
 .login-background-container {
     width: 30%;
     min-width: 500px;
@@ -171,9 +179,7 @@ li a:hover {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: end;
-    font-size: 3vh;
-}
+    align-items: end;}
 
 .login-form-container {
     justify-content: space-evenly;
@@ -202,7 +208,6 @@ li a:hover {
     border-radius: 3px;
     margin-bottom: 5px;
     border-radius: 10px;
-    font-size: 3vh;
 }
 
 .button {
@@ -230,7 +235,6 @@ button.button:hover {
 
 .forgot-password-link {
     margin: 5px 0 0 0;
-    font-size: 2vh;
 }
 
 .divider {
@@ -238,7 +242,6 @@ button.button:hover {
     align-items: center;
     --inner-divider-gap: 75px;
     margin: 20px 0;
-    font-size: 2vh;
 }
 
 /* Creates horizontal page divider lines around an element*/
