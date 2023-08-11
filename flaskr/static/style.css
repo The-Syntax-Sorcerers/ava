@@ -1,11 +1,16 @@
+header{
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
-    padding: 0;
+    padding-top: 60px;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
 }
 
@@ -14,7 +19,10 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 80%;
+    height: 80%;
+    margin-top: 20px;
+    /* vertical-align: top; */
 }
 
 h1 {
@@ -23,24 +31,24 @@ h1 {
 
 form {
     display: flex;
+    flex-direction: column;
     margin-top: 10px;
 }
 
 input[type="text"] {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-
-button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
+input[type="submit"] {
+    /* flex-grow: 1; */
+    padding: 5px;
+    width:20%;
+    border: 1px solid #ccc;
     border-radius: 3px;
-    cursor: pointer;
 }
+
 
 ul {
     position: fixed;
@@ -107,7 +115,7 @@ li a:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
     padding: 16px;
     text-align: left;
-    background-color: #f1f1f1;
+    background-color: white;
     border-radius: 5px;
     transition: 0.3s;
 }
