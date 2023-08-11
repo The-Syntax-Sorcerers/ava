@@ -6,8 +6,7 @@ header{
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
-    /* background-color: #f0f0f0; */
-    background-color: purple; /* testing only, delete later */
+    background-color: #f0f0f0;
     margin: 0;
     padding-top: 60px;
     display: flex;
@@ -33,12 +32,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red; /* testing only, delete later */
     width: 40%;
 }
 
 .login-centered-container {
-    background-color: yellow;
     width: 30%;
     padding: 10px;
     height: 80vh; /* Needs adjusting */
@@ -55,6 +52,7 @@ body {
     height: 50%;
     margin: 20px 0 0 0;
     padding: 0;
+    box-shadow: none;
 }
 
 .login-form-container > * {
@@ -169,6 +167,7 @@ li a:hover {
     padding: 5px;
     width: 80%;
     height: 20%;
+    box-shadow: none;
 }
 
 .login-logo {
