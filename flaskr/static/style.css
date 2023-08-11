@@ -200,7 +200,9 @@ li a:hover {
 
 .button {
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 8px;
     font-size: 22px;
     border-radius: 10px;
