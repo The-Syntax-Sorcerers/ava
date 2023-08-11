@@ -140,7 +140,7 @@ li a:hover {
 
 /* Login page classes */
 
-.login-header, .login-form, .button {
+.login-header, .login-form, .button, .divider {
     width: 95%;
 }
 
@@ -216,27 +216,24 @@ li a:hover {
 .divider {
     display: flex;
     align-items: center;
-    --outer-divider-gap: 10px;
     --inner-divider-gap: 75px;
     margin: 20px 0;
 }
 
 /* Creates horizontal page divider lines around an element*/
 .divider::before, .divider::after {
+    flex: 1;
     content: '';
     background-color: black;
-    flex: 1;
-    height: 10px;
+    height: 1px;
 }
 
 .divider::before {
-    margin-left: var(--outer-divider-gap);
     margin-right: var(--inner-divider-gap);
 }
 
 .divider::after {
     margin-left: var(--inner-divider-gap);
-    margin-right: var(--outer-divider-gap);
 }
 
 .forgot-password-link {
