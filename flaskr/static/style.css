@@ -211,6 +211,11 @@ li a:hover {
     font-size: 22px;
     border-radius: 10px;
     height: 100%;
+    border: none;
+}
+
+button.button:hover {
+    background-color: #2766cc;
 }
 
 .sign-in-button {
