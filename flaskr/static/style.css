@@ -15,15 +15,36 @@ body {
     min-height: 100vh;
 }
 
-.container {
+.container, .centered-container, .login-centered-container {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     width: 80%;
     height: 80%;
+}
+
+.container {
     margin-top: 20px;
     /* vertical-align: top; */
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red; /* testing only, delete later */
+    width: 40%;
+    height: 100%; /* Needs fixing */
+}
+
+.login-centered-container {
+    background-color: yellow;
+    width: 50%;
+}
+
+.vertical-container {
+    flex-direction: column;
 }
 
 h1 {
@@ -135,11 +156,9 @@ li a:hover {
 
 /* Login page classes */
 
+/* Redundant */
 .container.background {
     background-color: red; /* testing only, delete later */
-    display: flex;
-    justify-content: stretch;
-    align-items: stretch;
     padding: 0;
     margin: 0 0 60px 0;
     width: 50%;
@@ -157,11 +176,6 @@ li a:hover {
 
 .login.top {
     background-color: gold; /* testing only, delete later */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
 }
 
 .login.top > * {
