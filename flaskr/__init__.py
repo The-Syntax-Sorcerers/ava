@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 
 
 def create_app(test_config=None):
@@ -37,7 +37,7 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        return 'This is the login page'
+        return render_template('login.html', name='login')
 
     # return Instance
     return app
