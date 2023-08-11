@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>ToDo App</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li class="active"><a href="#assignments">Assignments</a></li>
+            <li style="float:right"><a href="#about">Manage Account</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>Assignment Upload</h2>
+    </div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 import os
 
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, url_for, redirect
 
 
 def create_app(test_config=None):
@@ -26,15 +25,18 @@ def create_app(test_config=None):
     except OSError:
         print("Exception Caught: ", OSError)
 
-    # a simple page that says hello
+    # Class selection screen as the homepage
     @app.route('/')
     def homepage(name='homepage'):
         return render_template('home.html', name=name)
+                               
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'hello'
+    @app.route('/upload',  methods=['GET', 'POST'])
+    def upload(name='assignment upload'):
+        if request.method == 'POST':
+            return redirect(url_for('homepage'))
+        return render_template('assignment_upload.html', name=name)
 
     # return Instance
     return app
