@@ -146,6 +146,7 @@ li a:hover {
 
 .login-background-container {
     width: 30%;
+    min-width: 500px;
     padding: 10px;
     height: 80vh; /* Needs adjusting */
 }
@@ -270,5 +271,6 @@ button.button:hover {
 @media screen and (max-width: 600px) {
     .login-background-container {
         width: 100%;
+        min-width: 0px;
     }
 }
