@@ -35,5 +35,9 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    @app.route('/login')
+    def login():
+        return 'This is the login page'
+
     # return Instance
     return app
