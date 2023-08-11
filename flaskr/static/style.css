@@ -124,6 +124,15 @@ li a:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
+.button {
+    background-color: #2e75e8;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    font-size: 30px;
+    border-radius: 10px;
+}
+
 /* Responsive columns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
     .column {
