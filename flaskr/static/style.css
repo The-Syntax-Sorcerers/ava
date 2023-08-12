@@ -195,8 +195,8 @@ li a:hover {
     box-shadow: none;
 }
 
-.login-form-container > * {
-    margin: 1px;
+.login-form-container, .login-form-container > * {
+    gap: 0.5vh;
 }
 
 .login-form {
