@@ -175,7 +175,7 @@ li a:hover {
 }
 
 .login-logo {
-    width: 100%;
+    width: auto;
     height: 100%;
     flex: 2;
 }
@@ -184,7 +184,7 @@ li a:hover {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: end;}
+    align-items: center;}
 
 .login-form-container {
     justify-content: space-evenly;
