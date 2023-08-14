@@ -4,6 +4,7 @@ header{
     right:0;
     top:0;
 }
+
 body, #login-body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f0f0;
@@ -64,11 +65,13 @@ input[type="text"] {
     border: 1px solid #ccc;
     border-radius: 3px;
 }
+
 input[type="submit"] {
     /* flex-grow: 1; */
     padding: 5px;
     width:20%;
     border: 1px solid #ccc;
+}
 
 button {
     background-color: #007bff;
