@@ -1,17 +1,26 @@
 import os
-
 from flask import Flask
-from flask import render_template
+
+from .extensions import db, login_manager
+from .models import User
+from .routes import bp
 
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI='sqlite:///flaskr.sqlite',
+        SECRET_KEY='chutiya',
+        SQLALCHEMY_DATABASE_URI='sqlite:///db.sqlite3',
         SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
+
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(user_id)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -24,17 +33,7 @@ def create_app(test_config=None):
     try:
         os.makedirs(app.instance_path)
     except OSError:
-        print("Exception Caught: ", OSError)
+        pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def homepage(name='homepage'):
-        return render_template('home.html', name=name)
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'hello'
-
-    # return Instance
+    app.register_blueprint(bp)
     return app
