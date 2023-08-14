@@ -1,9 +1,9 @@
 import os
 from flask import Flask
 
-from extensions import db, login_manager
-from models import User
-from routes import bp
+from .extensions import db, login_manager
+from .models import User
+from .routes import bp
 
 
 test_config = None
