@@ -2,4 +2,3 @@ flask
 flask_login
 flask_sqlalchemy
 waitress
-whitenoise
