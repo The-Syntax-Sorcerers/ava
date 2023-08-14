@@ -9,7 +9,7 @@ bp = Blueprint("bp", __name__)
 
 
 # a simple page that says hello
-@bp.route('/')
+@bp.route('/home')
 def homepage(name='homepage'):
     return render_template('home.html', name=name)
 

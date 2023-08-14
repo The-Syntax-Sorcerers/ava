@@ -13,7 +13,7 @@
         <div class="login-description">Log In To AVA</div>
     </div>
     <div class="login-form-container centered-container vertical-container">
-        <form class="login-form" id="loginForm" action="#" method="post">
+        <form class="login-form" id="loginForm" action="{{ url_for('auth.login') }}" method="post">
             <input type="email" placeholder="Email Address" name="email">
             <input type="password" placeholder="Password" name="password">
         </form>

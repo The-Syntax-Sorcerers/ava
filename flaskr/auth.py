@@ -1,15 +1,16 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for
 
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/')
-def homepage():
-    return 'Homepage: Hello, World!'
-
-@auth.route('/login')
+@auth.route('/', methods=["GET", "POST"])
 def login():
-    return render_template('login.html', name='login')
+    if request.method == 'POST':
+        user = request.form['email']
+        password = request.form['password']
+        return redirect(url_for('bp.homepage', name=user))
+    else:
+        return render_template('auth/login.html', name='login')
 
 @auth.route('/signup')
 def signup():

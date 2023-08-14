@@ -4,6 +4,7 @@ from flask import Flask
 from .extensions import db, login_manager
 from .models import User
 from .routes import bp
+from .auth import auth
 
 
 test_config = None
@@ -35,14 +36,7 @@ try:
     os.makedirs(app.instance_path)
 except OSError:
     pass
-# blueprint for auth routes in our app
-from .auth import auth as auth_blueprint
-app.register_blueprint(auth_blueprint)
-
-# blueprint for non-auth parts of app
-from .main import app as main_blueprint
-app.register_blueprint(main_blueprint)
-
 
 app.register_blueprint(bp)
 
+app.register_blueprint(auth)
