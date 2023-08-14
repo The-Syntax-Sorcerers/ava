@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Sign Up</title>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('bp.login') }}">Login</a></li>
+            <li class="active"><a href="#signup">Sign Up</a></li>
+        </ul>
+    </div>
+</head>
+<body>
+    <div class="container" id="stylized">
+        <img src="{{ url_for('static', filename='images/welcome.png') }}" alt="Welcome Image" style="display: block; margin: 0 auto 20px;width: 200px; height: auto;">
+        <h2>Sign Up</h2>
+        <form action="/signup" method="post">
+            <label for="firstname">First Name: </label>
+            <input type="text" id="firstname" name="firstname" required><br>
+
+            <label for="lastname">Last Name: </label>
+            <input type="text" id="lastname" name="lastname" required><br>
+
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="id">ID: </label>
+            <input type="text" id="id" name="id" required><br>
+
+            <label for="faculty">Faculty: </label>
+            <select id="faculty" name="faculty" required>
+                <option value="Choose Faculty">Choose Faculty</option>
+                <option value="Faculty of Science">Faculty of Science</option>
+                <option value="Faculty of Arts">Faculty of Arts</option>
+                <option value="Faculty of Commerce">Faculty of Commerce</option>
+            </select><br>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+</body>
+</html>

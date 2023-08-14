@@ -13,8 +13,8 @@ def login(name='login'):
     return render_template('auth/login.html', name=name)
 
 @bp.route('/signup')
-def signup():
-        return 'This is the signup page'
+def signup(name='homepage'):
+    return render_template('signup.html', name=name)
 
 # a simple page that says hello
 @bp.route('/home', methods=["GET", "POST"])
