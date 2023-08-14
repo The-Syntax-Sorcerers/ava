@@ -1,5 +1,3 @@
-import requests
-
 from flask import request, render_template, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
