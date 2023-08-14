@@ -12,6 +12,10 @@ bp = Blueprint("bp", __name__)
 def login(name='login'):
     return render_template('auth/login.html', name=name)
 
+@bp.route('/signup')
+def signup():
+        return 'This is the signup page'
+
 # a simple page that says hello
 @bp.route('/home', methods=["GET", "POST"])
 def homepage(name='homepage'):
