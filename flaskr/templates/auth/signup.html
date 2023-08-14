@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body id="login-body">
+<div class="login-background-container container centered-container vertical-container">
+    <div class="login-header centered-container vertical-container">
+        <img class="login-logo" src="{{ url_for('static', filename='images/polar-bear.png') }}" alt="AVA Logo">
+        <div class="login-description">Sign Up For AVA</div>
+    </div>
+    <div class="login-form-container centered-container vertical-container">
+        <form class="login-form" id="signUpForm" action="{{ url_for('bp.homepage') }}" method="post">
+            <input type="email" placeholder="Email Address" name="email" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+        </form>
+        <button class="sign-in-button" type="submit" form="signupForm" onclick="">Sign Up</button>
+    </div>
+    <div class="divider"><p>Already have an account?</p></div>
+    <div><a class="forgot-password-link" href=""> Login Here</a></div>
+</div>        
+</body>
+</html>
