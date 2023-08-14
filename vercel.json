@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "flaskr/script.py",
+      "src": "flaskr/main.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "flaskr/script.py"
+      "dest": "flaskr/main.py"
     }
   ]
 }
