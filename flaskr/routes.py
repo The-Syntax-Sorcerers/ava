@@ -18,3 +18,10 @@ def homepage(name='homepage'):
 @bp.route('/hello', methods=["GET", "POST"])
 def hello():
     return 'hello'
+
+# a simple page that says hello
+@bp.route('/upload',  methods=['GET', 'POST'])
+def upload(name='assignment upload'):
+    if request.method == 'POST':
+        return redirect(url_for('homepage'))
+    return render_template('assignment_upload.html', name=name)
