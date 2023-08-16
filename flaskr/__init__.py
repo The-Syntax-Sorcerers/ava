@@ -4,6 +4,7 @@ from flask import Flask
 from .extensions import db, login_manager
 from .models import User
 from .routes import bp
+from .auth import auth
 
 
 test_config = None
@@ -38,3 +39,4 @@ except OSError:
 
 app.register_blueprint(bp)
 
+app.register_blueprint(auth)
