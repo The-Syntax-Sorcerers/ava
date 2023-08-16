@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body id="login-body">
 <div class="login-background-container container centered-container vertical-container">
@@ -12,11 +13,37 @@
         <img class="login-logo" src="{{ url_for('static', filename='images/polar-bear.png') }}" alt="AVA Logo">
         <div class="login-description">Log In To AVA</div>
     </div>
+
     <div class="login-form-container centered-container vertical-container">
-        <form class="login-form" id="loginForm" action="{{ url_for('auth.login') }}" method="post">
-            <input type="email" placeholder="Email Address" name="email">
-            <input type="password" placeholder="Password" name="password">
+        <form method="POST" class="login-form" id="loginForm">
+            {{ loginform.hidden_tag() }}
+            <div class="form-group">
+                {{ loginform.email.label() }}
+                {{ loginform.email(class="form-control") }}
+                {% for error in loginform.email.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ loginform.password.label() }}
+                {{ loginform.password(class="form-control") }}
+                {% for error in loginform.password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <button type="submit" class="btn btn-primary">Log In</button>
         </form>
+{#        <form class="login-form" id="loginForm" action="{{ url_for('auth.login') }}" method="post">#}
+{#            <input type="email" placeholder="Email Address" name="email">#}
+{#            <input type="password" placeholder="Password" name="password">#}
+{#        </form>#}
         <button class="sign-in-button" type="submit" form="loginForm" onclick="login_success()">Log In</button>
         <a class="forgot-password-link" href="">Forgot Password?</a>
     </div>

@@ -10,7 +10,7 @@
             <li class="active"><a href="#home">Home</a></li>
             <li><a href="#classes">Classes</a></li>
             <li><a href="{{ url_for('bp.upload') }}">Assignments</a></li>
-            <li style="float:right"><a href="#about">Manage Account</a></li>
+            <li style="float:right"><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
         </ul>
     </div>
 </head>
