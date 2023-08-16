@@ -6,6 +6,7 @@ WTForms~=3.0.1
 
 flask_login
 flask_wtf
+flask_sqlalchemy
 email_validator
 
 # Front-End Dependencies
