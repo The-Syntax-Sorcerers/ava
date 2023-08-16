@@ -17,18 +17,24 @@ app.config.from_mapping(
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 
-# db.init_app(app)
+db.init_app(app)
 login_manager.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return User.query.get(int(user_id))
+
 
 if test_config is None:
     # load the instance config, if it exists, when not testing
+    print("Created Db")
+    with app.app_context():
+        db.create_all()
     app.config.from_pyfile('config.py', silent=True)
 else:
     # load the test config if passed in
+    print("test_config loaded")
     app.config.from_mapping(test_config)
 
 # ensure the instance folder exists
@@ -38,5 +44,4 @@ except OSError:
     pass
 
 app.register_blueprint(bp)
-
 app.register_blueprint(auth)
