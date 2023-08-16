@@ -5,7 +5,7 @@ werkzeug
 WTForms
 
 flask_login
-flask_wtf
+flask-wtf
 flask_sqlalchemy
 email_validator
 
