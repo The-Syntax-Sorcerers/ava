@@ -158,11 +158,11 @@ li a:hover {
 
 /* Login page classes */
 
-.login-header, .login-form, .sign-in-button, .sign-up-button, .divider {
+.authentication-header, .authentication-form, .sign-in-button, .sign-up-button, .divider {
     width: 95%;
 }
 
-.login-description, .login-form > input {
+.authentication-description, .authentication-form > input {
     font-size: 3vh;
 }
 
@@ -170,36 +170,36 @@ li a:hover {
     font-size: 2vh;
 }
 
-.login-background-container {
+.authentication-background-container {
     width: 30%;
     height: 80vh;
     min-width: 500px;
     padding: 10px;
 }
 
-.login-background-container > * {
+.authentication-background-container > * {
     margin: 5px 0;
 }
 
-.login-header {
+.authentication-header {
     padding: 5px;
     height: 20%;
     box-shadow: none;
 }
 
-.login-logo {
+.authentication-logo {
     width: auto;
     height: 100%;
     flex: 2;
 }
 
-.login-description {
+.authentication-description {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;}
 
-.login-form-container {
+.authentication-form-container {
     justify-content: space-evenly;
     width: 100%;
     height: 50%;
@@ -208,17 +208,17 @@ li a:hover {
     box-shadow: none;
 }
 
-.login-form-container, .login-form-container > * {
+.authentication-form-container, .authentication-form-container > * {
     gap: 0.5vh;
 }
 
-.login-form {
+.authentication-form {
     display: flex;
     height: 25%;
     flex: 3;
 }
 
-.login-form > input {
+.authentication-form > input {
     padding: 10px 20px;
     width: 100%;
     height: 100%;
@@ -279,7 +279,7 @@ li a:hover {
     height: 13%;
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
+/* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
     .column {
         width: 100%;
