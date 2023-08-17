@@ -6,7 +6,9 @@ WTForms
 
 flask_login
 flask-wtf
-flask_sqlalchemy
 email_validator
+
+python-dotenv
+supabase
 
 # Front-End Dependencies
