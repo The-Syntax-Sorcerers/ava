@@ -8,18 +8,11 @@ import shutil
 app=FastAPI()
 
 @app.get("/")
-def root(text:str):
+def root():
     return {"message": "Hello World"}
 
 # load the saved model
-# model = load_model('model_weights')
+model = load_model('model_weights')
 
-@app.post("/upload")
-async def upload(file: UploadFile = File(...)):
-    return {"filenames": file.filename}
-
-# @app.post("/uploads")
-# async def uploads(file: List[UploadFile] = File(...)):
-#     return {"filenames": file.filename}
 
 

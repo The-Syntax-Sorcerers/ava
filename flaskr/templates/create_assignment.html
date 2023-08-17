@@ -17,15 +17,14 @@
 <body>
     <div class="container" id="stylized">
         <h2>Assignment Upload</h2>
-        {% if submitted == False: %}
-        <form class="login-form" method="POST" enctype="multipart/form-data">
-            {{ form.hidden_tag()}}
-            {{form.file()}} 
-            {{form.submit()}}
+        <form>
+            <label for="fname">Enter Assignment Name: </label>
+            <input type="text" id="assname" name="assname"><br>
+            <label for="fname">Enter Due Date: </label>
+            <input type="text" id="duedate" name="duedate"><br>
+            <input type="submit" value="Save">
+            <input type="submit" value="Publish">
         </form>
-        {% else %}
-       <p>{{ upload_content }}</p>
-        {% endif %}
     </div>
 </body>
 </html>
