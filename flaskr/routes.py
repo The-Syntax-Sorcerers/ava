@@ -27,13 +27,13 @@ def signup(name='signup'):
         user = User.query.filter_by(id=id).first()
         if user:
             # Return to signup page with an error
-            return render_template('signup.html', error="ID already in use.")
+            return render_template('auth/signup.html', error="ID already in use.")
 
         # Check if email already exists
         user = User.query.filter_by(email=email).first()
         if user:
             # Return to signup page with an error
-            return render_template('signup.html', error="Email already in use.")
+            return render_template('auth/signup.html', error="Email already in use.")
 
         # Create a new user
         new_user = User(
@@ -51,7 +51,7 @@ def signup(name='signup'):
 
         return redirect(url_for('bp.homepage'))
 
-    return render_template('signup.html', name=name)
+    return render_template('auth/signup.html', name=name)
 
 
 # a simple page that says hello
