@@ -12,16 +12,16 @@
         <img class="authentication-logo" src="{{ url_for('static', filename='images/polar-bear.png') }}" alt="AVA Logo">
         <div class="authentication-description">Sign Up For AVA</div>
     </div>
-    <div class="authentication-form-container centered-container vertical-container">
+    <div class="authentication-form-container sign-up-form-container centered-container vertical-container">
         <form class="authentication-form" id="signupForm" action="{{ url_for('bp.homepage') }}" method="post">
             <input type="number" placeholder="ID Number *" name="idnumber" required>
             <input type="email" placeholder="Email Address *" name="email" required>
             <input type="password" placeholder="Password *" name="password" required>
         </form>
-        <button class="sign-in-button" type="submit" form="signupForm" onclick="">Sign Up</button>
+        <button class="sign-up-button" type="submit" form="signupForm" onclick="">Sign Up</button>
     </div>
-    <div class="divider"><p>Already have an account?</p></div>
-    <div><a class="forgot-password-link" href=""> Login Here</a></div>
+    <div class="divider">Already have an account?</div>
+    <div class=" login-link-container centered-container"><a class="login-link" href="{{ url_for('auth', filename='login.html') }}"> Login Here</a></div>
 </div>        
 </body>
 </html>
