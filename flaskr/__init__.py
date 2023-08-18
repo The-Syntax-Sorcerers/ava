@@ -33,3 +33,4 @@ def load_user(user_id):
 login_manager.init_app(app)
 app.register_blueprint(bp)
 app.register_blueprint(auth)
+

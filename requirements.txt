@@ -12,4 +12,3 @@ python-dotenv
 supabase
 
 # Front-End Dependencies
-
