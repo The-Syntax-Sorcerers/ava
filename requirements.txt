@@ -2,3 +2,4 @@ flask
 flask_login
 flask_sqlalchemy
 waitress
+flask_wtf
