@@ -41,6 +41,7 @@ yarn-error.log*
 
 # Documented Flask ignores
 venv/
+env/
 
 *.pyc
 __pycache__/
