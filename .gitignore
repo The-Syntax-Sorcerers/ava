@@ -60,3 +60,6 @@ build/
 .idea/
 venv
 flaskr/__pycache__
+
+# Secrets
+*.env
