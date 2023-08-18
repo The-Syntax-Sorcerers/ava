@@ -62,4 +62,4 @@ venv
 flaskr/__pycache__
 
 # Secrets
-.env
+*.env

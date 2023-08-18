@@ -8,8 +8,10 @@ from flaskr.postgres.models import User
 from flaskr.routes.bp import bp
 from flaskr.routes.auth import auth
 
-# socket.setdefaulttimeout(15)
+socket.setdefaulttimeout(15)
 test_config = None
+
+
 
 # create and configure the app
 app = Flask(__name__, instance_relative_config=True)
@@ -22,7 +24,15 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return supabase_sec.table("Users").select("*").eq("id", user_id).execute()
+    print(login_manager.user_callback)
+    print("USERID", user_id)
+    res = supabase_sec.table('Users').select('*').eq('id', user_id).execute().data
+    if len(res) == 0:
+        return None
+
+    res = res[0]
+    return User(res['id'], res['email'], res['name'], res['faculty'], res['uuid'])
+
 
 
 if test_config is None:

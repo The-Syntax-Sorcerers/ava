@@ -13,11 +13,12 @@ class User(UserMixin):
     # name = db.Column(db.String(128))
     # faculty = db.Column(db.String(100))
 
-    def __init__(self, supabase_sesh: Client, user_info: gotrue.User):
-        print("ID FROM SUPABASE IS: ", user_info.id, user_info.email)
-        self.id = user_info.id
-        self.supabase_sesh = supabase_sesh
-        self.user_info = user_info
+    def __init__(self, tid, email, name, faculty, uuid):
+        self.id = tid
+        self.name = name
+        self.email = email
+        self.faculty = faculty
+        self.uuid = uuid
 
     # def set_password(self, password):
     #     self.password_hash = generate_password_hash(password)
@@ -26,7 +27,7 @@ class User(UserMixin):
     #     return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f'<User> id: {self.id}, email: {self.user_info.email}'
+        return f'<User> id: {self.id}, email: {self.email}'
 
 # class Subject(db.Model):
 #     subject_code = db.Column(db.Integer, primary_key=True)
