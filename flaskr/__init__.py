@@ -4,6 +4,7 @@ from flask import Flask
 from .extensions import db, login_manager
 from .models import User
 from .routes import bp
+from .auth import auth
 
 
 test_config = None
@@ -13,7 +14,8 @@ app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(
     SECRET_KEY='chutiya',
     SQLALCHEMY_DATABASE_URI='sqlite:///db.sqlite3',
-    SQLALCHEMY_TRACK_MODIFICATIONS=False
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    UPLOAD_FOLDER='static/files'
 )
 
 # db.init_app(app)
@@ -38,3 +40,4 @@ except OSError:
 
 app.register_blueprint(bp)
 
+app.register_blueprint(auth)

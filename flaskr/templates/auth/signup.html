@@ -25,4 +25,18 @@
     <div class=" login-link-container centered-container"><a class="login-link" href="{{ url_for('auth', filename='login.html') }}"> Login Here</a></div>
 </div>        
 </body>
+
+<script>
+    document.getElementById('id').addEventListener('input', function(e) {
+        const re = /^[0-9]+$/;
+        const errorPopup = document.getElementById('id-error-popup');
+
+        if (!re.test(e.target.value)) {
+            errorPopup.style.display = 'block';  // Show the error popup
+        } else {
+            errorPopup.style.display = 'none';  // Hide the error popup
+        }
+    });
+</script>
+
 </html>

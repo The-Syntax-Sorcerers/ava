@@ -1,0 +1,17 @@
+{ "corpus": "PAN 2014 - Author Identification - Final Evaluation Corpus",
+  "problems": [
+    {"name": "EE002", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE006", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE009", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE010", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE011", "answer": "Y", "language": "english", "genre": "essays"},
+    {"name": "EE012", "answer": "Y", "language": "english", "genre": "essays"},
+    {"name": "EE016", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE017", "answer": "Y", "language": "english", "genre": "essays"},
+    {"name": "EE019", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE020", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE024", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE028", "answer": "N", "language": "english", "genre": "essays"},
+    {"name": "EE030", "answer": "Y", "language": "english", "genre": "essays"},
+    ]
+}
