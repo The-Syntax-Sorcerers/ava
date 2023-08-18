@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="./../../static/style.css">
 </head>
-<body id="login-body">
-<div class="login-background-container container centered-container vertical-container">
-    <div class="login-header centered-container vertical-container">
-        <img class="login-logo" src="{{ url_for('static', filename='images/polar-bear.png') }}" alt="AVA Logo">
-        <div class="login-description">Log In To AVA</div>
+<body id="authentication-body">
+<div class="authentication-background-container centered-container vertical-container">
+    <div class="authentication-header centered-container vertical-container">
+        <img class="authentication-logo" src="{{ url_for('static', filename='images/polar-bear.png') }}" alt="AVA Logo">
+        <div class="authentication-description">Log In To AVA</div>
     </div>
-    <div class="login-form-container centered-container vertical-container">
-        <form class="login-form" id="loginForm" action="{{ url_for('auth.login') }}" method="post">
-            <input type="email" placeholder="Email Address" name="email">
-            <input type="password" placeholder="Password" name="password">
+    <div class="authentication-form-container centered-container vertical-container">
+        <form class="authentication-form" id="loginForm *" action="{{ url_for('auth.login') }}" method="post">
+            <input type="email" placeholder="Email Address *" name="email" required>
+            <input type="password" placeholder="Password *" name="password" required>
         </form>
         <button class="sign-in-button" type="submit" form="loginForm">Log In</button>
         <a class="forgot-password-link" href="">Forgot Password?</a>
     </div>
     <div class="divider">or</div>
-    <button class="sign-up-button" type="button" onclick="location.href= '{{ url_for('auth.signup') }}'">Create New Account</button>
-</div>
+    <button class="create-account-button" type="button" onclick="location.href= '{{ url_for('auth.login') }}'">Create New Account</button>
+</div>        
 </body>
 </html>

@@ -159,11 +159,11 @@ li a:hover {
 
 /* Login page classes */
 
-.login-header, .login-form, .sign-in-button, .sign-up-button, .divider {
+.authentication-header, .authentication-form, .sign-in-button, .create-account-button, .divider, .sign-up-button {
     width: 95%;
 }
 
-.login-description, .login-form > input {
+.authentication-description, .authentication-form > input {
     font-size: 3vh;
 }
 
@@ -171,55 +171,66 @@ li a:hover {
     font-size: 2vh;
 }
 
-.login-background-container {
+.authentication-background-container {
     width: 30%;
     height: 80vh;
     min-width: 500px;
     padding: 10px;
+    display: flex;
 }
 
-.login-background-container > * {
+.authentication-background-container > * {
     margin: 5px 0;
 }
 
-.login-header {
+.authentication-header {
     padding: 5px;
     height: 20%;
     box-shadow: none;
-}
-
-.login-logo {
-    width: auto;
-    height: 100%;
     flex: 2;
 }
 
-.login-description {
+.authentication-logo {
+    width: auto;
+    height: 10vh;
+    flex: 2;
+}
+
+.authentication-description {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;}
 
-.login-form-container {
+.authentication-form-container {
     justify-content: space-evenly;
     width: 100%;
     height: 50%;
     margin: 0 0 0 0;
     padding: 0;
     box-shadow: none;
+    flex: 9;
 }
 
-.login-form-container, .login-form-container > * {
+.sign-up-form-container {
+    height: 60%;
+}
+
+.authentication-form-container, .authentication-form-container > * {
     gap: 0.5vh;
 }
 
-.login-form {
+.authentication-form {
     display: flex;
     height: 25%;
     flex: 3;
 }
 
-.login-form > input {
+.sign-up-form {
+    flex: 6;
+}
+
+.authentication-form > input {
     padding: 10px 20px;
     width: 100%;
     height: 100%;
@@ -229,12 +240,12 @@ li a:hover {
     border-radius: 10px;
 }
 
-.sign-up-button:hover, .sign-in-button:hover {
+.create-account-button:hover, .sign-in-button:hover, .sign-up-button:hover {
     background-color: #2766cc;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
 }
 
-.sign-in-button, .sign-up-button {
+.sign-in-button, .create-account-button, .sign-up-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,20 +255,21 @@ li a:hover {
     height: 100%;
 }
 
-.sign-in-button {
+.sign-in-button, .create-account-button, .sign-up-button {
     height: 10%;
     flex: 1;
 }
 
 .forgot-password-link {
     margin: 20px 0;
+    font-size: 2vh;
 }
 
 .divider {
     display: flex;
     align-items: center;
-    --inner-divider-gap: 75px;
-    margin: 0 0 5px 0;
+    --inner-divider-gap: 5vw;
+    margin: 5px 0 5px 0;
 }
 
 /* Creates horizontal page divider lines around an element*/
@@ -265,7 +277,7 @@ li a:hover {
     flex: 1;
     content: '';
     background-color: black;
-    height: 1px;
+    height: 3px;
 }
 
 .divider::before {
@@ -276,11 +288,26 @@ li a:hover {
     margin-left: var(--inner-divider-gap);
 }
 
-.sign-up-button {
-    height: 13%;
+.create-account-button {
+    height: 20%;
+    flex: 2;
 }
 
-/* Responsive columns - one column layout (vertical) on small screens */
+.sign-up-button {
+    height: 24%;
+}
+
+/* Sign up page classes */
+
+.login-link-container {
+    height: 5%;
+    margin: 2vh;
+    padding: 0;
+    font-size: 2vh;
+    box-shadow: none;
+}
+
+/* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
     .column {
         width: 100%;
@@ -290,7 +317,7 @@ li a:hover {
 }
 
 @media screen and (max-width: 600px) {
-    .login-background-container {
+    .authentication-background-container {
         width: 100%;
         height: 90vh;
         min-width: 0px;
