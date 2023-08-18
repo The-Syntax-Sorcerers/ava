@@ -209,7 +209,7 @@ li a:hover {
 }
 
 .sign-up-form-container {
-    height: 55%;
+    height: 60%;
 }
 
 .authentication-form-container, .authentication-form-container > * {
@@ -220,6 +220,10 @@ li a:hover {
     display: flex;
     height: 25%;
     flex: 3;
+}
+
+.sign-up-form {
+    flex: 6;
 }
 
 .authentication-form > input {
@@ -247,7 +251,7 @@ li a:hover {
     height: 100%;
 }
 
-.sign-in-button {
+.sign-in-button, .create-account-button, .sign-up-button {
     height: 10%;
     flex: 1;
 }

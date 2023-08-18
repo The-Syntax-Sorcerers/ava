@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="./../../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body id="authentication-body">
 <div class="authentication-background-container centered-container vertical-container">
@@ -13,7 +13,7 @@
         <div class="authentication-description">Log In To AVA</div>
     </div>
     <div class="authentication-form-container centered-container vertical-container">
-        <form class="authentication-form" id="loginForm *" action="{{ url_for('auth.login') }}" method="post">
+        <form class="authentication-form" id="loginForm *" action="{{ url_for('bp.login') }}" method="post">
             <input type="email" placeholder="Email Address *" name="email" required>
             <input type="password" placeholder="Password *" name="password" required>
         </form>

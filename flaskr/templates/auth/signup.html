@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="./../../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body id="authentication-body">
 <div class="authentication-background-container centered-container vertical-container">
@@ -13,10 +13,11 @@
         <div class="authentication-description">Sign Up For AVA</div>
     </div>
     <div class="authentication-form-container sign-up-form-container centered-container vertical-container">
-        <form class="authentication-form" id="signupForm" action="{{ url_for('bp.homepage') }}" method="post">
-            <input type="number" placeholder="ID Number *" name="idnumber" required>
+        <form class="authentication-form sign-up-form" id="signupForm" action="{{ url_for('bp.homepage') }}" method="post">
+            <input type="text" placeholder="Username *" name="username" required>
             <input type="email" placeholder="Email Address *" name="email" required>
             <input type="password" placeholder="Password *" name="password" required>
+            <input type="password" placeholder="Confirm Password *" name="password" required>
         </form>
         <button class="sign-up-button" type="submit" form="signupForm" onclick="">Sign Up</button>
     </div>
