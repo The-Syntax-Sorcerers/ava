@@ -10,5 +10,4 @@ debug:
 
 .PHONY: run-production
 run-production:
-	FLASK_ENV=prod
 	flask --app $(FLASK_APP) run --debug

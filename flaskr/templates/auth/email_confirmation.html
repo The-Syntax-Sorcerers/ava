@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body id="confirmation-body">
+<div class="confirmation-background-container container centered-container vertical-container">
+    <div class="confirmation-header centered-container vertical-container">
+        <img class="confirmation-logo" src="{{ url_for('static', filename='images/checkmark.png') }}" alt="Checkmark Icon"
+        width="100" height="100">
+        <div class="confirmation-message">Email Confirmed!</div>
+    </div>
+
+    <div class="confirmation-text-container centered-container vertical-container">
+        <p>Your email has been successfully confirmed.</p>
+    </div>
+
+    <button class="back-to-login-button" type="button" onclick="location.href= '{{ url_for('auth.login') }}'">Back to Log In</button>
+</div>
+</body>
+</html>
