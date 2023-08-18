@@ -1,4 +1,14 @@
+
+# Flask Dependencies
 flask
+werkzeug
+WTForms
+
 flask_login
-flask_sqlalchemy
-waitress
+flask-wtf
+email_validator
+
+python-dotenv
+supabase
+
+# Front-End Dependencies
