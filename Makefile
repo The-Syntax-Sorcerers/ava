@@ -3,11 +3,9 @@ FLASK_APP = flaskr
 
 .PHONY: run
 build:
-	FLASK_ENV=dev
 	flask --app $(FLASK_APP) run
 
 debug:
-	FLASK_ENV=dev
 	flask --app $(FLASK_APP) run --debug
 
 .PHONY: run-production
