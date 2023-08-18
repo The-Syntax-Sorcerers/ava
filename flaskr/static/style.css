@@ -176,6 +176,7 @@ li a:hover {
     height: 80vh;
     min-width: 500px;
     padding: 10px;
+    display: flex;
 }
 
 .authentication-background-container > * {
@@ -186,11 +187,12 @@ li a:hover {
     padding: 5px;
     height: 20%;
     box-shadow: none;
+    flex: 2;
 }
 
 .authentication-logo {
     width: auto;
-    height: 100%;
+    height: 10vh;
     flex: 2;
 }
 
@@ -207,6 +209,7 @@ li a:hover {
     margin: 0 0 0 0;
     padding: 0;
     box-shadow: none;
+    flex: 9;
 }
 
 .sign-up-form-container {
@@ -286,7 +289,8 @@ li a:hover {
 }
 
 .create-account-button {
-    height: 13%;
+    height: 20%;
+    flex: 2;
 }
 
 .sign-up-button {

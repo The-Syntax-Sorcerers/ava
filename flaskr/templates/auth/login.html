@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="./../../static/style.css">
 </head>
 <body id="authentication-body">
 <div class="authentication-background-container centered-container vertical-container">
@@ -21,7 +21,7 @@
         <a class="forgot-password-link" href="">Forgot Password?</a>
     </div>
     <div class="divider">or</div>
-    <button class="create-account-button" type="button">Create New Account</button>
+    <button class="create-account-button" type="button" onclick="location.href= '{{ url_for('auth.login') }}'">Create New Account</button>
 </div>        
 </body>
 </html>
