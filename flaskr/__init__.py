@@ -3,10 +3,10 @@ import socket
 
 from flask import Flask
 
-from flaskr.postgres.extensions import login_manager, supabase_sec
-from flaskr.postgres.models import User
-from flaskr.routes.bp import bp
-from flaskr.routes.auth import auth
+from flaskr.extensions import login_manager, supabase_sec
+from flaskr.models import User
+from flaskr.bp import bp
+from flaskr.auth import auth
 
 socket.setdefaulttimeout(15)
 test_config = None
