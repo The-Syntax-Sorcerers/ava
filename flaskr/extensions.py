@@ -19,6 +19,6 @@ if public_key is not None and secret_key is not None:
     supabase_anon: Client = create_client(url, public_key)
     supabase_sec: Client = create_client(url, secret_key)
 else:
-    supabase_anon: None
-    supabase_sec: None
+    supabase_anon = None
+    supabase_sec = None
 login_manager = LoginManager()
