@@ -18,4 +18,7 @@ secret_key: str = load_from_env(["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_K
 if public_key is not None and secret_key is not None:
     supabase_anon: Client = create_client(url, public_key)
     supabase_sec: Client = create_client(url, secret_key)
+else:
+    supabase_anon: None
+    supabase_sec: None
 login_manager = LoginManager()
