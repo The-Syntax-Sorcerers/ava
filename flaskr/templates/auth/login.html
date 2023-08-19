@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body id="authentication-body">
@@ -15,18 +15,16 @@
         <div class="authentication-description">Log In To AVA</div>
     </div>
     <div class="authentication-form-container centered-container vertical-container">
-        <form method="POST" class="login-form" id="loginForm">
+        <form method="POST" class="authentication-form" id="loginForm">
             {{ loginform.hidden_tag() }}
             <div class="form-group">
-                {{ loginform.email.label() }}
-                {{ loginform.email(class="form-control") }}
+                {{ loginform.email(class="form-input", placeholder="Email Address *") }}
                 {% for error in loginform.email.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
             </div>
             <div class="form-group">
-                {{ loginform.password.label() }}
-                {{ loginform.password(class="form-control") }}
+                {{ loginform.password(class="form-input", placeholder="Password *") }}
                 {% for error in loginform.password.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
