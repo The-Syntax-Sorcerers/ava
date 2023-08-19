@@ -15,6 +15,7 @@ url: str = load_from_env(["SUPABASE_URL"])
 public_key: str = load_from_env(["SUPABASE_ANON_KEY", "SUPABASE_PUBLIC_KEY"])
 secret_key: str = load_from_env(["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY"])
 
-supabase_anon: Client = create_client(url, public_key)
-supabase_sec: Client = create_client(url, secret_key)
+if public_key is not None and secret_key is not None:
+    supabase_anon: Client = create_client(url, public_key)
+    supabase_sec: Client = create_client(url, secret_key)
 login_manager = LoginManager()
