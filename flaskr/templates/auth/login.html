@@ -17,14 +17,14 @@
     <div class="authentication-form-container centered-container vertical-container">
         <form method="POST" class="authentication-form" id="loginForm">
             {{ loginform.hidden_tag() }}
-            <div class="form-group">
-                {{ loginform.email(class="form-input", placeholder="Email Address *") }}
+            <div class="authentication-form-group">
+                {{ loginform.email(class="authentication-form-input", placeholder="Email Address") }}
                 {% for error in loginform.email.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
             </div>
-            <div class="form-group">
-                {{ loginform.password(class="form-input", placeholder="Password *") }}
+            <div class="authentication-form-group">
+                {{ loginform.password(class="authentication-form-input", placeholder="Password") }}
                 {% for error in loginform.password.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
@@ -38,8 +38,8 @@
             {% endwith %}
             <button type="submit" class="btn btn-primary sign-in-button">Log In</button>
         </form>
-        <a class="forgot-password-link" href="">Forgot Password?</a>
     </div>
+    <div><a class="forgot-password-link" href="">Forgot Password?</a></div>
     <div class="divider">or</div>
     <button class="create-account-button" type="button" onclick="location.href= '{{ url_for('auth.signup') }}'">Create New Account</button>
 </div>        

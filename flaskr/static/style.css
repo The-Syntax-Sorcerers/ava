@@ -153,11 +153,11 @@ li a:hover {
     width: 95%;
 }
 
-.authentication-description, .form-input {
+.authentication-description, .authentication-form-input {
     font-size: 3vh;
 }
 
-.divider, .forgot-password-link {
+.divider, .forgot-password-link, .login-link {
     font-size: 2vh;
 }
 
@@ -188,7 +188,7 @@ li a:hover {
 .authentication-logo {
     width: auto;
     height: 10vh;
-    flex: 2;
+    flex: 2 100;
 }
 
 .authentication-description {
@@ -200,37 +200,32 @@ li a:hover {
 .authentication-form-container {
     justify-content: space-evenly;
     width: 100%;
-    height: 50%;
+    height: 40%;
     margin: 0.5vh 0 0.5vh 0;
     padding: 0;
     box-shadow: none;
-    flex-grow: 10;
-}
-
-.sign-up-form-container {
-    height: 60%;
-}
-
-.authentication-form-container, .authentication-form-container > * {
-    gap: 0.5vh;
+    flex: 8;
 }
 
 .authentication-form {
     display: flex;
     height: 25%;
     flex: 3;
+    gap: 2vh;
     justify-content: space-between;
 }
 
 .sign-up-form {
+    height: 60%;
     flex: 6;
+    gap: 1vh;
 }
 
-.form-group {
+.authentication-form-group {
     flex: 10;
 }
 
-.form-input {
+.authentication-form-input {
     padding: 10px 20px;
     width: 100%;
     height: 100%;
@@ -254,18 +249,18 @@ li a:hover {
     height: 100%;
 }
 
-.sign-in-button, .create-account-button, .sign-up-button {
+.sign-in-button, .sign-up-button {
+    width: 100%;
     height: 15%;
 }
 
 .sign-in-button {
-    width: 100%;
     flex: 8;
 }
 
-.forgot-password-link {
-    margin: 2vh 0;
-    flex: 0 1000 auto;
+.forgot-password-link, .login-link {
+    margin: 2vh;
+    flex: 0 1000 0;
 }
 
 .divider {
@@ -294,21 +289,24 @@ li a:hover {
 
 .create-account-button {
     height: 13.5%;
-    flex-grow: 2 1000;
+    flex: 2 1000;
 }
 
 /* Sign up page classes */
 
-.login-link-container {
-    height: 5%;
-    margin: 2vh;
-    padding: 0;
-    font-size: 2vh;
-    box-shadow: none;
+.sign-up-form-container {
+    gap: 1vh;
 }
 
 .sign-up-button {
     height: 24%;
+    flex: 1;
+}
+
+.login-link-container {
+    height: 5%;
+    margin: 2vh;
+    box-shadow: none;
 }
 
 /* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
@@ -325,6 +323,17 @@ li a:hover {
         width: 100%;
         height: 90vh;
         min-width: 0px;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .authentication-background-container {
+        /* width: 50vw; */
+        height: 100vh;
+    }
+
+    .forgot-password-link {
+        margin: 1px 0 1px 0;
     }
 }
 
