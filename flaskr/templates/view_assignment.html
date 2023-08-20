@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Assignment</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <div class="navbar">
-        <ul>
-            <li><a href="{{ url_for('bp.dashboard') }}">Home</a></li>
-            <li><a href="#classes">Classes</a></li>
-            <li class="active"><a href="#assignments">Assignments</a></li>
-            <li style="float:right"><a href="#about">Manage Account</a></li>
-        </ul>
-    </div>
-</head>
-<body>
+{% extends 'template.html' %}
 
-</body>
+{% block content %}
+<div class="assignment-header centered-container">
+    <div class="assignment-info centered-container vertical-container">
+        <!-- Needs to fetch actual assignment info from db -->
+        <p class="assignment-title">Assignment Title</p>
+        <p class="assignment-due-date">Due Date</p>
+    </div>
+    <div class="assignment-submission-info centered-container vertical-container">
+        <p class="assignment-submission-number">Submission Number</p>
+        <p class="assignment-submission-title">Submission Title</p>
+        <p class="assignment-submission-date">Submission Date</p>
+    </div>
+    <button class="assignment-submit-button centered-container">New Submission</button>
+</div>
+<h1>{% block title %} View Assignment {% endblock %}</h1>
+
+{% endblock %}
