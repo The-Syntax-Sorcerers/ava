@@ -149,7 +149,7 @@ li a:hover {
 
 /* Login page classes */
 
-.authentication-header, .authentication-form, .create-account-button, .divider, .sign-up-button {
+.authentication-header, .login-form, .sign-up-form, .create-account-button, .divider, .sign-up-button {
     width: 95%;
 }
 
@@ -207,16 +207,17 @@ li a:hover {
     flex: 8;
 }
 
-.authentication-form {
+.login-form, .sign-up-form {
     display: flex;
-    height: 25%;
-    flex: 3;
-    gap: 2vh;
     justify-content: space-between;
 }
 
+.login-form {
+    flex: 3;
+    gap: 2vh;
+}
+
 .sign-up-form {
-    height: 60%;
     flex: 6;
     gap: 1vh;
 }
@@ -266,7 +267,7 @@ li a:hover {
 .divider {
     display: flex;
     align-items: center;
-    --inner-divider-gap: 5vw;
+    --inner-divider-gap: 4vw;
     margin: 0.5vh 0 0.5vh 0;
     flex-shrink: 100;
 }
@@ -293,10 +294,6 @@ li a:hover {
 }
 
 /* Sign up page classes */
-
-.sign-up-form-container {
-    gap: 1vh;
-}
 
 .sign-up-button {
     height: 24%;
