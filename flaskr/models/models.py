@@ -13,11 +13,10 @@ class User(UserMixin):
     # name = db.Column(db.String(128))
     # faculty = db.Column(db.String(100))
 
-    def __init__(self, tid, email, name, faculty, uuid):
+    def __init__(self, tid, email, name, uuid):
         self.id = tid
         self.name = name
         self.email = email
-        self.faculty = faculty
         self.uuid = uuid
 
     # def set_password(self, password):

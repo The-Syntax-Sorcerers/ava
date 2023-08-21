@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body id="authentication-body">
@@ -17,16 +17,14 @@
     <div class="authentication-form-container centered-container vertical-container">
         <form method="POST" class="login-form" id="loginForm">
             {{ loginform.hidden_tag() }}
-            <div class="form-group">
-                {{ loginform.email.label() }}
-                {{ loginform.email(class="form-control") }}
+            <div class="authentication-form-group">
+                {{ loginform.email(class="authentication-form-input", placeholder="Email Address") }}
                 {% for error in loginform.email.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
             </div>
-            <div class="form-group">
-                {{ loginform.password.label() }}
-                {{ loginform.password(class="form-control") }}
+            <div class="authentication-form-group">
+                {{ loginform.password(class="authentication-form-input", placeholder="Password") }}
                 {% for error in loginform.password.errors %}
                     <div class="invalid-feedback">{{ error }}</div>
                 {% endfor %}
@@ -40,8 +38,8 @@
             {% endwith %}
             <button type="submit" class="btn btn-primary sign-in-button">Log In</button>
         </form>
-        <a class="forgot-password-link" href="">Forgot Password?</a>
     </div>
+    <div><a class="forgot-password-link" href="">Forgot Password?</a></div>
     <div class="divider">or</div>
     <button class="create-account-button" type="button" onclick="location.href= '{{ url_for('auth.signup') }}'">Create New Account</button>
 </div>        
