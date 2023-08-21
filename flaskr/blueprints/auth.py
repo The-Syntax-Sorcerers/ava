@@ -29,7 +29,7 @@ def login():
 
             # Loading User from db for flask_login
             res = supabase_anon.table('Users').select('*').eq('email', form.email.data).execute().data[0]
-            flask_login.login_user(User(res['email'], res['name'], res['uuid']))
+            flask_login.login_user(User(res['id'], res['email'], res['name'], res['uuid']))
 
             flash('Logged in successfully!', 'success')
             print("Logged In!")

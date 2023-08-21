@@ -27,7 +27,7 @@ def load_user(user_id):
         return None
 
     res = res[0]
-    return User(res['id'], res['email'], res['name'], res['faculty'], res['uuid'])
+    return User(res['id'], res['email'], res['name'], res['uuid'])
 
 
 login_manager.init_app(app)
