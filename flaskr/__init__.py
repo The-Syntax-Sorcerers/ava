@@ -4,7 +4,7 @@ from flask import Flask
 
 from flaskr.extensions import login_manager, supabase_sec
 from flaskr.models.models import User
-from flaskr.blueprints.bp import bp
+from flaskr.blueprints.common import common
 from flaskr.blueprints.auth import auth
 
 socket.setdefaulttimeout(15)
@@ -31,6 +31,6 @@ def load_user(user_id):
 
 
 login_manager.init_app(app)
-app.register_blueprint(bp)
+app.register_blueprint(common)
 app.register_blueprint(auth)
 

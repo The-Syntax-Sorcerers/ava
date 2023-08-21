@@ -17,7 +17,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/', methods=["GET", "POST"])
 def login():
     if flask_login.current_user.is_authenticated:
-        return redirect(url_for('bp.dashboard'))
+        return redirect(url_for('common.dashboard'))
 
     form = LoginForm()
 
@@ -33,7 +33,7 @@ def login():
 
             flash('Logged in successfully!', 'success')
             print("Logged In!")
-            return redirect(url_for('bp.dashboard'))
+            return redirect(url_for('common.dashboard'))
         except AuthApiError as e:
             print(e.status, e.message)
             if e.status == 400:

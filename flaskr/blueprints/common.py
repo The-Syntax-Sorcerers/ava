@@ -3,23 +3,23 @@ from flask_login import login_user, login_required, logout_user
 from flask_login import login_required
 
 
-bp = Blueprint("bp", __name__)
+common = Blueprint("common", __name__)
 
 # a simple page that says hello
-# @bp.route('/')
+# @common.route('/')
 # def login(name='login'):
 #     return render_template('auth/login.html')
 
 
 # a simple page that says hello
-@bp.route('/dashboard', methods=["GET", "POST"])
+@common.route('/dashboard', methods=["GET", "POST"])
 @login_required
 def dashboard(name='dashboard'):
     return render_template('dashboard.html', name=name)
 
 
 # a simple page that says hello
-@bp.route('/upload',  methods=['GET', 'POST'])
+@common.route('/upload',  methods=['GET', 'POST'])
 def upload(name='assignment upload'):
     if request.method == 'POST':
         return redirect(url_for('homepage'))
