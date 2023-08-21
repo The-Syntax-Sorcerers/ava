@@ -17,7 +17,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/', methods=["GET", "POST"])
 def login():
     if flask_login.current_user.is_authenticated:
-        return redirect(url_for('bp.dashboard'))
+        return redirect(url_for('common.dashboard'))
 
     form = LoginForm()
 
@@ -29,11 +29,11 @@ def login():
 
             # Loading User from db for flask_login
             res = supabase_anon.table('Users').select('*').eq('email', form.email.data).execute().data[0]
-            flask_login.login_user(User(res['id'], res['email'], res['name'], res['faculty'], res['uuid']))
+            flask_login.login_user(User(res['id'], res['email'], res['name'], res['uuid']))
 
             flash('Logged in successfully!', 'success')
             print("Logged In!")
-            return redirect(url_for('bp.dashboard'))
+            return redirect(url_for('common.dashboard'))
         except AuthApiError as e:
             print(e.status, e.message)
             if e.status == 400:
@@ -60,7 +60,6 @@ def signup():
             dto = {
                 "email": form.email.data,
                 "name": form.name.data,
-                "faculty": form.faculty.data,
                 "uuid": user.user.id
             }
 
@@ -91,4 +90,3 @@ def logout():
     flask_login.logout_user()
     flash('Logged out successfully!', 'success')
     return redirect(url_for('auth.login'))
-
