@@ -4,16 +4,10 @@ from wtforms.validators import DataRequired, Email, EqualTo
 
 
 class SignupForm(FlaskForm):
-    id = StringField('ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     name = StringField('First Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    faculty = SelectField('Faculty', choices=[
-        ('Faculty of Science', 'Faculty of Science'),
-        ('Faculty of Arts', 'Faculty of Arts'),
-        ('Faculty of Medicine', 'Faculty of Medicine')
-    ], validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
     # def validate_email(self, email):
