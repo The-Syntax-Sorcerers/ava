@@ -22,11 +22,11 @@ def dashboard(name='dashboard'):
 
 
 # a simple page that says hello
-@common.route('/upload',  methods=['GET', 'POST'])
-def upload(name='assignment upload'):
-    if request.method == 'POST':
-        return redirect(url_for('homepage'))
-    return render_template('assignment_upload.html', name=name)
+# @common.route('/upload',  methods=['GET', 'POST'])
+# def upload(name='assignment upload'):
+#     if request.method == 'POST':
+#         return redirect(url_for('homepage'))
+#     return render_template('assignment_upload.html', name=name)
 
 # class for taking file uploads
 class UploadFileForm(FlaskForm):
@@ -34,7 +34,7 @@ class UploadFileForm(FlaskForm):
     submit = SubmitField("Upload File")
 
 # upload an assignment
-@bp.route('/upload',  methods=['GET', 'POST'])
+@common.route('/upload',  methods=['GET', 'POST'])
 def upload(name='assignment upload'):
     form = UploadFileForm()
     if form.validate_on_submit():
