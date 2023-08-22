@@ -24,3 +24,9 @@ def upload(name='assignment upload'):
     if request.method == 'POST':
         return redirect(url_for('homepage'))
     return render_template('assignment_upload.html', name=name)
+
+# a simple page that says hello
+@common.route('/view_assignment', methods=["GET", "POST"])
+@login_required
+def view_assignment(name='view assignment'):
+    return render_template('view_assignment.html', name=name)

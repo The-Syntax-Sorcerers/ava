@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <div class="navbar">
         <ul>
-            <li><a href="{{ url_for('bp.dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
             <li><a href="#classes">Classes</a></li>
             <li class="active"><a href="#assignments">Assignments</a></li>
             <li style="float:right"><a href="#about">Manage Account</a></li>
@@ -27,6 +27,7 @@
         <p class="assignment-submission-title">Submission Title</p>
         <p class="assignment-submission-date">Submission Date</p>
     </div>
+    <div class="assignment-score-header centered-container">-%</div>
     <button class="assignment-submit-button centered-container">New Submission</button>
 </div>
 </body>
