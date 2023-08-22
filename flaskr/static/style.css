@@ -41,6 +41,12 @@ body, #authentication-body {
     justify-content: space-between;
 }
 
+.sticky-header {
+    position: sticky;
+    z-index: 1;
+    top: 60px;
+}
+
 h1 {
     text-align: center;
 }
@@ -304,6 +310,74 @@ li a:hover {
     height: 5%;
     margin: 2vh;
     box-shadow: none;
+}
+
+/* View assignment page classes */
+
+.assignment-header {
+    width: 90vw;
+    height: 15vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+}
+
+.assignment-info, .assignment-submission-box, .assignment-submission-info, .assignment-submission-dropdown, .assignment-score-header,
+.assignment-submit-button {
+    height: 100%;
+    margin: 0;
+    box-shadow: none;
+}
+
+.assignment-info, .assignment-submission-box {
+    margin: 0;
+    font-size: 3vh;
+    display: flex;
+    border: 1px solid #ccc;
+}
+
+.assignment-info, .assignment-submission-box {
+    width: 35%;
+    padding:  2vh 1vh 2vh 5vw;
+}
+
+.assignment-due-date, .assignment-submission-date {
+    font-size: 2vh;
+    color: #a3b3b8;
+}
+
+.assignment-submission-box {
+        border-radius: 0;
+}
+
+.assignment-submission-info {
+    width: 70%;
+}
+
+.assignment-submission-number, .assignment-submission-title, .assignment-submission-date {
+    margin: 0;
+}
+
+.assignment-submission-dropdown {
+    width: 30%;
+    font-size: 4vh;
+}
+
+.assignment-score-header {
+    width: 10%;
+    font-size: 4vh;
+    border: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.assignment-submit-button {
+    width: 20%;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 3vh;
 }
 
 /* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */

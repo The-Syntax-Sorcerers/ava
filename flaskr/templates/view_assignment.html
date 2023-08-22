@@ -16,18 +16,21 @@
     </div>
 </head>
 <body>
-<div class="assignment-header centered-container">
-    <div class="assignment-info centered-container vertical-container">
+<div class="assignment-header sticky-header centered-container">
+    <div class="assignment-info vertical-container">
         <!-- Needs to fetch actual assignment info from db -->
         <p class="assignment-title">Assignment Title</p>
         <p class="assignment-due-date">Due Date</p>
     </div>
-    <div class="assignment-submission-info centered-container vertical-container">
-        <p class="assignment-submission-number">Submission Number</p>
-        <p class="assignment-submission-title">Submission Title</p>
-        <p class="assignment-submission-date">Submission Date</p>
+    <div class="assignment-submission-box centered-container">
+        <div class="assignment-submission-info vertical-container">
+            <p class="assignment-submission-number">Submission Number</p>
+            <p class="assignment-submission-title">Submission Title</p>
+            <p class="assignment-submission-date">Submission Date</p>
+        </div>
+        <div class="assignment-submission-dropdown centered-container">V</div>
     </div>
-    <div class="assignment-score-header centered-container">-%</div>
-    <button class="assignment-submit-button centered-container">New Submission</button>
+    <div class="assignment-score-header centered-container">84%</div>
+    <button class="assignment-submit-button centered-container" onclick="location.href= '{{ url_for('common.upload') }}'">New Submission</button>
 </div>
 </body>
