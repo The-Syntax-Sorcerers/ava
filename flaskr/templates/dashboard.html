@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>ToDo App</title>
+    <title>Dashboa</title>
     <div class="navbar">
         <ul>
             <li class="active"><a href="#home">Home</a></li>
@@ -26,25 +26,25 @@
     <div class="selectClassMenu">
         <h2 style="margin-top: 25px;">Classes</h2>
         <div class="column">
-            <div class="card" onclick="location.href= '{{ url_for('common.assignments') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('common.classpage') }}'">
                 <h4><b>IT Project</b></h4>
                 <p>COMP30022</p>
             </div>
           </div>
         <div class="column">
-            <div class="card" onclick="location.href= '{{ url_for('common.assignments') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('common.classpage') }}'">
                 <h4><b>Models of Computation</b></h4>
                 <p>COMP30026</p>
             </div>
         </div>
         <div class="column">
-            <div class="card" onclick="location.href= '{{ url_for('common.assignments') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('common.classpage') }}'">
                 <h4><b>Declarative Programming</b></h4>
                 <p>COMP30020</p>
             </div>
         </div>
         <div class="column">
-            <div class="card" onclick="location.href= '{{ url_for('common.assignments') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('common.classpage') }}'">
                 <h4><b>Computer Systems</b></h4>
                 <p>COMP30023</p>
             </div>
