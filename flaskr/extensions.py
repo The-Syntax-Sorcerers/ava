@@ -21,4 +21,5 @@ if public_key is not None and secret_key is not None:
 else:
     supabase_anon = None
     supabase_sec = None
+
 login_manager = LoginManager()
