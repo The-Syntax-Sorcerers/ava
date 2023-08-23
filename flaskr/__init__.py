@@ -22,7 +22,7 @@ app.config.from_mapping(
 def load_user(user_id):
     print(login_manager.user_callback)
     print("USERID", user_id)
-    res = supabase_sec.table('Users').select('*').eq('id', user_id).execute().data
+    res = supabase_sec.table('User').select('*').eq('id', user_id).execute().data
     if len(res) == 0:
         return None
 

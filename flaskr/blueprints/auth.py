@@ -28,7 +28,7 @@ def login():
             supabase_anon.postgrest.auth(user.session.access_token)
 
             # Loading User from db for flask_login
-            res = supabase_anon.table('Users').select('*').eq('email', form.email.data).execute().data[0]
+            res = supabase_anon.table('User').select('*').eq('email', form.email.data).execute().data[0]
             flask_login.login_user(User(res['id'], res['email'], res['name'], res['uuid']))
 
             flash('Logged in successfully!', 'success')
@@ -63,7 +63,7 @@ def signup():
                 "uuid": user.user.id
             }
 
-            supabase_sec.table('Users').insert(dto).execute()
+            supabase_sec.table('User').insert(dto).execute()
             print("Signed up:", email)
 
             flash('Account created successfully!', 'success')
