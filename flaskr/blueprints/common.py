@@ -17,6 +17,15 @@ common = Blueprint("common", __name__)
 def dashboard(name='dashboard'):
     return render_template('dashboard.html', name=name)
 
+@common.route('/assignments', methods=["GET", "POST"])
+@login_required
+def assignments(name='assignments'):
+    return render_template('assignments.html', name=name)
+
+@common.route('/view_assignment', methods=["GET", "POST"])
+@login_required
+def view_assignment(name='view assignment'):
+    return render_template('view_assignment.html', name=name)
 
 # a simple page that says hello
 @common.route('/upload',  methods=['GET', 'POST'])
@@ -24,9 +33,3 @@ def upload(name='assignment upload'):
     if request.method == 'POST':
         return redirect(url_for('homepage'))
     return render_template('assignment_upload.html', name=name)
-
-# a simple page that says hello
-@common.route('/view_assignment', methods=["GET", "POST"])
-@login_required
-def view_assignment(name='view assignment'):
-    return render_template('view_assignment.html', name=name)
