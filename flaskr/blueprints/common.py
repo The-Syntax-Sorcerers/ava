@@ -22,10 +22,10 @@ def dashboard(name='dashboard'):
 def assignments(name='classpage'):
     return render_template('classpage.html', name=name)
 
-@common.route('/view_assignment', methods=["GET", "POST"])
+@common.route('/assignmentpage', methods=["GET", "POST"])
 @login_required
-def view_assignment(name='view assignment'):
-    return render_template('view_assignment.html', name=name)
+def assignmentpage(name='assignmentpage'):
+    return render_template('assignmentpage.html', name=name)
 
 # a simple page that says hello
 @common.route('/upload',  methods=['GET', 'POST'])
