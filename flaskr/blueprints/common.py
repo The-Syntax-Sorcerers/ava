@@ -2,8 +2,8 @@ from flask import request, render_template, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user
 from flask_login import login_required
 
-
 common = Blueprint("common", __name__)
+
 
 # a simple page that says hello
 # @common.route('/')
@@ -19,8 +19,18 @@ def dashboard(name='dashboard'):
 
 
 # a simple page that says hello
-@common.route('/upload',  methods=['GET', 'POST'])
+@common.route('/upload', methods=['GET', 'POST'])
 def upload(name='assignment upload'):
     if request.method == 'POST':
         return redirect(url_for('homepage'))
     return render_template('assignment_upload.html', name=name)
+
+
+@common.route('/profile', methods=['GET', 'POST'])
+def profile(name='profile'):
+    return render_template('profile.html', name=name)
+
+
+@common.route('/privacy_policy', methods=['GET', 'POST'])
+def privacy_policy(name='privacy_policy'):
+    return render_template('privacy_policy.html', name=name)
