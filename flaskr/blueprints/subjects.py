@@ -44,10 +44,11 @@ def assignment_page(sub_id, ass_id):
                 form_errors.append('Invalid File Type!')  # Triggered when a form is submitted & there is an error
             else:
                 file = form.file.data
-                file_stream = file.stream  # Get the file stream
+                # file_stream = file.stream  (Works in Python 3.11 !3.7) # Get the file stream
 
-                buffered_reader = io.BufferedReader(file_stream)
-                s.upload_assignment(buffered_reader, sub_id, ass_id, user.id)
+                # file_stream = io.BytesIO(file.read())
+                # buffered_reader = io.BufferedReader(file_stream)
+                s.upload_assignment(file.read(), sub_id, ass_id, user.id)
 
         # is_sub = s.exists_assignment_bool(str(sub_id), str(ass_id), str(user.id))
         # return render_template('subs/assignment_upload.html', form =form, ass_submitted=is_sub)
