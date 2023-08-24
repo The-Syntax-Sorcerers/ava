@@ -10,29 +10,57 @@ from nltk.stem import WordNetLemmatizer
 nltk.download(["punkt", "stopwords","wordnet"])
 from gensim.models import Word2Vec
 import string
+import json
+import sys
+sys.path.insert(0, '..')  # Point to the parent directory of both ava_api and flask
+from flaskr.extensions import supabase_sec
+supabase = supabase_sec
+sys.path.pop(0)
 
-def extract_text_from_files(file_paths):
-    known_text, unknown_text = [], []
 
-    for file_path in file_paths:
+
+# I hope this database model structure should be there
+# users table
+# user_email | user_name| concat_vec | (any other fields you want)
+# concat_vec will be stored as JSON
+
+# documents table
+# user_email | doc_Id |file | ....(any other fields you want)
+# note that for documents table, user_email and document Id both are primary composite key
+# to ensure one student can have multiple documents stored
+
+
+def extract_text_from_files(user_email, file_path):
+    # Extract data from database for the given user_email
+    query_results = supabase.table('documents').select('file').eq('user_email', user_email)
+
+    # Extracting and processing document texts from results
+    known_texts = []
+    for res in query_results.data:
+        text_content = res['file']
+        cleaned_lines = [line.strip().lstrip("\ufeff") for line in text_content.split('\n')]
+        known_texts.append(cleaned_lines)
+
+    # Process the file for the unknown document
+    unknown_text = []
+    with open(file_path, 'r') as file:
         text_lines = []
-        with open(file_path, 'r') as file:
-            for line in file:
-                cleaned_line = line.strip().lstrip("\ufeff")
-                text_lines.append(cleaned_line)
-        if 'unknown' in file_path:
-            unknown_text.append(text_lines)
-        else:
-            known_text.append(text_lines)
+        for line in file:
+            cleaned_line = line.strip().lstrip("\ufeff")
+            text_lines.append(cleaned_line)
+    unknown_text.append(text_lines)
 
-    return known_text, unknown_text
+    # known_texts and unknown_text are list of list strings and each list of a string
+    # refers to a single document
+    return known_texts, unknown_text
 
-def build_corpus(data_directory):
+def build_corpus(data_directory, user_email):
     corpus = {}
-    problem_file_paths = glob.glob(os.path.join(data_directory, '*'))
+    # given that only one txt file is there so just index that file
+    problem_file_paths = glob.glob(os.path.join(data_directory, '*'))[0]
 
 
-    known_text, unknown_text = extract_text_from_files(problem_file_paths)
+    known_text, unknown_text = extract_text_from_files(user_email, problem_file_paths)
     corpus[0] = {
         'known': known_text,
         'unknown': unknown_text
@@ -165,7 +193,7 @@ def get_vectors(texts, w2v_model, vector_size):
 
   return res
 
-def vectorize_text_data(data, w2v_model, vector_size):
+def vectorize_text_data(data, w2v_model, vector_size, user_email):
   """
   Build author data from the corpus
   """
@@ -173,16 +201,36 @@ def vectorize_text_data(data, w2v_model, vector_size):
   for key,val in tqdm(data.items(), total=len(data)):
     if len(val['unknown']) == 0:
       continue
-    res[key] = {
-        'known': get_vectors(val['known'], w2v_model, vector_size),
-        'unknown': get_vectors(val['unknown'], w2v_model, vector_size),
-    }
+
+    # fetch already present concatenated vec from database
+    vector_result = supabase.table('users').select('concat_vec').eq('user_email', user_email)
+    if not vector_result.data or vector_result.data[0]['concat_vec'] is None:
+
+        concat_vec = get_vectors(val['known'], w2v_model, vector_size)
+        # Store the computed concat_vec into the database for the user
+        json_string = json.dumps(concat_vec)
+        update_response = supabase.table('users').update({
+            'concat_vec': json_string
+        }).eq('user_email', user_email)
+        # error handling
+        if update_response.error:
+            print("Error updating concat_vec for user:", update_response.error)
+
+        res[key] = {
+            # need to modify this i.e., if concatenated vec present already then no need to calculate again
+            'known': concat_vec,
+            'unknown': get_vectors(val['unknown'], w2v_model, vector_size),
+        }
+    else:
+        res[key] = {
+            'known': json.loads(vector_result.data[0]['concat_vec']),
+            'unknown': get_vectors(val['unknown'], w2v_model, vector_size),
+        }
 
   return res
 
-def preprocess_dataset(data_directory, vector_size=300):
-    test_corpus = build_corpus(data_directory)
+def preprocess_dataset(data_directory, vector_size=300, user_email=""):
+    test_corpus = build_corpus(data_directory, user_email)
     word2vec_model = Word2Vec.load("w2v_model/word2vec.model")
-    test_data = vectorize_text_data(test_corpus, word2vec_model, vector_size)
+    test_data = vectorize_text_data(test_corpus, word2vec_model, vector_size, user_email)
     return test_data
-
