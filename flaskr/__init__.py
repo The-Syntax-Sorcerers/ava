@@ -41,10 +41,10 @@ app.register_blueprint(subjects)
 # print("Sub", sub)
 # print("Ass", sub.get_assignments())
 
-s = Storage()
+# s = Storage()
 # s.upload_assignment('test.txt', 'COMP123456', '420', 'bluffmaster')
 # print("Upload Complete!")
-print(s.exists_assignment_bool('COMP123456', '1', '9'))
+# print(s.exists_assignment_bool('COMP123456', '1', '9'))
 
 
 # res = s.delete_assignment('COMP123456', '420', 'bluffmaster')
