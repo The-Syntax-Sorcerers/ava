@@ -4,7 +4,7 @@ import flask_login
 from flask import Blueprint, render_template, redirect, url_for, flash
 
 # Our Entities
-from flaskr.models.User import User
+from flaskr.models.models import User
 from flaskr.extensions import supabase_anon
 from flaskr.models.flaskforms import LoginForm, SignupForm
 

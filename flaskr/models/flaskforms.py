@@ -3,7 +3,7 @@ from werkzeug.datastructures import FileStorage
 from wtforms import StringField, PasswordField, SubmitField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
-from flaskr.models.User import User
+from flaskr.models.models import User
 
 
 class SignupForm(FlaskForm):
@@ -30,3 +30,4 @@ class LoginForm(FlaskForm):
 class UploadFileForm(FlaskForm):
     file: FileStorage = FileField("File")
     submit = SubmitField("Upload File")
+    delete = SubmitField("Delete File")
