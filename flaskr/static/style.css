@@ -6,7 +6,7 @@ header{
     overflow: visible;
 }
 
-body, #authentication-body, #classpage-body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
@@ -16,17 +16,15 @@ body, #authentication-body, #classpage-body {
     min-height: 100vh;
 }
 
-.container, .centered-container {
+#authentication-body, #classpage-body, #assignmentpage-body {
+    align-items: center;
+}
+
+.centered-container {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    width: 80%;
-    height: 80%;
-    margin-top: 20px;
 }
 
 .centered-container {
@@ -43,8 +41,8 @@ body, #authentication-body, #classpage-body {
 
 .sticky-header {
     position: sticky;
-    z-index: 1;
-    top: 60px;
+    z-index: 0;
+    top: 52px;
 }
 
 h1 {
@@ -169,7 +167,6 @@ li a:hover {
 
 #authentication-body {
     padding: 0;
-    align-items: center;
 }
 
 .authentication-background-container {
@@ -314,29 +311,36 @@ li a:hover {
 
 /* Classpage classes */
 
-#classpage-body {
-    display: flex;
-    align-items: center;
-}
-
 .assignment-card {
     margin-bottom: 4vh;
 }
 
-/* View assignment page classes */
+/* Assignmentpage classes */
+
+#assignmentpage-body {
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.assignment-header, .assignment-description-block {
+    width: 90vw;
+}
+
+.assignment-header, .assignment-description-block, .assignment-submission-viewer, .assignment-submit-button-page {
+    margin-bottom: 4vh;
+}
 
 .assignment-header {
-    width: 90vw;
     height: 15vh;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: none;
+    border-radius: 0;
 }
 
-.assignment-info, .assignment-submission-box, .assignment-submission-info, .assignment-submission-dropdown, .assignment-score-header,
-.assignment-submit-button {
+.header-item {
     height: 100%;
     margin: 0;
     box-shadow: none;
@@ -385,12 +389,18 @@ li a:hover {
     border-radius: 0;
 }
 
-.assignment-submit-button {
+.assignment-submit-button-header, .assignment-submit-button-page {
     width: 20%;
     color: black;
     border: 1px solid #ccc;
     border-radius: 0;
     font-size: 3vh;
+}
+
+.assignment-submission-viewer {
+    height: 100vh;
+    width: 60%;
+    background-color: grey;
 }
 
 /* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
@@ -440,10 +450,11 @@ li a:hover {
   
 /* Links inside the dropdown */
 .dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    z-index: 1;
 }
   
 /* Change color of dropdown links on hover */

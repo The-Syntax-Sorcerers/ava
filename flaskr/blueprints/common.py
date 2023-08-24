@@ -19,7 +19,7 @@ def dashboard(name='dashboard'):
 
 @common.route('/classpage', methods=["GET", "POST"])
 @login_required
-def assignments(name='classpage'):
+def classpage(name='classpage'):
     return render_template('classpage.html', name=name)
 
 @common.route('/assignmentpage', methods=["GET", "POST"])
