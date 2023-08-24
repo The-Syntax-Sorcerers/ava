@@ -69,8 +69,8 @@ def confirmation():
     return render_template('auth/email_confirmation.html')
 
 
-@flask_login.login_required
 @auth.route('/logout')
+@flask_login.login_required
 def logout():
     supabase_anon.auth.sign_out()
     flask.session.clear()
