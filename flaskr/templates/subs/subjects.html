@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>ToDo App</title>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
+            <li class="active"><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
+            <li><a href="{{ url_for('common.assignments') }}">Assignments</a></li>
+            <div class="dropdown" style="float:right">
+            <li><a>Account</a></li>
+                <div class="dropdown-content">
+                    <a href="#profile">Profile</a>
+                    <a href="#Settings">Settings</a>
+                    <a href="#Privacy Policy">Privacy Policy</a>
+                    <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+</head>
+<body>
+    <div class="selectClassMenu">
+        <h2 style="margin-top: 25px;">Enrolled Subjects</h2>
+
+        {% for sub in enrolled_subjects %}
+            <a href="{{ url_for('subjects.index', sub_id=sub.subject_id) }}">
+            <div class="column">
+                <div class="card">
+                    <h4><b>{{ sub.name }}</b></h4>
+                    <p>{{ sub.subject_id }}</p>
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+
+    </div>
+    <div class="selectClassMenu">
+        <h2 style="margin-top: 25px;">Available Subjects</h2>
+        {% for sub in available_subjects %}
+            <a href="{{ url_for('subjects.index', sub_id=sub.subject_id) }}">
+            <div class="column">
+                <div class="card">
+                    <h4><b>{{ sub.name }}</b></h4>
+                    <p>{{ sub.subject_id }}</p>
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
