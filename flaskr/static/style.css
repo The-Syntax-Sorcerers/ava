@@ -103,7 +103,7 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-    background-color: #a3b3b8;
+    background-color: #a5b5b8;
 }
 
 .active {
@@ -145,6 +145,7 @@ li a:hover {
     background-color: white;
     border-radius: 5px;
     transition: 0.3s;
+    color: black;
 }
 /* On mouse-over, add a deeper shadow */
 .card:hover {
