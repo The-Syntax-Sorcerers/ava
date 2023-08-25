@@ -17,6 +17,15 @@ def dashboard(name='dashboard'):
     print("CURR", flask_login.current_user)
     return render_template('dashboard.html', name=name)
 
+@common.route('/classpage', methods=["GET", "POST"])
+@login_required
+def classpage(name='classpage'):
+    return render_template('classpage.html', name=name)
+
+@common.route('/assignmentpage', methods=["GET", "POST"])
+@login_required
+def assignmentpage(name='assignmentpage'):
+    return render_template('assignmentpage.html', name=name)
 
 @common.route('/assignments',  methods=['GET'])
 @login_required
