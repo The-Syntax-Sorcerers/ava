@@ -6,7 +6,7 @@ header{
     overflow: visible;
 }
 
-body, #authentication-body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
@@ -16,17 +16,15 @@ body, #authentication-body {
     min-height: 100vh;
 }
 
-.container, .centered-container {
+#authentication-body, #classpage-body, #assignmentpage-body {
+    align-items: center;
+}
+
+.centered-container {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    width: 80%;
-    height: 80%;
-    margin-top: 20px;
 }
 
 .centered-container {
@@ -39,6 +37,12 @@ body, #authentication-body {
 .vertical-container {
     flex-direction: column;
     justify-content: space-between;
+}
+
+.sticky-header {
+    position: sticky;
+    z-index: 0;
+    top: 52px;
 }
 
 h1 {
@@ -163,7 +167,6 @@ li a:hover {
 
 #authentication-body {
     padding: 0;
-    align-items: center;
 }
 
 .authentication-background-container {
@@ -306,6 +309,100 @@ li a:hover {
     box-shadow: none;
 }
 
+/* Classpage classes */
+
+.assignment-card {
+    margin-bottom: 4vh;
+}
+
+/* Assignmentpage classes */
+
+#assignmentpage-body {
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.assignment-header, .assignment-description-block {
+    width: 90vw;
+}
+
+.assignment-header, .assignment-description-block, .assignment-submission-viewer, .assignment-submit-button-page {
+    margin-bottom: 4vh;
+}
+
+.assignment-header {
+    height: 15vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.header-item {
+    height: 100%;
+    margin: 0;
+    box-shadow: none;
+}
+
+.assignment-info, .assignment-submission-box {
+    margin: 0;
+    font-size: 3vh;
+    display: flex;
+    border: 1px solid #ccc;
+}
+
+.assignment-info, .assignment-submission-box {
+    width: 35%;
+    padding:  2vh 1vh 2vh 5vw;
+}
+
+.assignment-due-date, .assignment-submission-date {
+    font-size: 2vh;
+    color: #a3b3b8;
+}
+
+.assignment-submission-box {
+        border-radius: 0;
+}
+
+.assignment-submission-info {
+    width: 70%;
+}
+
+.assignment-submission-number, .assignment-submission-title, .assignment-submission-date {
+    margin: 0;
+}
+
+.assignment-submission-dropdown {
+    width: 30%;
+    margin-right: 1vw;
+    font-size: 4vh;
+    border: 1px solid black;
+}
+
+.assignment-score-header {
+    width: 10%;
+    font-size: 4vh;
+    border: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.assignment-submit-button-header, .assignment-submit-button-page {
+    width: 20%;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 3vh;
+}
+
+.assignment-submission-viewer {
+    height: 100vh;
+    width: 60%;
+    background-color: grey;
+}
+
 /* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
     .column {
@@ -353,10 +450,11 @@ li a:hover {
   
 /* Links inside the dropdown */
 .dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    z-index: 1;
 }
   
 /* Change color of dropdown links on hover */

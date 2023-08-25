@@ -17,6 +17,15 @@ common = Blueprint("common", __name__)
 def dashboard(name='dashboard'):
     return render_template('dashboard.html', name=name)
 
+@common.route('/classpage', methods=["GET", "POST"])
+@login_required
+def classpage(name='classpage'):
+    return render_template('classpage.html', name=name)
+
+@common.route('/assignmentpage', methods=["GET", "POST"])
+@login_required
+def assignmentpage(name='assignmentpage'):
+    return render_template('assignmentpage.html', name=name)
 
 # a simple page that says hello
 @common.route('/upload',  methods=['GET', 'POST'])

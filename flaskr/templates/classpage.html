@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Class Page</title>
+    <div class="navbar">
+        <ul>
+            <li class="active"><a href="#home">Home</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="{{ url_for('common.upload') }}">Assignments</a></li>
+            <div class="dropdown" style="float:right">
+            <li><a>Account</a></li>
+                <div class="dropdown-content">
+                    <a href="#profile">Profile</a>
+                    <a href="#Settings">Settings</a>
+                    <a href="#Privacy Policy">Privacy Policy</a>
+                    <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                </div>
+            </div>
+        </ul>
+    </div>
+</head>
+<body id="classpage-body" class="vertical-container">
+<div class="selectClassMenu">
+    <h2 style="margin-top: 25px;">Assignments</h2>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Assignment 1</b></h4>
+            <p>--/100</p>
+            <p>Due: 13/07/2023</p>
+        </div>
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Project 2</b></h4>
+            <p>--/100</p>
+            <p>Due: 02/08/2023</p>
+        </div>
+        </div>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Assignment 2</b></h4>
+            <p>--/100</p>
+            <p>Due: 04/08/2023</p>
+        </div>
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>MST</b></h4>
+            <p>--/100</p>
+            <p>Due: 24/08/2023</p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Assignment 3</b></h4>
+            <p>--/100</p>
+            <p>Due: 06/09/2023</p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Project 1</b></h4>
+            <p>--/100</p>
+            <p>Due: 17/09/2023</p>
+        </div>
+    </div>
+</div>
+<div class="selectClassMenu">
+    <h2 style="margin-top: 25px;">Past Assignments</h2>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Report 1</b></h4>
+            <p>92/100</p>
+            <p>Due: 10/06/2023</p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card assignment-card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <h4><b>Report 2</b></h4>
+            <p>90/100</p>
+            <p>Due: 17/06/2023</p>
+        </div>
+    </div>
+</div>
+</body>
