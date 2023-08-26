@@ -47,10 +47,10 @@
     <h3 class="text-xl font-semibold mb-4">Assignments:</h3>
     <div class="card-row">
         {% for ass in assignments %}
-            <div class="card" onclick="location.href= '{{ url_for('common.assignment_page') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('subjects.assignment_page', sub_id=subject.subject_id, ass_id=ass.id) }}'">
                 <h4><b>{{ ass.name }}</b></h4>
                 <p>--/100</p>
-                <p>Due: {{ ass.due_date }}</p>
+                <p>Due: {{ ass.due_time }} {{ ass.due_date }}</p>
             </div>
             <!-- <a href="{{ url_for('subjects.assignment_page', sub_id=ass.subject_id, ass_id=ass.id) }}" class="cursor-pointer"> -->
         {% endfor %}

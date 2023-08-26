@@ -7,7 +7,7 @@ from werkzeug.datastructures.file_storage import FileStorage
 from werkzeug.utils import secure_filename
 
 from flaskr.models.flaskforms import UploadFileForm
-from flaskr.models.models import Subject, Storage
+from flaskr.models.models import Subject, Storage, Assignment
 
 ALLOWED_FILE_TYPES = ['text/plain']
 subjects = Blueprint("subjects", __name__, url_prefix="/subjects")
@@ -27,9 +27,23 @@ def index(sub_id=0, name='subjects_page'):
     return render_template('subs/subject_page.html', subject=sub, assignments=ass)
 
 
+@subjects.route('/', defaults={'sub_id': None, 'ass_id': None})
+@subjects.route('/<sub_id>/<ass_id>', methods=["GET", "POST"])
+@login_required
+def assignment_page(sub_id=0, ass_id=0, name='assignment_page'):
+    if not ass_id:
+        sub = Subject.get_subject(sub_id)
+        ass = sub.get_assignments()
+        return render_template('subs/subject_page.html', subject=sub, assignments=ass)
+
+    sub = Subject.get_subject(sub_id)
+    ass = Assignment.get_assignment(sub_id, ass_id)
+    return render_template('subs/assignment_page.html', subject=sub, assignment=ass)
+
+
 @subjects.route('/<sub_id>/<ass_id>', methods=['GET', 'POST'])
 @login_required
-def assignment_page(sub_id, ass_id):
+def upload_assignment(sub_id, ass_id):
     s, user = Storage(), flask_login.current_user
     form = UploadFileForm()
     form_errors = []

@@ -18,12 +18,6 @@ def dashboard(name='dashboard'):
     return render_template('dashboard.html', name=name)
 
 
-@common.route('/assignment_page', methods=["GET", "POST"])
-@login_required
-def assignment_page(name='assignment_page'):
-    return render_template('subs/assignment_page.html', name=name)
-
-
 @common.route('/all_assignments',  methods=['GET'])
 @login_required
 def all_assignments(name='assignment upload'):
@@ -31,27 +25,3 @@ def all_assignments(name='assignment upload'):
     # Get all the subjects listed for the current user
     user: User = flask_login.current_user
     return render_template('subs/all_assignments.html', current_assignments=user.get_assignments())
-
-
-# upload an assignment
-@common.route('/upload',  methods=['GET', 'POST'])
-@login_required
-def upload(name='assignment upload'):
-    form = UploadFileForm()
-    form_errors = []
-
-    if form.validate_on_submit():
-        if form.file.data.content_type not in ALLOWED_FILE_TYPES:
-            form_errors.append('Invalid File Type!')    # Triggered when a form is submitted & there is an error
-        else:
-            file: FileStorage = form.file.data
-            user = flask_login.current_user
-            res = []
-            return render_template('subs/assignment_upload.html', name=name, submitted=True, upload_content=res)
-
-    # Get all the subjects listed for the current user
-    print("Curr is", flask_login.current_user)
-
-    return render_template('subs/assignment_upload.html', form=form, submitted=False, errors=form_errors, subjects=["HAHABS"])
-
-

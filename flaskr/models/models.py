@@ -76,10 +76,10 @@ class Subject:
 
     def get_assignments(self):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
-        asses = []
+        assigns = []
         for r in res.data:
-            asses.append(Assignment(r['id'], r['subject_id'], r['name']))
-        return asses
+            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_date_time']))
+        return assigns 
 
     @staticmethod
     def get_subject(subject_id):
@@ -104,29 +104,34 @@ class Subject:
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name, due_date=None):
+    def __init__(self, assignment_id, subject_id, assignment_name, due_date_time=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
-        self.due_date = due_date
+        self.due_date_time = due_date_time
+        if due_date_time:
+            self.due_date = due_date_time[:10]
+            self.due_time = due_date_time[11:19]
+        else :
+            self.due_date = self.due_time = None
 
     @staticmethod
     def get_assignment(subject_id, assignment_id):
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date_time']) # Maybe need to add these for all_assignment due_dates to work res['due_date'], res['due_time']
         return None
 
     @staticmethod
     def get_all_assignments(subject_id):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_date']) for r in res]
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_date_time']) for r in res]
         return None
 
     def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_date: {self.due_date}'
+        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_date_time: {self.due_date_time}, due_date: {self.due_date}, due_time: {self.due_time}'
 
 
 class Storage:
