@@ -81,6 +81,7 @@ class Subject:
             assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_date_time']))
         return assigns 
 
+    # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
         res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
@@ -89,6 +90,7 @@ class Subject:
             return Subject(res['id'], res['professor_email'], res['name'])
         return None
 
+    # Returns every subject
     @staticmethod
     def get_all_subjects():
         res = supabase_sec.table('Subject').select('*').execute()
@@ -110,11 +112,13 @@ class Assignment:
         self.name = assignment_name
         self.due_date_time = due_date_time
         if due_date_time:
+            # Seperates date_time into just date and time
             self.due_date = due_date_time[:10]
             self.due_time = due_date_time[11:19]
         else :
             self.due_date = self.due_time = None
 
+    # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
     def get_assignment(subject_id, assignment_id):
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
@@ -123,6 +127,7 @@ class Assignment:
             return Assignment(res['id'], res['subject_id'], res['name'], res['due_date_time']) # Maybe need to add these for all_assignment due_dates to work res['due_date'], res['due_time']
         return None
 
+    # Returns all assignments using a given subject_id
     @staticmethod
     def get_all_assignments(subject_id):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data

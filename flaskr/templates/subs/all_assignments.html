@@ -37,7 +37,6 @@
 
     <h2 style="margin-top: 25px;">Past Assignments</h2>
     <div class="card-row">
-        <!-- Needs a previous assignment function -->
         {% for temp_assign in current_assignments %}
         <div class="card" onclick="location.href= '{{ url_for('subject.assignment_page', sub_id='temp_assign.subject_id', ass_id='temp_assign.id') }}'">
             <h4><b>{{ temp_assign.name }}</b></h4>

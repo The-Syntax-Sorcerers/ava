@@ -12,14 +12,14 @@ from flaskr.models.models import Subject, Storage, Assignment
 ALLOWED_FILE_TYPES = ['text/plain']
 subjects = Blueprint("subjects", __name__, url_prefix="/subjects")
 
-
+# Routes to the subject_page for a subject using a given subject_id 
 @subjects.route('/', defaults={'sub_id': None})
 @subjects.route('/<sub_id>', methods=['GET'])
 @login_required
 def index(sub_id=0, name='subjects_page'):
     user = flask_login.current_user
+    # Routes back to subject
     if not sub_id:
-
         return render_template('subs/subjects.html', enrolled_subjects=user.get_subjects(), available_subjects=Subject.get_all_subjects())
 
     sub = Subject.get_subject(sub_id)
@@ -27,10 +27,12 @@ def index(sub_id=0, name='subjects_page'):
     return render_template('subs/subject_page.html', subject=sub, assignments=ass)
 
 
+# Routes to the assignment_page for an assignment using a given subject_id and assignment_id
 @subjects.route('/', defaults={'sub_id': None, 'ass_id': None})
 @subjects.route('/<sub_id>/<ass_id>', methods=["GET", "POST"])
 @login_required
 def assignment_page(sub_id=0, ass_id=0, name='assignment_page'):
+    # Routes back to subject page
     if not ass_id:
         sub = Subject.get_subject(sub_id)
         ass = sub.get_assignments()
@@ -70,7 +72,5 @@ def upload_assignment(sub_id, ass_id):
 
     is_sub = s.exists_assignment_bool(str(sub_id), str(ass_id), str(user.id))
     return render_template('subs/assignment_upload.html', form=form, ass_submitted=is_sub, errors=form_errors)
-
-
 
 

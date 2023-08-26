@@ -18,9 +18,10 @@ def dashboard(name='dashboard'):
     return render_template('dashboard.html', name=name)
 
 
+# Routes to the all_assignments page
 @common.route('/all_assignments',  methods=['GET'])
 @login_required
-def all_assignments(name='assignment upload'):
+def all_assignments(name='all_assignments'):
 
     # Get all the subjects listed for the current user
     user: User = flask_login.current_user
