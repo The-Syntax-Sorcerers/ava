@@ -17,23 +17,20 @@ def dashboard(name='dashboard'):
     print("CURR", flask_login.current_user)
     return render_template('dashboard.html', name=name)
 
-@common.route('/classpage', methods=["GET", "POST"])
-@login_required
-def classpage(name='classpage'):
-    return render_template('classpage.html', name=name)
 
-@common.route('/assignmentpage', methods=["GET", "POST"])
+@common.route('/assignment_page', methods=["GET", "POST"])
 @login_required
-def assignmentpage(name='assignmentpage'):
-    return render_template('assignmentpage.html', name=name)
+def assignment_page(name='assignment_page'):
+    return render_template('subs/assignment_page.html', name=name)
 
-@common.route('/assignments',  methods=['GET'])
+
+@common.route('/all_assignments',  methods=['GET'])
 @login_required
-def assignments(name='assignment upload'):
+def all_assignments(name='assignment upload'):
 
     # Get all the subjects listed for the current user
     user: User = flask_login.current_user
-    return render_template('assignments.html', current_assignments=user.get_assignments())
+    return render_template('subs/all_assignments.html', current_assignments=user.get_assignments())
 
 
 # upload an assignment

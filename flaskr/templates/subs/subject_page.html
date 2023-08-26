@@ -10,7 +10,7 @@
         <ul>
             <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
             <li class="active"><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
-            <li><a href="{{ url_for('common.assignments') }}">Assignments</a></li>
+            <li><a href="{{ url_for('common.all_assignments') }}">Assignments</a></li>
             <div class="dropdown" style="float:right">
             <li><a>Account</a></li>
                 <div class="dropdown-content">
@@ -47,7 +47,7 @@
     <h3 class="text-xl font-semibold mb-4">Assignments:</h3>
     <div class="card-row">
         {% for ass in assignments %}
-            <div class="card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
+            <div class="card" onclick="location.href= '{{ url_for('common.assignment_page') }}'">
                 <h4><b>{{ ass.name }}</b></h4>
                 <p>--/100</p>
                 <p>Due: 13/07/2023</p>

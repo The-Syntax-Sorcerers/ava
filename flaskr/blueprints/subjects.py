@@ -26,6 +26,7 @@ def index(sub_id=0, name='subjects_page'):
     ass = sub.get_assignments()
     return render_template('subs/subject_page.html', subject=sub, assignments=ass)
 
+
 @subjects.route('/<sub_id>/<ass_id>', methods=['GET', 'POST'])
 @login_required
 def assignment_page(sub_id, ass_id):

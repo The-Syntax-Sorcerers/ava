@@ -43,7 +43,7 @@ def login():
     return render_template('auth/login.html', loginform=form)
 
 
-@auth.route('/signup', methods=['GET', 'POST'])
+@auth.route('/sign_up', methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
 
@@ -61,7 +61,7 @@ def signup():
             else:
                 print("UNHANDLED ERROR:", e.message)
 
-    return render_template('auth/signup.html', form=form)
+    return render_template('auth/sign_up.html', form=form)
 
 
 @auth.route('/complete')
