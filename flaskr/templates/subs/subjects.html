@@ -25,7 +25,7 @@
 <body>
 <div class="selectClassMenu">
     <h2 style="margin-top: 25px;">Enrolled Subjects</h2>
-    <div class="class-card-row">
+    <div class="card-row">
         {% for sub in enrolled_subjects %}
             <div class="card" onclick="location.href= '{{ url_for('subjects.index', sub_id=sub.subject_id) }}'">
                 <h4><b>{{ sub.name }}</b></h4>
@@ -34,7 +34,7 @@
         {% endfor %}
     </div>
     <h2 style="margin-top: 25px;">Available Subjects</h2>
-    <div class="class-card-row">
+    <div class="card-row">
         {% for sub in available_subjects %}
             <div class="card" onclick="location.href= '{{ url_for('subjects.index', sub_id=sub.subject_id) }}'">
                 <h4><b>{{ sub.name }}</b></h4>

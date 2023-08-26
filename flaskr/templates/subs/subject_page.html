@@ -45,7 +45,7 @@
     <!-- Add other sections here -->
 
     <h3 class="text-xl font-semibold mb-4">Assignments:</h3>
-    <div class="class-card-row">
+    <div class="card-row">
         {% for ass in assignments %}
             <div class="card" onclick="location.href= '{{ url_for('common.assignmentpage') }}'">
                 <h4><b>{{ ass.name }}</b></h4>
