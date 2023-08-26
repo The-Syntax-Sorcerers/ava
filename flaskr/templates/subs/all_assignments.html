@@ -27,20 +27,19 @@
     <h2 style="margin-top: 25px;">Current Assignments</h2>
     <div class="card-row">
         {% for temp_assign in current_assignments %}
-        <div class="card" onclick="location.href= '{{ url_for('common.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}'">
+        <div class="card" onclick="location.href= '{{ url_for('subjects.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}'">
             <h4><b>{{ temp_assign.name }}</b></h4>
             <p>--/100</p>
             <p>Due: {{ temp_assign.due_time }} {{ temp_assign.due_date }}</p>
         </div>
         {% endfor %}
     </div>
-
+    <!-- Needs a function to grab past assignments -->
     <h2 style="margin-top: 25px;">Past Assignments</h2>
     <div class="card-row">
         {% for temp_assign in current_assignments %}
-        <div class="card" onclick="location.href= '{{ url_for('subject.assignment_page', sub_id='temp_assign.subject_id', ass_id='temp_assign.id') }}'">
+        <div class="card" onclick="location.href= '{{ url_for('subjects.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}'">
             <h4><b>{{ temp_assign.name }}</b></h4>
-            <p>{{ temp_assign.subject_id }}</p>
         </div>
         {% endfor %}
     </div>
