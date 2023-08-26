@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from supabase import Client
+import datetime
 
 from flaskr.extensions import supabase_anon, supabase_sec
 
@@ -103,28 +104,29 @@ class Subject:
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name):
+    def __init__(self, assignment_id, subject_id, assignment_name, due_date=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
+        self.due_date = due_date
 
     @staticmethod
     def get_assignment(subject_id, assignment_id):
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date'])
         return None
 
     @staticmethod
     def get_all_assignments(subject_id):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name']) for r in res]
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_date']) for r in res]
         return None
 
     def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}'
+        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_date: {self.due_date}'
 
 
 class Storage:

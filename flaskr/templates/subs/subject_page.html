@@ -50,7 +50,7 @@
             <div class="card" onclick="location.href= '{{ url_for('common.assignment_page') }}'">
                 <h4><b>{{ ass.name }}</b></h4>
                 <p>--/100</p>
-                <p>Due: 13/07/2023</p>
+                <p>Due: {{ ass.due_date }}</p>
             </div>
             <!-- <a href="{{ url_for('subjects.assignment_page', sub_id=ass.subject_id, ass_id=ass.id) }}" class="cursor-pointer"> -->
         {% endfor %}
