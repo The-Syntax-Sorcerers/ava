@@ -124,7 +124,7 @@ class Assignment:
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date_time']) # Maybe need to add these for all_assignment due_dates to work res['due_date'], res['due_time']
+            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date_time'])
         return None
 
     # Returns all assignments using a given subject_id

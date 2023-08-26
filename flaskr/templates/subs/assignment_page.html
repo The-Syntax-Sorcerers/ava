@@ -39,7 +39,7 @@
         <div class="assignment-submission-dropdown header-item centered-container">V</div>
     </div>
     <div class="assignment-score-header header-item centered-container">--%</div>
-    <button class="assignment-submit-button-header header-item centered-container" onclick="location.href= '{{ url_for('subjects.upload_assignment', sub_id=subject.subject_id, ass_id=assignment.assignment_id) }}'">New Submission</button>
+    <button class="assignment-submit-button-header header-item centered-container" onclick="location.href= '{{ url_for('subjects.assignment_submission', sub_id=subject_id, ass_id=assignment_id) }}'">New Submission</button>
 </div>
 <div class="assignment-description-block vertical-container">
     <h3>Description</h3>
@@ -49,5 +49,5 @@
         massa eget nisi dictum pulvinar. Nullam eu massa libero. Maecenas eget aliquet enim, eget vestibulum massa. Aliquam finibus sagittis finibus. Sed lectus magna, ullamcorper eu faucibus elementum, consequat ut est. Donec aliquet viverra ex et efficitur. Fusce fermentum sapien dolor, vitae eleifend elit porta non</p>
 </div>
 <div class="assignment-submission-viewer"></div>
-<button class="assignment-submit-button-page centered-container" onclick="location.href= '{{ url_for('subjects.upload_assignment', sub_id=subject.subject_id, ass_id=assignment.assignment_id) }}'">New Submission</button>
+<button class="assignment-submit-button-page centered-container" onclick="location.href= '{{ url_for('subjects.assignment_submission', sub_id=subject_id, ass_id=assignment_id) }}'">New Submission</button>
 </body>

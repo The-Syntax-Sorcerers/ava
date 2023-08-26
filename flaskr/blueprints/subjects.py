@@ -40,12 +40,12 @@ def assignment_page(sub_id=0, ass_id=0, name='assignment_page'):
 
     sub = Subject.get_subject(sub_id)
     ass = Assignment.get_assignment(sub_id, ass_id)
-    return render_template('subs/assignment_page.html', subject=sub, assignment=ass)
+    return render_template('subs/assignment_page.html', subject_id=sub.subject_id, assignment_id=ass.id)
 
 
-@subjects.route('/<sub_id>/<ass_id>', methods=['GET', 'POST'])
+@subjects.route('/<sub_id>/<ass_id>/submission', methods=['GET', 'POST'])
 @login_required
-def upload_assignment(sub_id, ass_id):
+def assignment_submission(sub_id, ass_id):
     s, user = Storage(), flask_login.current_user
     form = UploadFileForm()
     form_errors = []
