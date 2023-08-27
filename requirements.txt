@@ -11,4 +11,9 @@ email_validator
 python-dotenv
 supabase
 
+# ML Dependencies
+numpy
+nltk
+gensim
+
 # Front-End Dependencies
