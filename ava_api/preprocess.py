@@ -162,20 +162,25 @@ def analyze_words(texts):
     """
     Analyze the words used in the texts
     """
+    
     words = []
     stop_words = set(stopwords.words('english'))
     lemmatizer = WordNetLemmatizer()
+
     for text in texts:
         tokenized = word_tokenize(text.lower())
         processed = [lemmatizer.lemmatize(word) for word in tokenized if word not in stop_words]
         words += processed
+    
     word_freq = nltk.FreqDist(words)
     rare_count = np.sum([freq <= 2 for word, freq in word_freq.items()])
     long_count = np.sum([len(word) > 6 for word in words])
     word_lengths = [len(word) for word in words]
+
     average_length = np.mean(word_lengths)
     count_over_avg = np.sum([length > average_length for length in word_lengths])
     count_under_avg = np.sum([length < average_length for length in word_lengths])
+
     count_avg = len(word_lengths) - count_over_avg - count_under_avg
     ttr = len(set(words)) / len(words) if words else 0
 
