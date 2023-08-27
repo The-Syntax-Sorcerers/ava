@@ -20,9 +20,6 @@ from flaskr.extensions import supabase_sec
 nltk.download(["punkt", "stopwords", "wordnet"])
 
 sys.path.insert(0, '..')  # Point to the parent directory of both ava_api and flask
-
-
-supabase = supabase_sec
 sys.path.pop(0)
 
 
@@ -39,7 +36,7 @@ sys.path.pop(0)
 
 def extract_text_from_files(user_email, file_path):
     # Extract data from database for the given user_email
-    query_results = supabase.table('documents').select('file').eq('user_email', user_email)
+    query_results = supabase_sec.table('documents').select('file').eq('user_email', user_email)
 
     # Extracting and processing document texts from results
     known_texts = []
@@ -162,7 +159,7 @@ def analyze_words(texts):
     """
     Analyze the words used in the texts
     """
-    
+
     words = []
     stop_words = set(stopwords.words('english'))
     lemmatizer = WordNetLemmatizer()
@@ -221,13 +218,13 @@ def vectorize_text_data(data, w2v_model, vector_size, user_email):
             continue
 
         # fetch already present concatenated vec from database
-        vector_result = supabase.table('users').select('concat_vec').eq('user_email', user_email)
+        vector_result = supabase_sec.table('users').select('concat_vec').eq('user_email', user_email)
         if not vector_result.data or vector_result.data[0]['concat_vec'] is None:
 
             concat_vec = get_vectors(val['known'], w2v_model, vector_size)
             # Store the computed concat_vec into the database for the user
             json_string = json.dumps(concat_vec)
-            update_response = supabase.table('users').update({
+            update_response = supabase_sec.table('users').update({
                 'concat_vec': json_string
             }).eq('user_email', user_email)
             # error handling
