@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Dashboard</title>
+    <title>ToDo App</title>
     <div class="navbar">
         <ul>
-            <li class="active"><a href="{{ url_for('common.dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
             <li><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
-            <li><a href="{{ url_for('common.assignments') }}">Assignments</a></li>
+            <li class="active"><a href="{{ url_for('common.assignments') }}">Assignments</a></li>
             <div class="dropdown" style="float:right">
             <li><a>Account</a></li>
                 <div class="dropdown-content">
@@ -23,6 +23,20 @@
     </div>
 </head>
 <body>
-    <h2>Wow, such empty :( </h2>
+    <div class="selectClassMenu">
+        <h2 style="margin-top: 25px;">Assignments</h2>
+
+        {% for temp_assign in current_assignments %}
+            <a href="{{ url_for('subjects.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}">
+            <div class="column">
+                <div class="card">
+                    <h4><b>{{ temp_assign.name }}</b></h4>
+                    <p>{{ temp_assign.subject_id }}</p>
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+
+    </div>
 </body>
 </html>
