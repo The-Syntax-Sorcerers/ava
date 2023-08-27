@@ -12,8 +12,8 @@ python-dotenv
 supabase
 
 # ML Dependencies
-numpy
-nltk
-gensim
+# numpy
+# nltk
+# gensim
 
 # Front-End Dependencies
