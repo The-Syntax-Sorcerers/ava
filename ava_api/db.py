@@ -1,6 +1,8 @@
 import os
 from supabase import create_client, Client
 
+PAST_ASSIGNMENTS_BUCKET = 'past-assignments'
+
 
 def load_from_env(variable_names: list):
     for v in variable_names:
@@ -58,3 +60,4 @@ class DB:
             if obj['name'] == user_id:
                 return True
         return False
+

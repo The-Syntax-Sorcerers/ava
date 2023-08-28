@@ -218,7 +218,7 @@ def vectorize_text_data(data, w2v_model, vector_size, user_email):
             continue
 
         # fetch already present concatenated vec from database
-        vector_result = supabase_sec.table('users').select('concat_vec').eq('user_email', user_email)
+        vector_result = supabase_sec.table('User').select('concat_vec').eq('user_email', user_email)
         if not vector_result.data or vector_result.data[0]['concat_vec'] is None:
 
             concat_vec = get_vectors(val['known'], w2v_model, vector_size)
