@@ -26,3 +26,12 @@ def all_assignments(name='all_assignments'):
     # Get all the subjects listed for the current user
     user: User = flask_login.current_user
     return render_template('subs/all_assignments.html', current_assignments=user.get_assignments())
+
+@common.route('/profile', methods=['GET', 'POST'])
+def profile(name='profile'):
+    return render_template('profile.html', name=name)
+
+
+@common.route('/privacy_policy', methods=['GET', 'POST'])
+def privacy_policy(name='privacy_policy'):
+    return render_template('privacy_policy.html', name=name)
