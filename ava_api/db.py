@@ -22,12 +22,12 @@ assert supabase_sec is not None
 class DB:
 
     @staticmethod
-    def construct_path(subject_id, assignment_id, user_id):
+    def __construct_path(subject_id, assignment_id, user_id):
         return f'{subject_id}/{assignment_id}/{user_id}'
 
     @staticmethod
     def upload_past_assignment(file, subject_id, assignment_id, user_id):
-        path = DB.construct_path(subject_id, assignment_id, user_id)
+        path = DB.__construct_path(subject_id, assignment_id, user_id)
         if not DB.exists_past_assignment(subject_id, assignment_id, user_id):
             return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).upload(path, file)
         return None
@@ -36,12 +36,12 @@ class DB:
     def download_past_assignment(subject_id, assignment_id, user_id):
         # Will return a byte stream.
         # Essentailly, it returns file.read(): byteStream in python.
-        path = DB.construct_path(subject_id, assignment_id, user_id)
+        path = DB.__construct_path(subject_id, assignment_id, user_id)
         return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
 
     @staticmethod
     def delete_past_assignment(subject_id, assignment_id, user_id):
-        path = DB.construct_path(subject_id, assignment_id, user_id)
+        path = DB.__construct_path(subject_id, assignment_id, user_id)
         return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).remove(path)
 
     @staticmethod
