@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Profile Page</title>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
+            <li class="active"><a href="#profile">Profile</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="{{ url_for('common.upload') }}">Assignments</a></li>
+            <li style="float:right"><a href="#about">Manage Account</a></li>
+        </ul>
+    </div>
+
+    <div class="profile-container">
+{#        <img class="profile-picture" src="profile-image.jpg" alt="Profile Picture">#}
+        <div class="profile-info">
+            <h1>John Doe</h1>
+            <p>Email: johndoe@example.com</p>
+            <p>Location: New York, USA</p>
+            <p>Joined: August 15, 2023</p>
+        </div>
+    </div>
+</body>
+</html>
