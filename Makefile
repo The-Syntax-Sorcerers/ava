@@ -3,11 +3,11 @@ FLASK_APP = flaskr
 
 .PHONY: run
 build:
-	flask --app $(FLASK_APP) run
+	flask --app $(FLASK_APP) run --port 8000
 
 debug:
-	flask --app $(FLASK_APP) run --debug
+	flask --app $(FLASK_APP) run --port 8000 --debug
 
 .PHONY: run-production
 run-production:
-	flask --app $(FLASK_APP) run --debug
+	flask --app $(FLASK_APP) run --port 8000 --debug

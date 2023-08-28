@@ -2,6 +2,7 @@ import flask_login
 from werkzeug.datastructures.file_storage import FileStorage
 from flask import request, render_template, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, fresh_login_required
+import json
 
 
 from flaskr.models.flaskforms import UploadFileForm
@@ -37,3 +38,7 @@ def profile(name='profile'):
 @common.route('/privacy_policy', methods=['GET', 'POST'])
 def privacy_policy(name='privacy_policy'):
     return render_template('privacy_policy.html', name=name)
+
+@common.route('/ass', methods=['GET'])
+def assignments():
+    return {"assignment": ["Assignment 1", "Assignment 2", "Project 1", "Project 2"]}
