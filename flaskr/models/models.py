@@ -4,6 +4,9 @@ import datetime
 
 from flaskr.extensions import supabase_anon, supabase_sec
 
+DATE_LENGTH = 10
+DATETIME_GAP = 1
+TIME_LENGTH = 19
 
 class User(UserMixin):
 
@@ -78,7 +81,7 @@ class Subject:
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
-            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_date_time']))
+            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']))
         return assigns 
 
     # Returns a specific subject using a given subject_id
@@ -106,15 +109,15 @@ class Subject:
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name, due_date_time=None):
+    def __init__(self, assignment_id, subject_id, assignment_name, due_datetime=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
-        self.due_date_time = due_date_time
-        if due_date_time:
-            # Seperates date_time into just date and time
-            self.due_date = due_date_time[:10]
-            self.due_time = due_date_time[11:19]
+        self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
+        if due_datetime:
+            # Seperates datetime into date and time
+            self.due_date = self.due_datetime.date()
+            self.due_time = self.due_datetime.time()
         else :
             self.due_date = self.due_time = None
 
@@ -124,7 +127,7 @@ class Assignment:
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['due_date_time'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['due_datetime'])
         return None
 
     # Returns all assignments using a given subject_id
@@ -132,11 +135,11 @@ class Assignment:
     def get_all_assignments(subject_id):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_date_time']) for r in res]
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']) for r in res]
         return None
 
     def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_date_time: {self.due_date_time}, due_date: {self.due_date}, due_time: {self.due_time}'
+        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_datetime: {self.due_datetime}, due_date: {self.due_date}, due_time: {self.due_time}'
 
 
 class Storage:

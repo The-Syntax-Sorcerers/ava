@@ -43,7 +43,7 @@ def login():
     return render_template('auth/login.html', loginform=form)
 
 
-@auth.route('/sign_up', methods=['GET', 'POST'])
+@auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
 

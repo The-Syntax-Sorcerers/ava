@@ -19,7 +19,7 @@ def dashboard(name='dashboard'):
 
 
 # Routes to the all_assignments page
-@common.route('/all_assignments',  methods=['GET'])
+@common.route('/assignments',  methods=['GET'])
 @login_required
 def all_assignments(name='all_assignments'):
 
