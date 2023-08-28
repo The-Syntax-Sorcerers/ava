@@ -4,10 +4,6 @@ import datetime
 
 from flaskr.extensions import supabase_anon, supabase_sec
 
-DATE_LENGTH = 10
-DATETIME_GAP = 1
-TIME_LENGTH = 19
-
 class User(UserMixin):
 
     def __init__(self, tid, email, name):
