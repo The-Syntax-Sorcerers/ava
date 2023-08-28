@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <div class="navbar">
         <ul>
-            <li class="active"><a href="#home">Home</a></li>
-            <li><a href="#classes">Classes</a></li>
-            <li><a href="{{ url_for('common.upload') }}">Assignments</a></li>
+            <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
+            <li class="active"><a href="{{ url_for('common.all_assignments') }}">Assignments</a></li>
             <div class="dropdown" style="float:right">
             <li><a>Account</a></li>
                 <div class="dropdown-content">
@@ -39,7 +39,7 @@
         <div class="assignment-submission-dropdown header-item centered-container">V</div>
     </div>
     <div class="assignment-score-header header-item centered-container">--%</div>
-    <button class="assignment-submit-button-header header-item centered-container" onclick="location.href= '{{ url_for('common.upload') }}'">New Submission</button>
+    <button class="assignment-submit-button-header header-item centered-container" onclick="location.href= '{{ url_for('subjects.assignment_submission', sub_id=subject_id, ass_id=assignment_id) }}'">New Submission</button>
 </div>
 <div class="assignment-description-block vertical-container">
     <h3>Description</h3>
@@ -49,5 +49,5 @@
         massa eget nisi dictum pulvinar. Nullam eu massa libero. Maecenas eget aliquet enim, eget vestibulum massa. Aliquam finibus sagittis finibus. Sed lectus magna, ullamcorper eu faucibus elementum, consequat ut est. Donec aliquet viverra ex et efficitur. Fusce fermentum sapien dolor, vitae eleifend elit porta non</p>
 </div>
 <div class="assignment-submission-viewer"></div>
-<button class="assignment-submit-button-page centered-container" onclick="location.href= '{{ url_for('common.upload') }}'">New Submission</button>
+<button class="assignment-submit-button-page centered-container" onclick="location.href= '{{ url_for('subjects.assignment_submission', sub_id=subject_id, ass_id=assignment_id) }}'">New Submission</button>
 </body>
