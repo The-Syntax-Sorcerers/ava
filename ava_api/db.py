@@ -1,7 +1,7 @@
 import os
 from supabase import create_client, Client
 
-PAST_ASSIGNMENTS_BUCKET = 'past-assignments'
+PAST_ASSIGNMENTS_BUCKET = 'ava-prod-past-assignments'
 
 
 def load_from_env(variable_names: list):
