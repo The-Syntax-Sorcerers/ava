@@ -27,26 +27,26 @@ class DB:
 
     @staticmethod
     def upload_assignment(file, subject_id, assignment_id, user_id):
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        if not self.exists_assignment_bool(subject_id, assignment_id, user_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
+        path = DB.construct_path(subject_id, assignment_id, user_id)
+        if not DB.exists_assignment_bool(subject_id, assignment_id, user_id):
+            return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).upload(path, file)
         return None
 
     @staticmethod
     def download_assignment(subject_id, assignment_id, user_id):
         # Will return a byte stream.
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
+        path = DB.construct_path(subject_id, assignment_id, user_id)
+        return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
 
     @staticmethod
     def delete_assignment(subject_id, assignment_id, user_id):
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
+        path = DB.construct_path(subject_id, assignment_id, user_id)
+        return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).remove(path)
 
     @staticmethod
     def exists_assignment(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return [obj]
@@ -55,7 +55,7 @@ class DB:
     @staticmethod
     def exists_assignment_bool(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
