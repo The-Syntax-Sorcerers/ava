@@ -26,25 +26,26 @@ class DB:
         return f'{subject_id}/{assignment_id}/{user_id}'
 
     @staticmethod
-    def upload_assignment(file, subject_id, assignment_id, user_id):
+    def upload_past_assignment(file, subject_id, assignment_id, user_id):
         path = DB.construct_path(subject_id, assignment_id, user_id)
-        if not DB.exists_assignment_bool(subject_id, assignment_id, user_id):
+        if not DB.exists_past_assignment(subject_id, assignment_id, user_id):
             return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).upload(path, file)
         return None
 
     @staticmethod
-    def download_assignment(subject_id, assignment_id, user_id):
+    def download_past_assignment(subject_id, assignment_id, user_id):
         # Will return a byte stream.
+        # Essentailly, it returns file.read(): byteStream in python.
         path = DB.construct_path(subject_id, assignment_id, user_id)
         return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
 
     @staticmethod
-    def delete_assignment(subject_id, assignment_id, user_id):
+    def delete_past_assignment(subject_id, assignment_id, user_id):
         path = DB.construct_path(subject_id, assignment_id, user_id)
         return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).remove(path)
 
     @staticmethod
-    def exists_assignment(subject_id, assignment_id, user_id):
+    def exists_past_assignment(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0] as a placeholder
         res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
         for obj in res:
@@ -52,12 +53,4 @@ class DB:
                 return [obj]
         return []
 
-    @staticmethod
-    def exists_assignment_bool(subject_id, assignment_id, user_id):
-        # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
-        for obj in res:
-            if obj['name'] == user_id:
-                return True
-        return False
 
