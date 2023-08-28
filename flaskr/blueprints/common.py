@@ -3,6 +3,7 @@ from werkzeug.datastructures.file_storage import FileStorage
 from flask import request, render_template, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, fresh_login_required
 
+
 from flaskr.models.flaskforms import UploadFileForm
 from flaskr.models.models import Assignment, User
 
@@ -22,10 +23,12 @@ def dashboard(name='dashboard'):
 def classpage(name='classpage'):
     return render_template('classpage.html', name=name)
 
+
 @common.route('/assignmentpage', methods=["GET", "POST"])
 @login_required
 def assignmentpage(name='assignmentpage'):
     return render_template('assignmentpage.html', name=name)
+
 
 @common.route('/assignments',  methods=['GET'])
 @login_required
@@ -57,4 +60,12 @@ def upload(name='assignment upload'):
 
     return render_template('subs/assignment_upload.html', form=form, submitted=False, errors=form_errors, subjects=["HAHABS"])
 
+@common.route('/profile', methods=['GET', 'POST'])
+def profile(name='profile'):
+    return render_template('profile.html', name=name)
 
+
+@common.route('/privacy_policy', methods=['GET', 'POST'])
+def privacy_policy(name='privacy_policy'):
+    return render_template('privacy_policy.html', name=name)
+  
