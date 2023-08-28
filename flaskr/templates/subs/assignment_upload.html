@@ -8,8 +8,8 @@
     <div class="navbar">
         <ul>
             <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
-            <li><a href="#classes">Classes</a></li>
-            <li class="active"><a href="{{ url_for('common.upload') }}">Assignments</a></li>
+            <li><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
+            <li class="active"><a href="{{ url_for('common.all_assignments') }}">Assignments</a></li>
             <div class="dropdown" style="float:right">
             <li><a>Account</a></li>
                 <div class="dropdown-content">
