@@ -61,7 +61,7 @@ def signup():
             else:
                 print("UNHANDLED ERROR:", e.message)
 
-    return render_template('auth/signup.html', form=form)
+    return render_template('auth/sign_up.html', form=form)
 
 
 @auth.route('/complete')
