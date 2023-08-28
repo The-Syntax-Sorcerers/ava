@@ -13,9 +13,9 @@
                 <div class="dropdown" style="float:right">
                 <li><a>Account</a></li>
                     <div class="dropdown-content">
-                        <a href="#profile">Profile</a>
+                        <a href="{{ url_for('common.profile') }}">Profile</a>
                         <a href="#Settings">Settings</a>
-                        <a href="#Privacy Policy">Privacy Policy</a>
+                        <a href="{{ url_for('common.privacy_policy') }}">Privacy Policy</a>
                         <a href="{{ url_for('auth.logout') }}">Log Out</a>
                     </div>
                 </div>
