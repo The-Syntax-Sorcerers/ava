@@ -224,9 +224,10 @@ def vectorize_text_data(data, w2v_model, vector_size, user_email):
             concat_vec = get_vectors(val['known'], w2v_model, vector_size)
             # Store the computed concat_vec into the database for the user
             json_string = json.dumps(concat_vec)
-            update_response = supabase_sec.table('users').update({
+            update_response = supabase_sec.table('User').update({
                 'concat_vec': json_string
-            }).eq('user_email', user_email)
+            }).eq('user_email', user_email).execute()
+
             # error handling
             if update_response.error:
                 print("Error updating concat_vec for user:", update_response.error)
