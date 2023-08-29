@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>ToDo App</title>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('common.homepage') }}">Home</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li class="active"><a href="#assignments">Assignments</a></li>
+            <li style="float:right"><a href="#about">Manage Account</a></li>
+        </ul>
+    </div>
+</head>
+<body>
+    <div class="container" id="stylized">
+        <h2>Assignment Upload</h2>
+        <form>
+            <label for="fname">Enter Assignment Name: </label>
+            <input type="text" id="assname" name="assname"><br>
+            <label for="fname">Enter Due Date: </label>
+            <input type="text" id="duedate" name="duedate"><br>
+            <input type="submit" value="Save">
+            <input type="submit" value="Publish">
+        </form>
+    </div>
+</body>
+</html>

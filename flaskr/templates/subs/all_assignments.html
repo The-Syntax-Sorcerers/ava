@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>Assignments Page</title>
+        <div class="navbar">
+            <ul>
+                <li><a href="{{ url_for('common.dashboard') }}">Home</a></li>
+                <li><a href="{{ url_for('subjects.index') }}">Subjects</a></li>
+                <li class="active"><a href="{{ url_for('common.all_assignments') }}">Assignments</a></li>
+                <div class="dropdown" style="float:right">
+                <li><a>Account</a></li>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('common.profile') }}">Profile</a>
+                        <a href="#Settings">Settings</a>
+                        <a href="{{ url_for('common.privacy_policy') }}">Privacy Policy</a>
+                        <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </head>
+<body>
+<div class="selectClassMenu">
+    <h2 style="margin-top: 25px;">Current Assignments</h2>
+    <div class="card-row">
+        {% for temp_assign in current_assignments %}
+        <div class="card" onclick="location.href= '{{ url_for('subjects.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}'">
+            <h4><b>{{ temp_assign.name }}</b></h4>
+            <p>--/100</p>
+            <p>Due: {{ temp_assign.due_time }} {{ temp_assign.due_date }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Needs a function to grab past assignments -->
+    <h2 style="margin-top: 25px;">Past Assignments</h2>
+    <div class="card-row">
+        {% for temp_assign in current_assignments %}
+        <div class="card" onclick="location.href= '{{ url_for('subjects.assignment_page', sub_id=temp_assign.subject_id, ass_id=temp_assign.id) }}'">
+            <h4><b>{{ temp_assign.name }}</b></h4>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

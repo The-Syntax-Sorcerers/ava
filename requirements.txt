@@ -8,7 +8,14 @@ flask_login
 flask-wtf
 email_validator
 
+datetime
 python-dotenv
 supabase
+
+
+# ML Dependencies
+# numpy
+# nltk
+# gensim
 
 # Front-End Dependencies

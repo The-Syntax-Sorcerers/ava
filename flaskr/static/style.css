@@ -6,7 +6,7 @@ header{
     overflow: visible;
 }
 
-body, #login-body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
@@ -16,26 +16,15 @@ body, #login-body {
     min-height: 100vh;
 }
 
-#login-body {
-    padding: 0;
+#authentication-body, #classpage-body, #assignmentpage-body {
     align-items: center;
 }
 
-.container, .centered-container, .login-background-container {
+.centered-container {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.centered-container, .login-background-container {
-    height: 80%;
-}
-
-.container {
-    width: 80%;
-    height: 80%;
-    margin-top: 20px;
 }
 
 .centered-container {
@@ -50,6 +39,12 @@ body, #login-body {
     justify-content: space-between;
 }
 
+.sticky-header {
+    position: sticky;
+    z-index: 0;
+    top: 52px;
+}
+
 h1 {
     text-align: center;
 }
@@ -60,7 +55,7 @@ form {
     margin-top: 10px;
 }
 
-input[type="text"] {
+[type="text"] {
     /* flex-grow: 1; */
     padding: 5px;
     border: 1px solid #ccc;
@@ -81,7 +76,6 @@ button {
     border-radius: 3px;
     cursor: pointer;
 }
-
 
 ul {
     position: fixed;
@@ -109,12 +103,14 @@ li a {
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-    background-color: #a3b3b8;
+    background-color: #a5b5b8;
 }
 
 .active {
     background-color: #658495;
 }
+
+/* Dashboard classes */
 
 /* Card container classes */
 
@@ -133,6 +129,21 @@ li a:hover {
     padding: 0 10px;
 }
 
+.card-row, .card {
+    --card-marg-vert: 4vh;
+    /* negative value of vertical-card-space */
+    --neg-card-marg-vert: calc(0px - var(--card-marg-vert));
+}
+
+.card-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    width: 80vw;
+    gap: 4%;
+    margin: var(--neg-card-marg-vert) 0 10vh 0;
+}
+
 /* Remove extra left and right margins, due to padding in columns */
 .row {margin: 0 -5px;}
 
@@ -145,12 +156,15 @@ li a:hover {
 
 /* Style the counter cards */
 .card {
+    width: 22%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
     padding: 16px;
     text-align: left;
     background-color: white;
     border-radius: 5px;
     transition: 0.3s;
+    color: black;
+    margin: var(--card-marg-vert) 0 0 0;
 }
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -159,16 +173,20 @@ li a:hover {
 
 /* Login page classes */
 
-.authentication-header, .authentication-form, .sign-in-button, .create-account-button, .divider, .sign-up-button {
+.authentication-header, .login-form, .sign-up-form, .create-account-button, .divider, .sign-up-button {
     width: 95%;
 }
 
-.authentication-description, .authentication-form > input {
+.authentication-description, .authentication-form-input {
     font-size: 3vh;
 }
 
-.divider, .forgot-password-link {
+.divider, .forgot-password-link, .login-link {
     font-size: 2vh;
+}
+
+#authentication-body {
+    padding: 0;
 }
 
 .authentication-background-container {
@@ -187,13 +205,13 @@ li a:hover {
     padding: 5px;
     height: 20%;
     box-shadow: none;
-    flex: 2;
+    flex: 2 1000;
 }
 
 .authentication-logo {
     width: auto;
     height: 10vh;
-    flex: 2;
+    flex: 2 100;
 }
 
 .authentication-description {
@@ -205,37 +223,37 @@ li a:hover {
 .authentication-form-container {
     justify-content: space-evenly;
     width: 100%;
-    height: 50%;
-    margin: 0 0 0 0;
+    height: 40%;
+    margin: 0.5vh 0 0.5vh 0;
     padding: 0;
     box-shadow: none;
-    flex: 9;
+    flex: 8;
 }
 
-.sign-up-form-container {
-    height: 60%;
-}
-
-.authentication-form-container, .authentication-form-container > * {
-    gap: 0.5vh;
-}
-
-.authentication-form {
+.login-form, .sign-up-form {
     display: flex;
-    height: 25%;
+    justify-content: space-between;
+}
+
+.login-form {
     flex: 3;
+    gap: 2vh;
 }
 
 .sign-up-form {
     flex: 6;
+    gap: 1vh;
 }
 
-.authentication-form > input {
+.authentication-form-group {
+    flex: 10;
+}
+
+.authentication-form-input {
     padding: 10px 20px;
     width: 100%;
     height: 100%;
     border: 1px solid #ccc;
-    border-radius: 3px;
     margin-bottom: 5px;
     border-radius: 10px;
 }
@@ -255,21 +273,26 @@ li a:hover {
     height: 100%;
 }
 
-.sign-in-button, .create-account-button, .sign-up-button {
-    height: 10%;
-    flex: 1;
+.sign-in-button, .sign-up-button {
+    width: 100%;
+    height: 15%;
 }
 
-.forgot-password-link {
-    margin: 20px 0;
-    font-size: 2vh;
+.sign-in-button {
+    flex: 8;
+}
+
+.forgot-password-link, .login-link {
+    margin: 2vh;
+    flex: 0 1000 0;
 }
 
 .divider {
     display: flex;
     align-items: center;
-    --inner-divider-gap: 5vw;
-    margin: 5px 0 5px 0;
+    --inner-divider-gap: 4vw;
+    margin: 0.5vh 0 0.5vh 0;
+    flex-shrink: 100;
 }
 
 /* Creates horizontal page divider lines around an element*/
@@ -289,22 +312,115 @@ li a:hover {
 }
 
 .create-account-button {
-    height: 20%;
-    flex: 2;
-}
-
-.sign-up-button {
-    height: 24%;
+    height: 13.5%;
+    flex: 2 1000;
 }
 
 /* Sign up page classes */
 
+.sign-up-button {
+    height: 24%;
+    flex: 1;
+}
+
 .login-link-container {
     height: 5%;
     margin: 2vh;
-    padding: 0;
-    font-size: 2vh;
     box-shadow: none;
+}
+
+/* Subjectpage classes */
+
+#subjectpage-body {
+    padding-left: 8vw;
+}
+
+/* Assignmentpage classes */
+
+#assignmentpage-body {
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.assignment-header, .assignment-description-block {
+    width: 90vw;
+}
+
+.assignment-header, .assignment-description-block, .assignment-submission-viewer, .assignment-submit-button-page {
+    margin-bottom: 4vh;
+}
+
+.assignment-header {
+    height: 15vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.header-item {
+    height: 100%;
+    margin: 0;
+    box-shadow: none;
+}
+
+.assignment-info, .assignment-submission-box {
+    margin: 0;
+    font-size: 3vh;
+    display: flex;
+    border: 1px solid #ccc;
+}
+
+.assignment-info, .assignment-submission-box {
+    width: 35%;
+    padding:  2vh 1vh 2vh 5vw;
+}
+
+.assignment-due-date, .assignment-submission-date {
+    font-size: 2vh;
+    color: #a3b3b8;
+}
+
+.assignment-submission-box {
+        border-radius: 0;
+}
+
+.assignment-submission-info {
+    width: 70%;
+}
+
+.assignment-submission-number, .assignment-submission-title, .assignment-submission-date {
+    margin: 0;
+}
+
+.assignment-submission-dropdown {
+    width: 30%;
+    margin-right: 1vw;
+    font-size: 4vh;
+    border: 1px solid black;
+}
+
+.assignment-score-header {
+    width: 10%;
+    font-size: 4vh;
+    border: 1px solid #ccc;
+    border-radius: 0;
+}
+
+.assignment-submit-button-header, .assignment-submit-button-page {
+    width: 20%;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 3vh;
+}
+
+.assignment-submission-viewer {
+    height: 100vh;
+    width: 60%;
+    background-color: grey;
 }
 
 /* Responsivrgb(255, 1, 1)lumns - one column layout (vertical) on small screens */
@@ -321,6 +437,17 @@ li a:hover {
         width: 100%;
         height: 90vh;
         min-width: 0px;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .authentication-background-container {
+        /* width: 50vw; */
+        height: 100vh;
+    }
+
+    .forgot-password-link {
+        margin: 1px 0 1px 0;
     }
 }
 
@@ -343,10 +470,11 @@ li a:hover {
   
 /* Links inside the dropdown */
 .dropdown-content a {
-color: black;
-padding: 12px 16px;
-text-decoration: none;
-display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    z-index: 1;
 }
   
 /* Change color of dropdown links on hover */
