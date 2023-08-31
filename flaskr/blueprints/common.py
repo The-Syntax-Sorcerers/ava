@@ -39,6 +39,7 @@ def profile(name='profile'):
 def privacy_policy(name='privacy_policy'):
     return render_template('privacy_policy.html', name=name)
 
+# this is here to test the react app
 @common.route('/ass', methods=['GET'])
 def assignments():
     return {"assignment": ["Assignment 1", "Assignment 2", "Project 1", "Project 2"]}

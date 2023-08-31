@@ -1,4 +1,10 @@
 import React, {useState, useEffect} from 'react'
+import styles from "./index.css"
+import Dashboard from './dashboard'
+import NavBar from './navbar'
+
+
+
 
 function App() {
     const [data, setData] = useState([{}])
@@ -22,16 +28,19 @@ function App() {
     }, []);
 
     return (
-        <div>
-            {(typeof data.assignment === 'undefined')? (
-                <p>Loading....</p>
-            ) : (
-                data.assignment.map((assignment, i) => (
-                    <p key={i}> {assignment}</p>
-                ))
-            )}
-
+        <div className="bg-main bg-cover">
+            <NavBar />
+            <main className="container mx-auto p-8">
+                <div>
+                {(typeof data.assignment === 'undefined')? (
+                    <p>Loading....</p>
+                ) : (
+                    <Dashboard assignments={data.assignment} />
+                )}
+                </div>
+            </main>
         </div>
+        
     )
 }
 
