@@ -1,8 +1,7 @@
 import flask_login
 from werkzeug.datastructures.file_storage import FileStorage
-from flask import request, render_template, redirect, url_for, Blueprint
+from flask import request, render_template, redirect, url_for, Blueprint, jsonify
 from flask_login import login_user, login_required, logout_user, fresh_login_required
-import json
 
 
 from flaskr.models.flaskforms import UploadFileForm
@@ -40,6 +39,22 @@ def privacy_policy(name='privacy_policy'):
     return render_template('privacy_policy.html', name=name)
 
 # this is here to test the react app
+
+
 @common.route('/ass', methods=['GET'])
+# @login_required
 def assignments():
-    return {"assignment": ["Assignment 1", "Assignment 2", "Project 1", "Project 2"]}
+    # user: User = flask_login.current_user
+    # current_assignments = user.get_assignments()
+    # response_data = {"all_assignments": []}
+    # for ass in current_assignments:
+    #     response_data['all_assignments'].append(
+    #         {'id': ass.subject_id, 'name': ass.name, 'due_date': ass.due_datetime.strftime('%m/%d/%Y')})
+    return {"all_assignments": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Some BS Assignment"},
+                                {"due_date": "10/17/2023", "id": "COMP123456",
+                                    "name": "Another BS assignment"},
+                                {"due_date": "10/01/2023", "id": "COMP123456",
+                                    "name": "What is this Assignment?!?!?!?"},
+                                {"due_date": "08/30/2023", "id": "COMP123456",
+                                    "name": "Grok Worksheet 1"},
+                                {"due_date": "02/26/2023", "id": "COMP123456", "name": "Grok Worksheet 2"}]}

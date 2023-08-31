@@ -3,15 +3,15 @@ import styles from "./index.css"
 import Dashboard from './dashboard'
 import NavBar from './navbar'
 
-
-
-
 function App() {
-    const [data, setData] = useState([{}])
+    const [data, setData] = useState({ all_assignments: [] })
 
     // fetch variables from backend
     useEffect(() => {
-        fetch("/ass")
+        fetch("/ass", {
+            method: "GET",
+            credentials: "include", // Include cookies in the request
+        })
         .then(res => {
             if (!res.ok) {
                 throw new Error("Network response was not ok");
@@ -28,14 +28,14 @@ function App() {
     }, []);
 
     return (
-        <div className="bg-main bg-cover">
+        <div className="bg-main bg-cover min-h-screen">
             <NavBar />
             <main className="container mx-auto p-8">
                 <div>
-                {(typeof data.assignment === 'undefined')? (
+                {(data.all_assignments.length === 0)? (
                     <p>Loading....</p>
                 ) : (
-                    <Dashboard assignments={data.assignment} />
+                    <Dashboard assignments={data.all_assignments} />
                 )}
                 </div>
             </main>

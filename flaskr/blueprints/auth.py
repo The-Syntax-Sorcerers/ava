@@ -24,8 +24,10 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = supabase_anon.auth.sign_in_with_password({"email": form.email.data, "password": form.password.data})
-            supabase_anon.postgrest.auth(user.session.access_token)  # Updates session for the anon client
+            user = supabase_anon.auth.sign_in_with_password(
+                {"email": form.email.data, "password": form.password.data})
+            # Updates session for the anon client
+            supabase_anon.postgrest.auth(user.session.access_token)
             flask_login.login_user(User.get_user_with_email(form.email.data))
 
             flash('Logged in successfully!', 'success')
@@ -49,7 +51,8 @@ def signup():
 
     if form.validate_on_submit():
         try:
-            User.wrapper_signup(form.email.data, form.password.data, form.name.data)
+            User.wrapper_signup(
+                form.email.data, form.password.data, form.name.data)
 
             flash('Account created successfully!', 'success')
             return redirect(url_for('auth.login'))
