@@ -19,3 +19,7 @@ supabase
 # gensim
 
 # Front-End Dependencies
+
+# Testing dependencies
+pytest
+pytest-flask
