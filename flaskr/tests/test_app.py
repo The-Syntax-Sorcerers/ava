@@ -1,7 +1,31 @@
-# flaskr/tests/test.py
+# flaskr/__init__.py
 
+import pytest
 from flaskr import app
 
-def test_home_page():
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
+
+# Test cases
+def test_home_page(client):
     """Test the home page."""
-    assert True
+    response = client.get('/')
+    assert response.status_code == 200
+
+def test_invalid_route(client):
+    """Test an invalid route."""
+    response = client.get('/invalid_route')
+    assert response.status_code == 404
+
+# Additional test cases can be added here for other routes and functionality
+
+# # Example for testing a POST request
+# def test_post_data(client):
+#     """Test a POST request."""
+#     data = {'name': 'John'}
+#     response = client.post('/process_data', data=data, follow_redirects=True)
+#     assert response.status_code ==
+
+# You can also write tests for handling form submissions, database interactions, and more
