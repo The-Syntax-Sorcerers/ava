@@ -1,6 +1,6 @@
 import flask_login
 from werkzeug.datastructures.file_storage import FileStorage
-from flask import request, render_template, redirect, url_for, Blueprint, jsonify
+from flask import request, render_template, redirect, url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, fresh_login_required
 
 
