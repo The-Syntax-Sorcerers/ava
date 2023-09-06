@@ -25,4 +25,4 @@ jobs:
     - name: Compile Test
       run: |
         export PYTHONPATH=$GITHUB_WORKSPACE
-        python flaskr/__init__.py test
+        python server/__init__.py test
