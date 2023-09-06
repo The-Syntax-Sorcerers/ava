@@ -1,17 +1,4 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "flaskr/__init__.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "flaskr/__init__.py"
-    }
-  ],
   "buildCommand": "npm run build",
   "outputDirectory": "client/dist",
   "devCommand": "npm run dev",
