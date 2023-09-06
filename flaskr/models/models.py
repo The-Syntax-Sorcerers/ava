@@ -109,13 +109,13 @@ class Assignment:
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
-        self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
         if due_datetime:
+            self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
             # Seperates datetime into date and time
             self.due_date = self.due_datetime.date()
             self.due_time = self.due_datetime.time()
         else :
-            self.due_date = self.due_time = None
+            self.due_datetime = self.due_date = self.due_time = None
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
