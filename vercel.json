@@ -5,14 +5,14 @@
   "installCommand": "npm install --prefix client",
   "builds": [
     {
-      "src": "flaskr/__init__.py",
+      "src": "server/__init__.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "flaskr/__init__.py"
+      "dest": "server/__init__.py"
     }
   ]
 }
