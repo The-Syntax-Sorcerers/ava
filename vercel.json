@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
   "builds": [
     {
       "src": "flaskr/__init__.py",
@@ -13,5 +11,9 @@
       "src": "/(.*)",
       "dest": "flaskr/__init__.py"
     }
-  ]
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "client/dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install"
 }
