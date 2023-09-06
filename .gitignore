@@ -59,7 +59,7 @@ build/
 # New Added
 .idea/
 venv
-flaskr/__pycache__
+server/__pycache__
 
 # Secrets
 *.env

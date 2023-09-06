@@ -2,7 +2,7 @@ from flask_login import UserMixin
 from supabase import Client
 import datetime
 
-from flaskr.extensions import supabase_anon, supabase_sec
+from server.extensions import supabase_anon, supabase_sec
 
 class User(UserMixin):
 

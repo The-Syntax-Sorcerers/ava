@@ -1,36 +1,33 @@
+import os
 import socket
 
 import flask_login
-from flask import Flask
+from flask import Flask, send_from_directory
 
-
-from flaskr.extensions import login_manager, supabase_sec
-from flaskr.models.models import User, Subject, Assignment, Storage
-from flaskr.blueprints.common import common
-from flaskr.blueprints.auth import auth
-from flaskr.blueprints.subjects import subjects
+from server.extensions import login_manager, supabase_sec
+from server.models.models import User, Subject, Assignment, Storage
+from server.blueprints.common import common
 
 socket.setdefaulttimeout(15)
 test_config = None
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder=os.getcwd()+"/client/dist")
 app.config.from_mapping(
     SECRET_KEY='chutiya',
 )
 
+# @login_manager.user_loader
+# def load_user(user_id):
+#     print("Browser loading id:", user_id)
+#     return User.get_user(user_id)  # Static method call to our User model
 
-@login_manager.user_loader
-def load_user(user_id):
-    print("Browser loading id:", user_id)
-    return User.get_user(user_id)  # Static method call to our User model
 
+# login_manager.init_app(app)
+# login_manager.login_view = "auth.login"
 
-login_manager.init_app(app)
-login_manager.login_view = "auth.login"
 
 app.register_blueprint(common)
-app.register_blueprint(auth)
-app.register_blueprint(subjects)
+
 
 ######################## Test Config ################################
 
@@ -49,4 +46,3 @@ app.register_blueprint(subjects)
 
 # res = s.delete_assignment('COMP123456', '420', 'bluffmaster')
 # print(res)
-
