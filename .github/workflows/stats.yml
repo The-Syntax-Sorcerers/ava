@@ -1,0 +1,14 @@
+name: Pull Request Stats
+
+on:
+  push
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Run pull request stats
+        uses: flowwer-dev/pull-request-stats@master

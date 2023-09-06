@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Set this to 0 to fetch the complete history
+          repository: 'The-Syntax-Sorcerers/ava'  # Replace with your repository owner and name
+
 
       - name: Install Node.js
         uses: actions/setup-node@v2
