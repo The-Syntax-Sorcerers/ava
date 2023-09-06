@@ -2,5 +2,17 @@
   "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
   "devCommand": "npm run dev --prefix client",
-  "installCommand": "npm install --prefix client"
+  "installCommand": "npm install --prefix client",
+  "builds": [
+    {
+      "src": "flaskr/__init__.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "flaskr/__init__.py"
+    }
+  ]
 }
