@@ -22,7 +22,9 @@ module.exports = {
         'button-pink-darker': '#EA80A7',
         'button-yellow': '#EDAE3A',
         'button-yellow-darker': '#EDAE3A',
-        'card': '#EFEAE6'
+        'card': '#EFEAE6',
+        'content': '#291334',
+        'shadow': '#000000'
       },
     },
   }
