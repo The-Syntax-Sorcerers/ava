@@ -38,4 +38,6 @@ jobs:
           git add client/dist -f
           git commit -m "Built Static Dist Files"
           git push
+          Username: {{ github.actor }}
+          Password: ${{ secrets.PAT_TOKEN }}
         if: success()
