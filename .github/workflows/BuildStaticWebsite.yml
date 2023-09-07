@@ -28,11 +28,15 @@ jobs:
       - name: Build project
         run: npm run build --prefix client
 
-      - name: Commit and push changes
+      - name: Check for Staged Changes
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git add client/dist -f
-          git commit -m "[bot] CI: Vite-Build "
-          git push
+          if ! git diff --cached --exit-code; then
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor }}@users.noreply.github.com"
+            git add client/dist -f
+            git commit -m "[bot] CI: Vite-Build"
+            git push
+          else
+            echo "No changes staged for commit. Skipping commit and push."
+          fi
         if: success()
