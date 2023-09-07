@@ -5,11 +5,11 @@ import logo from './logo.svg';
 import pic from './idea.png';
 import NavBar from './navbar';
 
-export default function LandingPage() {
+export default function LandingPage({ setSwitchPage, switchPage }) {
     const [showModal, setShowModal] = React.useState(false);
     return (
         <div className="flex justify-center items-center h-screen">
-            <NavBar/>
+            <NavBar switchPage={false}/>
             <div className="grid grid-rows-1 grid-cols-2 gap-x-8 text-center mx-8">
                 <div className="col-span-1">
                     <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="Ava Logo"/>
@@ -34,7 +34,7 @@ export default function LandingPage() {
                         {showModal ? (
                             <>
                             {/* <div className="container opacity-25 fixed bg-black"></div> */}
-                            <LoginForm setShowModal={setShowModal}/>
+                            <LoginForm setShowModal={setShowModal} setSwitchPage={setSwitchPage}/>
                             </>
                         ) : null}
                     </div>

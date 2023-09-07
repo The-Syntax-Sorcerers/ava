@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styles from "./index.css"
 import NavBar from './navbar'
 
-export default function LoginForm({ setShowModal }) {
+export default function LoginForm({ setShowModal, setSwitchPage}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -81,7 +81,9 @@ export default function LoginForm({ setShowModal }) {
                 type="submit"
                 class="dark:active:shadow inline-block w-full rounded bg-button-blue px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-button-blue-darker"
                 data-te-ripple-init
-                data-te-ripple-color="light">
+                data-te-ripple-color="light"
+                onClick={() => setSwitchPage(true)}
+                >
                 Sign in
                 </button>
 

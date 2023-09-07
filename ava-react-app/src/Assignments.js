@@ -3,7 +3,7 @@ import styles from "./index.css"
 import Dashboard from './dashboard'
 import NavBar from './navbar'
 
-function App() {
+export default function AssignmentsPage({ setSwitchPage }) {
     const [data, setData] = useState({ all_assignments: [] })
 
     // fetch variables from backend
@@ -29,7 +29,7 @@ function App() {
 
     return (
         <div className="bg-main bg-cover min-h-screen">
-            <NavBar />
+            <NavBar switchPage={true}/>
             <main className="container mx-auto p-8">
                 <div>
                 {(data.all_assignments.length === 0)? (
@@ -43,5 +43,3 @@ function App() {
         
     )
 }
-
-export default App
