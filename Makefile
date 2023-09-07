@@ -4,8 +4,13 @@ debug:
 	npm run watch --prefix client &
 	flask --app server run --debug
 
-.PHONY: run
 prod:
+	npm run clean --prefix client
+	npm install --prefix client
+	npm run build --prefix client
+
+.PHONY: run
+run:
 	npm run clean --prefix client
 	npm install --prefix client
 	npm run build --prefix client
