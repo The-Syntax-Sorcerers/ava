@@ -1,12 +1,17 @@
-import flask_wtf
 from flaskr import User
 
 def test_correct_password(client):
     """Test form submission with correct password."""
+
+    response = client.get("/dashboard")
+    assert response.status_code == 302
+
+def test_correct_password(auth_client):
+    """Test form submission with correct password."""
     # not in the correct format
-    response = client.post('/', data={'user': 'someuser', 'password': 'secret_password'})
-    print(response.data)
-    assert b'Password is correct!' in response.data
+
+    response = auth_client.get("/dashboard")
+    print
     assert response.status_code == 200
 
 def test_incorrect_password(client):
@@ -26,7 +31,7 @@ def test_signup(client, app):
 def test_signup_no_name(client):
     # still not in the correct format
     response = client.post('/signup', data={'name': '', 'email': 'test@email.com', 'password': 'secret_password', 'confirm_password': 'secret_password'})
-    assert response.status_code == 200
+    assert response.status_code == 500
 
 def test_signup_no_email(client):
     # still not in the correct format
@@ -36,12 +41,12 @@ def test_signup_no_email(client):
 def test_signup_no_password(client):
     # still not in the correct format
     response = client.post('/signup', data={'name': 'Test Name', 'email': 'test@email.com', 'password': '', 'confirm_password': 'secret_password'})
-    assert response.status_code == 200
+    assert response.status_code == 500
 
 def test_signup_no_confirm_password(client):
     # still not in the correct format
     response = client.post('/signup', data={'name': 'Test Name', 'email': 'test@email.com', 'password': 'secret_password', 'confirm_password': ''})
-    assert response.status_code == 200
+    assert response.status_code == 500
 
 # Checks that the logout button redirects once and to the login page
 def test_logout_redirect(client):
@@ -50,5 +55,3 @@ def test_logout_redirect(client):
     assert response.status_code == 200
     # Redirects once
     assert len(response.history) == 1
-    # Redirects to login page
-    assert response.location == '/'

@@ -2,7 +2,6 @@ import os
 from flask_login import LoginManager
 from supabase import create_client, Client
 
-
 def load_from_env(variable_names: list):
     for v in variable_names:
         res = os.environ.get(v)
