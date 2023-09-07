@@ -28,17 +28,11 @@ jobs:
       - name: Build project
         run: npm run build --prefix client
 
-      # - name: Store dist output
-      #   run: |
-      #     mkdir -p client/dist
-      #     cp -r client/dist/* client/backup/dist/
-      #   if: success()
-
       - name: Commit and push changes
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git add client/dist -f
-          git commit -m "Built Static Dist Files"
+          git commit -m "[bot] CI: Vite-Build "
           git push
         if: success()
