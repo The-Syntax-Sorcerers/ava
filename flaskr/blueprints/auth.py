@@ -24,9 +24,10 @@ def login():
 
     if form.validate_on_submit():
         try:
-            user = supabase_anon.auth.sign_in_with_password({"email": form.email.data, "password": form.password.data})
+            # Puts email to lowercase to prevent crashing the server
+            user = supabase_anon.auth.sign_in_with_password({"email": form.email.data.lower(), "password": form.password.data})
             supabase_anon.postgrest.auth(user.session.access_token)  # Updates session for the anon client
-            flask_login.login_user(User.get_user_with_email(form.email.data))
+            flask_login.login_user(User.get_user_with_email(form.email.data.lower()))
 
             flash('Logged in successfully!', 'success')
             print("Logged In!")
