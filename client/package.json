@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "watch": "watch 'npm run build' ./src",
     "clean": "rm -rf node_modules dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^20.5.9",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

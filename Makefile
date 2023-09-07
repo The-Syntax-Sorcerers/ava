@@ -1,10 +1,8 @@
 
 #  FLASK := FLASK_APP=$(FLASK_APP) env/bin/flask
-debug-server:
+debug:
+	npm run watch --prefix client &
 	flask --app server run --debug
-
-debug-client:
-	npm run dev --prefix client
 
 .PHONY: run
 prod:
@@ -13,6 +11,6 @@ prod:
 	npm run build --prefix client
 	flask --app server run
 
-.PHONY: run-production
-run-production:
+
+server:
 	flask --app server run --debug
