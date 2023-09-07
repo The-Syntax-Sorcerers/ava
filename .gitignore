@@ -18,7 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Compiled files
-/dist/
+# /dist/
 /out/
 /build/
 *.log
@@ -52,7 +52,6 @@ instance/
 .coverage
 htmlcov/
 
-dist/
 build/
 *.egg-info/
 
