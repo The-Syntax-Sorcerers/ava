@@ -65,4 +65,5 @@ server/__pycache__
 *.env
 client/dist/
 client\dist\
+client\dist
 
