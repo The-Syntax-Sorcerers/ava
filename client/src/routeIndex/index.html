@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/client/src/assets/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>AVA</title>
   </head>
   <body>
     <div id="root"></div>
     <script>
-        globalThis.template_data = {{template_data | tojson | safe}}
+        globalThis.template_data = {{ template_data | tojson | safe }}
         console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
     </script>
-    <script type="module" src="/main.tsx"></script>
+    <script type="module" src="./App.tsx"></script>
   </body>
 </html>
