@@ -18,6 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Compiled files
+\dist\
 /dist/
 /out/
 /build/
@@ -62,3 +63,5 @@ server/__pycache__
 
 # Secrets
 *.env
+client/dist/
+client\dist\
