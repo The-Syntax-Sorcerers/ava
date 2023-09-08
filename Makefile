@@ -12,7 +12,6 @@ prod:
 	npm run build --prefix ${CLIENT_DIR}
 
 setup:
-	npm run clean --prefix ${CLIENT_DIR}
 	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
 
 clean:
