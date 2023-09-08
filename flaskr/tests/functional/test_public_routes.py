@@ -24,6 +24,12 @@ def test_profile(client):
     assert b"<title>Profile Page</title>" in response.data
     assert response.status_code == 200
 
+# # Checks that the email confirmation page can be accessed
+# def test_email_confirm(client):
+#     response = client.get('/email')
+#     assert b"  <title>Email Confirmed</title>" in response.data
+#     assert response.status_code == 200
+
 # Checks that invalid routes return an error
 def test_invalid_route(client):
     response = client.get('/invalid_route')

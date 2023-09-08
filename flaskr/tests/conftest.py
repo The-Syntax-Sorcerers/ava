@@ -1,18 +1,51 @@
 import pytest
-from flaskr import User, app
+from flaskr.models.flaskforms import SignupForm
 from bs4 import BeautifulSoup as bs
-from flaskr.extensions import load_from_env
 
+from flaskr.__init__ import app
+
+# Used to sign up the user
+from flask import Flask, render_template 
+from flaskr.blueprints.auth import auth
+from flaskr.blueprints.common import common
+from flaskr.blueprints.subjects import subjects
+
+# Used for cleanup
+from flaskr.models.models import User
+
+# Creates a test version of the application
+@pytest.fixture
+def signup_app():
+    signup_app = Flask(__name__)
+    signup_app.config.from_mapping(SECRET_KEY='chutiya')
+    signup_app.config['TESTING'] = True
+    # Disable CSRF protection for testing
+    signup_app.config['WTF_CSRF_ENABLED'] = False
+
+    # Adding the routes to this app
+    signup_app.register_blueprint(auth)
+    signup_app.register_blueprint(common)
+    signup_app.register_blueprint(subjects)
+    
+    yield signup_app
+
+    # Cleaning up created test user
+    User.delete_test_user()
 
 # Generates a test client to simulate HTTP requests
-@pytest.fixture#(scope="session")
+@pytest.fixture
 def client():
-    load_from_env(["SUPABASE_ANON_KEY", "SUPABASE_PUBLIC_KEY","SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY", "SUPABASE_URL"])
     with app.test_client() as client:
         yield client
 
+# Generates a test client for signing up
+@pytest.fixture
+def signup_client(signup_app):
+    with signup_app.test_client() as signup_client:
+        yield signup_client
+
 # Generates a test client with a user who has already logged in
-@pytest.fixture(scope="session")
+@pytest.fixture
 def auth_client(client):
 
     # not in the correct format

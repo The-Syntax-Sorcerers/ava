@@ -3,7 +3,6 @@ import socket
 import flask_login
 from flask import Flask
 
-
 from flaskr.extensions import login_manager, supabase_sec
 from flaskr.models.models import User, Subject, Assignment, Storage
 from flaskr.blueprints.common import common
