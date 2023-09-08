@@ -1,7 +1,7 @@
 import logo from '../assets/logo.svg';
 
 
-export default function AnonymousNavbar() {
+export default function AnonymousNavbar({setShowModal}: {setShowModal: any}) {
     return (
         <>
             <nav className="fixed top-5 left-0 w-full flex justify-center items-center">
@@ -12,10 +12,20 @@ export default function AnonymousNavbar() {
                         <div className="text-white text-xl font-bold text-button-blue">AVA</div>
                     </div>
                     <ul className="flex space-x-4">
-                    <li><a href="#" className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50">
-                        Log In</a></li>
-                        <li><a href="?" className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50">
-                        Sign Up</a></li>
+                    <li>
+                        <button className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50"
+                            type="button"
+                            onClick={() => setShowModal(true)}
+                        > Log In
+                        </button>
+                    </li>
+                    <li>
+                        <button className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50"
+                            type="button"
+                            onClick={() => setShowModal(true)}
+                        > Sign Up
+                        </button>
+                    </li>
                     </ul>
                 </div>
             </div>

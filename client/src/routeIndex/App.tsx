@@ -27,7 +27,7 @@ export default function LandingPage() {
     const [showModal, setShowModal] = useState(false);
     return (
         <div className="flex justify-center items-center h-screen">
-            <AnonymousNavbar/>
+            <AnonymousNavbar setShowModal={setShowModal}/>
             <div className="grid grid-rows-1 grid-cols-2 gap-x-8 text-center mx-8">
                 <div className="col-span-1">
                     <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="Ava Logo"/>
@@ -45,7 +45,7 @@ export default function LandingPage() {
                             <button
                                 className="bg-button-blue text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-button-blue-darker outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={() => setShowModal(true)}
+                                
                             > Get Started
                             </button>
                         </div>
