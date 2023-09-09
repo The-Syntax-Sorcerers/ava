@@ -1,4 +1,4 @@
-name: Build Vite Pages
+name: Build and Deploy
 
 on:
   push
@@ -7,7 +7,30 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  BuildServer:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.8, 3.11]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Compile Test
+      run: |
+        export PYTHONPATH=$GITHUB_WORKSPACE
+        python server/__init__.py test
+  
+  BuildClient:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +49,9 @@ jobs:
         run: npm install --prefix client
 
       - name: Build project
-        run: npm run build --prefix client
+        run: |
+          rm -rf client/node_modules client/dist
+          npm run build --prefix client
 
       - name: Check for Staged Changes
         run: |
