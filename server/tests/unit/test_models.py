@@ -1,4 +1,4 @@
-from flaskr import User, Subject, Assignment
+from server.models import User, Subject, Assignment
 import datetime
 
 # Checks whether a new user can be made

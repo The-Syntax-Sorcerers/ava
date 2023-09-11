@@ -5,7 +5,7 @@ import flask_login
 from flask import Flask, send_from_directory
 
 from server.extensions import login_manager, supabase_sec
-from server.models.models import User, Subject, Assignment, Storage
+from server.models import User, Subject, Assignment, Storage
 from server.blueprints.common import common
 from server.blueprints.auth import auth
 

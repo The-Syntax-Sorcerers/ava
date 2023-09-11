@@ -3,7 +3,7 @@ from werkzeug.datastructures import FileStorage
 from wtforms import StringField, PasswordField, SubmitField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
-from server.models.models import User
+from server.models import User
 
 
 class SignupForm(FlaskForm):

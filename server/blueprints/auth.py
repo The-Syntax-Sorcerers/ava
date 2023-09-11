@@ -9,7 +9,7 @@ from gotrue.errors import AuthApiError
 
 from server.extensions import supabase_anon
 from server.models.flaskforms import LoginForm
-from server.models.models import User
+from server import User
 
 auth = Blueprint('auth', __name__, template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
 

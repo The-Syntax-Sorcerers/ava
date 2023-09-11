@@ -2,16 +2,16 @@ import pytest
 from server.models.flaskforms import SignupForm
 from bs4 import BeautifulSoup as bs
 
-from server.__init__ import app
+from server import app
 
 # Used to sign up the user
 from flask import Flask, render_template 
 from server.blueprints.auth import auth
 from server.blueprints.common import common
-from server.blueprints.subjects import subjects
+from server.models import Subject
 
 # Used for cleanup
-from server.models.models import User
+from server.models import User
 
 # Creates a test version of the application
 @pytest.fixture
@@ -25,7 +25,7 @@ def signup_app():
     # Adding the routes to this app
     signup_app.register_blueprint(auth)
     signup_app.register_blueprint(common)
-    signup_app.register_blueprint(subjects)
+    signup_app.register_blueprint(Subject)
     
     yield signup_app
 
