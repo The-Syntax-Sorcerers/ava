@@ -14,7 +14,7 @@ frontend:
 	npm run dev --prefix ${CLIENT_DIR}
 
 setup:
-	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
+	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} --force 
 
 clean:
 	npm run clean --prefix ${CLIENT_DIR}
