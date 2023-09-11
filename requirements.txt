@@ -13,9 +13,16 @@ python-dotenv
 supabase
 
 
+beautifulsoup4==4.12.2
+
 # ML Dependencies
 # numpy
 # nltk
 # gensim
 
 # Front-End Dependencies
+
+# Testing dependencies
+pytest
+pytest-flask
+pytest-dotenv

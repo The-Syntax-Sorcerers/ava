@@ -43,6 +43,34 @@ class User(UserMixin):
             res = res[0]
             return User(res['id'], res['email'], res['name'])
         return None
+    
+    # Deletes a user from the database
+    def delete_user(user_id, user_email, user_name, requesting_user):
+        # Check if the requesting user is allowed to perform this action
+        if requesting_user.is_admin or requesting_user.id == user_id:
+            try:
+                res = supabase_sec.table('User').select('*').eq('id', id).execute().data
+                if ((res['email'] == user_email) and (res['name'] == user_name)):
+                    # Send a DELETE request to the Supabase table to delete the user by ID
+                    res = supabase_sec.table('User').delete().eq('id', user_id).execute()
+                
+                if res.status_code == 200:
+                    return True
+                else:
+                    return False
+            except Exception as e:
+                # Handle any exceptions or errors that may occur during the deletion
+                print(f"Error deleting user: {str(e)}")
+                return False
+        # The requesting user is not allowed to delete the requested account
+        else:
+            return False
+
+    @staticmethod
+    # Deletes user created during testing
+    def delete_test_user():
+        supabase_sec.table('User').delete().eq('email', 'nonrealuserfortesting@gmail.com').execute()
+        return None
 
     @staticmethod
     def supabase_signup_wrapper(email, password, name):
@@ -109,13 +137,13 @@ class Assignment:
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
-        self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
         if due_datetime:
+            self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
             # Seperates datetime into date and time
             self.due_date = self.due_datetime.date()
             self.due_time = self.due_datetime.time()
         else :
-            self.due_date = self.due_time = None
+            self.due_datetime = self.due_date = self.due_time = None
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
@@ -179,5 +207,3 @@ class Storage:
             if obj['name'] == user_id:
                 return True
         return False
-
-
