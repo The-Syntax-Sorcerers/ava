@@ -4,17 +4,24 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/assets/logo-565dfa49.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta id="csrf-token" content="{{csrf}}">
     <title>AVA</title>
-    <script type="module" crossorigin src="/assets/index-a3300c2d.js"></script>
+    <script type="module" crossorigin src="/assets/main-65e7db93.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/logo-acb7ac67.js">
-    <link rel="stylesheet" href="/assets/index-b1b07e82.css">
+    <link rel="stylesheet" href="/assets/index-b2695994.css">
   </head>
   <body>
     <div id="root"></div>
     <script>
-        globalThis.template_data = {{ template_data | tojson | safe }}
-        console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+          if (typeof template_data !== 'undefined' && template_data !== null) {
+            globalThis.template_data = {{ template_data | tojson | safe }}
+            console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+          }
+          else {
+            console.log("INFO: template_data is not defined.");
+          }
     </script>
     
   </body>
 </html>
+

@@ -45,7 +45,7 @@ class User(UserMixin):
         return None
 
     @staticmethod
-    def wrapper_signup(email, password, name):
+    def supabase_signup_wrapper(email, password, name):
         print("Attempted signup", email, password)
         user = supabase_anon.auth.sign_up({"email": email, "password": password})
 

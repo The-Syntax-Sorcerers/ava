@@ -1,5 +1,25 @@
 import logo from "../assets/logo.svg";
+import { Key } from 'react'
 
+const routes = [  
+    ['Home', '/dashboard'],
+    ['Assignments', '/assignments'],
+    ['Profile', '/profile'],
+    ['Log Out', '/logout'],
+]
+
+function NavBarElement({route, rkey}: {route: string[], rkey: Key}) {
+    const title = route[0];
+    const url = route[1];
+
+    return (
+        <li key={rkey}>
+            <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-50 bg-black outline-slate-200 border-yellow-100">
+                {title}
+            </a>
+        </li>
+    );
+}
 
 export default function LoggedInNavbar() {
     return (
@@ -12,14 +32,8 @@ export default function LoggedInNavbar() {
                         <div className="text-white text-xl font-bold text-button-blue">AVA</div>
                     </div>
                     <ul className="flex space-x-4">
-                    {[    ['Home', '/dashboard'],
-                            ['Assignments', '/assignments'],
-                            ['Profile', '/profile'],
-                        ].map(([title, url]) => (
-                            <li><a href={url} className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50">
-                                {title}
-                                </a>
-                            </li>
+                        {routes.map((route, rkey: Key) => (
+                            <NavBarElement route={route} rkey={rkey} />
                         ))}
                     </ul>
                 </div>
@@ -27,5 +41,5 @@ export default function LoggedInNavbar() {
             </nav>
         </>
     );
-  }
+}
 

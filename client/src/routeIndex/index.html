@@ -4,14 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta id="csrf-token" content="{{csrf}}">
     <title>AVA</title>
   </head>
   <body>
     <div id="root"></div>
     <script>
-        globalThis.template_data = {{ template_data | tojson | safe }}
-        console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+          if (typeof template_data !== 'undefined' && template_data !== null) {
+            globalThis.template_data = {{ template_data | tojson | safe }}
+            console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+          }
+          else {
+            console.log("INFO: template_data is not defined.");
+          }
     </script>
-    <script type="module" src="./App.tsx"></script>
+    <script type="module" src="./entry.tsx"></script>
   </body>
 </html>
+

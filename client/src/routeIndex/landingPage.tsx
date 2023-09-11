@@ -1,22 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import "./App.css"
-
-
-const template_data: { my_data: string } = JSON.parse((globalThis as any).template_data);
-console.log("Received template_Data ==>", template_data)
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <LandingPage />
-  </React.StrictMode>,
-)
-
-/* =================================   Render DOM above   ========================================= */
-/* ================================= Page Structure below ========================================= */
-
 import { useState } from 'react';
-import LoginForm from '../components/login.tsx';
+import LoginForm from '../components/loginModal.tsx';
+import SignupForm from '../components/signUpModal.tsx';
 import AnonymousNavbar from '../components/AnonymousNavbar.tsx';
 
 import logo from '../assets/logo.svg';
@@ -25,9 +9,26 @@ import pic from '../assets/idea.png';
 
 export default function LandingPage() {
     const [showModal, setShowModal] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(true);
+
+
+    const handleLoginClick = () => {
+        setShowModal(true);
+        setShowLoginForm(true);
+    };
+
+    const handleSignupClick = () => {
+        setShowModal(true);
+        setShowLoginForm(false);
+    };
+
+
     return (
         <div className="flex justify-center items-center h-screen">
-            <AnonymousNavbar setShowModal={setShowModal}/>
+            <AnonymousNavbar
+                handleLoginClick={handleLoginClick}
+                handleSignupClick={handleSignupClick}
+            />
             <div className="grid grid-rows-1 grid-cols-2 gap-x-8 text-center mx-8">
                 <div className="col-span-1">
                     <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="Ava Logo"/>
@@ -50,10 +51,13 @@ export default function LandingPage() {
                             </button>
                         </div>
                         {showModal ? (
-                            <>
-                            {/* <div className="container opacity-25 fixed bg-black"></div> */}
-                            <LoginForm setShowModal={setShowModal}/>
-                            </>
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                {showLoginForm ? (
+                                    <LoginForm setShowModal={setShowModal}/>
+                                ) : (
+                                    <SignupForm setShowModal={setShowModal} />
+                                )}
+                            </div>
                         ) : null}
                     </div>
                 </div>

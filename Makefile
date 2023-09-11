@@ -10,6 +10,9 @@ run-server:
 run-client:
 	npm run watch --prefix ${CLIENT_DIR} &
 
+frontend:
+	npm run dev --prefix ${CLIENT_DIR}
+
 setup:
 	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
 

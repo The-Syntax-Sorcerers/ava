@@ -7,6 +7,7 @@ from flask import Flask, send_from_directory
 from server.extensions import login_manager, supabase_sec
 from server.models.models import User, Subject, Assignment, Storage
 from server.blueprints.common import common
+from server.blueprints.auth import auth
 
 socket.setdefaulttimeout(15)
 test_config = None
@@ -16,18 +17,19 @@ app.config.from_mapping(
     SECRET_KEY='chutiya',
 )
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     print("Browser loading id:", user_id)
-#     return User.get_user(user_id)  # Static method call to our User model
+
+@login_manager.user_loader
+def load_user(user_id):
+    print("Browser loading id:", user_id)
+    return User.get_user(user_id)  # Static method call to our User model
 
 
-# login_manager.init_app(app)
-# login_manager.login_view = "auth.login"
+login_manager.init_app(app)
+login_manager.login_view = "common.index"
 
 
 app.register_blueprint(common)
-
+app.register_blueprint(auth)
 
 ######################## Test Config ################################
 
