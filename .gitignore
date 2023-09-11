@@ -18,6 +18,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Compiled files
+\dist\
 /dist/
 /out/
 /build/
@@ -52,14 +53,17 @@ instance/
 .coverage
 htmlcov/
 
-dist/
 build/
 *.egg-info/
 
 # New Added
 .idea/
 venv
-flaskr/__pycache__
+server/__pycache__
 
 # Secrets
 *.env
+client/dist/
+client\dist\
+client\dist
+
