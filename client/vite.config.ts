@@ -15,6 +15,7 @@ export default defineConfig({
     redirect({from: '/assignments', to: '/routeAssignments/'}),
     redirect({from: '/logout', to: '/routeIndex/'}),
     redirect({from: '/profile', to: '/routeProfile/'}),
+    redirect({from: '/privacy_policy', to: '/routePrivacyPolicy/'}),
   ],
   build: {
     outDir,
