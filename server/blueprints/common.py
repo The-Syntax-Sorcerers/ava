@@ -20,6 +20,12 @@ def index(loginform=None, signupform=None):
     return flask.render_template('routeIndex/index.html', template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
 
 
+@common.route('/privacy_policy')
+def privacy_policy():
+    print("Serving Privacy Policy")
+    return flask.render_template('routePrivacyPolicy/index.html')
+
+
 @common.route('/dashboard')
 @flask_login.login_required
 def dashboard():
