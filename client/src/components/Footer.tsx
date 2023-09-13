@@ -1,6 +1,6 @@
 import { Key } from 'react'
 
-// The list of links to add to the footer in [text: route] pairs
+// The list of links to add to the footer in [text, route] pairs
 const routes = [  
     ['Privacy Policy', '/privacy_policy'],
 ]
