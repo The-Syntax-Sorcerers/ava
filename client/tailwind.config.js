@@ -15,7 +15,8 @@ export default {
         'button-yellow-darker': '#EDAE3A',
         'card': '#EFEAE6',
         'content': '#291334',
-        'shadow': '#000000'
+        'shadow': '#000000',
+        'footer': '#e8e8e8'
       },
     extend: {},
   },
