@@ -5,6 +5,7 @@ import { Key } from 'react'
 interface SubjectObj {
     name: string;
     id: string;
+    link: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

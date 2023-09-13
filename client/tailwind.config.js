@@ -14,9 +14,10 @@ export default {
         'button-yellow': '#EDAE3A',
         'button-yellow-darker': '#EDAE3A',
         'card': '#EFEAE6',
+        'card-hover': '#E7E2DE',
         'content': '#291334',
         'shadow': '#000000'
-      },
+    },
     extend: {},
   },
   plugins: [],
