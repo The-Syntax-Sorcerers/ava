@@ -24,14 +24,14 @@ export default function LandingPage() {
 
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen mx-auto">
             <AnonymousNavbar
                 handleLoginClick={handleLoginClick}
                 handleSignupClick={handleSignupClick}
             />
-            <div className="grid grid-rows-1 grid-cols-2 gap-x-8 text-center mx-8">
+            <div className="grid grid-rows-1 grid-cols-2 text-center mx-auto">
                 <div className="col-span-1">
-                    <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="Ava Logo"/>
+                    <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="pic1"/>
                 </div>
                 <div className="col-span-1">
                     <div className="grid grid-rows-2 grid-cols-1 gap-4 text-center">
@@ -39,14 +39,12 @@ export default function LandingPage() {
                             <img className="object-contain h-48 w-48 mx-auto" src={logo} alt="Ava Logo"/>
                         </div>
                         <div className="place-content-center">
-                            <h1>Welcome to AVA</h1>
-                            <h2>The world's best authorship verification algorithm</h2>
-                        </div>
-                        <div className="place-content-center">
+                            <h1 className="text-lg font-semibold">Welcome to AVA</h1>
+                            <h2>Unlocking Authenticity: Introducing AVA, Your Authorship Verification Algorithm</h2>
                             <button
-                                className="bg-button-blue text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-button-blue-darker outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                className="bg-button-blue mt-5 text-slate-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-button-blue-darker outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                
+                                onClick={handleLoginClick}
                             > Get Started
                             </button>
                         </div>

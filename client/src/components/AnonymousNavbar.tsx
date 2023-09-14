@@ -8,12 +8,12 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                     <div className="container mx-auto px-4 flex justify-between items-center">
                         <div className="flex items-center">
                             <img className="w-10 h-10" src={logo} alt="Ava Logo" />
-                            <div className="text-white text-xl font-bold text-button-blue">AVA</div>
+                            <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
                         </div>
                         <ul className="flex space-x-4">
                             <li>
                                 <button
-                                    className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50"
+                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900"
                                     type="button"
                                     onClick={handleLoginClick}
                                 >
@@ -22,7 +22,7 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                             </li>
                             <li>
                                 <button
-                                    className="rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-pink hover:text-slate-50"
+                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900"
                                     type="button"
                                     onClick={handleSignupClick}
                                 >
