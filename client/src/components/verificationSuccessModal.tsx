@@ -25,7 +25,7 @@ export default function VerificationSuccess({ setShowModal, result }: {setShowMo
                         </div>
                     )}
                     <button
-                        className="bg-button-blue rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-blue-darker hover:text-slate-50"
+                        className="bg-button-yellow rounded-lg px-3 py-2 text-slate-900 font-medium hover:bg-button-yellow-darker"
                         type="button"
                         onClick={() => setShowModal(false)}
                     >
