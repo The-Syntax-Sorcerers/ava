@@ -12,9 +12,6 @@ datetime
 python-dotenv
 supabase
 
-
-beautifulsoup4==4.12.2
-
 # ML Dependencies
 # numpy
 # nltk
@@ -25,4 +22,8 @@ beautifulsoup4==4.12.2
 # Testing dependencies
 pytest
 pytest-flask
+
+# Testing requirements
+beautifulsoup4==4.12.2
+pre-commit==3.4.0
 pytest-dotenv

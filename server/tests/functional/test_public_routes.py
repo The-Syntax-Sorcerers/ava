@@ -9,6 +9,7 @@ def test_login(client):
 # Checks that the signup page can be accessed
 def test_signup(client):
     response = client.get('/signup')
+    print(response.text)
     assert b"<title>Sign Up</title>" in response.data
     assert response.status_code == 200
 

@@ -61,6 +61,8 @@ def auth_client(client):
 
     r = client.post('/', data={'csrf_token': csrf_token, 'email': test_email, 'password': test_password}, headers=head, follow_redirects=True)
 
+    print(r.text)
+
     yield client
 
     client.get('/logout', follow_redirects=True)

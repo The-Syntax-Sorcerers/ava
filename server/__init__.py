@@ -34,6 +34,7 @@ app.register_blueprint(auth)
 ######################## Test Config ################################
 
 
+
 # u = User(9, 'test@gmail.com', 'test')
 
 # sub = Subject.get_subject('COMP123456')
