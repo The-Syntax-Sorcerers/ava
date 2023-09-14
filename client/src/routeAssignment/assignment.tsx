@@ -11,10 +11,11 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
     console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
     const [fileUploaded, setFileUploaded] = useState(false);
     // const [file, setFile] = useState({ url: PDF1_URL });
-    // const [fileSubmitted, setFileSubmitted] = useState(false);
+    const [fileSubmitted, setFileSubmitted] = useState(false);
 
     const handleUpload = () => {
         setFileUploaded(true);
+        setFileSubmitted(false);
         // const fileReader = new window.FileReader();
         // const file = event.target.files[0];
         
@@ -25,9 +26,10 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
         
         // fileReader.readAsDataURL(file);
     };
-    // const fileSubmit = () => {
-    //     setFileSubmitted(true);
-    // };
+    const handleSubmit = () => {
+        setFileSubmitted(true);
+        setFileUploaded(false);
+    };
 
     return (
         <div className="bg-main bg-cover min-h-screen">
@@ -39,12 +41,41 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
                     <h2 className="text-lg font-semibold mb-4">Due on {assignment.due_date}</h2>
                     <p className="text-base mb-4">Description: {assignment.description}</p>
                     <p className="text-base mb-4">Marks: {assignment.marks}</p>
-                    {fileUploaded ? (
+                    <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
+                    {fileSubmitted ? (
                         <div>
-                            <UploadPreview/>
-                            <UploadButton handleUpload={handleUpload}/>
+                        <p className="text-base mb-4">Looks Like you've already submitted an assignment. Do you want to submit another one?</p>
+                        <Dropzone handleUpload={handleUpload}/>
                         </div>
-                    ):(<Dropzone handleUpload={handleUpload}/>)}
+                    ):(<>
+                        {fileUploaded ? (
+                                <div>
+                                    <UploadPreview/>
+                                    <UploadButton handleUpload={handleUpload}/>
+                                    <div className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
+                                        <div>
+                                            <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                            <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy_policy" className="text-blue-600 dark:text-blue-500 hover:underline">privacy policy</a>.</label>
+                                        </div>
+                                        <div>
+                                            <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                            <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I hereby acknowledge that all work submitted in this assignment is my original work, created solely by me, unless otherwise indicated.</label>
+                                        </div>
+                                        <button
+                                        className="bg-button-blue rounded-lg px-3 py-2 text-slate-50 font-medium hover:bg-button-blue-darker hover:text-slate-50"
+                                        type="button"
+                                        onClick={handleSubmit}>
+                                            Submit
+                                    </button>
+                                    </div>
+                                    
+                                </div>
+                        ):(<Dropzone handleUpload={handleUpload}/>)}
+                        </>
+                        )
+                        
+                    }
+                   
                     
                 </div>
             </main>
