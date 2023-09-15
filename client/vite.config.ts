@@ -27,7 +27,7 @@ export default defineConfig({
         main: resolve(root, 'routeIndex', 'index.html'),
         dashboard: resolve(root, 'routeDashboard', 'index.html'),
         assignments: resolve(root, 'routeAssignments', 'index.html'),
-        privacyPolicy: resolve(root, 'routePrivacyPolicy', 'index.hmtl'),
+        privacyPolicy: resolve(root, 'routePrivacyPolicy', 'index.html'),
         subject: resolve(root, 'routeSubject', 'index.html'),
         assignment: resolve(root, 'routeAssignment', 'index.html'),
       }

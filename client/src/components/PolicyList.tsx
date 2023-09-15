@@ -20,18 +20,20 @@ function PolicyElement({policy, rkey}: {policy: string[], rkey: Key}) {
     const content = policy[1]
 
     return (
-        <li key={rkey} className="list-decimal pl-2 marker:font-bold">
-            <div>
-                <h2 className='font-bold text-1xl'>
-                    {title}
-                </h2>
-                <div className='ml-8'>
-                    <p className='text-lg'>
-                        {content}
-                    </p>
+        <div className="bg-card rounded-lg shadow-md p-4 pl-10">
+            <li key={rkey} className="list-decimal pl-2 marker:font-bold">
+                <div>
+                    <h2 className='font-bold text-1xl'>
+                        {title}
+                    </h2>
+                    <div className='ml-8'>
+                        <p className='text-lg'>
+                            {content}
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
+        </div>
     )
 }
 
