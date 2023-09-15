@@ -10,10 +10,10 @@ export default function SubjectPage({upcoming, past, subject}) {
     console.log("Rendering Ass with Assignments:", upcoming, past)
 
     return (
-        <div className="bg-main bg-cover min-h-screen">
+        <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
-            <main className="container mx-auto p-8">
-                <div className="container mx-auto px-4 py-20">
+            <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
+                <div className="container mx-auto">
                     <h1 className="text-2xl font-semibold mb-4">{subject.name}</h1>
                     <h2 className="text-xl font-semibold mb-4">{subject.id}</h2>
                     <p className="text-base mb-4">Overview: {subject.description}</p>

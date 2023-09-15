@@ -38,8 +38,8 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
     return (
         <div className="bg-main bg-cover min-h-screen flex flex-col">
             <LoggedInNavbar />
-            <main className="container mx-auto flex-grow box-border pt-28 pb-12">
-                <div className="container mx-auto px-12">
+            <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
+                <div className="container mx-auto">
                     <h1 className="text-2xl font-semibold mb-4">{assignment.name}</h1>
                     <h2 className="text-xl font-semibold mb-4">{assignment.id}</h2>
                     <h2 className="text-lg font-semibold mb-4">Due on {assignment.due_date}</h2>
