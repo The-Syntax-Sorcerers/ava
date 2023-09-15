@@ -1,13 +1,36 @@
-FLASK_APP = flaskr
+CLIENT_DIR = ./client
+CONFIG_NAME = package.json
 #  FLASK := FLASK_APP=$(FLASK_APP) env/bin/flask
 
+debug: run-client run-server 
+
+run-server:
+	flask --app server run --debug
+
+run-client:
+	npm run watch --prefix ${CLIENT_DIR} &
+
+frontend:
+	npm run dev --prefix ${CLIENT_DIR}
+
+setup:
+	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} --force
+
+clean:
+	npm run clean --prefix ${CLIENT_DIR}
+
+dist:
+	npm run clean --prefix ${CLIENT_DIR}
+	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
+	npm run build --prefix ${CLIENT_DIR}
+
 .PHONY: run
-build:
-	flask --app $(FLASK_APP) run
+run:
+	npm run clean --prefix ${CLIENT_DIR}
+	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
+	npm run build --prefix ${CLIENT_DIR}
+	flask --app server run
 
-debug:
-	flask --app $(FLASK_APP) run --debug
 
-.PHONY: run-production
-run-production:
-	flask --app $(FLASK_APP) run --debug
+server:
+	flask --app server run --debug
