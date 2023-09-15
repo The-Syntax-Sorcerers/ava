@@ -8,7 +8,6 @@ from server import app
 from flask import Flask, render_template 
 from server.blueprints.auth import auth
 from server.blueprints.common import common
-from server.models import Subject
 
 # Used for cleanup
 from server.models import User
@@ -32,8 +31,7 @@ def signup_app():
     # Adding the routes to this app
     signup_app.register_blueprint(auth)
     signup_app.register_blueprint(common)
-    signup_app.register_blueprint(Subject)
-    
+
     yield signup_app
 
     # Cleaning up created test user
@@ -57,24 +55,13 @@ def auth_client(client):
 
     # not in the correct format
     csrf_token = getCSRFToken(client, '/')
-
-    r = client.post('/', data={'csrf_token': csrf_token, 'email': TEST_EMAIL, 'password': TEST_PASSWORD}, headers=URL_HEADER, follow_redirects=True)
-
-    print("is this working??")
-    print(r.text)
-
+    client.post('/', data={'csrf_token': csrf_token, 'email': TEST_EMAIL, 'password': TEST_PASSWORD}, headers=URL_HEADER, follow_redirects=True)
     yield client
-
     client.get('/logout', follow_redirects=True)
 
 
 def getCSRFToken(running_client, form_URL):
-
     r = running_client.get(form_URL)
     soup = bs(r.text, 'html.parser')
-    print(1)
-    print(r.text)
-    print(soup.find('login', {'id': 'csrf_token'}))
-    csrf_token = soup.find('input', {'id': 'csrf_token'})['value']
-    print(csrf_token)
+    csrf_token = soup.find('meta', {'id': 'csrf-token'})['content']
     return csrf_token

@@ -1,13 +1,5 @@
-def test_signup_form(signup_client):
-    # Signs the user up and checks they are being redirected to login
-    response = signup_client.post('/signup', data={'name': 'Test Name', 
-                                            'email': 'nonrealuserfortesting@gmail.com', 
-                                            'password': 'secret_password', 
-                                            'confirm_password': 'secret_password'
-                                            })
+from server.tests.conftest import getCSRFToken
 
-    assert response.status_code == 302
-    assert response.location == '/'  
 
 def test_correct_password(auth_client):
     """Test form submission with correct password."""
@@ -17,7 +9,7 @@ def test_correct_password(auth_client):
     # assert response.status_code == 302
     # assert response.location == '/dashboard'
 
-    response = auth_client.post('/dashboard', follow_redirects=True)
+    response = auth_client.get('/dashboard', follow_redirects=True)
     assert response.status_code == 200
 
 def test_incorrect_password(client):
@@ -38,6 +30,18 @@ def test_logout_redirect(client):
     # Succesfully redirects a single time
     assert response.status_code == 200
     assert len(response.history) == 1
+
+def test_signup_form(client):
+    # Signs the user up and checks they are being redirected to login
+    response = client.post('/signup', data={'csrf_token': getCSRFToken(client,'/'),
+                                            'name': 'Test Name',
+                                            'email': 'nonrealuserfortesting@gmail.com',
+                                            'password': 'secret_password',
+                                            'confirm_password': 'secret_password'}
+                                                    )
+
+    assert response.status_code == 302
+    assert response.location == '/'
 
 # def test_signup_no_name(signup_client):
 #     # still not in the correct format

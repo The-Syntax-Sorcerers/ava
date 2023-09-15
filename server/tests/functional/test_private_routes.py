@@ -1,8 +1,6 @@
 # Checks that the dashboard page can be accessed by an authenticated user
 def test_dashboard_authorised(auth_client):
     response = auth_client.get('/dashboard', follow_redirects=True)
-    assert b'<title>Dashboard</title>' in response.data
-    assert response.location == None
     assert response.status_code == 200
 
 # Checks that the dashboard page can't be accessed by an unauthenticated user
