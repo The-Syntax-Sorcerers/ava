@@ -19,7 +19,7 @@ export default function Dashboard({subjects} : {subjects: [SubjectObj]}) {
         <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-12">
                     <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {subjects.map((subject: SubjectObj, rkey: Key) => (

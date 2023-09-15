@@ -25,7 +25,7 @@ function FooterLinkElement({route, rkey}: {route: string[], rkey: Key}) {
 // A footer containing copyright information and a list of link elements
 export default function Footer() {
     return (
-        <footer className="bg-footer">
+        <footer className="bg-footer w-full">
             <div className="flex justify-center items-center">
                 <div className="mx-4 my-4">
                     <p className="text-center">© The-Syntax-Sorcerers 2023
