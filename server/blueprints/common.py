@@ -52,3 +52,21 @@ def assignments():
         "random": 69,
     }
     return flask.render_template('routeAssignments/index.html', template_data=template_data)
+
+# this is a placeholder for the privacy policy and the profile page
+@common.route('/privacy_policy')
+@common.route('/profile')
+def privacy_policy():
+    print("place holder for testing")
+    template_data = {
+        "all_assignments": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Some BS Assignment"},
+                            {"due_date": "10/17/2023", "id": "COMP123456",
+                             "name": "Another BS assignment"},
+                            {"due_date": "10/01/2023", "id": "COMP123456",
+                             "name": "What is this Assignment?!?!?!?"},
+                            {"due_date": "08/30/2023", "id": "COMP123456",
+                             "name": "Grok Worksheet 1"},
+                            {"due_date": "02/26/2023", "id": "COMP123456", "name": "Grok Worksheet 2"}],
+        "random": 69,
+    }
+    return flask.render_template('routeAssignments/index.html', template_data=template_data)

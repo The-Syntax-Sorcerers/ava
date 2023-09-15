@@ -13,6 +13,13 @@ from server.models import Subject
 # Used for cleanup
 from server.models import User
 
+TEST_EMAIL = "test@gmail.com"
+TEST_PASSWORD = "test"
+
+URL_HEADER = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+
+
 # Creates a test version of the application
 @pytest.fixture
 def signup_app():
@@ -49,20 +56,25 @@ def signup_client(signup_app):
 def auth_client(client):
 
     # not in the correct format
-    test_email = "test@gmail.com"
-    test_password = "test"
+    csrf_token = getCSRFToken(client, '/')
 
-    head= {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+    r = client.post('/', data={'csrf_token': csrf_token, 'email': TEST_EMAIL, 'password': TEST_PASSWORD}, headers=URL_HEADER, follow_redirects=True)
 
-    r = client.get('/')
-
-    soup = bs(r.text, 'html.parser')
-    csrf_token = soup.find('input', {'id': 'csrf_token'})['value']
-
-    r = client.post('/', data={'csrf_token': csrf_token, 'email': test_email, 'password': test_password}, headers=head, follow_redirects=True)
-
+    print("is this working??")
     print(r.text)
 
     yield client
 
     client.get('/logout', follow_redirects=True)
+
+
+def getCSRFToken(running_client, form_URL):
+
+    r = running_client.get(form_URL)
+    soup = bs(r.text, 'html.parser')
+    print(1)
+    print(r.text)
+    print(soup.find('login', {'id': 'csrf_token'}))
+    csrf_token = soup.find('input', {'id': 'csrf_token'})['value']
+    print(csrf_token)
+    return csrf_token
