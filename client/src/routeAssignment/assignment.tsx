@@ -79,7 +79,7 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
                         
                     }
                     {showModal ? (
-                        <VerificationSuccess setShowModal={setShowModal} result={true}/>
+                        <VerificationSuccess setShowModal={setShowModal} result={false}/>
                     ):null
                     }
                     

@@ -4,7 +4,7 @@ export default function LoginForm({ setShowModal }) {
 
 
     return (
-        <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25">
+        <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25 backdrop-blur-sm">
             <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded-lg shadow-2xl text-center">
                 <div className="relative w-auto my-6 mx-auto max-w-sm text-center">
                     <h1 className="text-xl font-semibold"> Log In </h1>
