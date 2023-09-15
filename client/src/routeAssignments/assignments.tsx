@@ -1,6 +1,7 @@
 import { Key } from 'react'
 import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
 import AssignmentCard, {assignmentObj} from '../components/assignmentCard.tsx'
+import Footer from '../components/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -9,7 +10,7 @@ export default function AssignmentsPage({upcoming, past}) {
     console.log("Rendering Ass with Assignments:", upcoming, past)
 
     return (
-        <div className="bg-main bg-cover min-h-screen">
+        <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
             <main className="container mx-auto p-8">
                 <div className="container mx-auto px-4 py-20">
@@ -28,8 +29,8 @@ export default function AssignmentsPage({upcoming, past}) {
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
-
     )
 }
 

@@ -1,6 +1,7 @@
 import { Key } from 'react'
 import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
 import AssignmentCard, {assignmentObj} from '../components/assignmentCard.tsx'
+import Footer from '../components/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -31,6 +32,7 @@ export default function SubjectPage({upcoming, past, subject}) {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </div>
 
     )

@@ -3,6 +3,7 @@ import LoginForm from '../components/loginModal.tsx';
 import SignupForm from '../components/signUpModal.tsx';
 import AnonymousNavbar from '../components/AnonymousNavbar.tsx';
 import DescriptionCards from '../components/descriptionCards.tsx';
+import Footer from '../components/Footer.tsx'
 
 import logo from '../assets/logo.svg';
 import pic from '../assets/idea.png';
@@ -25,7 +26,7 @@ export default function LandingPage() {
 
 
     return (
-        <div className="flex justify-center items-center mx-auto overflow-visible">
+        <div className="flex flex-col justify-center items-center mx-auto overflow-visible">
             <AnonymousNavbar
                 handleLoginClick={handleLoginClick}
                 handleSignupClick={handleSignupClick}
@@ -64,6 +65,7 @@ export default function LandingPage() {
                     )}
                 </div>
             ) : null}
+            <Footer />
         </div>
     );
 }

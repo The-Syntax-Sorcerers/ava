@@ -4,6 +4,7 @@ import Dropzone from '../components/dropzone.tsx'
 import UploadButton from '../components/uploadButton.tsx'
 import UploadPreview from '../components/uploadPreview.tsx'
 import VerificationSuccess from '../components/verificationSuccessModal.tsx'
+import Footer from '../components/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -35,7 +36,7 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
     };
 
     return (
-        <div className="bg-main bg-cover min-h-screen">
+        <div className="bg-main bg-cover min-h-screen flex flex-col">
             <LoggedInNavbar />
             <main className="container mx-auto p-8">
                 <div className="container mx-auto px-4 py-20">
@@ -82,9 +83,9 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
                         <VerificationSuccess setShowModal={setShowModal} result={false}/>
                     ):null
                     }
-                    
                 </div>
             </main>
+            <Footer/>
         </div>
 
     )
