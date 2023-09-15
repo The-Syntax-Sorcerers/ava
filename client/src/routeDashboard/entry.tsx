@@ -5,11 +5,11 @@ import Dashboard from './dashboard'
 
 if ((globalThis as any).template_data === undefined) {
     (globalThis as any).template_data = {
-        "subjects": [{"id": "BSBS873295", "name": "Intro to BS"},
-                     {"id": "CHEM992376", "name": "Scuffed Chemisty"},
-                     {"id": "COMP431242", "name": "Bad Physics"},
-                     {"id": "CODD123456", "name": "Call of Duty"},
-                     {"id": "CREED42069", "name": "Assiassians Creed"}],
+        "subjects": [{"id": "BSBS873295", "name": "Intro to BS", "link": "/subject"},
+                     {"id": "CHEM992376", "name": "Scuffed Chemisty", "link": "/assignments"},
+                     {"id": "COMP431242", "name": "Bad Physics", "link": "/assignments"},
+                     {"id": "CODD123456", "name": "Call of Duty", "link": "/assignments"},
+                     {"id": "CREED42069", "name": "Assiassians Creed", "link": "/assignments"}],
         "random": 69,
     };
     console.log("Mock data:", (globalThis as any).template_data)

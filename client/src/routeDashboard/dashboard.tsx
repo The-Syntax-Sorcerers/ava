@@ -6,6 +6,7 @@ import { Key } from 'react'
 interface SubjectObj {
     name: string;
     id: string;
+    link: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -17,8 +18,8 @@ export default function Dashboard({subjects} : {subjects: [SubjectObj]}) {
     return (
         <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
-            <main className="container mx-auto flex-grow box-border p-40 min-h-screen">
-                <div className="container mx-auto px-4">
+            <main className="container mx-auto flex-grow box-border pt-28 w-5/6">
+                <div className="container mx-auto">
                     <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {subjects.map((subject: SubjectObj, rkey: Key) => (
