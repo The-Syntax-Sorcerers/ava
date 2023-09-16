@@ -1,5 +1,6 @@
 import logo from "../assets/logo.svg";
 import menu from "../assets/menu.svg";
+import DropdownList from "./DropdownList";
 import { Key } from 'react';
 import { useState } from 'react';
 
@@ -39,7 +40,7 @@ export default function LoggedInNavbar() {
 
     return (
         <>
-            <nav className="fixed top-5 left-0 w-full flex justify-center items-center">
+            <nav className="fixed top-5 left-0 w-full flex justify-center items-center z-10">
                 <div className="w-5/6 bg-main px-6 py-3 drop-shadow-lg rounded-md">
                 <div className="flex container mx-auto px-4 justify-between items-center">
                     <div className="flex items-center">
@@ -53,14 +54,10 @@ export default function LoggedInNavbar() {
                             ))}
                         </ul>
                         {/* Dropdown menu element */}
-                        <button onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium ${isClicked ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
+                        <button onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 ${isClicked ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
                             <img className="" src={menu} alt="Ava Logo"/>
                             {isClicked ? (
-                                <div className="dropdown-content">
-                                    <div>Light/Dark Mode</div>
-                                    <a href="#Settings">Settings</a>
-                                    <a href="#logout">Log Out</a>
-                                </div>
+                                <DropdownList />
                             ) : null }
                         </button>
                     </div>
