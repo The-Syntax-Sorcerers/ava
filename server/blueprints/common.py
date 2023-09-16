@@ -23,8 +23,12 @@ def index(loginform=None, signupform=None):
 
 @common.route('/privacy_policy')
 def privacy_policy():
-    print("Serving Privacy Policy")
-    return flask.render_template('routePrivacyPolicy/index.html')
+    if flask_login.current_user.is_authenticated:
+        print("Serving Authenticated Privacy Policy")
+        return flask.render_template('routePrivacyPolicy/index.html', auth_user=True)
+    else:
+        print("Serving Anonymous Privacy Policy")
+        return flask.render_template('routePrivacyPolicy/index.html', auth_user=False)
 
 
 @common.route('/dashboard')

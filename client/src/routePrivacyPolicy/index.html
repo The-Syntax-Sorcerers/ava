@@ -7,7 +7,8 @@
     <title>Ava - Privacy Policy</title>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- data-auth value comes from the flask routing and indicates the authorisation status of the current user -->
+    <div id="root" data-auth="{{ auth_user }}"></div>
     <script type="module" src="./entry.tsx"></script>
   </body>
 </html>
