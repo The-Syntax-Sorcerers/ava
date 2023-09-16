@@ -25,7 +25,7 @@ export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
     };
    
     return (
-        <div className="bg-main bg-cover flex flex-col min-h-screen">
+        <div className="bg-cover flex flex-col min-h-screen">
             { auth_user ? (
                 <LoggedInNavbar />
             ) : (
@@ -35,8 +35,8 @@ export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
                 />
             )}
             
-            <main className="container mx-auto flex-grow box-border p-40 pb-10">
-                <div className="mb-4 flex flex-col justify-center items-center bg-card-hover rounded-lg shadow-md p-4">
+            <main className="container mx-auto flex-grow box-border pt-28 pb-10 w-5/6">
+                <div className="mb-4 flex flex-col justify-center items-center bg-slate-50 rounded-lg shadow-md p-4">
                     <div className="mb-4 flex flex-col justify-center items-center">
                         <h1 className='text-3xl font-bold'>Privacy Policy</h1>
                         <p className='text-lg'>Last updated: { editDate }</p>

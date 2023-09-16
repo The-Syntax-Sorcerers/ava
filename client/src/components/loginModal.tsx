@@ -58,7 +58,7 @@ export default function LoginForm({ setShowModal }) {
 
                         {/* <!--Register link--> */}
                         <div className="mb-6 flex items-center justify-center">
-                        <p className="mt-6 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                        <p className="mt-6 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
                             Not a member?<a className="text-blue-700 transition duration-150 ease-in-out hover:text-blue-800 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
                             data-te-ripple-init
                             data-te-ripple-color="light"

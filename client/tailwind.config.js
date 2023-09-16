@@ -19,7 +19,7 @@ export default {
             'content': '#291334',
             'shadow': '#000000',
             'footer': '#E8E8E8',
-            'lighter-text': '#838583',
+            'lighter': '#838583',
         },
     },
   },
