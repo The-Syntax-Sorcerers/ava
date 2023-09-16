@@ -52,10 +52,12 @@ export default function LoggedInNavbar() {
                                 <NavBarElement route={route} rkey={rkey} />
                             ))}
                         </ul>
-                        <button onClick={handleButtonClick} className="ml-4 rounded-lg px-3 py-2 font-medium hover:bg-button-pink bg-transparent {isClicked ? (bg-button-pink) : (bg-button-pink-darker)}">
+                        {/* Dropdown menu element */}
+                        <button onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium ${isClicked ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
                             <img className="" src={menu} alt="Ava Logo"/>
                             {isClicked ? (
                                 <div className="dropdown-content">
+                                    <div>Light/Dark Mode</div>
                                     <a href="#Settings">Settings</a>
                                     <a href="#logout">Log Out</a>
                                 </div>
