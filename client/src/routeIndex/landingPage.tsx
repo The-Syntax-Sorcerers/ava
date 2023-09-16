@@ -8,8 +8,10 @@ import pic from '../assets/idea.png';
 
 
 export default function LandingPage() {
-    const [showModal, setShowModal] = useState(false);
-    const [showLoginForm, setShowLoginForm] = useState(true);
+    const data = (globalThis as any).template_data
+
+    const [showModal, setShowModal] = useState(data.showModal);
+    const [showLoginForm, setShowLoginForm] = useState(data.showLogin);
 
 
     const handleLoginClick = () => {
@@ -21,7 +23,6 @@ export default function LandingPage() {
         setShowModal(true);
         setShowLoginForm(false);
     };
-
 
     return (
         <div className="flex justify-center items-center h-screen">

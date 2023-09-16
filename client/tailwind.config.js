@@ -13,6 +13,7 @@ export default {
         'button-pink-darker': '#EA80A7',
         'button-yellow': '#EDAE3A',
         'button-yellow-darker': '#EDAE3A',
+        'error-red': '#EF4444',
         'card': '#EFEAE6',
         'content': '#291334',
         'shadow': '#000000'

@@ -7,9 +7,12 @@ if ((globalThis as any).template_data === undefined) {
   (globalThis as any).template_data = JSON.stringify({
     result: "No Template Data Received"
   });
+  console.log("Mock data:", (globalThis as any).template_data)
 }
-const template_data: { result: string } = JSON.parse((globalThis as any).template_data);
-console.log("Received template_Data ==>", template_data)
+else {
+    console.log("Received date from server:", (globalThis as any).template_data)
+}
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

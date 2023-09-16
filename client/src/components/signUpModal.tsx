@@ -4,24 +4,31 @@
 // @ts-ignore
 export default function SignupForm({ setShowModal }) {
 
+    const data = (globalThis as any).template_data
+    const receivedError = Object.prototype.hasOwnProperty.call(data, "error");
     
-    const filledForm = (globalThis as any).template_data.LoginForm
-    console.log("filled form Signup: ", filledForm)
-    if(filledForm !== undefined) {
-        
-        // Init Form here
 
-        
-
-
+    const filledForm = Object.prototype.hasOwnProperty.call(data, "signupform") ? data.signupform : null;
+    let filledName = "", filledEmail = "";
+    if(filledForm) {
+        filledName = Object.prototype.hasOwnProperty.call(filledForm, "name") ? filledForm.name : "";
+        filledEmail = Object.prototype.hasOwnProperty.call(filledForm, "email") ? filledForm.email : "";
     }
-
 
     return (
         <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25">
             <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded shadow-2xl">
                 <h1> Sign Up </h1>
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
+
+                    {/* Error message */}
+                    {receivedError ? (
+                        <div className="relative mb-6">
+                            <p className="text-error-red">{receivedError}</p>
+                        </div>
+                    ) : null}
+                
+                    {/* Sign up form */}
                     <form method="post" action="/signup">
                         {/* First Name input */}
                         <input name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
@@ -32,6 +39,7 @@ export default function SignupForm({ setShowModal }) {
                                 className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                                 id="name"
                                 name="name"
+                                defaultValue={filledName}
                                 placeholder="Preferred Name" required
                             />
                         </div>
@@ -42,6 +50,7 @@ export default function SignupForm({ setShowModal }) {
                                 type="email" name="email"
                                 className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                                 id="signupEmail"
+                                defaultValue={filledEmail}
                                 placeholder="Enter Email address" required
                             />
                         </div>

@@ -5,15 +5,17 @@
     <link rel="icon" type="image/svg+xml" href="/assets/logo-565dfa49.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ava - Dashboard</title>
-    <script type="module" crossorigin src="/assets/dashboard-5fee9fad.js"></script>
+    <script type="module" crossorigin src="/assets/dashboard-7c3f4ddb.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/logo-acb7ac67.js">
     <link rel="modulepreload" crossorigin href="/assets/LoggedInNavbar-65bda572.js">
-    <link rel="stylesheet" href="/assets/index-b2695994.css">
+    <link rel="stylesheet" href="/assets/index-eec47854.css">
   </head>
   <body>
     <div id="root"></div>
     <script>
-      globalThis.template_data = {{ template_data | tojson | safe }}
+      {% if template_data %}
+          globalThis.template_data = {{ template_data | tojson | safe }};
+      {% endif %}
       console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
     </script>
     
