@@ -1,4 +1,6 @@
 import os
+
+import flask
 from flask_login import LoginManager
 from supabase import create_client, Client
 
@@ -24,3 +26,21 @@ else:
     supabase_sec = None
 
 login_manager = LoginManager()
+
+
+def get_cookies():
+    try:
+        return flask.session['cookies']
+    except KeyError:
+        return {}
+
+
+def set_cookies(cook):
+    flask.session['cookies'] = cook
+
+
+def clear_cookies():
+    try:
+        flask.session['cookies'] = {}
+    except KeyError:
+        return {}

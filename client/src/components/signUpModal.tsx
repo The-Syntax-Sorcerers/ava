@@ -5,8 +5,8 @@
 export default function SignupForm({ setShowModal }) {
 
     const data = (globalThis as any).template_data
-    const receivedError = Object.prototype.hasOwnProperty.call(data, "error");
-    
+    const receivedError = Object.prototype.hasOwnProperty.call(data, "signup_error") ? data.signup_error : null;
+    console.log("Received error:", receivedError);
 
     const filledForm = Object.prototype.hasOwnProperty.call(data, "signupform") ? data.signupform : null;
     let filledName = "", filledEmail = "";

@@ -3,6 +3,7 @@
 export default function LoginForm({ setShowModal }) {
 
     const data = (globalThis as any).template_data
+    const receivedError = Object.prototype.hasOwnProperty.call(data, "login_error") ? data.login_error : null;
     const filledForm = Object.prototype.hasOwnProperty.call(data, "loginform") ? data.loginform : null;
     let filledEmail = "";
     if(filledForm){
@@ -16,9 +17,9 @@ export default function LoginForm({ setShowModal }) {
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
 
                     {/* Error message */}
-                    {Object.prototype.hasOwnProperty.call(data, "error") ? (
+                    {receivedError ? (
                         <div className="relative mb-6">
-                            <p className="text-error-red">{data.error}</p>
+                            <p className="text-error-red">{receivedError}</p>
                         </div>
                     ) : null}
 
