@@ -40,7 +40,8 @@ export default function SignupForm({ setShowModal }) {
                                 id="name"
                                 name="name"
                                 defaultValue={filledName}
-                                placeholder="Preferred Name" required
+                                placeholder="Preferred Name" 
+                                required
                             />
                         </div>
 
@@ -51,7 +52,8 @@ export default function SignupForm({ setShowModal }) {
                                 className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                                 id="signupEmail"
                                 defaultValue={filledEmail}
-                                placeholder="Enter Email address" required
+                                placeholder="Enter Email address" 
+                                required
                             />
                         </div>
 
@@ -61,7 +63,8 @@ export default function SignupForm({ setShowModal }) {
                                 type="password" name="password"
                                 className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                                 id="signupPassword"
-                                placeholder="Password" required
+                                placeholder="Password" 
+                                required
                             />
                         </div>
 
@@ -71,7 +74,8 @@ export default function SignupForm({ setShowModal }) {
                                 type="password" name="confirmPassword"
                                 className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                                 id="confirmPassword"
-                                placeholder="Confirm Password" required
+                                placeholder="Confirm Password" 
+                                required
                             />
                         </div>
 

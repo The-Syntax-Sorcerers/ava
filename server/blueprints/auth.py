@@ -108,7 +108,7 @@ def signup():
                     "showModal": True,
                     "showLogin": False,
                     "status": e.code,
-                    "signup_error": "User already exists!",
+                    "signup_error": "User email already exists!",
                     "signupform": request.form
                 }
             else:
