@@ -6,7 +6,7 @@ import DescriptionCards from '../components/descriptionCards.tsx';
 import Footer from '../components/Footer.tsx'
 
 import logo from '../assets/logo.svg';
-import pic from '../assets/idea.png';
+import pic from '../assets/idea2.svg';
 
 
 export default function LandingPage() {
