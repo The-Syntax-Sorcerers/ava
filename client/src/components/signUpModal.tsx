@@ -119,7 +119,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
 
                     {/* Close button */}
                     <button
-                        className="rounded-lg text-slate-900 mt-4 bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="rounded-lg text-slate-900bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                     >
