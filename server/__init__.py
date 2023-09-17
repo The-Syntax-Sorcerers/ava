@@ -1,8 +1,7 @@
 import os
 import socket
 
-import flask_login
-from flask import Flask, send_from_directory
+from flask import Flask
 
 from server.extensions import login_manager, supabase_sec
 from server.models import User, Subject, Assignment, Storage
@@ -12,7 +11,8 @@ from server.blueprints.auth import auth
 socket.setdefaulttimeout(15)
 test_config = None
 
-app = Flask(__name__, static_url_path='', static_folder=os.getcwd()+"/client/dist")
+app = Flask(__name__, static_url_path='',
+            static_folder=os.getcwd() + "/client/dist")
 app.config.from_mapping(
     SECRET_KEY='chutiya',
 )
@@ -32,7 +32,6 @@ app.register_blueprint(common)
 app.register_blueprint(auth)
 
 ######################## Test Config ################################
-
 
 
 # u = User(9, 'test@gmail.com', 'test')

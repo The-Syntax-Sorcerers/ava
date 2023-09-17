@@ -1,13 +1,20 @@
 from flask_login import UserMixin
-from supabase import Client
 import datetime
 
 from server.extensions import supabase_anon, supabase_sec
 
+TEST_USER = {'name': 'Test Name',
+             'email': 'nonrealuserfortesting@gmail.com',
+             'password': 'secret_password',
+             'confirm_password': 'secret_password'}
+
+
 class User(UserMixin):
 
     def __init__(self, tid, email, name):
-        self.id = tid  # This variable needs to be called `id` to shadow variable of parent class `UserMixin`
+        # This variable needs to be called
+        # `id` to shadow variable of parent class `UserMixin`
+        self.id = tid
         self.name = name
         self.email = email
 
@@ -69,8 +76,17 @@ class User(UserMixin):
     @staticmethod
     # Deletes user created during testing
     def delete_test_user():
-        supabase_sec.table('User').delete().eq('email', 'nonrealuserfortesting@gmail.com').execute()
+        supabase_sec.table('User').delete().eq('email', TEST_USER['email']).execute()
         return None
+
+    @staticmethod
+    # gets test user credentials
+    def get_test_user(loginData=False):
+        if supabase_sec.table('User').select('*').eq('email', TEST_USER['email']):
+            User.delete_test_user()
+        if loginData:
+            return {TEST_USER['email'], TEST_USER['password']}
+        return TEST_USER.copy()
 
     @staticmethod
     def supabase_signup_wrapper(email, password, name):
@@ -94,7 +110,8 @@ class Subject:
         self.name = subject_name
 
     def get_students(self):
-        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
+        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id',
+        # self.subject_id).execute()
         res = supabase_sec.table('StudentSubject').select('student_id').eq('subject_id', self.subject_id).execute()
         students = []
         for student_dict in res.data:
@@ -102,16 +119,19 @@ class Subject:
         return students
 
     def get_assignments(self):
-        res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('Assignment').select('*').eq(
+            'subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
-            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']))
-        return assigns 
+            assigns.append(Assignment(r['id'], r['subject_id'],
+                                      r['name'], r['due_datetime']))
+        return assigns
 
     # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
-        res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
+        res = supabase_sec.table('Subject').select(
+            '*').eq('id', subject_id).execute().data
         if res:
             res = res[0]
             return Subject(res['id'], res['professor_email'], res['name'])
@@ -126,44 +146,65 @@ class Subject:
             subs.append(Subject(r['id'], r['professor_email'], r['name']))
         return subs
 
-
     def __repr__(self):
-        return f'<Subject> subject_id: {self.subject_id}, prof_email: {self.professor_email}'
+        return (f'<Subject> subject_id:'
+                f' {self.subject_id},'
+                f' prof_email: {self.professor_email}')
 
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name, due_datetime=None):
+    def __init__(self, assignment_id, subject_id,
+                 assignment_name, due_datetime=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
         if due_datetime:
-            self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
+            self.due_datetime = datetime.datetime.strptime(
+                due_datetime, "%Y-%m-%dT%H:%M:%S%z")
             # Seperates datetime into date and time
             self.due_date = self.due_datetime.date()
             self.due_time = self.due_datetime.time()
-        else :
-            self.due_datetime = self.due_date = self.due_time = None
+        else:
+            self.due_datetime = (
+                self).due_date = (
+                self).due_time = None
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
     def get_assignment(subject_id, assignment_id):
-        res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
+        res = supabase_sec.table(
+            'Assignment').select('*').eq(
+            'id', assignment_id).eq(
+            'subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['due_datetime'])
+            return Assignment(res['id'],
+                              res['subject_id'],
+                              res['name'],
+                              res['due_datetime'])
         return None
 
     # Returns all assignments using a given subject_id
     @staticmethod
     def get_all_assignments(subject_id):
-        res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+        res = supabase_sec.table(
+            'Assignment').select('*').eq(
+            'subject_id', subject_id).execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']) for r in res]
+            return [Assignment(r['id'],
+                               r['subject_id'],
+                               r['name'],
+                               r['due_datetime']) for r in res]
         return None
 
     def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_datetime: {self.due_datetime}, due_date: {self.due_date}, due_time: {self.due_time}'
+        return (f'<Assignment> name: {self.name},'
+                f' assignment_id: {self.id},'
+                f' subject_id: {self.subject_id},'
+                f' due_datetime: {self.due_datetime},'
+                f' due_date: {self.due_date},'
+                f' due_time: {self.due_time}')
 
 
 class Storage:
@@ -180,7 +221,8 @@ class Storage:
     def upload_assignment(self, file, subject_id, assignment_id, user_id):
         path = self.construct_path(subject_id, assignment_id, user_id)
         if not self.exists_assignment_bool(subject_id, assignment_id, user_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
+            return self.supabase_sec.storage.from_(self.ass_bucket).upload(
+                path, file)
         return None
 
     def download_assignment(self, subject_id, assignment_id, user_id):
@@ -193,16 +235,20 @@ class Storage:
         return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
 
     def exists_assignment(self, subject_id, assignment_id, user_id):
-        # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
+        res = self.supabase_sec.storage.from_(self.ass_bucket).list(
+            f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return [obj]
         return []
 
     def exists_assignment_bool(self, subject_id, assignment_id, user_id):
-        # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
+        res = self.supabase_sec.storage.from_(
+            self.ass_bucket).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
