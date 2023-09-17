@@ -8,16 +8,15 @@ import Footer from '../components/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const PDF1_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
 export default function AssignmentPage({assignment, user_type}: {assignment: any, user_type: any}) {
     console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
     const [fileUploaded, setFileUploaded] = useState(false);
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
-    const [file, setFile] = useState({ url: PDF1_URL });
+    // const [file, setFile] = useState({ url: PDF1_URL });
  
 
-    const handleUpload = (event: any) => {
+    const handleUpload = () => {
         setFileUploaded(true);
         setFileSubmitted(false);
         // const fileReader = new window.FileReader();
