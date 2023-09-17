@@ -44,3 +44,9 @@ def clear_cookies():
         flask.session['cookies'] = {}
     except KeyError:
         return {}
+
+
+def get_and_clear_cookies():
+    cookies = get_cookies()
+    clear_cookies()
+    return cookies

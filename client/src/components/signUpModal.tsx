@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export default function SignupForm({ setShowModal }) {
+export default function SignupForm({ setShowModal, handleLoginClick }) {
 
     const data = (globalThis as any).template_data
     const receivedError = Object.prototype.hasOwnProperty.call(data, "signup_error") ? data.signup_error : null;
@@ -95,6 +95,28 @@ export default function SignupForm({ setShowModal }) {
                         
                         
                     </form>
+
+                    {/* <!--Login link--> */}
+                    <div className="mb-5 flex items-center justify-center">
+                        <div>
+                            <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                                Already a member?
+                            </p>
+                        </div>
+                            
+                        <div>
+                            <button
+                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={handleLoginClick}
+                                >
+                                Log In
+                            </button>
+                        </div>
+                            
+                        
+                    </div>
+
                     {/* Close button */}
                     <button
                         className="rounded-lg text-slate-900 mt-4 bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

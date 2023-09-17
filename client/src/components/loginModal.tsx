@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export default function LoginForm({ setShowModal }) {
+export default function LoginForm({ setShowModal, handleSignupClick }) {
 
     const data = (globalThis as any).template_data
     const receivedError = Object.prototype.hasOwnProperty.call(data, "login_error") ? data.login_error : null;
@@ -76,20 +76,32 @@ export default function LoginForm({ setShowModal }) {
                         >
                         Log in
                         </button>
-
-                        {/* <!--Register link--> */}
-                        <div className="mb-6 flex items-center justify-center">
-                        <p className="mt-6 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
-                            Not a member?<a className="text-blue-700 transition duration-150 ease-in-out hover:text-blue-800 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            href="/signup"> Sign Up </a>
-                        </p>
-                        
-                        </div>
                     </form>
+
+                    {/* <!--Register link--> */}
+                    <div className="mb-5 flex items-center justify-center">
+                        <div>
+                            <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                                Not a member?
+                            </p>
+                        </div>
+                            
+                        <div>
+                            <button
+                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={handleSignupClick}
+                                >
+                                Sign Up
+                            </button>
+                        </div>
+                            
+                        
+                    </div>
+
+                    {/* <!--Register link--> */}
                     <button
-                        className="rounded-lg text-slate-900 mt-4 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="rounded-lg text-slate-900  mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                         >
