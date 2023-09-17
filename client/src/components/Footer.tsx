@@ -6,12 +6,12 @@ const routes = [
 ]
 
 // Allows adding link elements to the footer
-function FooterLinkElement({route, rkey}: {route: string[], rkey: Key}) {
+function FooterLinkElement({route}: {route: string[]}) {
     const title = route[0]
     const url = route[2]
 
     return (
-        <li key={rkey} className="list-none">
+        <li className="list-none">
             <div className="flex justify-center items-center -ml-3 mr-1">
                 <p>|&nbsp;</p>
                 <a href={url} className="pr-3 py-2 hover:text-button-pink">
@@ -32,8 +32,8 @@ export default function Footer() {
                     </p>
                 </div>
                 <div className="flex justify-center items-center">
-                    {routes.map((route, rkey: Key) => (
-                        <FooterLinkElement route={route} rkey={rkey} />
+                    {routes.map((route, key: Key) => (
+                        <FooterLinkElement route={route} key={key} />
                     ))}
                 </div>
             </div>

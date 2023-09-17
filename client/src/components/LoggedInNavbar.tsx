@@ -8,12 +8,12 @@ const routes = [
     ['Log Out', '/logout'],
 ]
 
-function NavBarElement({route, rkey}: {route: string[], rkey: Key}) {
+function NavBarElement({route}: {route: string[]}) {
     const title = route[0];
     const url = route[1];
 
     return (
-        <li key={rkey}>
+        <li>
             <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
                 {title}
             </a>
@@ -32,8 +32,8 @@ export default function LoggedInNavbar() {
                         <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
                     </div>
                     <ul className="flex space-x-4">
-                        {routes.map((route, rkey: Key) => (
-                            <NavBarElement route={route} rkey={rkey} />
+                        {routes.map((route, key: Key) => (
+                            <NavBarElement route={route} key={key} />
                         ))}
                     </ul>
                 </div>

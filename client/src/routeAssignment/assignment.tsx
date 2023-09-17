@@ -12,11 +12,12 @@ const PDF1_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/
 export default function AssignmentPage({assignment, user_type}: {assignment: any, user_type: any}) {
     console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
     const [fileUploaded, setFileUploaded] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
-    // const [file, setFile] = useState({ url: PDF1_URL });
+    const [file, setFile] = useState({ url: PDF1_URL });
+ 
 
-    const handleUpload = () => {
+    const handleUpload = (event: any) => {
         setFileUploaded(true);
         setFileSubmitted(false);
         // const fileReader = new window.FileReader();
@@ -29,10 +30,11 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
         
         // fileReader.readAsDataURL(file);
     };
+    
     const handleSubmit = () => {
         setFileSubmitted(true);
         setFileUploaded(false);
-        setShowModal(true)
+        setShowSubmitModal(true)
     };
 
     return (
@@ -79,8 +81,8 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
                         )
                         
                     }
-                    {showModal ? (
-                        <VerificationSuccess setShowModal={setShowModal} result={false}/>
+                    {showSubmitModal ? (
+                        <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={false}/>
                     ):null
                     }
                 </div>

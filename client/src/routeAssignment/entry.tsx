@@ -7,7 +7,7 @@ if ((globalThis as any).template_data === undefined) {
     (globalThis as any).template_data = {
         "assignment": {"due_date": "12/31/2023", "id": "BSBS873295",
                        "name": "Don't Use ChatGPT", 
-                       "link": "/assignnent",
+                       "link": "/assignment",
                        "description": "Write stuff in your own words. Do not use ChatGPT or any AI to assist you. WE CAN TELL!!",
                        "marks": "???/100"},
         "user_type": "student"
