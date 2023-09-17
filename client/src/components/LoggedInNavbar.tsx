@@ -2,7 +2,7 @@ import logo from "../assets/logo.svg";
 import menu from "../assets/menu.svg";
 import DropdownList from "./DropdownList";
 import { Key } from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef} from 'react';
 
 const routes = [  
     ['Home', '/dashboard'],
@@ -25,18 +25,39 @@ function NavBarElement({route, rkey}: {route: string[], rkey: Key}) {
 }
 
 export default function LoggedInNavbar() {
-    const [isClicked, setIsClicked] = useState(false);
+    // The reference objects for the dropdown menu
+    const dropdownMenuButtonRef = useRef(null)
+    const dropdownMenuRef = useRef(null)
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isClosedByPage, setIsClosedByPage] = useState(false);
 
     const handleButtonClick = () => {
-        if (isClicked === true) {
-            console.log("set to false")
-            setIsClicked(false);
+        console.log('clicked')
+        if (isDropdownOpen) {
+            setIsDropdownOpen(false);
         }
         else {
-            console.log("set to true")
-            setIsClicked(true);
+            if (!isClosedByPage) {
+                setIsDropdownOpen(true);
+            }
+            else {
+                setIsClosedByPage(false);
+            }
         }
     };
+
+    const handlePageClick = () => {
+        if (dropdownMenuRef.current && dropdownMenuButtonRef.current && isDropdownOpen) {
+            console.log("set to false")
+            console.log('window')
+            setIsDropdownOpen(false);
+            setIsClosedByPage(true);
+        }
+    }
+
+    document.addEventListener('mousedown', handlePageClick)
+    document.querySelector('#navbar-menu-button')?.addEventListener('mousedown', handleButtonClick)
 
     return (
         <>
@@ -50,14 +71,16 @@ export default function LoggedInNavbar() {
                     <div className="flex items-center">
                         <ul className="flex space-x-4">
                             {routes.map((route, rkey: Key) => (
-                                <NavBarElement route={route} rkey={rkey} />
+                                <NavBarElement route={ route } rkey={ rkey } />
                             ))}
                         </ul>
                         {/* Dropdown menu element */}
-                        <button onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 ${isClicked ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
-                            <img className="" src={menu} alt="Ava Logo"/>
-                            {isClicked ? (
-                                <DropdownList />
+                        <button id='navbar-menu-button' ref={ dropdownMenuButtonRef } onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 focus: ${isDropdownOpen ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
+                            <img className="" src={ menu } alt="Ava Logo"/>
+                            {isDropdownOpen ? (
+                                <div ref={ dropdownMenuRef }>
+                                    <DropdownList />
+                                </div>
                             ) : null }
                         </button>
                     </div>
