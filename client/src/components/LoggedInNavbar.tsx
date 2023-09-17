@@ -14,7 +14,7 @@ function NavBarElement({route, rkey}: {route: string[], rkey: Key}) {
 
     return (
         <li key={rkey}>
-            <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-50 bg-black outline-slate-200 border-yellow-100">
+            <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
                 {title}
             </a>
         </li>
@@ -29,7 +29,7 @@ export default function LoggedInNavbar() {
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <img className="w-10 h-10" src={logo} alt="Ava Logo"/>
-                        <div className="text-white text-xl font-bold text-button-blue">AVA</div>
+                        <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
                     </div>
                     <ul className="flex space-x-4">
                         {routes.map((route, rkey: Key) => (

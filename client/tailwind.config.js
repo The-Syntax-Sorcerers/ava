@@ -15,8 +15,10 @@ export default {
         'button-yellow-darker': '#EDAE3A',
         'error-red': '#EF4444',
         'card': '#EFEAE6',
+        'card-hover': '#E7E2DE',
         'content': '#291334',
-        'shadow': '#000000'
+        'shadow': '#000000',
+        'footer': '#e8e8e8'
       },
     extend: {},
   },
