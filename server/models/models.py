@@ -4,6 +4,7 @@ import datetime
 
 from server.extensions import supabase_anon, supabase_sec
 
+
 class User(UserMixin):
 
     def __init__(self, tid, email, name):
@@ -60,10 +61,14 @@ class User(UserMixin):
 
 
 class Subject:
-    def __init__(self, subject_id, professor_email, subject_name):
+    def __init__(self, subject_id, description, professor_email, subject_name):
         self.subject_id = subject_id
+        self.description = description
         self.professor_email = professor_email
         self.name = subject_name
+
+    def __repr__(self):
+        return f'<Subject> subject_id: {self.subject_id}, sub_name: {self.name}, prof_email: {self.professor_email}'
 
     def get_students(self):
         # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
@@ -77,8 +82,8 @@ class Subject:
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
-            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']))
-        return assigns 
+            assigns.append(Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
+        return assigns
 
     # Returns a specific subject using a given subject_id
     @staticmethod
@@ -86,7 +91,7 @@ class Subject:
         res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
         if res:
             res = res[0]
-            return Subject(res['id'], res['professor_email'], res['name'])
+            return Subject(res['id'], res['description'], res['professor_email'], res['name'])
         return None
 
     # Returns every subject
@@ -95,27 +100,28 @@ class Subject:
         res = supabase_sec.table('Subject').select('*').execute()
         subs = []
         for r in res.data:
-            subs.append(Subject(r['id'], r['professor_email'], r['name']))
+            subs.append(Subject(r['id'], res['description'], r['professor_email'], r['name']))
         return subs
-
-
-    def __repr__(self):
-        return f'<Subject> subject_id: {self.subject_id}, prof_email: {self.professor_email}'
 
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name, due_datetime=None):
+    def __init__(self, assignment_id, subject_id, assignment_name, description, due_datetime=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
-        self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
+        self.description = description
+        self.due_datetime = due_datetime
         if due_datetime:
-            # Seperates datetime into date and time
+            # Separates datetime into date and time
+            self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
             self.due_date = self.due_datetime.date()
             self.due_time = self.due_datetime.time()
-        else :
+        else:
             self.due_date = self.due_time = None
+
+    def __repr__(self):
+        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_datetime: {self.due_datetime}, due_date: {self.due_date}, due_time: {self.due_time}'
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
@@ -123,7 +129,7 @@ class Assignment:
         res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['due_datetime'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['due_datetime'])
         return None
 
     # Returns all assignments using a given subject_id
@@ -131,11 +137,8 @@ class Assignment:
     def get_all_assignments(subject_id):
         res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['due_datetime']) for r in res]
-        return None
-
-    def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_datetime: {self.due_datetime}, due_date: {self.due_date}, due_time: {self.due_time}'
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']) for r in res]
+        return []
 
 
 class Storage:

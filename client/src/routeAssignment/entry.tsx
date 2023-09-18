@@ -21,9 +21,6 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AssignmentsPage 
-        assignment={(globalThis as any).template_data.assignment}
-        user_type={(globalThis as any).template_data.user_type}
-    />
+    <AssignmentsPage />
   </React.StrictMode>,
 )

@@ -28,11 +28,6 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AssignmentsPage 
-        upcoming={(globalThis as any).template_data.upcoming} 
-        past={(globalThis as any).template_data.past} 
-        subject={(globalThis as any).template_data.subject}
-
-    />
+    <AssignmentsPage/>
   </React.StrictMode>,
 )
