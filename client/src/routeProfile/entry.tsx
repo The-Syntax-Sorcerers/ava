@@ -16,8 +16,16 @@ if ((globalThis as any).template_data === undefined) {
                         {"due_date": "02/26/2023", "id": "COMP123456",
                         "name": "Grok Worksheet 2", "link": "/ass"}],
         "id": 1171234,
+        "allscores": [76, 82, 62, 56, 42, 91, 77, 7, 62],
         "score": 86,
     };
+    // Calculate average of allscores and round to whole number
+    let total = 0;
+    for(let i = 0; i < (globalThis as any).template_data.allscores.length; i++){
+        total += (globalThis as any).template_data.allscores[i];
+    }
+    (globalThis as any).template_data.score = Math.round(total / (globalThis as any).template_data.allscores.length);
+
     console.log("Mock data:", (globalThis as any).template_data)
 }
 else {
@@ -31,6 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       comparison={(globalThis as any).template_data.comparison}
       past={(globalThis as any).template_data.past}
       score={(globalThis as any).template_data.score}
+      allscores={(globalThis as any).template_data.allscores}
     />
   </React.StrictMode>,
 )
