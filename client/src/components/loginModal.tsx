@@ -81,7 +81,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* <!--Register link--> */}
                     <div className="mb-5 flex items-center justify-center">
                         <div>
-                            <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                            <p className="mt-4 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
                                 Not a member?
                             </p>
                         </div>
