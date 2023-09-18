@@ -111,3 +111,11 @@ def assignment():
         "user_type": "student"
     }
     return flask.render_template('routeAssignment/index.html', template_data=template_data)
+
+@common.route('/profile')
+@flask_login.login_required
+def profile():
+    print("Serving profile page")
+
+
+    return flask.render_template('routeProfile/index.html', template_data={})
