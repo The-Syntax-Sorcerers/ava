@@ -18,7 +18,8 @@ export default {
             'card-hover': '#E7E2DE',
             'content': '#291334',
             'shadow': '#000000',
-            'footer': '#e8e8e8'
+            'footer': '#E8E8E8',
+            'lighter': '#838583',
         },
     },
   },

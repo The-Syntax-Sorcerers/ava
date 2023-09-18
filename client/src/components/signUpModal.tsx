@@ -68,6 +68,12 @@ export default function SignupForm({ setShowModal }) {
                             />
                         </div>
 
+                        {/* Privacy Policy */}
+                        <div className="flex flex-grow justify-center text-center -mt-4 mb-4 text-sm">
+                            <p className="text-lighter">By clicking sign up you agree to our&nbsp;</p>
+                            <a href="/privacy_policy" className="text-blue-600 dark:bg-blue-500 hover:underline">Privacy Policy</a>
+                        </div>
+
                         {/* Sign up button */}
                         <button
                             type="submit"
