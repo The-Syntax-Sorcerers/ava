@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo-565dfa49.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ava - Assignments</title>
+    <script type="module" crossorigin src="/assets/assignments-44d0e525.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/Footer-53861639.js">
+    <link rel="modulepreload" crossorigin href="/assets/LoggedInNavbar-72cafa68.js">
+    <link rel="modulepreload" crossorigin href="/assets/assignmentCard-c723ffa3.js">
+    <link rel="stylesheet" href="/assets/index-f8f0e0e3.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      {% if template_data %}
+          globalThis.template_data = {{ template_data | tojson | safe }};
+      {% endif %}
+      console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+    </script>
+    
+  </body>
+</html>
