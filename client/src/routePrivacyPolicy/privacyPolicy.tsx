@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
     // The most recent edit date of the privacy policy
-    const editDate = '14/08/23'
+    const editDate = '18/09/23'
 
     const [showModal, setShowModal] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(true);
