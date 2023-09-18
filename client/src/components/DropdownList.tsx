@@ -1,31 +1,37 @@
 import { Key } from 'react'
+import NavBarElement from './LoggedInNavbar';
 
 // The list of dropdown menu items and corresponding actions
 const menuItems = [
-    ['Settings',],
-    ['Log Out',],
+    ['Profile', '/profile'],
+    ['Settings', '/settings'],
+    ['Log Out', '/logout'],
 ];
 
 // Creates the dropdown menu items
-function DropdownElement({menuItem, rkey}: {menuItem: String[], rkey: Key}) {
+function DropdownElement({menuItem, rkey}: {menuItem: string[], rkey: Key}) {
     const title = menuItem[0];
+    const url = menuItem[1];
 
     return (
-        <li key={ rkey } className="flex justify-center items-center border-2 -mb-0.5 p-4 w-32 border-slate-950 bg-main">
-            <p>
+        <li key={ rkey }>
+            <a href={ url } className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
                 { title }
-            </p>
+            </a>
         </li>
-    )
+    );
 }
 
-export default function DropdownList() {
+export default function DropdownList({ setShowDropdown }) {
 
     return (
-        <div className='absolute inline-block top-16 right-0 z-50'>
-            {menuItems.map((menuItem, rkey: Key) => (
-                <DropdownElement menuItem={menuItem} rkey={rkey} />
-            ))}
+        <div onClick={() => setShowDropdown(false)} className="fixed inset-0 z-50 outline-none focus:outline-none">
+            <ul onClick={e => e.stopPropagation()} className='flex flex-col fixed top-24 right-32 z-50 rounded-lg p-4 gap-4 bg-main drop-shadow-lg list-none'>
+                {menuItems.map((menuItem, rkey: Key) => (
+                    //<NavBarElement route={ menuItem } rkey={ rkey } />
+                    <DropdownElement menuItem={menuItem} rkey={rkey} />
+                ))}
+            </ul>
         </div>
     )
 }

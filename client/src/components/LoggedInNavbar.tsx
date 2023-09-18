@@ -29,35 +29,15 @@ export default function LoggedInNavbar() {
     const dropdownMenuButtonRef = useRef(null)
     const dropdownMenuRef = useRef(null)
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isClosedByPage, setIsClosedByPage] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
 
-    const handleButtonClick = () => {
+    const handleDropdownClick = () => {
         console.log('clicked')
-        if (isDropdownOpen) {
-            setIsDropdownOpen(false);
-        }
-        else {
-            if (!isClosedByPage) {
-                setIsDropdownOpen(true);
-            }
-            else {
-                setIsClosedByPage(false);
-            }
-        }
+        setShowDropdown(!showDropdown)
     };
 
-    const handlePageClick = () => {
-        if (dropdownMenuRef.current && dropdownMenuButtonRef.current && isDropdownOpen) {
-            console.log("set to false")
-            console.log('window')
-            setIsDropdownOpen(false);
-            setIsClosedByPage(true);
-        }
-    }
-
-    document.addEventListener('mousedown', handlePageClick)
-    document.querySelector('#navbar-menu-button')?.addEventListener('mousedown', handleButtonClick)
+    //document.addEventListener('mousedown', handlePageClick)
+    //document.querySelector('#navbar-menu-button')?.addEventListener('mousedown', handleDropdownClick)
 
     return (
         <>
@@ -75,53 +55,17 @@ export default function LoggedInNavbar() {
                             ))}
                         </ul>
                         {/* Dropdown menu element */}
-                        <button id='navbar-menu-button' ref={ dropdownMenuButtonRef } onClick={handleButtonClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 focus: ${isDropdownOpen ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
+                        <button id='navbar-menu-button' ref={ dropdownMenuButtonRef } onClick={handleDropdownClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 focus:bg-button-pink-darker ${showDropdown ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
                             <img className="" src={ menu } alt="Ava Logo"/>
-                            {isDropdownOpen ? (
-                                <div ref={ dropdownMenuRef }>
-                                    <DropdownList />
-                                </div>
-                            ) : null }
                         </button>
                     </div>
                 </div>
                 </div>
             </nav>
+            {showDropdown ? (
+                <DropdownList setShowDropdown={ setShowDropdown }/>
+                ) : (null)
+            }
         </>
     );
 }
-
-
-{/*
-Drop down menu
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-  
-Dropdown Content (Hidden by Default)
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-  
-Links inside the dropdown
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    z-index: 1;
-}
-  
-Change color of dropdown links on hover
-.dropdown-content a:hover {background-color: #ddd;}
-
-Show the dropdown menu on hover
-.dropdown:hover .dropdown-content {display: block;}
-*/}
