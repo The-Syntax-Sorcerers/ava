@@ -67,3 +67,5 @@ client/dist/
 client\dist\
 client\dist
 
+package-lock.json
+package.json

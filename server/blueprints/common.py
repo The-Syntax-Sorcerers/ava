@@ -18,6 +18,20 @@ def index(loginform=None, signupform=None):
     return flask.render_template('routeIndex/index.html', template_data=cookies, csrf=flask_wtf.csrf.generate_csrf())
 
 
+@common.route('/privacy_policy')
+def privacy_policy(loginform=None, signupform=None):
+    template_data = {
+        "loginform": loginform,
+        "signupform": signupform,
+    }
+    if flask_login.current_user.is_authenticated:
+        print("Serving Authenticated Privacy Policy")
+        return flask.render_template('routePrivacyPolicy/index.html', auth_user=True, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+    else:
+        print("Serving Anonymous Privacy Policy")
+        return flask.render_template('routePrivacyPolicy/index.html', auth_user=False, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+
+
 @common.route('/dashboard')
 @flask_login.login_required
 def dashboard():
