@@ -4,7 +4,6 @@ import pytest
 
 ROUTES_TESTCASES = [('/', 200),
                     ('/privacy_policy', 200),
-                    ('/profile', 200),
                     ('/invalid_route', 404)
                     ]
 

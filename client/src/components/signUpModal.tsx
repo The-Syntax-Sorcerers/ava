@@ -18,9 +18,11 @@ export default function SignupForm({ setShowModal }) {
 
 
     return (
-        <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25">
-            <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded shadow-2xl">
-                <h1> Sign Up </h1>
+        <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25 backdrop-blur-sm">
+            <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded-lg shadow-2xl text-center">
+                <div className="relative w-auto my-6 mx-auto max-w-sm text-center">
+                    <h1 className="text-xl font-semibold">Sign Up</h1>
+                </div>
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
                     <form method="post" action="/signup">
                         {/* First Name input */}
@@ -66,10 +68,16 @@ export default function SignupForm({ setShowModal }) {
                             />
                         </div>
 
+                        {/* Privacy Policy */}
+                        <div className="flex flex-grow justify-center text-center -mt-4 mb-4 text-sm">
+                            <p className="text-lighter">By clicking sign up you agree to our&nbsp;</p>
+                            <a href="/privacy_policy" className="text-blue-600 dark:bg-blue-500 hover:underline">Privacy Policy</a>
+                        </div>
+
                         {/* Sign up button */}
                         <button
                             type="submit"
-                            className="dark:active:shadow inline-block w-full rounded bg-button-blue px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-button-blue-darker"
+                            className="dark:active:shadow inline-block w-full rounded bg-button-blue px-6 pb-2 pt-2.5 font-semibold text-lg uppercase leading-normal text-slate-900 transition duration-150 ease-in-out hover:bg-button-blue-darker"
                             data-te-ripple-init
                             data-te-ripple-color="light"
                             // onClick={() => HANDLE FORM SUBMISSION}
@@ -77,15 +85,17 @@ export default function SignupForm({ setShowModal }) {
                             Sign up
                         </button>
 
-                        {/* Close button */}
-                        <button
-                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => setShowModal(false)}
-                        >
-                            Close
-                        </button>
+                        
+                        
                     </form>
+                    {/* Close button */}
+                    <button
+                        className="rounded-lg text-slate-900 mt-4 bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(false)}
+                    >
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
