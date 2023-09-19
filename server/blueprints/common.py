@@ -5,20 +5,17 @@ import flask
 import flask_login
 import flask_wtf.csrf
 from flask import Blueprint, send_from_directory, redirect, url_for
+from server.extensions import get_and_clear_cookies
 
-common = Blueprint('common', __name__, template_folder=os.getcwd(
-)+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+common = Blueprint('common', __name__, template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
 
 
 @common.route('/')
 def index(loginform=None, signupform=None):
     print("Serving Landing", common.static_folder+'/index.html')
 
-    template_data = {
-        "loginform": loginform,
-        "signupform": signupform,
-    }
-    return flask.render_template('routeIndex/index.html', template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+    cookies = get_and_clear_cookies()
+    return flask.render_template('routeIndex/index.html', template_data=cookies, csrf=flask_wtf.csrf.generate_csrf())
 
 
 @common.route('/privacy_policy')
