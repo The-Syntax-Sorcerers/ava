@@ -14,7 +14,7 @@ function NavBarElement({route}: {route: string[]}) {
 
     return (
         <li>
-            <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
+            <a href={url} className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900 transition duration-300 ease-in-out">
                 {title}
             </a>
         </li>

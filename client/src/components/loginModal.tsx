@@ -12,7 +12,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
     
     return (
         <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25 backdrop-blur-sm">
-            <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded-lg shadow-2xl text-center">
+            <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-5 container bg-main rounded-lg shadow-2xl text-center">
                 <div className="relative w-auto my-6 mx-auto max-w-sm text-center">
                     <h1 className="text-xl font-semibold"> Log In </h1>
                 </div>
@@ -47,21 +47,24 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
 
                         {/* <!--Remember me checkbox--> */}
                         <div className="mb-6 flex items-center justify-between">
-                            <div className="block min-h-[1.5rem] pl-[1.5rem]">
-                                <input
-                                className="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                                type="checkbox"
-                                value=""
-                                id="exampleCheck2" />
-                                <label className="inline-block pl-[0.15rem] hover:cursor-pointer" htmlFor="exampleCheck2">
-                                    Remember me
-                                </label>
-                            </div>
+
+                        <div className="flex items-center">
+                            <input id="link-checkbox" type="checkbox" defaultChecked
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
+                            focus:ring-none dark:bg-gray-700" />
+                            
+                            <label htmlFor="link-checkbox" 
+                                className="ml-1 text-sm font-medium text-gray-500
+                                hover:cursor-pointer"
+                                > Remember Me 
+                            </label>
+                        </div>
 
                             {/* <!--Forgot password link--> */}
                             <a
                                 href="#!"
-                                className="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                                className="text-primary transition duration-200 ease-in-out 
+                                text-sm font-medium text-gray-500 hover:text-blue-600 hover:dark:text-blue-500"
                                 >Forgot password?
                             </a>
                         </div>
@@ -69,10 +72,9 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Sign in button--> */}
                         <button
                         type="submit"
-                        className="dark:active:shadow inline-block w-full rounded bg-button-blue px-6 pb-2 pt-2.5 font-semibold text-lg uppercase leading-normal text-slate-900 transition duration-150 ease-in-out hover:bg-button-blue-darker"
-                        data-te-ripple-init
-                        data-te-ripple-color="light"
-                        // onClick={() => HANDLE FORM SUBMISSION}
+                        className="dark:active:shadow inline-block w-full rounded px-6 pb-2 pt-2.5
+                        font-semibold text-lg uppercase leading-normal text-slate-900 transition duration-300 ease-in-out
+                        bg-button-light-blue hover:bg-button-blue-darker"
                         >
                         Log in
                         </button>
@@ -81,14 +83,17 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* <!--Register link--> */}
                     <div className="mb-5 flex items-center justify-center">
                         <div>
-                            <p className="mt-4 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                            <p className="mt-4 text-center text-gray-500 dark:text-gray-500
+                            text-sm font-medium">
                                 Not a member?
                             </p>
                         </div>
                             
                         <div>
                             <button
-                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                className="mt-4 ml-5 mr-1 mx-auto px-6 py-2 rounded-lg uppercase
+                                bg-button-light-yellow hover:bg-button-yellow-darker font-semibold font-sans text-sm text-gray-900
+                                focus:outline-none ease-in-out transition-all duration-300"
                                 type="button"
                                 onClick={handleSignupClick}
                                 >
@@ -101,7 +106,9 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
 
                     {/* <!--Register link--> */}
                     <button
-                        className="rounded-lg text-slate-900  mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="mr-1 mb-1 mx-auto px-6 py-2 rounded-lg uppercase
+                        bg-button-light-yellow hover:bg-button-yellow-darker font-semibold font-sans text-sm text-gray-900
+                        focus:outline-none ease-in-out transition-all duration-300"
                         type="button"
                         onClick={() => setShowModal(false)}
                         >
