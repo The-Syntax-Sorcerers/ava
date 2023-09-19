@@ -1,6 +1,5 @@
 // The list of dropdown menu items to add in [title, url] pairs
 const menuItems = [
-    ['Profile', '/profile'],
     ['Settings', '/settings'],
     ['Log Out', '/logout'],
 ];

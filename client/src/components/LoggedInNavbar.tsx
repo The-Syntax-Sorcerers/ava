@@ -6,10 +6,9 @@ import { useState } from 'react';
 
 // The list of link elements to add in [title, url] pairs
 const routes = [  
-    ['Home', '/dashboard'],
+    ['Subjects', '/dashboard'],
     ['Assignments', '/assignments'],
     ['Profile', '/profile'],
-    ['Log Out', '/logout'],
 ]
 
 // Allows dynamically adding link elements to the navbar
