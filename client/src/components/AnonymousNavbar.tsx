@@ -8,7 +8,7 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                     <div className="container mx-auto px-4 flex justify-between items-center">
                         <div className="flex items-center">
                             <img className="w-10 h-10" src={logo} alt="Ava Logo" />
-                            <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
+                            <div className="text-xl font-bold text-button-blue">AVA</div>
                         </div>
                         <ul className="flex space-x-4">
                             <li>
