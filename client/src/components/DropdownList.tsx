@@ -18,7 +18,8 @@ function DropdownElement({menuItem}: {menuItem: string[]}) {
     );
 }
 
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 // Creates a dropdown menu of extra links for website nevaigation
 export default function DropdownList({ setShowDropdown }) {
 
