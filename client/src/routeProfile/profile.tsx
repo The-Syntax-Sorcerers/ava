@@ -39,7 +39,8 @@ export default function Profile({ id, comparison, past, score, allscores}: {id: 
             },
         },
         responsive: true, // Make the graph responsive
-        maintainAspectRatio: false // Allow dynamic resizing
+        maintainAspectRatio: false, // Allow dynamic resizing
+        tension: 0.4 // Make the line graph less curvy
     };
     
     
