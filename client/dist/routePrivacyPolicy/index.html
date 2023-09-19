@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo-565dfa49.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta id="csrf-token" content="{{csrf}}">
+    <title>AVA - Privacy Policy</title>
+    <script type="module" crossorigin src="/assets/privacyPolicy-80591411.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/Footer-2707c63e.js">
+    <link rel="modulepreload" crossorigin href="/assets/LoggedInNavbar-50c3f938.js">
+    <link rel="modulepreload" crossorigin href="/assets/AnonymousNavbar-f43785fa.js">
+    <link rel="stylesheet" href="/assets/index-73b56478.css">
+  </head>
+  <body>
+    <!-- data-auth value comes from the flask routing and indicates the authorisation status of the current user -->
+    <div id="root" data-auth="{{ auth_user | tojson | safe }}"></div>
+    <script>
+      if (typeof template_data !== 'undefined' && template_data !== null) {
+        globalThis.template_data = {{ template_data | tojson | safe }}
+        console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+      }
+      else {
+        console.log("INFO: template_data is not defined.");
+      }
+</script>
+    
+  </body>
+</html>
