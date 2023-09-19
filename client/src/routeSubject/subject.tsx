@@ -10,7 +10,7 @@ export default function SubjectPage({upcoming, past, subject}) {
     console.log("Rendering Ass with Assignments:", upcoming, past)
 
     return (
-        <div className="bg-main bg-cover flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
                 <div className="container mx-auto">

@@ -25,7 +25,7 @@ export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
     };
    
     return (
-        <div className="bg-cover flex flex-col min-h-screen">
+        <div className="lex flex-col min-h-screen custom-pages">
             { auth_user ? (
                 <LoggedInNavbar />
             ) : (

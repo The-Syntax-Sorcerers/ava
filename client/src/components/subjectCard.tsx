@@ -4,9 +4,9 @@ import { Key } from "react";
 export default function SubjectCard({ sub, rkey }: { sub: any, rkey: Key }) {
     return (
         <a href={sub.link}>
-        <div key={rkey} className="bg-card rounded-lg shadow-md p-4 transform hover:bg-card-hover hover:scale-105 transition-transform duration-300 cursor-pointer">
-            <h3 className="text-base font-bold mb-1">{sub.name}</h3>
-            <h2 className="text-sm font-semibold">{sub.id}</h2>
+        <div key={rkey} className="cursor-pointer custom-subject-cards">
+            <h3 className="text-base font-semibold mb-1">{sub.name}</h3>
+            <h2 className="text-xs text-gray font-medium">{sub.id}</h2>
         </div>
         </a>
     );

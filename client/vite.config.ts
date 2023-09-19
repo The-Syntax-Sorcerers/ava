@@ -12,6 +12,8 @@ export default defineConfig({
   plugins: [react(),
     redirect({from: '/', to: '/routeIndex/'}),
     redirect({from: '/dashboard', to: '/routeDashboard/'}),
+    redirect({from: '/login', to: '/routeDashboard/'}),
+    redirect({from: '/signup', to: '/routeDashboard/'}),
     redirect({from: '/subject', to: '/routeSubject/'}),
     redirect({from: '/assignments', to: '/routeAssignments/'}),
     redirect({from: '/logout', to: '/routeIndex/'}),

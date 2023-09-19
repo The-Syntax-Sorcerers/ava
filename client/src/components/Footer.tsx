@@ -2,6 +2,7 @@ import { Key } from 'react'
 
 // The list of links to add to the footer in [text, route] pairs
 const routes = [  
+    ['Github', ''],
     ['Privacy Policy', '/privacy_policy'],
 ]
 
@@ -13,7 +14,7 @@ function FooterLinkElement({route}: {route: string[]}) {
     return (
         <li className="list-none">
             <div className="flex justify-center items-center -ml-3 mr-1">
-                <p>|&nbsp;</p>
+                <p> | &nbsp;</p>
                 <a href={url} className="pr-3 py-2 hover:text-button-pink">
                     {title}
                 </a>
@@ -24,12 +25,12 @@ function FooterLinkElement({route}: {route: string[]}) {
 
 // A footer containing copyright information and a list of link elements
 export default function Footer() {
-    return (
-        <footer className="bg-footer w-full">
+    return (// bg-button-light-blue bg-indigo-100
+        <footer className="container flex items-center justify-center text-sm font-medium custom-footer">
             <div className="flex justify-center items-center">
                 <div className="mx-4 my-4">
-                    <p className="text-center">© The-Syntax-Sorcerers 2023
-                    </p>
+                    <p className="text-center">Made with ❤️</p>
+                    {/* <p className="text-center"> © The-Syntax-Sorcerers 2023 </p> */}
                 </div>
                 <div className="flex justify-center items-center">
                     {routes.map((route, key: Key) => (

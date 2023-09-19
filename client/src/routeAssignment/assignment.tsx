@@ -37,7 +37,7 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
     };
 
     return (
-        <div className="bg-main bg-cover min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col custom-pages">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
                 <div className="container mx-auto">
