@@ -43,30 +43,30 @@ export default function Profile({ id, comparison, past, score, allscores}: {id: 
         tension: 0.4 // Make the line graph less curvy
     };
     
-    
-    
-    
     return (
         <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 w-5/6">
                 {/* ID and Score Display */}
-                <div className="flex justify-between items-start mb-12">
-                    <div className="flex items-center">
-                        <img src={student} alt="ID Icon" className="mr-4"/>
-                        <span className="text-6xl font-bold">{id}</span>
-                    </div>
-                    <div className="flex items-start">  {/* Align items to the start */}
-                        {/* Line Graph */}
-                        <div className="w-4/5 mr-4 h-55">  {/* Decrease the width and height of the graph */}
-                            <Line data={data} options={options} />
+                <div className="container mx-auto">
+                    <div className="flex flex-col md:flex-row justify-between items-start mb-12">
+                        <div className="flex items-center mb-4 md:mb-0">
+                            <img src={student} alt="ID Icon" className="mr-4"/>
+                            <span className="text-6xl font-bold mr-24">{id}</span>
                         </div>
-                        <div className="text-right w-3/5 flex flex-col justify-center">  {/* Increase the width of the average score and align score to the center */}
-                            <span className="text-2xl">Average Score</span>
-                            <div className="text-5xl font-semibold text-center"> {score}%</div>
+                        <div className="flex flex-col md:flex-row items-start">  {/* Align items to the start */}
+                            {/* Line Graph */}
+                            <div className="md:w-80 mr-0.5  h-55">  {/* Decrease the width and height of the graph */}
+                                <Line data={data} options={options} />
+                            </div>
+                            <div className="text-right md:w-1/2 flex flex-col justify-center">  {/* Increase the width of the average score and align score to the center */}
+                                <span className="text-2xl">Average Score</span>
+                                <div className="text-5xl font-semibold text-center"> {score}%</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div className="container mx-auto">
                     {/*<h1 className="text-2xl font-semibold mb-4">All Assignments</h1>*/}
