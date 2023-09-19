@@ -13,7 +13,7 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                         <ul className="flex space-x-4">
                             <li>
                                 <button
-                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900"
+                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900 focus:bg-button-pink-darker"
                                     type="button"
                                     onClick={handleLoginClick}
                                 >
@@ -22,7 +22,7 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                             </li>
                             <li>
                                 <button
-                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900"
+                                    className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900 focus:bg-button-pink-darker"
                                     type="button"
                                     onClick={handleSignupClick}
                                 >

@@ -16,7 +16,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                 <div className="relative w-auto my-6 mx-auto max-w-sm text-center">
                     <h1 className="text-xl font-semibold"> Log In </h1>
                 </div>
-                <div className="relative w-auto my-6 mx-auto max-w-sm">
+                <div className="relative w-auto my-6 mx-auto max-w-sm flex flex-col justify-center">
 
                     {/* Error message */}
                     {receivedError ? (
@@ -31,7 +31,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--E-mail input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="email" name="email" 
-                            className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                                       ${receivedError ? 'border-error-red' : 'border-neutral-300'}`} 
                             placeholder="Email" 
                             defaultValue={filledEmail} 
                             required />
@@ -40,7 +41,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Password input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="password" name="password" id="password" 
-                            className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                            ${receivedError ? 'border-error-red' : 'border-neutral-300'}`}  
                             placeholder="Password" 
                             required />
                         </div>
@@ -79,6 +81,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     </form>
 
                     {/* <!--Register link--> */}
+                    {/*
                     <div className="mb-5 flex items-center justify-center">
                         <div>
                             <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
@@ -95,13 +98,24 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                                 Sign Up
                             </button>
                         </div>
-                            
-                        
+                    </div>
+                     */}
+
+                    <div className="mb-5 flex items-center justify-center">
+                        <div>
+                            <button
+                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto hover:bg-button-yellow-darker px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={handleSignupClick}
+                                >
+                                Not a member? Sign Up
+                            </button>
+                        </div>
                     </div>
 
                     {/* <!--Register link--> */}
                     <button
-                        className="rounded-lg text-slate-900  mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="rounded-lg text-slate-900  w-1/4 ml-auto mr-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                         >
