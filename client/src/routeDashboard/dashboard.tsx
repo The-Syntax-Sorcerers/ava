@@ -1,6 +1,6 @@
-import LoggedInNavbar from "../components/LoggedInNavbar";
-import SubjectCard from "../components/subjectCard";
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from "../components/navbarComponents/LoggedInNavbar";
+import SubjectCard from "../components/subjectComponents/subjectCard.tsx";
+import Footer from '../components/landingComponents/Footer.tsx'
 import { Key } from 'react'
 
 interface SubjectObj {

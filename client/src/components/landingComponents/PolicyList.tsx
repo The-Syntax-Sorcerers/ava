@@ -11,21 +11,19 @@ const policies = [
 ]
 
 // Allows dynamically adding policy paragraphs to the page
-function PolicyElement({policy, rkey}: {policy: string[], rkey: Key}) {
+function PolicyElement({policy}: {policy: string[]}) {
     const title = policy[0]
     const content = policy[1]
 
     return (
-        <div className="bg-slate-100 rounded-lg shadow-md p-4 pl-10">
-            <li key={rkey} className="list-decimal pl-2 marker:font-bold">
+        <div className="bg-gray-200 rounded-lg shadow-md p-4 pl-10">
+            <li className="list-decimal pl-2 marker:font-bold">
                 <div>
-                    <h2 className='font-bold text-1xl'>
+                    <h2 className='font-bold text-md text-gray-700'>
                         {title}
                     </h2>
-                    <div className='ml-8'>
-                        <p className='text-lg'>
-                            {content}
-                        </p>
+                    <div className='text-sm font-medium text-gray-700'>
+                        <p>{content}</p>
                     </div>
                 </div>
             </li>
@@ -38,7 +36,7 @@ export default function PolicyList() {
     return (
         <ul className='space-y-5'>
             {policies.map((policy, rkey: Key) => (
-                <PolicyElement policy={policy} rkey={rkey} />
+                <PolicyElement policy={policy} key={rkey} />
             ))}
         </ul>
     )

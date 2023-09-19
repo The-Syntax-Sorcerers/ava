@@ -20,7 +20,7 @@
     }
 
     .custom-pages {
-        @apply bg-cover bg-gray-200;
+        @apply bg-auto bg-gray-200;
     }
 
 
@@ -51,7 +51,7 @@
 
     /* This tag applies to the footer */
     .custom-footer {
-        @apply bg-white shadow-md rounded-full mx-auto w-80 h-9 mb-5;
+        @apply bg-white shadow-md rounded-full mx-auto w-80 h-9 mb-5 mt-8;
     }
 
     /* This tag applies to both navbars (loggedin / anonymous) */

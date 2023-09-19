@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import LoginForm from '../components/loginModal.tsx';
-import SignupForm from '../components/signUpModal.tsx';
-import AnonymousNavbar from '../components/AnonymousNavbar.tsx';
-import DescriptionCards from '../components/descriptionCards.tsx';
-import Footer from '../components/Footer.tsx'
+import LoginForm from '../components/landingComponents/loginModal.tsx';
+import SignupForm from '../components/landingComponents/signUpModal.tsx';
+import AnonymousNavbar from '../components/navbarComponents/AnonymousNavbar.tsx';
+import DescriptionCards from '../components/landingComponents/descriptionCards.tsx';
+import Footer from '../components/landingComponents/Footer.tsx'
 
 import logo from '../assets/logo.svg';
 import pic from '../assets/idea2.svg';

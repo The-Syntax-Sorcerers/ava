@@ -1,6 +1,6 @@
-import hourglass from '../assets/hourglass.png'
-import chart from '../assets/chart.png'
-import graph from '../assets/graph.png'
+import hourglass from '../../assets/hourglass.png'
+import chart from '../../assets/chart.png'
+import graph from '../../assets/graph.png'
 
 const cards = [
     [hourglass,"Real-Time Verification", "AVA provides lightning-fast results, allowing users to verify authorship in real-time, making it ideal for time-sensitive situations where authenticity matters."],

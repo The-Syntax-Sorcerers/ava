@@ -28,10 +28,10 @@ def privacy_policy(loginform=None, signupform=None):
     }
     if flask_login.current_user.is_authenticated:
         print("Serving Authenticated Privacy Policy")
-        return flask.render_template('routePrivacyPolicy/index.html', auth_user=True, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+        return render_template('routePrivacyPolicy/index.html', auth_user=True, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
     else:
         print("Serving Anonymous Privacy Policy")
-        return flask.render_template('routePrivacyPolicy/index.html', auth_user=False, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+        return render_template('routePrivacyPolicy/index.html', auth_user=False, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
 
 
 @common.route('/dashboard', methods=["GET"])

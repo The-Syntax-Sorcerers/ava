@@ -1,7 +1,7 @@
 import { Key } from 'react'
-import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
-import AssignmentCard, {assignmentObj} from '../components/assignmentCard.tsx'
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from '../components/navbarComponents/LoggedInNavbar.tsx'
+import AssignmentCard, {assignmentObj} from '../components/assignmentComponents/assignmentCard.tsx'
+import Footer from '../components/landingComponents/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

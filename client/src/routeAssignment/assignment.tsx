@@ -1,10 +1,10 @@
 import {useState} from 'react';
-import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
-import Dropzone from '../components/dropzone.tsx'
-import UploadButton from '../components/uploadButton.tsx'
-import UploadPreview from '../components/uploadPreview.tsx'
-import VerificationSuccess from '../components/verificationSuccessModal.tsx'
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from '../components/navbarComponents/LoggedInNavbar.tsx'
+import Dropzone from '../components/assignmentComponents/dropzone.tsx'
+import UploadButton from '../components/assignmentComponents/uploadButton.tsx'
+import UploadPreview from '../components/assignmentComponents/uploadPreview.tsx'
+import VerificationSuccess from '../components/assignmentComponents/verificationSuccessModal.tsx'
+import Footer from '../components/landingComponents/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

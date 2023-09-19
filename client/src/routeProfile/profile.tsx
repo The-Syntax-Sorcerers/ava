@@ -1,16 +1,15 @@
 import { Key } from 'react'
-import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
-import AssignmentCard, {assignmentObj} from '../components/assignmentCard.tsx'
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from '../components/navbarComponents/LoggedInNavbar.tsx'
+import AssignmentCard, {assignmentObj} from '../components/assignmentComponents/assignmentCard.tsx'
+import Footer from '../components/landingComponents/Footer.tsx'
 import { useState } from 'react'
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
 
 import student from '../assets/student.svg';
 import afterdrop from '../assets/afterdrop.svg';
 import beforedrop from '../assets/beforedrop.svg';
 
-export default function Profile({ id, comparison, past, score, allscores}: {id: any, comparison: any, past: any, score: any, allscores: any}) {
+export default function Profile({ id, comparison, past, score, allscores}: {id: number, comparison: any, past: any, score: number, allscores: [number]}) {
     const [showComparison, setShowComparison] = useState(true);
     const [showPast, setShowPast] = useState(true);
     console.log("Profile page:", id, comparison, past, score)
@@ -44,7 +43,7 @@ export default function Profile({ id, comparison, past, score, allscores}: {id: 
     };
     
     return (
-        <div className="bg-main bg-cover flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 w-5/6">
                 {/* ID and Score Display */}
