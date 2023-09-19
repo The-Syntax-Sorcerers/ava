@@ -3,7 +3,7 @@ import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
 import AssignmentCard, {assignmentObj} from '../components/assignmentCard.tsx'
 import Footer from '../components/Footer.tsx'
 import { useState } from 'react'
-import { Line } from 'react-chartjs-2'; // Import Line from react-chartjs-2 for line graph
+import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 import student from '../assets/student.svg';
@@ -11,8 +11,8 @@ import afterdrop from '../assets/afterdrop.svg';
 import beforedrop from '../assets/beforedrop.svg';
 
 export default function Profile({ id, comparison, past, score, allscores}: {id: any, comparison: any, past: any, score: any, allscores: any}) {
-    const [showComparison, setShowComparison] = useState(false);
-    const [showPast, setShowPast] = useState(false);
+    const [showComparison, setShowComparison] = useState(true);
+    const [showPast, setShowPast] = useState(true);
     console.log("Profile page:", id, comparison, past, score)
     
     // Prepare data for line graph
