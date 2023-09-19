@@ -1,5 +1,4 @@
 // Extract the SubjectCard into a separate component for better organization
-import { Key } from "react";
 
 export interface assignmentObj {
     name: string;
@@ -9,6 +8,7 @@ export interface assignmentObj {
 }
 
 export default function AssignmentCard({ ass, rkey, inSubject }: { ass: any, rkey: Key, inSubject: boolean }) {
+    if(ass.due_date == null) ass.due_date = "None";
     return (
         <a href={ass.link}>
         <div key={rkey} className="cursor-pointer custom-assignment-cards">

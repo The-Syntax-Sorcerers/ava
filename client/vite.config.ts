@@ -32,6 +32,7 @@ export default defineConfig({
         privacyPolicy: resolve(root, 'routePrivacyPolicy', 'index.html'),
         subject: resolve(root, 'routeSubject', 'index.html'),
         assignment: resolve(root, 'routeAssignment', 'index.html'),
+        profile: resolve(root, 'routeProfile', 'index.html')
       }
     }
   },
