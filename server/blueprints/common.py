@@ -70,3 +70,27 @@ def assignments():
 
     return render_template('routeAssignments/index.html', template_data=template_data)
 
+
+@common.route('/profile', methods=["GET"])
+@flask_login.login_required
+def profile():
+    print("Serving Profile")
+
+    scores = [76, 82, 62, 56, 42, 91, 77, 7, 62]
+    template_data = {
+        "comparison": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Automata Worksheet",
+                        "link": "/assignnent"},
+                       {"due_date": "10/17/2023", "id": "COMP123456",
+                        "name": "NFA assignment 2", "link": "/ass"},
+                       {"due_date": "10/01/2023", "id": "MAST30026",
+                        "name": "Bayesian inference 4", "link": "/ass"}],
+        "past": [{"due_date": "08/30/2023", "id": "COMP123456",
+                  "name": "Grok Worksheet 1", "link": "/ass"},
+                 {"due_date": "02/26/2023", "id": "COMP123456",
+                  "name": "Grok Worksheet 2", "link": "/ass"}],
+        "id": 1171234,
+        "allscores": scores,
+        "score": round(sum(scores) / len(scores)),
+    }
+
+    return render_template('routeProfile/index.html', template_data=template_data)

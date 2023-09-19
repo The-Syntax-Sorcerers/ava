@@ -79,7 +79,7 @@ export default function Profile({ id, comparison, past, score, allscores}: {id: 
                     {showComparison && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {comparison.map((assignment: assignmentObj, rkey: Key) => (
-                                <AssignmentCard ass={assignment} rkey={rkey} inSubject={false} />
+                                <AssignmentCard ass={assignment} key={rkey} inSubject={false} />
                             ))}
                         </div>
                     )}
@@ -92,7 +92,7 @@ export default function Profile({ id, comparison, past, score, allscores}: {id: 
                     {showPast && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {past.map((assignment: assignmentObj, rkey: Key) => (
-                                <AssignmentCard ass={assignment} rkey={rkey} inSubject={false} />
+                                <AssignmentCard ass={assignment} key={rkey} inSubject={false} />
                             ))}
                         </div>
                     )}

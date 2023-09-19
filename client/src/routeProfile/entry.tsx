@@ -20,11 +20,12 @@ if ((globalThis as any).template_data === undefined) {
         "score": 86,
     };
     // Calculate average of allscores and round to whole number
+   const temp = (globalThis as any).template_data
     let total = 0;
-    for(let i = 0; i < (globalThis as any).template_data.allscores.length; i++){
-        total += (globalThis as any).template_data.allscores[i];
+    for(let i = 0; i < temp.allscores.length; i++){
+        total += temp.allscores[i];
     }
-    (globalThis as any).template_data.score = Math.round(total / (globalThis as any).template_data.allscores.length);
+    temp.score = Math.round(total / temp.allscores.length);
 
     console.log("Mock data:", (globalThis as any).template_data)
 }
