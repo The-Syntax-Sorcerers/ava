@@ -18,7 +18,7 @@ export default function Dashboard({subjects} : {subjects: [SubjectObj]}) {
     return (
         <div className="bg-main bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
-            <main className="container mx-auto flex-grow box-border pt-28 w-5/6">
+            <main className="container mx-auto flex-grow box-border pt-28 pb-10 w-5/6">
                 <div className="container mx-auto">
                     <h1 className="text-2xl font-semibold mb-4">Subject Dashboard</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

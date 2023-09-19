@@ -8,7 +8,7 @@ const routes = [
 // Allows adding link elements to the footer
 function FooterLinkElement({route, rkey}: {route: string[], rkey: Key}) {
     const title = route[0]
-    const url = route[2]
+    const url = route[1]
 
     return (
         <li key={rkey} className="list-none">
