@@ -13,7 +13,7 @@ export default {
             'button-pink': '#EE9FBC',
             'button-pink-darker': '#EA80A7',
             'button-yellow': '#EDAE3A',
-            'button-yellow-darker': '#EDAE3A',
+            'button-yellow-darker': '#E39B17',
             'card': '#EFEAE6',
             'card-hover': '#E7E2DE',
             'content': '#291334',
