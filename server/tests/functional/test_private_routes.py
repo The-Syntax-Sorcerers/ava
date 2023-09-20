@@ -1,7 +1,19 @@
-# Checks that the dashboard page can be accessed by an authenticated user
-def test_dashboard_authorised(auth_client):
-    response = auth_client.get('/dashboard', follow_redirects=True)
-    assert response.status_code == 200
+import pytest
+
+PRIVATE_ROUTES_TESTCASES = [('/dashboard', 200),
+                            ('/subject', 200),
+                            ('/assignment', 200),
+                            ('/assignments', 200),
+                            ('/invalid_route', 404)
+                            ]
+
+
+@pytest.mark.parametrize("route,response_code", PRIVATE_ROUTES_TESTCASES)
+def test_private_routes(auth_client, route, response_code):
+    response = auth_client.get(route, follow_redirects=True)
+    print(response.text)
+    assert response.status_code == response_code
+
 
 # Checks that the dashboard page can't be accessed by an unauthenticated user
 def test_dashboard_unauthorised_redirect(client):

@@ -10,9 +10,3 @@ repos:
     hooks:
     -   id: flake8
         args: ['--max-line-length=120', '--ignore=F401,E402,E266,W293']
-#-   repo: local
-#    hooks:
-#    -   id: pytest
-#        name: pytest
-#        language: python
-#        entry: pytest

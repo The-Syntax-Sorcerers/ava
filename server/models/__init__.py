@@ -110,8 +110,6 @@ class Subject:
         self.name = subject_name
 
     def get_students(self):
-        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id',
-        # self.subject_id).execute()
         res = supabase_sec.table('StudentSubject').select('student_id').eq('subject_id', self.subject_id).execute()
         students = []
         for student_dict in res.data:
