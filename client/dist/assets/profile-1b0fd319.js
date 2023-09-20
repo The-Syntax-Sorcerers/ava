@@ -1,4 +1,4 @@
-import{r as J,R as Di,j as F,F as fo,c as go}from"./Footer-47447d43.js";import{L as po}from"./LoggedInNavbar-dba2d0c8.js";import{A as Ui}from"./assignmentCard-2c3b0593.js";/*!
+import{r as J,R as Di,j as F,F as fo,c as go}from"./Footer-47447d43.js";import{L as po}from"./LoggedInNavbar-ee9a44d2.js";import{A as Ui}from"./assignmentCard-2c3b0593.js";/*!
  * Chart.js v3.9.1
  * https://www.chartjs.org
  * (c) 2022 Chart.js Contributors
