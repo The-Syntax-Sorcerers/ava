@@ -10,7 +10,7 @@ export default function AssignmentsPage({upcoming, past}) {
     console.log("Rendering Ass with Assignments:", upcoming, past)
 
     return (
-        <div className="bg-main bg-cover flex flex-col min-h-screen">
+        <div className="bg-cover flex flex-col min-h-screen">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 w-5/6">
                 <div className="container mx-auto">
