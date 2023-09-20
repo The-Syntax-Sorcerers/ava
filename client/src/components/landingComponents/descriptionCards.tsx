@@ -28,11 +28,11 @@ function DescCard ({card}: {card: string[]}) {
 
 export default function DescriptionCards () {
     return (
-        <div className="flex flex-col gap-4">
-            {cards.map((card: any) => (
-                <DescCard card={card} />
-            ))}
-        </div>
+            <div className="container flex flex-col gap-4">
+                {cards.map((card: any) => (
+                    <DescCard card={card} />
+                ))}
+            </div>
     )
     
 }

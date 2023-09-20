@@ -9,7 +9,9 @@ function NavBarElement({route}: {route: any[]}) {
     return (
         <li>
             <button 
-                className="rounded-lg px-3 py-2 bg-transparent border-button-pink text-slate-900 font-medium hover:bg-button-pink hover:text-slate-900"
+                className="rounded-lg px-3 py-2 bg-transparent border-button-pink 
+                text-sm font-medium hover:bg-violet-300 text-slate-900 hover:text-violet-800
+                transition duration-200 ease-in-out"
                 type="button"
                 onClick={func}
             >

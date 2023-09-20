@@ -72,9 +72,9 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Sign in button--> */}
                         <button
                         type="submit"
-                        className="dark:active:shadow inline-block w-full rounded px-6 pb-2 pt-2.5
-                        font-semibold text-lg uppercase leading-normal text-slate-900 transition duration-300 ease-in-out
-                        bg-button-light-blue hover:bg-button-blue-darker"
+                        className="dark:active:shadow inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold 
+                        text-md uppercase leading-normal transition duration-200 ease-in-out
+                        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                         >
                         Log in
                         </button>
@@ -91,9 +91,9 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             
                         <div>
                             <button
-                                className="mt-4 ml-5 mr-1 mx-auto px-6 py-2 rounded-lg uppercase
-                                bg-button-light-yellow hover:bg-button-yellow-darker font-semibold font-sans text-sm text-gray-900
-                                focus:outline-none ease-in-out transition-all duration-300"
+                                className="mt-4 ml-5 mr-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
+                                text-sm focus:outline-none ease-in-out transition-all duration-200
+                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                                 type="button"
                                 onClick={handleSignupClick}
                                 >
@@ -105,15 +105,15 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     </div>
 
                     {/* <!--Register link--> */}
-                    <button
-                        className="mr-1 mb-1 mx-auto px-6 py-2 rounded-lg uppercase
-                        bg-button-light-yellow hover:bg-button-yellow-darker font-semibold font-sans text-sm text-gray-900
-                        focus:outline-none ease-in-out transition-all duration-300"
+                    {/* <button
+                        className="mr-1 mb-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
+                        text-sm focus:outline-none ease-in-out transition-all duration-200
+                        hover:bg-button-light-blue hover:text-teal-800 bg-violet-300 text-violet-800"
                         type="button"
                         onClick={() => setShowModal(false)}
                         >
                         Close
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

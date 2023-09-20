@@ -90,9 +90,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
 
                         {/* Sign up button */}
                         <button
-                            className="inline-block w-full rounded bg-button-light-blue px-6 pb-2 pt-2.5 
-                            font-semibold text-md uppercase leading-normal text-slate-900 transition duration-300
-                            ease-in-out dark:active:shadow hover:bg-button-blue-darker"
+                            className="inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold text-md 
+                            uppercase leading-normal transition duration-200 ease-in-out dark:active:shadow 
+                            bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                             type="submit"
                         >
                             Sign up
@@ -114,9 +114,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div>
                             <button
                                 // className="rounded-lg text-slate-900 bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-light-yellow hover:bg-button-yellow-darker 
-                                font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-300
-                                text-gold-500 hover:text-gold-600"
+                                className="rounded-lg mt-4 ml-5 mx-auto uppercase px-6 py-2 text-sm font-semibold 
+                                focus:outline-none mr-1 ease-linear transition-all duration-200
+                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                                 type="button"
                                 onClick={handleLoginClick}
                                 >
@@ -128,13 +128,13 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                     </div>
 
                     {/* Close button */}
-                    <button
+                    {/* <button
                         className="rounded-lg text-slate-900 bg-button-light-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                     >
                         Close
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

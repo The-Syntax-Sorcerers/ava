@@ -46,8 +46,12 @@ export default function LandingPage() {
                             <div className="place-content-center">
                                 <h1 className="text-lg font-semibold">Welcome to AVA</h1>
                                 <h2>Unlocking Authenticity: Introducing AVA, Your Authorship Verification Algorithm</h2>
+                                
+                                
                                 <button
-                                    className="bg-button-light-blue mt-5 text-slate-900 font-bold uppercase text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg hover:bg-button-blue-darker outline-none focus:outline-none mr-1 mb-1 ease-in-out transition-all duration-300"
+                                    className="bg-button-light-blue text-teal-800 mt-5 text-slate-900 font-bold uppercase 
+                                    text-sm px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-violet-300 hover:text-violet-800 
+                                    outline-none focus:outline-none mr-1 mb-1 ease-in-out transition-all duration-300"
                                     type="button"
                                     onClick={handleLoginClick}
                                 > Get Started

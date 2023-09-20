@@ -1,22 +1,25 @@
 import { Key } from 'react'
+import gitlogo from '../../assets/github.svg';
 
 // The list of links to add to the footer in [text, route] pairs
 const routes = [  
-    ['Github', ''],
-    ['Privacy Policy', '/privacy_policy'],
+    ['Github', 'https://github.com/The-Syntax-Sorcerers/ava', gitlogo],
+    // ['Privacy Policy', '/privacy_policy', null],
 ]
 
 // Allows adding link elements to the footer
-function FooterLinkElement({route}: {route: string[]}) {
-    const title = route[0]
-    const url = route[1]
+function FooterLinkElement({route}: {route: any[]}) {
+    const title = route[0];
+    const url = route[1];
+    const logo = route[2];
 
     return (
         <li className="list-none">
             <div className="flex justify-center items-center -ml-3 mr-1">
-                <p> | &nbsp;</p>
+                <p className='ml-1'>| &nbsp;</p>
                 <a href={url} className="pr-3 py-2 hover:text-button-pink">
-                    {title}
+                    {logo ? <img className='w-5 h-5' src={logo} /> : title}
+                    <title></title>
                 </a>
             </div>
         </li>
