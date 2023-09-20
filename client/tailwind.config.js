@@ -21,6 +21,7 @@ export default {
             'footer': '#E8E8E8',
             'lighter': '#838583',
             'error-red': '#EF4444',
+            'card-border': '#D3F3EE',
         },
     },
   },
