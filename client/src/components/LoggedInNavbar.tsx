@@ -1,7 +1,6 @@
 import logo from "../assets/logo.svg";
 import menu from "../assets/menu.svg";
 import DropdownList from "./DropdownList";
-import { Key } from 'react';
 import { useState } from 'react';
 
 // The list of link elements to add in [title, url] pairs
