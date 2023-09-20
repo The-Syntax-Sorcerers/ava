@@ -116,7 +116,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <p className="mt-4 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
                                 Already a member?&nbsp;
                                 <button
-                                    className="rounded-lg text-slate-900 mt-4 hover:text-button-pink focus:text-button-pink-darker font-bold py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                    className="rounded-lg text-slate-900 mt-4 hover:text-button-pink focus:text-button-pink-darker font-bold py-2 text-sm mr-1 ease-linear transition-all duration-150"
                                     type="button"
                                     onClick={handleLoginClick}
                                     >
