@@ -14,7 +14,9 @@
   <body>
     <div id="root"></div>
     <script>
-      globalThis.template_data = {{ template_data | tojson | safe }}
+      {% if template_data %}
+          globalThis.template_data = {{ template_data | tojson | safe }};
+      {% endif %}
       console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
     </script>
     

@@ -69,3 +69,4 @@ client\dist
 
 package-lock.json
 package.json
+client/vite.config.ts.timestamp-*

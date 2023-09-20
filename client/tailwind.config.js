@@ -20,6 +20,7 @@ export default {
             'shadow': '#000000',
             'footer': '#E8E8E8',
             'lighter': '#838583',
+            'error-red': '#EF4444',
         },
     },
   },

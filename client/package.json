@@ -18,7 +18,9 @@
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.1",
     "vite-plugin-url-redirect": "^0.1.0",
-    "watch": "^1.0.2"
+    "watch": "^1.0.2",
+    "react-chartjs-2": "^3.0.3",
+    "chart.js": "^3.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

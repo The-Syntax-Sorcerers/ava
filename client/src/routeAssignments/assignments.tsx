@@ -18,13 +18,13 @@ export default function AssignmentsPage({upcoming, past}) {
                     <h2 className="text-xl font-semibold mb-4">Upcoming Assignments</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {upcoming.map((assignment: assignmentObj, rkey: Key) => (
-                            <AssignmentCard ass={assignment} rkey={rkey} inSubject={false}/>
+                            <AssignmentCard ass={assignment} key={rkey} inSubject={false}/>
                         ))}
                     </div>
                     <h2 className="text-xl font-semibold mb-4 mt-10">Past Assignments</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {past.map((assignment: assignmentObj, rkey: Key) => (
-                            <AssignmentCard ass={assignment} rkey={rkey} inSubject={false}/>
+                            <AssignmentCard ass={assignment} key={rkey} inSubject={false}/>
                         ))}
                     </div>
                 </div>
