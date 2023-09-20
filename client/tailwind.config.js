@@ -8,10 +8,13 @@ export default {
     extend: {
         colors: {
             'main': '#F9F7F5',
+            'button-light-blue': '#93D4D7',
             'button-blue': '#66C2C7',
             'button-blue-darker': '#4BB8BD',
-            'button-pink': '#EE9FBC',
-            'button-pink-darker': '#EA80A7',
+            'button-pink-backup': '#EE9FBC',
+            'button-pink-darker-backup': '#EA80A7',
+            'button-pink': '#C4B5FD',
+            'button-pink-darker': '#5B21B6',
             'button-yellow': '#EDAE3A',
             'button-yellow-darker': '#E39B17',
             'card': '#EFEAE6',

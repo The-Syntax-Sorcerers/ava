@@ -3,6 +3,7 @@ import { Key } from 'react'
 // The list of links to add to the footer in [text, route] pairs
 const routes = [  
     ['Privacy Policy', '/privacy_policy'],
+    ['GitHub', 'https://github.com/The-Syntax-Sorcerers/ava']
 ]
 
 // Allows adding link elements to the footer
