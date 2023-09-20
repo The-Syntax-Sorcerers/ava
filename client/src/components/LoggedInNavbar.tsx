@@ -26,8 +26,6 @@ export default function LoggedInNavbar() {
         <>
             <nav className="fixed top-5 left-0 w-full flex justify-center items-center">
                 <div className="w-[90%] bg-main px-6 py-3 drop-shadow-lg rounded-full border-2 border-button-blue">
-                {/*<div className="w-5/6 bg-slate-200 px-6 py-3 drop-shadow-lg rounded-md">*/}
-                {/*<div className="w-5/6 bg-neutral-200 px-6 py-3 drop-shadow-lg rounded-md">*/}
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <img className="w-10 h-10" src={logo} alt="Ava Logo"/>
