@@ -21,7 +21,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                 <div className="relative w-auto my-6 mx-auto max-w-sm text-center">
                     <h1 className="text-xl font-semibold">Sign Up</h1>
                 </div>
-                <div className="relative w-auto my-6 mx-auto max-w-sm">
+                <div className="relative w-auto mt-6 mx-auto max-w-sm">
 
                     {/* Error message */}
                     {receivedError ? (
@@ -116,7 +116,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <p className="mt-4 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
                                 Already a member?&nbsp;
                                 <button
-                                    className="rounded-lg text-slate-900 mt-4 hover:text-button-pink focus:text-button-pink-darker font-bold py-2 text-sm mr-1 ease-linear transition-all duration-150"
+                                    className="rounded-lg text-slate-900 hover:text-button-pink focus:text-button-pink-darker font-bold py-2 text-sm mr-1 ease-linear transition-all duration-150"
                                     type="button"
                                     onClick={handleLoginClick}
                                     >
@@ -125,15 +125,6 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             </p>
                         </div>
                     </div>
-
-                    {/* Close button */}
-                    <button
-                        className="rounded-lg text-slate-900  w-1/4 mx-auto hover:bg-button-yellow focus:bg-button-yellow-darker font-bold uppercase flex items-center justify-center px-6 py-2 text-sm focus:outline-none mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                        >
-                        Close
-                    </button>
                 </div>
             </div>
         </div>
