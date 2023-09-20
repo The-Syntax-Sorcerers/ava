@@ -47,8 +47,8 @@ export default function LoggedInNavbar() {
                     <div className="flex items-center">
                         {/* Narbar link elements */}
                         <ul className="flex space-x-4">
-                            {routes.map((route, rkey: Key) => (
-                                <NavBarElement route={ route } rkey={ rkey } />
+                            {routes.map((route) => (
+                                <NavBarElement route={ route }/>
                             ))}
                         </ul>
                         {/* Dropdown menu button */}
