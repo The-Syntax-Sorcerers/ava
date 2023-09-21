@@ -44,7 +44,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input
                                 type="text"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-button-pink focus:ring-button-pink block w-full rounded-md sm:text-sm focus:ring-1 border-2
                                 ${usernameError ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="name"
                                 name="name"
@@ -58,7 +58,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input
                                 type="email" name="email"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-button-pink focus:ring-button-pink block w-full rounded-md sm:text-sm focus:ring-1 border-2
                                 ${emailError  ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="signupEmail"
                                 defaultValue={filledEmail}
@@ -71,7 +71,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input
                                 type="password" name="password"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-button-pink focus:ring-button-pink block w-full rounded-md sm:text-sm focus:ring-1 border-2
                                 ${passwordError  ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="signupPassword"
                                 placeholder="Password" 
@@ -83,7 +83,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input
                                 type="password" name="confirmPassword"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-button-pink focus:ring-button-pink block w-full rounded-md sm:text-sm focus:ring-1 border-2
                                 ${passwordError ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="confirmPassword"
                                 placeholder="Confirm Password" 

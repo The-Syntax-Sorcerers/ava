@@ -4,7 +4,6 @@ import { Key } from 'react'
 const routes = [  
     ['Our GitHub', 'https://github.com/The-Syntax-Sorcerers/ava'],
     ['Privacy Policy', '/privacy_policy'],
-    ['GitHub', 'https://github.com/The-Syntax-Sorcerers/ava']
 ]
 
 // Allows adding link elements to the footer
@@ -27,7 +26,7 @@ function FooterLinkElement({route}: {route: string[]}) {
 // A footer containing copyright information and a list of link elements
 export default function Footer() {
     return (
-        <footer className="bg-footer w-full border-t-2 border-neutral-300">
+        <footer className="bg-footer w-full border-t-2 border-neutral-200">
             <div className="flex justify-center items-center">
                 <div className="mx-4 my-4">
                     <p className="text-center">© The-Syntax-Sorcerers 2023
