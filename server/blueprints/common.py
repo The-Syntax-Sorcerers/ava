@@ -39,10 +39,12 @@ def privacy_policy(loginform=None, signupform=None):
 @flask_login.login_required
 def dashboard():
     print("Serving Dash")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "subjects": [],
-        "user_type": "teacher",
+        "user_type": user_type,
         "random": 69,
     }
 
@@ -60,16 +62,18 @@ def dashboard():
 @flask_login.login_required
 def assignments():
     print("Serving Assignments")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "upcoming": [],
         "past": [],
-        "user_type": "student",
+        "user_type": user_type,
         "random": 69,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
-    user: User = flask_login.current_user
+
     db_asses: [Assignment] = user.get_assignments()
     db_asses = sorted(db_asses, key=lambda x: (
         x.due_date is not None, x.due_date))

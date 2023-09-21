@@ -18,6 +18,8 @@ subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
 @flask_login.login_required
 def subject_page(sub_id):
     print("Serving Subject page")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     sub = Subject.get_subject(sub_id)
     asses = sub.get_assignments()
@@ -27,7 +29,7 @@ def subject_page(sub_id):
         "upcoming": [],
         "past": [],
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
-        "user_type": "teacher",
+        "user_type": user_type,
         "random": 69,
         "students": [{"name": "Jimmy", "link": "/profile"}]
     }
@@ -52,12 +54,14 @@ def subject_page(sub_id):
 @flask_login.login_required
 def assignment_page(sub_id, ass_id):
     print("Serving Assignment page")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
     template_data = {
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
-        "user_type": "teacher",
+        "user_type": user_type,
         "students": [{"name": "Jimmy", "link": "/profile"}]
     }
 
