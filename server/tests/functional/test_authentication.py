@@ -19,12 +19,7 @@ def test_signup_form(client, changed_elems, response_code):
     for elem in changed_elems:
         data[elem[0]] = elem[1]
     response = client.post('/signup', data=data, follow_redirects=False)
-    print(f'Location: {response.location}')
-    print(f'Response: {response.status_code}')
-    print(response.text)
-    
     assert response.status_code == response_code
-    # assert response.status_code == response_code
 
     User.delete_test_user()
 
