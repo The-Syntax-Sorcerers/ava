@@ -7,6 +7,12 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
     const data = (globalThis as any).template_data
     const receivedError = Object.prototype.hasOwnProperty.call(data, "signup_error") ? data.signup_error : null;
     console.log("Received error:", receivedError);
+    
+    {/* Handles the logic for when each input field should highlight an error */}
+    const globalError = receivedError === "Signups not allowed for this instance";
+    const usernameError = globalError;
+    const passwordError = globalError || receivedError === 'Passwords do not match!!';
+    const emailError = globalError || receivedError === 'This email is already in use.';
 
     const filledForm = Object.prototype.hasOwnProperty.call(data, "signupform") ? data.signupform : null;
     let filledName = "", filledEmail = "";
@@ -39,7 +45,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <input
                                 type="text"
                                 className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
-                                ${receivedError ? 'border-error-red' : 'border-neutral-300'}`}
+                                ${usernameError ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="name"
                                 name="name"
                                 defaultValue={filledName}
@@ -53,7 +59,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <input
                                 type="email" name="email"
                                 className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
-                                ${receivedError ? 'border-error-red' : 'border-neutral-300'}`}
+                                ${emailError  ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="signupEmail"
                                 defaultValue={filledEmail}
                                 placeholder="Enter Email address" 
@@ -66,7 +72,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <input
                                 type="password" name="password"
                                 className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
-                                ${receivedError ? 'border-error-red' : 'border-neutral-300'}`}
+                                ${passwordError  ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="signupPassword"
                                 placeholder="Password" 
                                 required
@@ -78,7 +84,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <input
                                 type="password" name="confirmPassword"
                                 className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-neutral-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 border-2
-                                ${receivedError ? 'border-error-red' : 'border-neutral-300'}`}
+                                ${passwordError ? 'border-error-red' : 'border-neutral-300'}`}
                                 id="confirmPassword"
                                 placeholder="Confirm Password" 
                                 required
