@@ -1,7 +1,7 @@
 import pytest
 
 PRIVATE_ROUTES_TESTCASES = [('/dashboard', 200),
-                            ('/subject', 200),
+                            ('/subjects/COMP123456', 200),
                             ('/assignment', 200),
                             ('/assignments', 200),
                             ('/invalid_route', 404)
