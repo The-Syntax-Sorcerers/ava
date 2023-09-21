@@ -9,7 +9,8 @@ from flask import Blueprint, send_from_directory, redirect, url_for, render_temp
 from server.extensions import get_and_clear_cookies
 from server.models.models import User, Subject, Assignment
 
-subjects = Blueprint('subjects', __name__, url_prefix='/subjects', template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
+                     template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
 
 
 # Routes to the subject_page for a subject using a given subject_id
@@ -26,7 +27,9 @@ def subject_page(sub_id):
         "upcoming": [],
         "past": [],
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
+        "user_type": "teacher",
         "random": 69,
+        "students": [{"name": "Jimmy", "link": "/profile"}]
     }
 
     for ass in asses:
@@ -54,8 +57,8 @@ def assignment_page(sub_id, ass_id):
     template_data = {
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
-        "user_type": "student"
+        "user_type": "teacher",
+        "students": [{"name": "Jimmy", "link": "/profile"}]
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
-
