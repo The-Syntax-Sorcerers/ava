@@ -31,16 +31,22 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--E-mail input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="email" name="email" 
-                            className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                            sm:text-sm focus:ring-1
+                            ${receivedError ? 'border-2 border-red-400' : null}`} 
                             placeholder="Email" 
                             defaultValue={filledEmail} 
                             required />
                         </div>
 
                         {/* <!--Password input--> */}
-                        <div className="relative mb-6" data-te-input-wrapper-init>
+                        <div className="relative mb-6">
                             <input type="password" name="password" id="password" 
-                            className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                            sm:text-sm focus:ring-1
+                            ${receivedError ? 'border-2 border-red-400' : null}`}
                             placeholder="Password" 
                             required />
                         </div>
@@ -49,7 +55,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         <div className="mb-6 flex items-center justify-between">
 
                         <div className="flex items-center">
-                            <input id="link-checkbox" type="checkbox" defaultChecked
+                            <input id="link-checkbox" type="checkbox"
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
                             focus:ring-none dark:bg-gray-700" />
                             
@@ -64,7 +70,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             <a
                                 href="#!"
                                 className="text-primary transition duration-200 ease-in-out 
-                                text-sm font-medium text-gray-500 hover:text-blue-600 hover:dark:text-blue-500"
+                                text-sm font-medium text-gray-500 hover:text-accent-violet-700 hover:dark:accent-violet-500"
                                 >Forgot password?
                             </a>
                         </div>

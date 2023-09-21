@@ -33,8 +33,8 @@ export default function LandingPage() {
                 handleLoginClick={handleLoginClick}
                 handleSignupClick={handleSignupClick}
             />
-            <div className="flex flex-col text-center mx-auto pt-28 font-medium text-md text-gray-700">
-                <div className="grid grid-rows-1 grid-cols-2 text-center mx-auto mb-10">
+            <div className="flex flex-col text-center mx-auto pt-28 font-medium text-md text-gray-700 items-center">
+                <div className="grid grid-rows-1 grid-cols-2 text-center mx-auto mb-10"> 
                     <div className="col-span-1">
                         <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="pic1"/>
                     </div>

@@ -16,7 +16,8 @@ function PolicyElement({policy}: {policy: string[]}) {
     const content = policy[1]
 
     return (
-        <div className="bg-gray-200 rounded-lg shadow-md p-4 pl-10">
+        <div className="bg-neutral-100 rounded-lg shadow-md p-4 pl-10 
+        border-2 border-card-border">
             <li className="list-decimal pl-2 marker:font-bold">
                 <div>
                     <h2 className='font-bold text-md text-gray-700'>

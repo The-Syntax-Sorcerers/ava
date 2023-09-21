@@ -1,3 +1,14 @@
+interface ErrorLookup {
+    [key: number]: string[];
+}
+const error_lookup: ErrorLookup = {
+    23505: ['email'],
+    400: ['password', 'confirmPassword'],
+    422: ['password', 'confirmPassword'],
+    403: ['name', 'email', 'password', 'confirmPassword'],
+    500: [],
+}
+
 
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -6,8 +17,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
 
     const data = (globalThis as any).template_data
     const receivedError = Object.prototype.hasOwnProperty.call(data, "signup_error") ? data.signup_error : null;
+    const highlight = receivedError ? error_lookup[data.status as number] || []: [];    // Ask Talym
     console.log("Received error:", receivedError);
-
+    
     const filledForm = Object.prototype.hasOwnProperty.call(data, "signupform") ? data.signupform : null;
     let filledName = "", filledEmail = "";
     if(filledForm) {
@@ -38,10 +50,13 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="text"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 
+                                ${highlight.includes('name') ? 'border-2 border-red-300' : null}`}
                                 id="name"
                                 name="name"
-                                defaultValue={filledName}
+                                defaultValue={highlight.includes('name') ? "" : filledName}
                                 placeholder="Preferred Name" 
                                 required
                             />
@@ -51,9 +66,11 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="email" name="email"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('email') ? 'border-2 border-red-400' : null}`}
                                 id="signupEmail"
-                                defaultValue={filledEmail}
+                                defaultValue={highlight.includes('email') ? "" :filledEmail}
                                 placeholder="Enter Email address" 
                                 required
                             />
@@ -63,7 +80,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="password" name="password"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('password') ? 'border-2 border-red-400' : null}`}
                                 id="signupPassword"
                                 placeholder="Password" 
                                 required
@@ -74,7 +93,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="password" name="confirmPassword"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('confirmPassword') ? 'border-2 border-red-400' : null}`}
                                 id="confirmPassword"
                                 placeholder="Confirm Password" 
                                 required
@@ -84,8 +105,17 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         {/* Privacy Policy */}
                         <div className="flex flex-grow justify-center text-center mt-4 mb-4 text-gray-500 dark:text-gray-500
                             text-sm font-medium">
-                            <p> By clicking sign up you agree to our&nbsp; </p>
-                            <a href="/privacy_policy" className="text-blue-600">Privacy Policy</a>
+                                
+                            <div>
+                                <p>
+                                    By clicking sign up you agree to our&nbsp; 
+                                    <a href="/privacy_policy" className="text-accent-violet-500 hover:text-accent-violet-700">
+                                        Privacy Policy
+                                    </a>
+                                </p>
+                                {/* <p> By clicking sign up you agree to our&nbsp; </p>
+                                <a href="/privacy_policy" className="text-blue-600">Privacy Policy</a> */}
+                            </div>
                         </div>
 
                         {/* Sign up button */}

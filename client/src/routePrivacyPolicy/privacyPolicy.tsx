@@ -38,8 +38,8 @@ export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
             <main className="container mx-auto flex-grow box-border pt-28 pb-10 w-5/6">
                 <div className="mb-4 flex flex-col justify-center items-center bg-slate-50 rounded-lg shadow-md p-4">
                     <div className="mb-4 flex flex-col justify-center items-center text-gray-700">
-                        <h1 className='text-xl font-bold'>Privacy Policy</h1>
-                        <p className='text-sm font-medium'>Last updated: {editDate}</p>
+                        <h1 className='text-xl font-bold text-button-blue'>Privacy Policy</h1>
+                        <p className='font-medium text-sm italic'>Last updated: {editDate}</p>
                     </div>
                     <PolicyList />
                 </div>
