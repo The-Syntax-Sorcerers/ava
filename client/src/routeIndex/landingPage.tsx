@@ -27,7 +27,7 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center mx-auto overflow-visible">
+        <div className="flex flex-col justify-center items-center mx-auto overflow-visible custom-landing-page">
             <AnonymousNavbar
                 handleLoginClick={handleLoginClick}
                 handleSignupClick={handleSignupClick}
