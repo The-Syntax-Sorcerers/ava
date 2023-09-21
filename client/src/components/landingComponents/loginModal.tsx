@@ -21,7 +21,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* Error message */}
                     {receivedError ? (
                         <div className="relative mb-6">
-                            <p className="text-error-red">{receivedError}</p>
+                            <p className="custom-error-text">{receivedError}</p>
                         </div>
                     ) : null}
 
@@ -31,10 +31,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--E-mail input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="email" name="email" 
-                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                            sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
+                            className={`custom-form-field
+                            ${receivedError ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                             placeholder="Email" 
                             defaultValue={filledEmail} 
                             required />
@@ -43,10 +41,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Password input--> */}
                         <div className="relative mb-6">
                             <input type="password" name="password" id="password" 
-                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                            sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
+                            className={`custom-form-field
+                            ${receivedError ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                             placeholder="Password" 
                             required />
                         </div>

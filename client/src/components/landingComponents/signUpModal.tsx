@@ -52,10 +52,8 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="text"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                                sm:text-sm focus:ring-1 
-                                ${highlight.includes('name') ? 'border-2 border-red-300' : null}`} /* Highlights the input field on errors */
+                                className={`custom-form-field 
+                                ${highlight.includes('name') ? 'custom-error-text' : null}`} /* Highlights the input field on errors */
                                 id="name"
                                 name="name"
                                 defaultValue={highlight.includes('name') ? "" : filledName}
@@ -68,10 +66,8 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="email" name="email"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                                sm:text-sm focus:ring-1 
-                                ${highlight.includes('email') ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
+                                className={`custom-form-field
+                                ${highlight.includes('email') ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                                 id="signupEmail"
                                 defaultValue={highlight.includes('email') ? "" :filledEmail}
                                 placeholder="Enter Email address" 
@@ -83,10 +79,8 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="password" name="password"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                                sm:text-sm focus:ring-1 
-                                ${highlight.includes('password') ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
+                                className={`custom-form-field 
+                                ${highlight.includes('password') ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                                 id="signupPassword"
                                 placeholder="Password" 
                                 required
@@ -97,10 +91,8 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         <div className="relative mb-6">
                             <input
                                 type="password" name="confirmPassword"
-                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                                sm:text-sm focus:ring-1 
-                                ${highlight.includes('confirmPassword') ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
+                                className={`custom-form-field 
+                                ${highlight.includes('confirmPassword') ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                                 id="confirmPassword"
                                 placeholder="Confirm Password" 
                                 required
