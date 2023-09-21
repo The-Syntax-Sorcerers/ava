@@ -57,7 +57,30 @@
 
     /* Styles the text elements on the auth forms */
     .custom-form-text-elements {
-        @apply text-sm font-medium hover:text-accent-secondary-500 focus:text-accent-secondary-700 text-gray-500 hover:cursor-pointer;
+        @apply text-sm font-medium  text-gray-500;
+    }
+
+    /* Styles the clickable text elements on the auth forms */
+    .custom-form-text-element-clickable {
+        @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer;
+    }
+
+    /* */
+    .custom-form-button {
+        @apply uppercase font-semibold ease-in-out duration-200 rounded-lg
+        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800
+    }
+
+    /* Styles the primary action buttons on the auth forms */
+    .custom-form-main-button {
+        @apply custom-form-button 
+        w-full px-6 pb-2 pt-2.5 dark:active:shadow inline-block leading-normal;
+    }
+
+    /* Styles the secondary action buttons on the auth forms */
+    .custom-form-secondary-button {
+        @apply custom-form-button
+        mt-4 ml-5 mr-1 mx-auto px-6 py-2 text-sm focus:outline-none
     }
 
         /* 

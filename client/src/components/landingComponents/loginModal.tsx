@@ -50,7 +50,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Remember me checkbox--> */}
                         <div className="mb-6 flex items-center justify-between">
 
-                        <div className="flex items-center custom-form-text-elements">
+                        <div className="flex items-center custom-form-text-elements custom-form-text-element-clickable">
                             <input id="link-checkbox" type="checkbox"
                             className="w-4 h-4 rounded" />
                             <label htmlFor="link-checkbox" 
@@ -62,7 +62,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             {/* <!--Forgot password link--> */}
                             <a
                                 href="#!"
-                                className="transition duration-200 ease-in-out custom-form-text-elements
+                                className="custom-form-text-elements custom-form-text-element-clickable
                                 hover:dark:accent-secondary-500"
                                 >Forgot password?
                             </a>
@@ -71,10 +71,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Sign in button--> */}
                         <button
                         type="submit"
-                        className="dark:active:shadow inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold 
-                        text-md uppercase leading-normal transition duration-200 ease-in-out
-                        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
-                        >
+                        className="custom-form-main-button">
                         Log in
                         </button>
                     </form>
@@ -82,37 +79,20 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* <!--Register link--> */}
                     <div className="mb-5 flex items-center justify-center">
                         <div>
-                            <p className="mt-4 text-center text-gray-500 dark:text-gray-500
-                            text-sm font-medium">
+                            <p className="mt-4 text-center custom-form-text-elements">
                                 Not a member?
                             </p>
                         </div>
                             
                         <div>
                             <button
-                                className="mt-4 ml-5 mr-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
-                                text-sm focus:outline-none ease-in-out transition-all duration-200
-                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
+                                className="custom-form-secondary-button"
                                 type="button"
-                                onClick={handleSignupClick}
-                                >
+                                onClick={handleSignupClick}>
                                 Sign Up
                             </button>
                         </div>
-                            
-                        
                     </div>
-
-                    {/* <!--Register link--> */}
-                    {/* <button
-                        className="mr-1 mb-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
-                        text-sm focus:outline-none ease-in-out transition-all duration-200
-                        hover:bg-button-light-blue hover:text-teal-800 bg-violet-300 text-violet-800"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                        >
-                        Close
-                    </button> */}
                 </div>
             </div>
         </div>

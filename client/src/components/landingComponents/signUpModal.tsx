@@ -106,7 +106,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <div>
                                 <p>
                                     By clicking sign up you agree to our&nbsp; 
-                                    <a href="/privacy_policy" className="text-accent-secondary-500 hover:text-accent-secondary-700">
+                                    <a href="/privacy_policy" className="font-bold custom-form-text-elements custom-form-text-element-clickable">
                                         Privacy Policy
                                     </a>
                                 </p>
@@ -115,9 +115,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
 
                         {/* Sign up button */}
                         <button
-                            className="inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold text-md 
-                            uppercase leading-normal transition duration-200 ease-in-out dark:active:shadow 
-                            bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
+                            className="custom-form-main-button"
                             type="submit"
                         >
                             Sign up
@@ -135,9 +133,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             
                         <div>
                             <button
-                                className="rounded-lg mt-4 ml-5 mx-auto uppercase px-6 py-2 text-sm font-semibold 
-                                focus:outline-none mr-1 ease-linear transition-all duration-200
-                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
+                                className="custom-form-secondary-button"
                                 type="button"
                                 onClick={handleLoginClick}
                                 >
