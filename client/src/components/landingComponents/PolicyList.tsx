@@ -1,5 +1,3 @@
-import { Key } from 'react'  
-
 // The list of privacy policies to reder in [title, paragraph] pairs
 const policies = [
     ['Introduction', 'Welcome to our AI Text Comparison Tool\'s Privacy Policy. This policy explains how we collect, use, disclose, and safeguard your information when you use our AI tool. Please read this policy carefully to understand our practices.'],
@@ -36,8 +34,8 @@ function PolicyElement({policy}: {policy: string[]}) {
 export default function PolicyList() {
     return (
         <ul className='space-y-5'>
-            {policies.map((policy, rkey: Key) => (
-                <PolicyElement policy={policy} key={rkey} />
+            {policies.map((policy) => (
+                <PolicyElement policy={policy}/>
             ))}
         </ul>
     )
