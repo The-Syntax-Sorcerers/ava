@@ -46,7 +46,7 @@
     /* Styles the input fields on the auth forms */
     .custom-form-field {
         @apply w-full mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-        focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md 
+        focus:outline-none focus:border-accent-primary-300 focus:ring-accent-primary-300 block rounded-md 
         sm:text-sm focus:ring-1;
     }
 
