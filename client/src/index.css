@@ -25,8 +25,8 @@
 
     /* This tag applies to the subject cards on dashbboard */
     .custom-subject-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform 
-        hover:bg-button-light-blue hover:scale-105 transition-transform 
-        duration-300;
+        @apply bg-white border-card-border border-2 rounded-lg shadow-md p-4 transform 
+        hover:bg-button-light-blue hover:border-button-light-blue hover:scale-105 transition-transform 
+        duration-300 cursor-pointer;
     }
 }
