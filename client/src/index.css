@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 @layer components {
 
     :root {
@@ -13,6 +10,12 @@
         --secondary-bg: bg-gray-200;
         --secondary-contrast: bg-white;
     }
+
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Page Styling
+     * ------------------------------------------------------------------------------------------
+     */
 
     /* This tag applies to the background of all webpages */
     .custom-landing-page {
@@ -28,8 +31,7 @@
         
         /* dark:from-gray-400 dark:via-slate-200 dark:to-slate-200; */
         
-        /* @apply bg-cover bg-gray-200; */
-        
+        /* @apply bg-cover bg-gray-200; */    
     }
 
     /* 
@@ -89,27 +91,61 @@
      * ------------------------------------------------------------------------------------------
      */
 
-     /* Styles the colour and text of navbar link elements */
-     .custom-navbar-element {
+    /* This tag applies to both navbars (loggedin / anonymous) */
+    .custom-navbar {
+        @apply bg-white drop-shadow-lg rounded-full;
+    }
+
+    /* Styles the colour and text of navbar link elements */
+    .custom-navbar-element {
         @apply ease-in-out text-sm font-medium rounded-lg transition duration-200 flex justify-center items-center
         bg-transparent hover:bg-violet-300 text-slate-900  hover:text-violet-800 focus:bg-violet-500;
-     }
+    }
 
-     /* Styles the pinned navbar link elements*/
-     .custom-navbar-link-element {
-        @apply custom-navbar-element
-        px-3 py-2;
-     }
+    /* Styles the pinned navbar link elements*/
+    .custom-navbar-link-element {
+    @apply custom-navbar-element
+    px-3 py-2;
+    }
 
-     /* Styles the navbar dropdown link elements */
-     .custom-dropdown-link-element {
-        @apply custom-navbar-element 
-        px-5 py-2 my-1 w-full 
-     }
+    /* Styles the navbar dropdown link elements */
+    .custom-dropdown-link-element {
+    @apply custom-navbar-element 
+    px-5 py-2 my-1 w-full 
+    }
 
-      /* 
+    /* 
      * ------------------------------------------------------------------------------------------
-     * 
+     * Card Elements
+     * ------------------------------------------------------------------------------------------
+     */
+
+    /* This tag applies to the description cards on landing page */
+    .custom-descriptioncards {
+        @apply bg-white rounded-3xl shadow-md hover:shadow-lg transition duration-300 ease-in-out;
+        /* hover:outline hover:outline-2 hover:outline-teal-500; */
+    }
+
+    /* Styles the colour and interactivity of the subject and assignment cards */
+    .custom-school-cards {
+        @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-300
+        hover:bg-accent-primary-400 hover:border-accent-primary-400 hover:scale-105 transition-transform 
+        duration-300;
+    }
+
+    /* This tag applies to the subject cards on the subjects dashbboard */
+    .custom-subject-cards {
+        @apply custom-school-cards;
+    }
+
+    /* This tag applies to the assignment cards on assignments page */
+    .custom-assignment-cards {
+        @apply custom-school-cards;
+    }
+
+    /* 
+     * ------------------------------------------------------------------------------------------
+     *
      * ------------------------------------------------------------------------------------------
      */
 
@@ -118,33 +154,8 @@
         @apply outline-none focus:outline-none bg-black bg-opacity-25 backdrop-blur-sm;
     }
 
-    /* This tag applies to the description cards on landing page */
-    .custom-descriptioncards {
-        @apply bg-white rounded-3xl shadow-md hover:shadow-lg transition duration-300 ease-in-out;
-        /* hover:outline hover:outline-2 hover:outline-teal-500; */
-    }
-
-    /* This tag applies to the subject cards on dashbboard */
-    .custom-subject-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform 
-        hover:bg-button-light-blue hover:scale-105 transition-transform 
-        duration-300;
-    }
-
-    /* This tag applies to the assignment cards on assignments page */
-    .custom-assignment-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform 
-        hover:bg-button-light-blue hover:scale-105 transition-transform 
-        duration-300;
-    }
-
     /* This tag applies to the footer */
     .custom-footer {
         @apply bg-white shadow-md rounded-full mx-auto w-48 h-9 mb-5 mt-8;
-    }
-
-    /* This tag applies to both navbars (loggedin / anonymous) */
-    .custom-navbar {
-        @apply bg-white drop-shadow-lg rounded-full;
     }
 }
