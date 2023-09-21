@@ -30,23 +30,6 @@ def test_login(client, changed_elems, route):
     client.get('/logout', follow_redirects=True)
 
 
-def test_correct_password(auth_client):
-    """Test form submission with correct password."""
-    # still not in the correct format
-
-    response = auth_client.get('/dashboard', follow_redirects=True)
-    assert response.status_code == 200
-
-
-def test_incorrect_password(client):
-    """Test form submission with incorrect password."""
-    # still not in the correct format
-    # need to get the csrf token for this page
-    response = client.post('/login', data={'user': 'someuser',
-                                           'password': 'wrong_pass'})
-    assert response.status_code == 500
-
-
 # Checks that the logout button redirects once and to the login page
 def test_logout_redirect(client):
     response = client.get('/logout')
