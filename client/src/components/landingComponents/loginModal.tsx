@@ -60,7 +60,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             focus:ring-none dark:bg-gray-700" />
                             
                             <label htmlFor="link-checkbox" 
-                                className="ml-1 text-sm font-medium hover:text-accent-violet-500 focus:text-accent-violet-700 text-gray-500
+                                className="ml-1 text-sm font-medium hover:text-accent-secondary-500 focus:text-accent-secondary-700 text-gray-500
                                 hover:cursor-pointer"
                                 > Remember Me 
                             </label>
@@ -70,7 +70,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             <a
                                 href="#!"
                                 className="text-primary transition duration-200 ease-in-out 
-                                text-sm font-medium text-gray-500 hover:text-accent-violet-500 focus:text-accent-violet-700 hover:dark:accent-violet-500"
+                                text-sm font-medium text-gray-500 hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:dark:accent-secondary-500"
                                 >Forgot password?
                             </a>
                         </div>

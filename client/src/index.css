@@ -17,13 +17,13 @@
     /* This tag applies to the background of all webpages */
     .custom-landing-page {
         @apply bg-cover bg-no-repeat bg-gradient-to-bl 
-        from-accent-teal-100 from-10% via-blue-50 via-40% to-accent-violet-300 to-95%
+        from-accent-primary-100 from-10% via-blue-50 via-40% to-accent-secondary-300 to-95%
         bg-slate-600 bg-opacity-20 bg-blend-overlay;
     }
 
     .custom-pages {
         @apply bg-cover bg-no-repeat bg-gradient-to-bl 
-        from-accent-teal-100 from-10% via-blue-50 via-40% to-accent-violet-300 to-95%
+        from-accent-primary-100 from-10% via-blue-50 via-40% to-accent-secondary-300 to-95%
         bg-slate-600 bg-opacity-20 bg-blend-overlay;
         
         /* dark:from-gray-400 dark:via-slate-200 dark:to-slate-200; */

@@ -114,7 +114,7 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                             <div>
                                 <p>
                                     By clicking sign up you agree to our&nbsp; 
-                                    <a href="/privacy_policy" className="text-accent-violet-500 hover:text-accent-violet-700">
+                                    <a href="/privacy_policy" className="text-accent-secondary-500 hover:text-accent-secondary-700">
                                         Privacy Policy
                                     </a>
                                 </p>
