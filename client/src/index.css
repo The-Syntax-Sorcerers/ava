@@ -65,7 +65,7 @@
         @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer;
     }
 
-    /* */
+    /* Styles the colour and text of buttons on the auth form fields and landing page */
     .custom-form-button {
         @apply uppercase font-semibold ease-in-out duration-200 rounded-lg
         bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800

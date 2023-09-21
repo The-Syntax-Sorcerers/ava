@@ -49,9 +49,8 @@ export default function LandingPage() {
                                 
                                 
                                 <button
-                                    className="bg-button-light-blue text-teal-800 mt-5 text-slate-900 font-bold uppercase 
-                                    text-sm px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-violet-300 hover:text-violet-800 
-                                    outline-none focus:outline-none mr-1 mb-1 ease-in-out transition-all duration-300"
+                                    className="mt-5 mr-1 mb-1 px-6 py-3 font-bold text-sm shadow-md hover:shadow-lg 
+                                    custom-form-button"
                                     type="button"
                                     onClick={handleLoginClick}
                                 > Get Started
