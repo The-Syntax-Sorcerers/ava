@@ -10,7 +10,7 @@ export default function Dropzone({handleUpload }: {handleUpload: (event: any) =>
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">TXT, PDF, or DOCX (MAX. 2MB)</p>
                 </div> 
-                <input id="dropzone-file" type="file" className="hidden" onChange={handleUpload}/>
+                <input id="dropzone-file" type="file" className="hidden" accept=".txt, .pdf, .docx" onChange={handleUpload}/>
             </label>
         </div> 
     );

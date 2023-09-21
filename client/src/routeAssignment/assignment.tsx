@@ -20,21 +20,15 @@ export default function AssignmentPage() {
     const [fileUploaded, setFileUploaded] = useState(false);
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
-    // const [file, setFile] = useState({ url: PDF1_URL });
- 
+    // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
 
-    const handleUpload = () => {
-        setFileUploaded(true);
-        setFileSubmitted(false);
-        // const fileReader = new window.FileReader();
-        // const file = event.target.files[0];
-        
-        // fileReader.onload = fileLoad => {
-        //     const { result } = fileLoad.target;
-        //     setFile({ url: result });
-        // };
-        
-        // fileReader.readAsDataURL(file);
+    const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length === 1) {
+            setFileUploaded(true);
+            setFileSubmitted(false);
+            setSelectedDocs(Array.from(e.target.files));
+        }
     };
     
     const handleSubmit = () => {
@@ -61,7 +55,10 @@ export default function AssignmentPage() {
                     ):(<>
                         {fileUploaded ? (
                                 <div>
-                                    <UploadPreview/>
+                                    <UploadPreview docs={selectedDocs.map((file) => ({
+                                        uri: window.URL.createObjectURL(file),
+                                        fileName: file.name,
+                                    }))}/>
                                     <UploadButton handleUpload={handleUpload}/>
                                     <div className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
                                         <div>

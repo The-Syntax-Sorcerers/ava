@@ -8,6 +8,7 @@ export default function UploadButton({handleUpload}: {handleUpload: (event: any)
                 aria-describedby="file_input_help" 
                 id="file_input" 
                 type="file"
+                accept=".txt, .pdf, .docx"
                 onChange={handleUpload}/>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">TXT, PDF, or DOCX (MAX. 2MB)</p>
         </div>
