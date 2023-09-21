@@ -128,7 +128,7 @@
 
     /* Styles the colour and interactivity of the subject and assignment cards */
     .custom-school-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-300
+        @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-50
         hover:bg-accent-primary-400 hover:border-accent-primary-400 hover:scale-105 transition-transform 
         duration-300;
     }
