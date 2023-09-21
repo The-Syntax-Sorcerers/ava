@@ -34,7 +34,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
                             focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
                             sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`} 
+                            ${receivedError ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
                             placeholder="Email" 
                             defaultValue={filledEmail} 
                             required />
@@ -46,7 +46,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
                             focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
                             sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`}
+                            ${receivedError ? 'border-2 border-red-400' : null}`} /* Highlights the input field on errors */
                             placeholder="Password" 
                             required />
                         </div>
@@ -60,7 +60,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             focus:ring-none dark:bg-gray-700" />
                             
                             <label htmlFor="link-checkbox" 
-                                className="ml-1 text-sm font-medium text-gray-500
+                                className="ml-1 text-sm font-medium hover:text-accent-violet-500 focus:text-accent-violet-700 text-gray-500
                                 hover:cursor-pointer"
                                 > Remember Me 
                             </label>
@@ -70,7 +70,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                             <a
                                 href="#!"
                                 className="text-primary transition duration-200 ease-in-out 
-                                text-sm font-medium text-gray-500 hover:text-accent-violet-700 hover:dark:accent-violet-500"
+                                text-sm font-medium text-gray-500 hover:text-accent-violet-500 focus:text-accent-violet-700 hover:dark:accent-violet-500"
                                 >Forgot password?
                             </a>
                         </div>
