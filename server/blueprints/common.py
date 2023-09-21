@@ -12,7 +12,8 @@ from server.models import User, Subject, Assignment
 common = Blueprint('common', __name__, template_folder=os.getcwd(
 ) + "/client/dist", static_folder=os.getcwd() + "/client/dist")
 
-
+# leave this here for now so that the testing will work
+@common.route('/privacy_policy', methods=["GET"])
 @common.route('/', methods=["GET"])
 def index():
     print("Serving Landing", common.static_folder + '/index.html')

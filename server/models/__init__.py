@@ -6,7 +6,7 @@ from server.extensions import supabase_anon, supabase_sec
 TEST_USER = {'name': 'Test Name',
              'email': 'nonrealuserfortesting@gmail.com',
              'password': 'secret_password',
-             'confirm_password': 'secret_password'}
+             'confirmPassword': 'secret_password'}
 
 
 class User(UserMixin):
@@ -79,12 +79,11 @@ class User(UserMixin):
     # Deletes user created during testing
     def delete_test_user():
         supabase_sec.table('User').delete().eq('email', TEST_USER['email']).execute()
-        return None
 
     @staticmethod
     # gets test user credentials
     def get_test_user(loginData=False):
-        if supabase_sec.table('User').select('*').eq('email', TEST_USER['email']):
+        if supabase_sec.table('User').select('*').eq('email', TEST_USER['email']).execute():
             User.delete_test_user()
         if loginData:
             return {TEST_USER['email'], TEST_USER['password']}

@@ -70,6 +70,8 @@ def signup():
     email = request.form.get('email')
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
+    print(password)
+    print(confirmPassword)
 
     if password != confirmPassword:
         temp_cookies = {

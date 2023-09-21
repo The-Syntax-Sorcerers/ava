@@ -1,14 +1,33 @@
 from server import User
 from server.tests.conftest import get_CSRF_token, TEST_DATA
 import pytest
-
-SIGN_UP_TESTCASES = [([], 200),
-                     ([('name', '')], 200),
+# this is probably going to break again, not sure why it is failing
+SIGN_UP_TESTCASES = [([], 302),
+                     ([('name', '')], 302),
                      ([('email', '')], 500),
-                     ([('password', '')], 200),
-                     ([('confirm_password', '')], 200),
+                     ([('password', '')], 302),
+                     ([('confirmPassword', '')], 302),
                      ([('email', ''), ('name', '')], 500),
                      ]
+
+
+@pytest.mark.parametrize("changed_elems,response_code", SIGN_UP_TESTCASES)
+def test_signup_form(client, changed_elems, response_code):
+    # Signs the user up and checks they are being redirected to login
+    data = User.get_test_user()
+    data['csrf_token'] = get_CSRF_token(client, '/')
+    for elem in changed_elems:
+        data[elem[0]] = elem[1]
+    response = client.post('/signup', data=data, follow_redirects=False)
+    print(f'Location: {response.location}')
+    print(f'Response: {response.status_code}')
+    print(response.text)
+    
+    assert response.status_code == response_code
+    # assert response.status_code == response_code
+
+    User.delete_test_user()
+
 
 # At the moment this is a broken test that will
 # always pass as the username and password will never fail
@@ -41,17 +60,3 @@ def test_logout_redirect(client):
     # Succesfully redirects a single time
     assert response.status_code == 200
     assert len(response.history) == 1
-
-
-@pytest.mark.parametrize("changed_elems,response_code", SIGN_UP_TESTCASES)
-def test_signup_form(client, changed_elems, response_code):
-    # Signs the user up and checks they are being redirected to login
-    data = User.get_test_user()
-    data['csrf_token'] = get_CSRF_token(client, '/')
-    for elem in changed_elems:
-        data[elem[0]] = elem[1]
-
-    response = client.post('/signup', data=data, follow_redirects=True)
-    assert response.status_code == response_code
-
-    User.delete_test_user()

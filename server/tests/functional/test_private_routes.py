@@ -2,8 +2,9 @@ import pytest
 
 PRIVATE_ROUTES_TESTCASES = [('/dashboard', 200),
                             ('/subjects/COMP123456', 200),
-                            ('/assignment', 200),
                             ('/assignments', 200),
+                            ('/subjects/COMP123456', 200),
+                            ('/subjects/COMP123456/1', 200),
                             ('/invalid_route', 404)
                             ]
 
@@ -11,7 +12,6 @@ PRIVATE_ROUTES_TESTCASES = [('/dashboard', 200),
 @pytest.mark.parametrize("route,response_code", PRIVATE_ROUTES_TESTCASES)
 def test_private_routes(auth_client, route, response_code):
     response = auth_client.get(route, follow_redirects=True)
-    print(response.text)
     assert response.status_code == response_code
 
 
