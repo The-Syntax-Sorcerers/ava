@@ -10,7 +10,7 @@ from postgrest import APIError
 
 from server.extensions import supabase_anon, set_cookies, get_cookies, clear_cookies
 from server.models.flaskforms import LoginForm
-from server import User
+from server.models import User
 
 auth = Blueprint('auth', __name__, template_folder=os.getcwd() + "/client/dist",
                  static_folder=os.getcwd() + "/client/dist")

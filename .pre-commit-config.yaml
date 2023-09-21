@@ -9,4 +9,4 @@ repos:
     rev: '2f90d073891b0b8777915383c35ecf8838680264'  # Use the latest version available
     hooks:
     -   id: flake8
-        args: ['--max-line-length=120', '--ignore=F401,E402,E266,W293']
+        args: ['--max-line-length=120', '--ignore=F401,E402,E266,W293,W503']
