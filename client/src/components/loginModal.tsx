@@ -1,6 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export default function LoginForm({ setShowModal }) {
+export default function LoginForm({ setShowModal, handleSignupClick }) {
+
+    const data = (globalThis as any).template_data
+    const receivedError = Object.prototype.hasOwnProperty.call(data, "login_error") ? data.login_error : null;
+    const filledForm = Object.prototype.hasOwnProperty.call(data, "loginform") ? data.loginform : null;
+    let filledEmail = "";
+    if(filledForm){
+        filledEmail = Object.prototype.hasOwnProperty.call(filledForm, "email") ? filledForm.email : "";
+    } 
+    
     return (
         <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25 backdrop-blur-sm">
             <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded-lg shadow-2xl text-center">
@@ -8,20 +17,32 @@ export default function LoginForm({ setShowModal }) {
                     <h1 className="text-xl font-semibold"> Log In </h1>
                 </div>
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
+
+                    {/* Error message */}
+                    {receivedError ? (
+                        <div className="relative mb-6">
+                            <p className="text-error-red">{receivedError}</p>
+                        </div>
+                    ) : null}
+
+                    {/* Login form */}
                     <form method="post" action="/login">
                         <input id="csrf_token" name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
                         {/* <!--E-mail input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="email" name="email" 
                             className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            defaultValue={filledEmail} 
+                            required />
                         </div>
 
                         {/* <!--Password input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="password" name="password" id="password" 
                             className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
-                            placeholder="Password" />
+                            placeholder="Password" 
+                            required />
                         </div>
 
                         {/* <!--Remember me checkbox--> */}
@@ -55,20 +76,32 @@ export default function LoginForm({ setShowModal }) {
                         >
                         Log in
                         </button>
-
-                        {/* <!--Register link--> */}
-                        <div className="mb-6 flex items-center justify-center">
-                        <p className="mt-6 text-center text-lighter dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
-                            Not a member?<a className="text-blue-700 transition duration-150 ease-in-out hover:text-blue-800 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            href="/signup"> Sign Up </a>
-                        </p>
-                        
-                        </div>
                     </form>
+
+                    {/* <!--Register link--> */}
+                    <div className="mb-5 flex items-center justify-center">
+                        <div>
+                            <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                                Not a member?
+                            </p>
+                        </div>
+                            
+                        <div>
+                            <button
+                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={handleSignupClick}
+                                >
+                                Sign Up
+                            </button>
+                        </div>
+                            
+                        
+                    </div>
+
+                    {/* <!--Register link--> */}
                     <button
-                        className="rounded-lg text-slate-900 mt-4 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="rounded-lg text-slate-900  mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                         >
@@ -76,7 +109,6 @@ export default function LoginForm({ setShowModal }) {
                     </button>
                 </div>
             </div>
-
         </div>
     );
 }

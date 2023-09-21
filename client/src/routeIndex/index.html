@@ -10,13 +10,10 @@
   <body>
     <div id="root"></div>
     <script>
-          if (typeof template_data !== 'undefined' && template_data !== null) {
-            globalThis.template_data = {{ template_data | tojson | safe }}
-            console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
-          }
-          else {
-            console.log("INFO: template_data is not defined.");
-          }
+      {% if template_data %}
+          globalThis.template_data = {{ template_data | tojson | safe }};
+      {% endif %}
+      console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
     </script>
     <script type="module" src="./entry.tsx"></script>
   </body>

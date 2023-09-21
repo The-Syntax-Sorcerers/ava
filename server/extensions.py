@@ -1,6 +1,9 @@
 import os
+
+import flask
 from flask_login import LoginManager
 from supabase import create_client, Client
+
 
 # Loads the first not-None value from the .env file for the given key list
 def load_from_env(variable_names: list):
@@ -9,6 +12,7 @@ def load_from_env(variable_names: list):
         if res:
             return res
     return None
+
 
 # Loading in the inidiviual user's supabase environment variables
 url: str = load_from_env(["SUPABASE_URL"])
@@ -27,3 +31,26 @@ else:
 
 login_manager = LoginManager()
 
+
+def get_cookies():
+    try:
+        return flask.session['cookies']
+    except KeyError:
+        return {}
+
+
+def set_cookies(cook):
+    flask.session['cookies'] = cook
+
+
+def clear_cookies():
+    try:
+        flask.session['cookies'] = {}
+    except KeyError:
+        return {}
+
+
+def get_and_clear_cookies():
+    cookies = get_cookies()
+    clear_cookies()
+    return cookies

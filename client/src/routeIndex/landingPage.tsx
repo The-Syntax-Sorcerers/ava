@@ -6,12 +6,14 @@ import DescriptionCards from '../components/descriptionCards.tsx';
 import Footer from '../components/Footer.tsx'
 
 import logo from '../assets/logo.svg';
-import pic from '../assets/idea.png';
+import pic from '../assets/idea2.svg';
 
 
 export default function LandingPage() {
-    const [showModal, setShowModal] = useState(false);
-    const [showLoginForm, setShowLoginForm] = useState(true);
+    const data = (globalThis as any).template_data
+
+    const [showModal, setShowModal] = useState(data.showModal);
+    const [showLoginForm, setShowLoginForm] = useState(data.showLogin);
 
 
     const handleLoginClick = () => {
@@ -23,7 +25,6 @@ export default function LandingPage() {
         setShowModal(true);
         setShowLoginForm(false);
     };
-
 
     return (
         <div className="flex flex-col justify-center items-center mx-auto overflow-visible">
@@ -59,9 +60,9 @@ export default function LandingPage() {
             {showModal ? (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     {showLoginForm ? (
-                        <LoginForm setShowModal={setShowModal}/>
+                        <LoginForm setShowModal={setShowModal} handleSignupClick={handleSignupClick}/>
                     ) : (
-                        <SignupForm setShowModal={setShowModal} />
+                        <SignupForm setShowModal={setShowModal} handleLoginClick={handleLoginClick} />
                     )}
                 </div>
             ) : null}

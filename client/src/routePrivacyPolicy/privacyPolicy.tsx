@@ -47,9 +47,9 @@ export default function PrivacyPolicy({ auth_user }: { auth_user: boolean }) {
             { showModal ? (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     {showLoginForm ? (
-                        <LoginForm setShowModal={setShowModal}/>
+                        <LoginForm setShowModal={setShowModal} handleSignupClick={handleSignupClick}/>
                     ) : (
-                        <SignupForm setShowModal={setShowModal} />
+                        <SignupForm setShowModal={setShowModal} handleLoginClick={handleLoginClick} />
                     )}
                 </div>
             ) : null }

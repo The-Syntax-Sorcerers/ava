@@ -6,7 +6,7 @@ import AssignmentsPage from "./assignments";
 if ((globalThis as any).template_data === undefined) {
     (globalThis as any).template_data = {
         "upcoming": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Some BS Assignment", 
-                        "link": "/assignnent"},
+                        "link": "/assignment"},
                         {"due_date": "10/17/2023", "id": "COMP123456",
                         "name": "Another BS assignment", "link": "/ass"},
                         {"due_date": "10/01/2023", "id": "COMP123456",
