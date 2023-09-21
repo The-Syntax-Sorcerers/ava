@@ -14,11 +14,11 @@ function PolicyElement({policy}: {policy: string[]}) {
     const content = policy[1]
 
     return (
-        <div className="bg-neutral-100 rounded-lg shadow-md p-4 pl-10 
-        border-2 border-card-border">
-            <li className="list-decimal pl-2 marker:font-bold">
+        <div className="rounded-lg shadow-md p-4 pl-10 
+        border-2 border-accent-primary-100">
+            <li className="list-decimal pl-2 marker:font-semibold marker:text-gray-700">
                 <div>
-                    <h2 className='font-bold text-md text-gray-700'>
+                    <h2 className='font-semibold text-md text-gray-700'>
                         {title}
                     </h2>
                     <div className='text-sm font-medium text-gray-700'>
