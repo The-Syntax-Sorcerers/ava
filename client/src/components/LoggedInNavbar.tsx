@@ -41,6 +41,7 @@ export default function LoggedInNavbar() {
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <img className="w-10 h-10" src={logo} alt="Ava Logo"/>
+<<<<<<< HEAD
                         <div className="text-button-blue text-xl font-bold">AVA</div>
                     </div>
                     <div className="flex items-center">
@@ -54,6 +55,9 @@ export default function LoggedInNavbar() {
                         <button onClick={handleDropdownClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 focus:bg-button-pink-darker ${showDropdown ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
                             <img src={ menu } alt="Dropdown Menu"/>
                         </button>
+=======
+                        <div className="text-xl font-bold text-button-blue">AVA</div>
+>>>>>>> 84040438297805c3a04efdf063287ab9bb768b1f
                     </div>
                 </div>
             </div>

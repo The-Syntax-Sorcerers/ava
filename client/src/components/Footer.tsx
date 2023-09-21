@@ -4,6 +4,7 @@ import { Key } from 'react'
 const routes = [  
     ['Our GitHub', 'https://github.com/The-Syntax-Sorcerers/ava'],
     ['Privacy Policy', '/privacy_policy'],
+    ['GitHub', 'https://github.com/The-Syntax-Sorcerers/ava']
 ]
 
 // Allows adding link elements to the footer
