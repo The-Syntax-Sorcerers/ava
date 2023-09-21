@@ -11,7 +11,7 @@ function DropdownElement({menuItem}: {menuItem: string[]}) {
 
     return (
         <li className='flex w-full'>
-            <a href={ url } className="flex justify-center items-center rounded-lg px-5 py-2 w-full my-1 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
+            <a href={ url } className="custom-dropdown-link-element">
                 { title }
             </a>
         </li>
@@ -27,7 +27,7 @@ export default function DropdownList({ setShowDropdown }) {
         <>
         {/* Allows closing the dropdown menu by clicking anywhere on the screen */}
         <div onClick={() => setShowDropdown(false)} className="fixed inset-0 z-50 outline-none focus:outline-none">
-            <ul onClick={e => e.stopPropagation()} className='flex flex-col items-center fixed top-24 right-32 z-50 min-w-max rounded-lg p-2 bg-main drop-shadow-lg list-none divide-y-2 divide-lighter divide-double'>
+            <ul onClick={e => e.stopPropagation()} className='flex flex-col items-center fixed top-24 right-32 z-50 min-w-max rounded-lg p-2 bg-white drop-shadow-lg list-none divide-y-2 divide-black'>
                 {/* Dropdown Link Elements */}
                 {menuItems.map((menuItem) => (
                     <DropdownElement menuItem={ menuItem } />

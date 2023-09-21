@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 @layer components {
 
     :root {
@@ -14,29 +11,114 @@
         --secondary-contrast: bg-white;
     }
 
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Page Styling
+     * ------------------------------------------------------------------------------------------
+     */
+
     /* This tag applies to the background of all webpages */
     .custom-landing-page {
         @apply bg-cover bg-no-repeat bg-gradient-to-bl 
-        from-accent-teal-100 from-10% via-blue-50 via-40% to-accent-violet-300 to-95%
+        from-accent-primary-100 from-10% via-blue-50 via-40% to-accent-secondary-300 to-95%
         bg-slate-600 bg-opacity-20 bg-blend-overlay;
     }
 
     .custom-pages {
         @apply bg-cover bg-no-repeat bg-gradient-to-bl 
-        from-accent-teal-100 from-10% via-blue-50 via-40% to-accent-violet-300 to-95%
+        from-accent-primary-100 from-10% via-blue-50 via-40% to-accent-secondary-300 to-95%
         bg-slate-600 bg-opacity-20 bg-blend-overlay;
         
         /* dark:from-gray-400 dark:via-slate-200 dark:to-slate-200; */
         
-        /* @apply bg-cover bg-gray-200; */
-        
+        /* @apply bg-cover bg-gray-200; */    
     }
 
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Authorisation Form Styling
+     * ------------------------------------------------------------------------------------------
+     */
 
-    /* This tag applies to the loginModal */
-    .custom-login {
-        @apply outline-none focus:outline-none bg-black bg-opacity-25 backdrop-blur-sm;
+    /* Styles the error text on the auth forms */
+    .custom-error-text {
+        @apply border-2 border-red-300;
     }
+
+    /* Styles the input fields on the auth forms */
+    .custom-form-field {
+        @apply w-full mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+        focus:outline-none focus:border-accent-primary-300 focus:ring-accent-primary-300 block rounded-md 
+        sm:text-sm focus:ring-1;
+    }
+
+    /* Styles the input fields on the auth forms after an input error */
+    .custom-form-field-error {
+        @apply border-2 border-red-400;
+    }
+
+    /* Styles the text elements on the auth forms */
+    .custom-form-text-elements {
+        @apply text-sm font-medium  text-gray-500;
+    }
+
+    /* Styles the clickable text elements on the auth forms */
+    .custom-form-text-element-clickable {
+        @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer focus:bg-accent-secondary-500;
+    }
+
+    /* Styles the colour and text of buttons on the auth form fields and landing page */
+    .custom-form-button {
+        @apply uppercase font-semibold ease-in-out duration-200 rounded-lg
+        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800 focus:bg-accent-secondary-500;
+    }
+
+    /* Styles the primary action buttons on the auth forms */
+    .custom-form-main-button {
+        @apply custom-form-button 
+        w-full px-6 pb-2 pt-2.5 dark:active:shadow inline-block leading-normal;
+    }
+
+    /* Styles the secondary action buttons on the auth forms */
+    .custom-form-secondary-button {
+        @apply custom-form-button
+        mt-4 ml-5 mr-1 mx-auto px-6 py-2 text-sm;
+    }
+
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Navbar Elements
+     * ------------------------------------------------------------------------------------------
+     */
+
+    /* This tag applies to both navbars (loggedin / anonymous) */
+    .custom-navbar {
+        @apply bg-white drop-shadow-lg rounded-full;
+    }
+
+    /* Styles the colour and text of navbar link elements */
+    .custom-navbar-element {
+        @apply ease-in-out text-sm font-medium rounded-lg transition duration-200 flex justify-center items-center
+        bg-transparent hover:bg-violet-300 text-slate-900  hover:text-violet-800 focus:bg-violet-500;
+    }
+
+    /* Styles the pinned navbar link elements*/
+    .custom-navbar-link-element {
+    @apply custom-navbar-element
+    px-3 py-2;
+    }
+
+    /* Styles the navbar dropdown link elements */
+    .custom-dropdown-link-element {
+    @apply custom-navbar-element 
+    px-5 py-2 my-1 w-full 
+    }
+
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Card Elements
+     * ------------------------------------------------------------------------------------------
+     */
 
     /* This tag applies to the description cards on landing page */
     .custom-descriptioncards {
@@ -44,27 +126,36 @@
         /* hover:outline hover:outline-2 hover:outline-teal-500; */
     }
 
-    /* This tag applies to the subject cards on dashbboard */
-    .custom-subject-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform 
-        hover:bg-button-light-blue hover:scale-105 transition-transform 
+    /* Styles the colour and interactivity of the subject and assignment cards */
+    .custom-school-cards {
+        @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-50
+        hover:bg-accent-primary-400 hover:border-accent-primary-400 hover:scale-105 transition-transform 
         duration-300;
+    }
+
+    /* This tag applies to the subject cards on the subjects dashbboard */
+    .custom-subject-cards {
+        @apply custom-school-cards;
     }
 
     /* This tag applies to the assignment cards on assignments page */
     .custom-assignment-cards {
-        @apply bg-white rounded-lg shadow-md p-4 transform 
-        hover:bg-button-light-blue hover:scale-105 transition-transform 
-        duration-300;
+        @apply custom-school-cards;
+    }
+
+    /* 
+     * ------------------------------------------------------------------------------------------
+     *
+     * ------------------------------------------------------------------------------------------
+     */
+
+    /* This tag applies to the loginModal */
+    .custom-login {
+        @apply outline-none focus:outline-none bg-black bg-opacity-25 backdrop-blur-sm;
     }
 
     /* This tag applies to the footer */
     .custom-footer {
         @apply bg-white shadow-md rounded-full mx-auto w-48 h-9 mb-5 mt-8;
-    }
-
-    /* This tag applies to both navbars (loggedin / anonymous) */
-    .custom-navbar {
-        @apply bg-white drop-shadow-lg rounded-full;
     }
 }
