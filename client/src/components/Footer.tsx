@@ -1,5 +1,3 @@
-import { Key } from 'react'
-
 // The list of links to add to the footer in [text, route] pairs
 const routes = [  
     ['Our GitHub', 'https://github.com/The-Syntax-Sorcerers/ava'],
@@ -33,8 +31,8 @@ export default function Footer() {
                     </p>
                 </div>
                 <div className="flex justify-center items-center">
-                    {routes.map((route, key: Key) => (
-                        <FooterLinkElement route={route} key={key} />
+                    {routes.map((route) => (
+                        <FooterLinkElement route={route}/>
                     ))}
                 </div>
             </div>
