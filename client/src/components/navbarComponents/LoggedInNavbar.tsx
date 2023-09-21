@@ -9,7 +9,6 @@ const routes = [
     ['Subjects', '/dashboard'],
     ['Assignments', '/assignments'],
     ['Profile', '/profile'],
-    ['Log Out', '/logout'],
 ]
 
 // Allows dynamically adding link elements to the navbar
@@ -19,9 +18,7 @@ function NavBarElement({route}: {route: string[]}) {
 
     return (
         <li>
-            <a href={url} className="rounded-lg px-3 py-2 bg-transparent border-button-pink
-                text-sm font-medium hover:bg-violet-300 text-slate-900 hover:text-violet-800
-                transition duration-200 ease-in-out">
+            <a href={url} className="custom-navbar-link-element">
                 {title}
             </a>
         </li>
@@ -45,7 +42,7 @@ export default function LoggedInNavbar() {
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <img className="w-10 h-10" src={logo} alt="Ava Logo"/>
-                        <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
+                        <div className="text-button-blue text-xl font-bold">AVA</div>
                     </div>
                     <div className="flex items-center">
                         {/* Narbar link elements */}
@@ -55,7 +52,10 @@ export default function LoggedInNavbar() {
                             ))}
                         </ul>
                         {/* Dropdown menu button */}
-                        <button onClick={handleDropdownClick} className={`ml-4 rounded-lg px-3 py-2 font-medium z-20 focus:bg-button-pink-darker ${showDropdown ? 'bg-button-pink-darker' : 'bg-transparent hover:bg-button-pink'}`}>
+                        <button 
+                            onClick={handleDropdownClick} 
+                            className={`ml-4 px-3 py-2 z-20 custom-navbar-element 
+                            ${showDropdown ? 'bg-violet-500' : 'bg-transparent hover:bg-violet-300'}`}>
                             <img src={ menu } alt="Dropdown Menu"/>
                         </button>
                     </div>

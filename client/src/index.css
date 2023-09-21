@@ -62,13 +62,13 @@
 
     /* Styles the clickable text elements on the auth forms */
     .custom-form-text-element-clickable {
-        @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer;
+        @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer focus:bg-accent-secondary-500;
     }
 
     /* Styles the colour and text of buttons on the auth form fields and landing page */
     .custom-form-button {
         @apply uppercase font-semibold ease-in-out duration-200 rounded-lg
-        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800
+        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800 focus:bg-accent-secondary-500;
     }
 
     /* Styles the primary action buttons on the auth forms */
@@ -80,10 +80,34 @@
     /* Styles the secondary action buttons on the auth forms */
     .custom-form-secondary-button {
         @apply custom-form-button
-        mt-4 ml-5 mr-1 mx-auto px-6 py-2 text-sm focus:outline-none
+        mt-4 ml-5 mr-1 mx-auto px-6 py-2 text-sm;
     }
 
-        /* 
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Navbar Elements
+     * ------------------------------------------------------------------------------------------
+     */
+
+     /* Styles the colour and text of navbar link elements */
+     .custom-navbar-element {
+        @apply ease-in-out text-sm font-medium rounded-lg transition duration-200 flex justify-center items-center
+        bg-transparent hover:bg-violet-300 text-slate-900  hover:text-violet-800 focus:bg-violet-500;
+     }
+
+     /* Styles the pinned navbar link elements*/
+     .custom-navbar-link-element {
+        @apply custom-navbar-element
+        px-3 py-2;
+     }
+
+     /* Styles the navbar dropdown link elements */
+     .custom-dropdown-link-element {
+        @apply custom-navbar-element 
+        px-5 py-2 my-1 w-full 
+     }
+
+      /* 
      * ------------------------------------------------------------------------------------------
      * 
      * ------------------------------------------------------------------------------------------

@@ -9,9 +9,7 @@ function NavBarElement({route}: {route: any[]}) {
     return (
         <li>
             <button 
-                className="rounded-lg px-3 py-2 bg-transparent border-button-pink 
-                text-sm font-medium hover:bg-violet-300 text-slate-900 hover:text-violet-800
-                transition duration-200 ease-in-out"
+                className="custom-navbar-link-element"
                 type="button"
                 onClick={func}
             >
@@ -35,7 +33,7 @@ export default function AnonymousNavbar({ handleLoginClick, handleSignupClick }:
                     <div className="container mx-auto px-4 flex justify-between items-center">
                         <div className="flex items-center">
                             <img className="w-10 h-10" src={logo} alt="Ava Logo" />
-                            <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
+                            <div className="text-button-blue text-xl font-bold">AVA</div>
                         </div>
                         <ul className="flex space-x-4">
                             {routes.map((route, key: Key) => (
