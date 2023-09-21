@@ -50,23 +50,20 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Remember me checkbox--> */}
                         <div className="mb-6 flex items-center justify-between">
 
-                        <div className="flex items-center">
+                        <div className="flex items-center custom-form-text-elements">
                             <input id="link-checkbox" type="checkbox"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                            focus:ring-none dark:bg-gray-700" />
-                            
+                            className="w-4 h-4 rounded" />
                             <label htmlFor="link-checkbox" 
-                                className="ml-1 text-sm font-medium hover:text-accent-secondary-500 focus:text-accent-secondary-700 text-gray-500
-                                hover:cursor-pointer"
-                                > Remember Me 
+                                className="ml-1"> 
+                                Remember Me 
                             </label>
                         </div>
 
                             {/* <!--Forgot password link--> */}
                             <a
                                 href="#!"
-                                className="text-primary transition duration-200 ease-in-out 
-                                text-sm font-medium text-gray-500 hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:dark:accent-secondary-500"
+                                className="transition duration-200 ease-in-out custom-form-text-elements
+                                hover:dark:accent-secondary-500"
                                 >Forgot password?
                             </a>
                         </div>

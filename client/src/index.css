@@ -32,23 +32,39 @@
         
     }
 
-    /* */
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * Authorisation Form Styling
+     * ------------------------------------------------------------------------------------------
+     */
+
+    /* Styles the error text on the auth forms */
     .custom-error-text {
         @apply border-2 border-red-300;
     }
 
-    /* */
+    /* Styles the input fields on the auth forms */
     .custom-form-field {
         @apply w-full mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
         focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md 
         sm:text-sm focus:ring-1;
     }
 
-    /* */
+    /* Styles the input fields on the auth forms after an input error */
     .custom-form-field-error {
         @apply border-2 border-red-400;
     }
 
+    /* Styles the text elements on the auth forms */
+    .custom-form-text-elements {
+        @apply text-sm font-medium hover:text-accent-secondary-500 focus:text-accent-secondary-700 text-gray-500 hover:cursor-pointer;
+    }
+
+        /* 
+     * ------------------------------------------------------------------------------------------
+     * 
+     * ------------------------------------------------------------------------------------------
+     */
 
     /* This tag applies to the loginModal */
     .custom-login {
