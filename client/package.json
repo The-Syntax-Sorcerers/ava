@@ -21,7 +21,7 @@
     "rimraf": "^5.0.1",
     "vite-plugin-url-redirect": "^0.1.0",
     "watch": "^1.0.2",
-    "@cyntler/react-doc-viewer": "^1.13.0",
+    "@cyntler/react-doc-viewer": "^1.13.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
