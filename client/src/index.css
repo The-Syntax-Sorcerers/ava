@@ -42,7 +42,7 @@
 
     /* Styles the error text on the auth forms */
     .custom-error-text {
-        @apply border-2 border-red-300;
+        @apply text-red-300;
     }
 
     /* Styles the input fields on the auth forms */
@@ -64,7 +64,8 @@
 
     /* Styles the clickable text elements on the auth forms */
     .custom-form-text-element-clickable {
-        @apply hover:text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer focus:bg-accent-secondary-500;
+        @apply custom-form-text-elements
+        text-accent-secondary-500 focus:text-accent-secondary-700 hover:cursor-pointer focus:bg-accent-secondary-500;
     }
 
     /* Styles the colour and text of buttons on the auth form fields and landing page */
@@ -158,4 +159,10 @@
     .custom-footer {
         @apply bg-white shadow-md rounded-full mx-auto w-48 h-9 mb-5 mt-8;
     }
+
+    /* Styles the colour and text of buttons on the auth form fields and landing page */
+    .custom-upload-button {
+        @apply border-none custom-form-button p-4 hover:border-accent-secondary-500 hover:border-2
+    }
+
 }
