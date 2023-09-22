@@ -21,7 +21,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* Error message */}
                     {receivedError ? (
                         <div className="relative mb-6">
-                            <p className="text-error-red">{receivedError}</p>
+                            <p className="custom-error-text">{receivedError}</p>
                         </div>
                     ) : null}
 
@@ -31,10 +31,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--E-mail input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="email" name="email" 
-                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                            sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`} 
+                            className={`custom-form-field
+                            ${receivedError ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                             placeholder="Email" 
                             defaultValue={filledEmail} 
                             required />
@@ -43,10 +41,8 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Password input--> */}
                         <div className="relative mb-6">
                             <input type="password" name="password" id="password" 
-                            className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
-                            focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
-                            sm:text-sm focus:ring-1
-                            ${receivedError ? 'border-2 border-red-400' : null}`}
+                            className={`custom-form-field
+                            ${receivedError ? 'custom-form-field-error' : null}`} /* Highlights the input field on errors */
                             placeholder="Password" 
                             required />
                         </div>
@@ -54,23 +50,20 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Remember me checkbox--> */}
                         <div className="mb-6 flex items-center justify-between">
 
-                        <div className="flex items-center">
+                        <div className="flex items-center custom-form-text-elements custom-form-text-element-clickable">
                             <input id="link-checkbox" type="checkbox"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded 
-                            focus:ring-none dark:bg-gray-700" />
-                            
+                            className="w-4 h-4 rounded" />
                             <label htmlFor="link-checkbox" 
-                                className="ml-1 text-sm font-medium text-gray-500
-                                hover:cursor-pointer"
-                                > Remember Me 
+                                className="ml-1"> 
+                                Remember Me 
                             </label>
                         </div>
 
                             {/* <!--Forgot password link--> */}
                             <a
                                 href="#!"
-                                className="text-primary transition duration-200 ease-in-out 
-                                text-sm font-medium text-gray-500 hover:text-accent-violet-700 hover:dark:accent-violet-500"
+                                className="custom-form-text-elements custom-form-text-element-clickable
+                                hover:dark:accent-secondary-500"
                                 >Forgot password?
                             </a>
                         </div>
@@ -78,10 +71,7 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                         {/* <!--Sign in button--> */}
                         <button
                         type="submit"
-                        className="dark:active:shadow inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold 
-                        text-md uppercase leading-normal transition duration-200 ease-in-out
-                        bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
-                        >
+                        className="custom-form-main-button">
                         Log in
                         </button>
                     </form>
@@ -89,37 +79,20 @@ export default function LoginForm({ setShowModal, handleSignupClick }) {
                     {/* <!--Register link--> */}
                     <div className="mb-5 flex items-center justify-center">
                         <div>
-                            <p className="mt-4 text-center text-gray-500 dark:text-gray-500
-                            text-sm font-medium">
+                            <p className="mt-4 text-center custom-form-text-elements">
                                 Not a member?
                             </p>
                         </div>
                             
                         <div>
                             <button
-                                className="mt-4 ml-5 mr-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
-                                text-sm focus:outline-none ease-in-out transition-all duration-200
-                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
+                                className="custom-form-secondary-button"
                                 type="button"
-                                onClick={handleSignupClick}
-                                >
+                                onClick={handleSignupClick}>
                                 Sign Up
                             </button>
                         </div>
-                            
-                        
                     </div>
-
-                    {/* <!--Register link--> */}
-                    {/* <button
-                        className="mr-1 mb-1 mx-auto px-6 py-2 rounded-lg uppercase font-semibold font-sans 
-                        text-sm focus:outline-none ease-in-out transition-all duration-200
-                        hover:bg-button-light-blue hover:text-teal-800 bg-violet-300 text-violet-800"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                        >
-                        Close
-                    </button> */}
                 </div>
             </div>
         </div>
