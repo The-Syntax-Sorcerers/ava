@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.menuSelected {
+    --tw-bg-opacity: 1;
+    background-color: rgb(234 128 167 / var(--tw-bg-opacity));
+}
+
+.menuDeselected {
+    
+}

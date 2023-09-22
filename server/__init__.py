@@ -8,6 +8,7 @@ from server.extensions import login_manager, supabase_sec
 from server.models.models import User, Subject, Assignment, Storage
 from server.blueprints.common import common
 from server.blueprints.auth import auth
+from server.blueprints.subjects import subjects
 
 socket.setdefaulttimeout(15)
 test_config = None
@@ -30,6 +31,7 @@ login_manager.login_view = "common.index"
 
 app.register_blueprint(common)
 app.register_blueprint(auth)
+app.register_blueprint(subjects)
 
 ######################## Test Config ################################
 

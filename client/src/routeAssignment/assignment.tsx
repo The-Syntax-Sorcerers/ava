@@ -8,13 +8,20 @@ import Footer from '../components/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const PDF1_URL = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-export default function AssignmentPage({assignment, user_type}: {assignment: any, user_type: any}) {
+export default function AssignmentPage() {
+    
+    const data = (globalThis as any).template_data
+    const assignment = data.assignment
+    const user_type = data.user_type
+
+    if(assignment !== undefined && assignment.due_date == null) assignment.due_date = "None"
+
     console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
     const [fileUploaded, setFileUploaded] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
     // const [file, setFile] = useState({ url: PDF1_URL });
+ 
 
     const handleUpload = () => {
         setFileUploaded(true);
@@ -29,10 +36,11 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
         
         // fileReader.readAsDataURL(file);
     };
+    
     const handleSubmit = () => {
         setFileSubmitted(true);
         setFileUploaded(false);
-        setShowModal(true)
+        setShowSubmitModal(true)
     };
 
     return (
@@ -40,9 +48,8 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
                 <div className="container mx-auto">
-                    <h1 className="text-2xl font-semibold mb-4">{assignment.name}</h1>
-                    <h2 className="text-xl font-semibold mb-4">{assignment.id}</h2>
-                    <h2 className="text-lg font-semibold mb-4">Due on {assignment.due_date}</h2>
+                    <h1 className="text-2xl font-semibold mb-4">{assignment.id} - {assignment.name}</h1>
+                    <h2 className="text-lg font-semibold mb-4">Due on: {assignment.due_date}</h2>
                     <p className="text-base mb-4">Description: {assignment.description}</p>
                     <p className="text-base mb-4">Marks: {assignment.marks}</p>
                     <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
@@ -79,8 +86,8 @@ export default function AssignmentPage({assignment, user_type}: {assignment: any
                         )
                         
                     }
-                    {showModal ? (
-                        <VerificationSuccess setShowModal={setShowModal} result={false}/>
+                    {showSubmitModal ? (
+                        <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={false}/>
                     ):null
                     }
                 </div>

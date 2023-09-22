@@ -27,7 +27,7 @@ dist:
 .PHONY: run
 run:
 	npm run clean --prefix ${CLIENT_DIR}
-	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME} 
+	npm install --prefix ${CLIENT_DIR} ${CONFIG_NAME}  --force
 	npm run build --prefix ${CLIENT_DIR}
 	flask --app server run
 

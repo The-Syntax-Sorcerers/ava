@@ -6,8 +6,9 @@ import flask_login
 import flask_wtf.csrf
 from flask import Blueprint, flash, redirect, url_for, request
 from gotrue.errors import AuthApiError
+from postgrest import APIError
 
-from server.extensions import supabase_anon
+from server.extensions import supabase_anon, set_cookies, get_cookies, clear_cookies
 from server.models.flaskforms import LoginForm
 from server.models.models import User
 
@@ -19,6 +20,8 @@ def login():
     print("Serving Login Route!")
     if flask_login.current_user.is_authenticated:
         return redirect(url_for('common.dashboard'))
+
+    temp_cookies = {}
 
     # Validating CSRF token prevents Cross-site forgery attacks!!
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
@@ -34,15 +37,19 @@ def login():
         flash('Logged in successfully!', 'success')
         print("Logged In!")
 
+        clear_cookies()
         return redirect(url_for('common.dashboard'))
 
     except AuthApiError as e:
-        print(e.status, e.message)
-        if e.status == 400:
-            print(e.message)
-        else:
-            print("UNHANDLED ERROR:", e.message)
+        temp_cookies = {
+            "showModal": True,
+            "showLogin": True,
+            "status": e.status,
+            "login_error": e.message,
+            "loginform": request.form
+        }
 
+    set_cookies(temp_cookies)
     return redirect(url_for('common.dashboard'))
 
 
@@ -53,6 +60,8 @@ def signup():
     if flask_login.current_user.is_authenticated:
         return redirect(url_for('common.dashboard'))
 
+    temp_cookies = {}
+
     # Validating CSRF token prevents Cross-site forgery attacks!!
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
@@ -61,22 +70,53 @@ def signup():
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
 
-    try:
-        User.supabase_signup_wrapper(email, password, name)
-        flash('Account created successfully!', 'success')
+    if password != confirmPassword:
+        temp_cookies = {
+            "showModal": True,
+            "showLogin": False,
+            "status": 400,
+            "signup_error": "Passwords do not match!!",
+            "signupform": request.form
+        }
 
-        # Signup Success. confirm from email.
-        return redirect(url_for('common.index'))
+    else:
+        try:
+            User.supabase_signup_wrapper(email, password, name)
+            flash('Account created successfully!', 'success')
 
-    except AuthApiError as e:
-        print(e.status, e.message)
-        if e.status == 422:
-            print("Invalid Format:", e.message)
-        else:
-            print("UNHANDLED ERROR:", e.message)
+            temp_cookies = {
+                "status": 200,
+                "signup_error": "Sign up Success!!",
+            }
+
+            # Signup Success. confirm from email.
+            set_cookies(temp_cookies)
+            return redirect(url_for('common.index'))
+
+        except (AuthApiError, APIError) as e:
+            if type(e) == AuthApiError:
+
+                temp_cookies = {
+                    "showModal": True,
+                    "showLogin": False,
+                    "status": e.status,
+                    "signup_error": e.message,
+                    "signupform": request.form
+                }
+            elif type(e) == APIError:
+                temp_cookies = {
+                    "showModal": True,
+                    "showLogin": False,
+                    "status": e.code,
+                    "signup_error": "User email already exists!",
+                    "signupform": request.form
+                }
+            else:
+                print("SOMETHING IS WRONG!!!")
 
     # There was some error with signup
-    return redirect(url_for('common.index', signupform=request.form))
+    set_cookies(temp_cookies)
+    return redirect(url_for('common.index'))
 
 
 @auth.route('/logout')

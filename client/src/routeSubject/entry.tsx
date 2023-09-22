@@ -6,7 +6,7 @@ import AssignmentsPage from "./subject";
 if ((globalThis as any).template_data === undefined) {
     (globalThis as any).template_data = {
         "upcoming": [{"due_date": "12/31/2023", "id": "BSBS873295", 
-                            "name": "Don't Use ChatGPT", "link": "/assignnent"},
+                            "name": "Don't Use ChatGPT", "link": "/assignment"},
                             {"due_date": "10/17/2023", "id": "BSBS873295",
                              "name": "Dumb Project", "link": "/ass"},
                             {"due_date": "02/01/2028", "id": "BSBS873295",
@@ -28,11 +28,6 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AssignmentsPage 
-        upcoming={(globalThis as any).template_data.upcoming} 
-        past={(globalThis as any).template_data.past} 
-        subject={(globalThis as any).template_data.subject}
-
-    />
+    <AssignmentsPage/>
   </React.StrictMode>,
 )

@@ -1,5 +1,5 @@
 // Upload another assignment button
-export default function UploadButton({handleUpload}: {handleUpload: () => void}) {
+export default function UploadButton({handleUpload}: {handleUpload: (event: any) => void}) {
     return (
         <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload another file</label>
