@@ -9,7 +9,8 @@ from flask import Blueprint, render_template, send_from_directory, redirect, url
 from server.extensions import get_and_clear_cookies
 from server.models.models import User, Subject, Assignment
 
-common = Blueprint('common', __name__, template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+common = Blueprint('common', __name__, template_folder=os.getcwd(
+)+"/client/dist", static_folder=os.getcwd()+"/client/dist")
 
 
 @common.route('/',  methods=["GET"])
@@ -38,16 +39,20 @@ def privacy_policy(loginform=None, signupform=None):
 @flask_login.login_required
 def dashboard():
     print("Serving Dash")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "subjects": [],
+        "user_type": user_type,
         "random": 69,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
     user: User = flask_login.current_user
     for sub in user.get_subjects():
-        temp = {'id': sub.subject_id, 'name': sub.name, 'link': 'subjects/' + sub.subject_id}
+        temp = {'id': sub.subject_id, 'name': sub.name,
+                'link': 'subjects/' + sub.subject_id}
         template_data['subjects'].append(temp)
 
     return render_template('routeDashboard/index.html', template_data=template_data)
@@ -57,18 +62,21 @@ def dashboard():
 @flask_login.login_required
 def assignments():
     print("Serving Assignments")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "upcoming": [],
         "past": [],
-        "user_type": "student",
+        "user_type": user_type,
         "random": 69,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
-    user: User = flask_login.current_user
+
     db_asses: [Assignment] = user.get_assignments()
-    db_asses = sorted(db_asses, key=lambda x: (x.due_date is not None, x.due_date))
+    db_asses = sorted(db_asses, key=lambda x: (
+        x.due_date is not None, x.due_date))
     for ass in db_asses:
         temp = {
             "id": ass.subject_id,

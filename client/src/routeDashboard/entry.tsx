@@ -20,8 +20,7 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    
-    <Dashboard subjects={(globalThis as any).template_data.subjects}/>
+    <Dashboard subjects={(globalThis as any).template_data.subjects} userType={(globalThis as any).template_data.user_type}/>
   </React.StrictMode>,
 )
 

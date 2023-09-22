@@ -1,14 +1,19 @@
-import { Key } from 'react'
+import { Key, useState} from 'react'
 import LoggedInNavbar from '../components/navbarComponents/LoggedInNavbar.tsx'
 import AssignmentCard, {assignmentObj} from '../components/assignmentComponents/assignmentCard.tsx'
+import StudentCard, {studentObj} from '../components/subjectComponents/studentCard.tsx'
 import Footer from '../components/landingComponents/Footer.tsx'
+import CreateAssignmentForm from '../components/assignmentComponents/createAssignmentModal.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export default function SubjectPage() {
     const data = (globalThis as any).template_data
     console.log("Rendering Ass with Assignments:", data.upcoming, data.past)
-
+    const [showModal, setShowModal] = useState(false);
+    const handleAddAssignment = () => {
+        setShowModal(true);
+    };
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
@@ -23,6 +28,16 @@ export default function SubjectPage() {
                         {data.upcoming.map((assignment: assignmentObj, rkey: Key) => (
                             <AssignmentCard ass={assignment} key={rkey} inSubject={true} />
                         ))}
+                        {data.user_type == "teacher" ? (<button 
+                            className="cursor-pointer custom-subject-cards
+                            hover:bg-violet-300 text-slate-900 hover:text-violet-800
+                            transition duration-200 ease-in-out"
+                            type="button"
+                            onClick={handleAddAssignment}
+                        >
+                            +
+                        </button>):null
+                        }
                     </div>
                     <h1 className="text-2xl font-semibold mb-4 mt-5">Past Assignments</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -31,6 +46,21 @@ export default function SubjectPage() {
                         ))}
                     </div>
                 </div>
+                
+                {data.user_type == "teacher" ? (
+                    <>
+                    <h1 className="text-2xl font-semibold mb-4 mt-5">Students</h1>
+                    {data.students.map((student: studentObj) => (
+                        <StudentCard stu={student}/>
+                    ))}
+                    </>
+                ):null
+                }
+                {showModal ? (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <CreateAssignmentForm setShowModal={setShowModal}/>
+                </div>
+                ) : null}
             </main>
             <Footer/>
         </div>

@@ -1,4 +1,3 @@
-
 // The list of privacy policies to reder in [title, paragraph] pairs
 const policies = [
     ['Introduction', 'Welcome to our AI Text Comparison Tool\'s Privacy Policy. This policy explains how we collect, use, disclose, and safeguard your information when you use our AI tool. Please read this policy carefully to understand our practices.'],
