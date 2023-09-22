@@ -1,3 +1,14 @@
+interface ErrorLookup {
+    [key: number]: string[];
+}
+const error_lookup: ErrorLookup = {
+    23505: ['email'],
+    400: ['password', 'confirmPassword'],
+    422: ['password', 'confirmPassword'],
+    403: ['name', 'email', 'password', 'confirmPassword'],
+    500: [],
+}
+
 
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -6,8 +17,9 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
 
     const data = (globalThis as any).template_data
     const receivedError = Object.prototype.hasOwnProperty.call(data, "signup_error") ? data.signup_error : null;
+    const highlight = receivedError ? error_lookup[data.status as number] || []: [];    // Ask Talym
     console.log("Received error:", receivedError);
-
+    
     const filledForm = Object.prototype.hasOwnProperty.call(data, "signupform") ? data.signupform : null;
     let filledName = "", filledEmail = "";
     if(filledForm) {
@@ -35,35 +47,42 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         {/* First Name input */}
                         <input name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
                         
-                        <div className="relative mb-6" data-te-input-wrapper-init>
+                        <div className="relative mb-6">
                             <input
                                 type="text"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 
+                                ${highlight.includes('name') ? 'border-2 border-red-300' : null}`}
                                 id="name"
                                 name="name"
-                                defaultValue={filledName}
+                                defaultValue={highlight.includes('name') ? "" : filledName}
                                 placeholder="Preferred Name" 
                                 required
                             />
                         </div>
 
                         {/* Email input */}
-                        <div className="relative mb-6" data-te-input-wrapper-init>
+                        <div className="relative mb-6">
                             <input
                                 type="email" name="email"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('email') ? 'border-2 border-red-400' : null}`}
                                 id="signupEmail"
-                                defaultValue={filledEmail}
+                                defaultValue={highlight.includes('email') ? "" :filledEmail}
                                 placeholder="Enter Email address" 
                                 required
                             />
                         </div>
 
                         {/* Password input */}
-                        <div className="relative mb-6" data-te-input-wrapper-init>
+                        <div className="relative mb-6">
                             <input
                                 type="password" name="password"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('password') ? 'border-2 border-red-400' : null}`}
                                 id="signupPassword"
                                 placeholder="Password" 
                                 required
@@ -71,10 +90,12 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         </div>
 
                         {/* Confirm Password input */}
-                        <div className="relative mb-6" data-te-input-wrapper-init>
+                        <div className="relative mb-6">
                             <input
                                 type="password" name="confirmPassword"
-                                className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                className={`mt-1 px-3 py-2 bg-white shadow-sm placeholder-slate-400 
+                                focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md 
+                                sm:text-sm focus:ring-1 ${highlight.includes('confirmPassword') ? 'border-2 border-red-400' : null}`}
                                 id="confirmPassword"
                                 placeholder="Confirm Password" 
                                 required
@@ -82,18 +103,27 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                         </div>
 
                         {/* Privacy Policy */}
-                        <div className="flex flex-grow justify-center text-center -mt-4 mb-4 text-sm">
-                            <p className="text-lighter">By clicking sign up you agree to our&nbsp;</p>
-                            <a href="/privacy_policy" className="text-blue-600 dark:bg-blue-500 hover:underline">Privacy Policy</a>
+                        <div className="flex flex-grow justify-center text-center mt-4 mb-4 text-gray-500 dark:text-gray-500
+                            text-sm font-medium">
+                                
+                            <div>
+                                <p>
+                                    By clicking sign up you agree to our&nbsp; 
+                                    <a href="/privacy_policy" className="text-accent-violet-500 hover:text-accent-violet-700">
+                                        Privacy Policy
+                                    </a>
+                                </p>
+                                {/* <p> By clicking sign up you agree to our&nbsp; </p>
+                                <a href="/privacy_policy" className="text-blue-600">Privacy Policy</a> */}
+                            </div>
                         </div>
 
                         {/* Sign up button */}
                         <button
+                            className="inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold text-md 
+                            uppercase leading-normal transition duration-200 ease-in-out dark:active:shadow 
+                            bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                             type="submit"
-                            className="dark:active:shadow inline-block w-full rounded bg-button-blue px-6 pb-2 pt-2.5 font-semibold text-lg uppercase leading-normal text-slate-900 transition duration-150 ease-in-out hover:bg-button-blue-darker"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            // onClick={() => HANDLE FORM SUBMISSION}
                         >
                             Sign up
                         </button>
@@ -103,16 +133,20 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                     </form>
 
                     {/* <!--Login link--> */}
-                    <div className="mb-5 flex items-center justify-center">
+                    <div className="mb-5 flex items-center justify-center ">
                         <div>
-                            <p className="mt-4 text-center text-neutral-800 dark:text-neutral-200 font-size: .875rem line-height: 1.25rem">
+                            <p className="mt-4 text-center text-gray-500 dark:text-gray-500
+                            text-sm font-medium">
                                 Already a member?
                             </p>
                         </div>
                             
                         <div>
                             <button
-                                className="rounded-lg text-slate-900 mt-4 ml-5 mx-auto bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 ease-linear transition-all duration-150"
+                                // className="rounded-lg text-slate-900 bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                className="rounded-lg mt-4 ml-5 mx-auto uppercase px-6 py-2 text-sm font-semibold 
+                                focus:outline-none mr-1 ease-linear transition-all duration-200
+                                bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                                 type="button"
                                 onClick={handleLoginClick}
                                 >
@@ -124,13 +158,13 @@ export default function SignupForm({ setShowModal, handleLoginClick }) {
                     </div>
 
                     {/* Close button */}
-                    <button
-                        className="rounded-lg text-slate-900bg-button-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    {/* <button
+                        className="rounded-lg text-slate-900 bg-button-light-yellow hover:bg-button-yellow-darker font-bold uppercase px-6 py-2 text-sm focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => setShowModal(false)}
                     >
                         Close
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

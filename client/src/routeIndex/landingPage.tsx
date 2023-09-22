@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import LoginForm from '../components/loginModal.tsx';
-import SignupForm from '../components/signUpModal.tsx';
-import AnonymousNavbar from '../components/AnonymousNavbar.tsx';
-import DescriptionCards from '../components/descriptionCards.tsx';
-import Footer from '../components/Footer.tsx'
+import LoginForm from '../components/landingComponents/loginModal.tsx';
+import SignupForm from '../components/landingComponents/signUpModal.tsx';
+import AnonymousNavbar from '../components/navbarComponents/AnonymousNavbar.tsx';
+import DescriptionCards from '../components/landingComponents/descriptionCards.tsx';
+import Footer from '../components/landingComponents/Footer.tsx'
 
 import logo from '../assets/logo.svg';
 import pic from '../assets/idea2.svg';
@@ -27,13 +27,14 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="flex flex-col justify-center items-center mx-auto overflow-visible">
+        // For page background use bg-stone-100 OR bg-
+        <div className="flex flex-col justify-center items-center mx-auto overflow-visible custom-landing-page">
             <AnonymousNavbar
                 handleLoginClick={handleLoginClick}
                 handleSignupClick={handleSignupClick}
             />
-            <div className="flex flex-col text-center mx-auto pt-28">
-                <div className="grid grid-rows-1 grid-cols-2 text-center mx-auto mb-10">
+            <div className="flex flex-col text-center mx-auto pt-28 font-medium text-md text-gray-700 items-center">
+                <div className="grid grid-rows-1 grid-cols-2 text-center mx-auto mb-10"> 
                     <div className="col-span-1">
                         <img className="object-contain h-80 w-auto mx-auto" src={pic} alt="pic1"/>
                     </div>
@@ -45,8 +46,12 @@ export default function LandingPage() {
                             <div className="place-content-center">
                                 <h1 className="text-lg font-semibold">Welcome to AVA</h1>
                                 <h2>Unlocking Authenticity: Introducing AVA, Your Authorship Verification Algorithm</h2>
+                                
+                                
                                 <button
-                                    className="bg-button-blue mt-5 text-slate-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg hover:bg-button-blue-darker outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="bg-button-light-blue text-teal-800 mt-5 text-slate-900 font-bold uppercase 
+                                    text-sm px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-violet-300 hover:text-violet-800 
+                                    outline-none focus:outline-none mr-1 mb-1 ease-in-out transition-all duration-300"
                                     type="button"
                                     onClick={handleLoginClick}
                                 > Get Started

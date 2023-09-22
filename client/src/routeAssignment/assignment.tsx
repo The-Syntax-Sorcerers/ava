@@ -1,10 +1,10 @@
 import {useState} from 'react';
-import LoggedInNavbar from '../components/LoggedInNavbar.tsx'
-import Dropzone from '../components/dropzone.tsx'
-import UploadButton from '../components/uploadButton.tsx'
-import UploadPreview from '../components/uploadPreview.tsx'
-import VerificationSuccess from '../components/verificationSuccessModal.tsx'
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from '../components/navbarComponents/LoggedInNavbar.tsx'
+import Dropzone from '../components/assignmentComponents/dropzone.tsx'
+import UploadButton from '../components/assignmentComponents/uploadButton.tsx'
+import UploadPreview from '../components/assignmentComponents/uploadPreview.tsx'
+import VerificationSuccess from '../components/assignmentComponents/verificationSuccessModal.tsx'
+import Footer from '../components/landingComponents/Footer.tsx'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -44,7 +44,7 @@ export default function AssignmentPage() {
     };
 
     return (
-        <div className="bg-main bg-cover min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col custom-pages">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
                 <div className="container mx-auto">
@@ -66,7 +66,7 @@ export default function AssignmentPage() {
                                     <div className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
                                         <div>
                                             <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                            <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy_policy" className="text-blue-600 dark:bg-blue-500 hover:underline">privacy policy</a>.</label>
+                                            <label htmlFor="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="/privacy_policy" className="text-blue-600 dark:bg-blue-500 hover:underline">Privacy Policy</a>.</label>
                                         </div>
                                         <div>
                                             <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>

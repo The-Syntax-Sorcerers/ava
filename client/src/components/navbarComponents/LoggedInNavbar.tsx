@@ -1,13 +1,15 @@
-import logo from "../assets/logo.svg";
-import menu from "../assets/menu.svg";
+import logo from "../../assets/logo.svg";
+import menu from "../../assets/menu.svg";
 import DropdownList from "./DropdownList";
 import { useState } from 'react';
 
+
 // The list of link elements to add in [title, url] pairs
-const routes = [  
+const routes = [
     ['Subjects', '/dashboard'],
     ['Assignments', '/assignments'],
     ['Profile', '/profile'],
+    ['Log Out', '/logout'],
 ]
 
 // Allows dynamically adding link elements to the navbar
@@ -17,8 +19,10 @@ function NavBarElement({route}: {route: string[]}) {
 
     return (
         <li>
-            <a href={url} className="rounded-lg px-3 py-2 font-medium hover:bg-button-pink hover:text-slate-900 bg-transparent border-button-pink">
-                { title }
+            <a href={url} className="rounded-lg px-3 py-2 bg-transparent border-button-pink
+                text-sm font-medium hover:bg-violet-300 text-slate-900 hover:text-violet-800
+                transition duration-200 ease-in-out">
+                {title}
             </a>
         </li>
     );
@@ -36,12 +40,12 @@ export default function LoggedInNavbar() {
 
     return (
         <>
-        <nav className="fixed top-5 left-0 w-full flex justify-center items-center z-10">
-            <div className="w-5/6 bg-main px-6 py-3 drop-shadow-lg rounded-md">
-                <div className="flex container mx-auto px-4 justify-between items-center">
+            <nav className="fixed top-5 left-0 w-full flex justify-center items-center">
+                <div className="w-5/6 px-6 py-3 custom-navbar">
+                <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center">
                         <img className="w-10 h-10" src={logo} alt="Ava Logo"/>
-                        <div className="text-button-blue text-xl font-bold">AVA</div>
+                        <div className="text-button-blue text-xl font-bold text-button-blue">AVA</div>
                     </div>
                     <div className="flex items-center">
                         {/* Narbar link elements */}
@@ -66,3 +70,4 @@ export default function LoggedInNavbar() {
         </>
     );
 }
+

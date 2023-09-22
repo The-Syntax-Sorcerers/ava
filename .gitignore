@@ -69,4 +69,6 @@ client\dist
 
 package-lock.json
 package.json
+
+# Random
 client/vite.config.ts.timestamp-*

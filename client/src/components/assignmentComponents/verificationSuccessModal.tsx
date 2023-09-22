@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 
-import failPic from '../assets/fail.png';
-import successPic from '../assets/success.png';
+import failPic from '../../assets/fail.png';
+import successPic from '../../assets/success.png';
 
 export default function VerificationSuccess({ setShowSubmitModal, result }: {setShowSubmitModal: any, result: any}) {
     return (

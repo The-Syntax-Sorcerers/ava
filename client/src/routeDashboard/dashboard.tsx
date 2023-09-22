@@ -1,6 +1,6 @@
-import LoggedInNavbar from "../components/LoggedInNavbar";
-import SubjectCard from "../components/subjectCard";
-import Footer from '../components/Footer.tsx'
+import LoggedInNavbar from "../components/navbarComponents/LoggedInNavbar";
+import SubjectCard from "../components/subjectComponents/subjectCard.tsx";
+import Footer from '../components/landingComponents/Footer.tsx'
 import { Key } from 'react'
 
 interface SubjectObj {
@@ -16,7 +16,7 @@ export default function Dashboard({subjects} : {subjects: [SubjectObj]}) {
     console.log("Rendering Dash with Subjects:", subjects)
 
     return (
-        <div className="bg-main bg-cover flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-10 w-5/6">
                 <div className="container mx-auto">
