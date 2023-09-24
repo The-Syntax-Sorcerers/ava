@@ -21,7 +21,6 @@ def index():
     return render_template('routeIndex/index.html', template_data=cookies, csrf=flask_wtf.csrf.generate_csrf())
 
 
-@common.route('/dashboard', methods=["GET"])
 @common.route('/privacy_policy')
 def privacy_policy(loginform=None, signupform=None):
     template_data = {
