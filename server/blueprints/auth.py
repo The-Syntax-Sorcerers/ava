@@ -51,7 +51,7 @@ def login():
         }
 
     set_cookies(temp_cookies)
-    return redirect(url_for('common.dashboard'))
+    return redirect(url_for('common.index'))
 
 
 @auth.route('/signup', methods=['POST'])
