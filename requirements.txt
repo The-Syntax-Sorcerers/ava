@@ -12,10 +12,18 @@ datetime
 python-dotenv
 supabase
 
-
 # ML Dependencies
 # numpy
 # nltk
 # gensim
 
 # Front-End Dependencies
+
+# Testing dependencies
+pytest
+pytest-flask
+
+# Testing requirements
+beautifulsoup4==4.12.2
+pre-commit==3.4.0
+pytest-dotenv

@@ -7,10 +7,10 @@ import flask_login
 import flask_wtf.csrf
 from flask import Blueprint, send_from_directory, redirect, url_for, render_template
 from server.extensions import get_and_clear_cookies
-from server.models.models import User, Subject, Assignment
+from server.models import User, Subject, Assignment
 
 subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
-                     template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+                     template_folder=os.getcwd() + "/client/dist", static_folder=os.getcwd() + "/client/dist")
 
 
 # Routes to the subject_page for a subject using a given subject_id
@@ -50,7 +50,7 @@ def subject_page(sub_id):
     return render_template('routeSubject/index.html', template_data=template_data)
 
 
-@subjects.route('/<sub_id>/<ass_id>',  methods=["GET"])
+@subjects.route('/<sub_id>/<ass_id>', methods=["GET"])
 @flask_login.login_required
 def assignment_page(sub_id, ass_id):
     print("Serving Assignment page")
@@ -66,3 +66,4 @@ def assignment_page(sub_id, ass_id):
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
+

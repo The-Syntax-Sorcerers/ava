@@ -4,11 +4,18 @@ import datetime
 
 from server.extensions import supabase_anon, supabase_sec
 
+TEST_USER = {'name': 'Test Name',
+             'email': 'nonrealuserfortesting@gmail.com',
+             'password': 'secret_password',
+             'confirmPassword': 'secret_password'}
+
 
 class User(UserMixin):
 
     def __init__(self, tid, email, name):
-        self.id = tid  # This variable needs to be called `id` to shadow variable of parent class `UserMixin`
+        # This variable needs to be called
+        # `id` to shadow variable of parent class `UserMixin`
+        self.id = tid
         self.name = name
         self.email = email
 
@@ -16,17 +23,15 @@ class User(UserMixin):
         return f'<User> id: {self.id}, email: {self.email}'
 
     def get_subjects(self):
-        res = supabase_sec.table('StudentSubject').select(
-            'subject_id').eq('student_id', self.id).execute()
+        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
         subjects = []
         for student_dict in res.data:
-            subjects.append(Subject.get_subject(
-                student_dict.get('subject_id')))
+            subjects.append(Subject.get_subject(student_dict.get('subject_id')))
         return subjects
 
     def get_assignments(self):
-        res = supabase_sec.table('StudentSubject').select(
-            'subject_id').eq('student_id', self.id).execute()
+        res = supabase_sec.table('StudentSubject').select('subject_id'
+                                                          ).eq('student_id', self.id).execute()
         assigns = []
         for student_dict in res.data:
             assigns += Assignment.get_all_assignments(
@@ -59,6 +64,42 @@ class User(UserMixin):
             return User(res['id'], res['email'], res['name'])
         return None
 
+    # Deletes a user from the database
+    def delete_user(user_id, user_email, user_name, requesting_user):
+        # Check if the requesting user is allowed to perform this action
+        if requesting_user.is_admin or requesting_user.id == user_id:
+            try:
+                res = supabase_sec.table('User').select('*').eq('id', id).execute().data
+                if ((res['email'] == user_email) and (res['name'] == user_name)):
+                    # Send a DELETE request to the Supabase table to delete the user by ID
+                    res = supabase_sec.table('User').delete().eq('id', user_id).execute()
+
+                if res.status_code == 200:
+                    return True
+                else:
+                    return False
+            except Exception as e:
+                # Handle any exceptions or errors that may occur during the deletion
+                print(f"Error deleting user: {str(e)}")
+                return False
+        # The requesting user is not allowed to delete the requested account
+        else:
+            return False
+
+    @staticmethod
+    # Deletes user created during testing
+    def delete_test_user():
+        supabase_sec.table('User').delete().eq('email', TEST_USER['email']).execute()
+
+    @staticmethod
+    # gets test user credentials
+    def get_test_user(loginData=False):
+        if supabase_sec.table('User').select('*').eq('email', TEST_USER['email']).execute():
+            User.delete_test_user()
+        if loginData:
+            return {TEST_USER['email'], TEST_USER['password']}
+        return TEST_USER.copy()
+
     @staticmethod
     def supabase_signup_wrapper(email, password, name):
         print("Attempted signup", email, password)
@@ -83,7 +124,9 @@ class Subject:
         self.name = subject_name
 
     def __repr__(self):
-        return f'<Subject> subject_id: {self.subject_id}, sub_name: {self.name}, prof_email: {self.professor_email}'
+        return (f'<Subject> subject_id: {self.subject_id}, '
+                + f'sub_name: {self.name}, '
+                + f'prof_email: {self.professor_email}')
 
     def get_students(self):
         # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
@@ -126,7 +169,8 @@ class Subject:
 
 class Assignment:
 
-    def __init__(self, assignment_id, subject_id, assignment_name, description, due_datetime=None):
+    def __init__(self, assignment_id, subject_id,
+                 assignment_name, description, due_datetime=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
@@ -142,7 +186,12 @@ class Assignment:
             self.due_date = self.due_time = None
 
     def __repr__(self):
-        return f'<Assignment> name: {self.name}, assignment_id: {self.id}, subject_id: {self.subject_id}, due_datetime: {self.due_datetime}, due_date: {self.due_date}, due_time: {self.due_time}'
+        return (f'<Assignment> name: {self.name}, '
+                + f'assignment_id: {self.id}, '
+                + f'subject_id: {self.subject_id}, '
+                + f'due_datetime: {self.due_datetime}, '
+                + f'due_date: {self.due_date}, '
+                + f'due_time: {self.due_time}')
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
@@ -178,7 +227,8 @@ class Storage:
     def upload_assignment(self, file, subject_id, assignment_id, user_id):
         path = self.construct_path(subject_id, assignment_id, user_id)
         if not self.exists_assignment_bool(subject_id, assignment_id, user_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
+            return self.supabase_sec.storage.from_(self.ass_bucket).upload(
+                path, file)
         return None
 
     def download_assignment(self, subject_id, assignment_id, user_id):
@@ -191,19 +241,23 @@ class Storage:
         return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
 
     def exists_assignment(self, subject_id, assignment_id, user_id):
-        # if the folder is empty, db returns 1 element in list[0] as a placeholder
-        res = self.supabase_sec.storage.from_(
-            self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
+        res = self.supabase_sec.storage.from_(self.ass_bucket).list(
+            f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return [obj]
         return []
 
     def exists_assignment_bool(self, subject_id, assignment_id, user_id):
-        # if the folder is empty, db returns 1 element in list[0] as a placeholder
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
         res = self.supabase_sec.storage.from_(
             self.ass_bucket).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
         return False
+
+
