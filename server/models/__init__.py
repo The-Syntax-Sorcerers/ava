@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from supabase import Client
 import datetime
 
 from server.extensions import supabase_anon, supabase_sec
@@ -22,8 +23,7 @@ class User(UserMixin):
         return f'<User> id: {self.id}, email: {self.email}'
 
     def get_subjects(self):
-        res = supabase_sec.table('StudentSubject').select('subject_id'
-                                                          ).eq('student_id', self.id).execute()
+        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
         subjects = []
         for student_dict in res.data:
             subjects.append(Subject.get_subject(student_dict.get('subject_id')))
@@ -34,12 +34,22 @@ class User(UserMixin):
                                                           ).eq('student_id', self.id).execute()
         assigns = []
         for student_dict in res.data:
-            assigns += Assignment.get_all_assignments(subject_id=student_dict['subject_id'])
+            assigns += Assignment.get_all_assignments(
+                subject_id=student_dict['subject_id'])
         return assigns
+
+    def get_user_type(self):
+        res = supabase_sec.table('User').select(
+            '*').eq('email', self.email).execute().data
+        if res:
+            res = res[0]
+            return res['user_type']
+        return None
 
     @staticmethod
     def get_user(user_id):
-        res = supabase_sec.table('User').select('*').eq('id', user_id).execute().data
+        res = supabase_sec.table('User').select(
+            '*').eq('id', user_id).execute().data
         if res:
             res = res[0]
             return User(res['id'], res['email'], res['name'])
@@ -47,12 +57,13 @@ class User(UserMixin):
 
     @staticmethod
     def get_user_with_email(user_email):
-        res = supabase_sec.table('User').select('*').eq('email', user_email).execute().data
+        res = supabase_sec.table('User').select(
+            '*').eq('email', user_email).execute().data
         if res:
             res = res[0]
             return User(res['id'], res['email'], res['name'])
         return None
-    
+
     # Deletes a user from the database
     def delete_user(user_id, user_email, user_name, requesting_user):
         # Check if the requesting user is allowed to perform this action
@@ -62,7 +73,7 @@ class User(UserMixin):
                 if ((res['email'] == user_email) and (res['name'] == user_name)):
                     # Send a DELETE request to the Supabase table to delete the user by ID
                     res = supabase_sec.table('User').delete().eq('id', user_id).execute()
-                
+
                 if res.status_code == 200:
                     return True
                 else:
@@ -92,7 +103,8 @@ class User(UserMixin):
     @staticmethod
     def supabase_signup_wrapper(email, password, name):
         print("Attempted signup", email, password)
-        user = supabase_anon.auth.sign_up({"email": email, "password": password})
+        user = supabase_anon.auth.sign_up(
+            {"email": email, "password": password})
 
         dto = {
             "email": email,
@@ -117,25 +129,28 @@ class Subject:
                 + f'prof_email: {self.professor_email}')
 
     def get_students(self):
-        res = supabase_sec.table('StudentSubject').select('student_id').eq('subject_id',
-                                                                           self.subject_id).execute()
+        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('StudentSubject').select(
+            'student_id').eq('subject_id', self.subject_id).execute()
         students = []
         for student_dict in res.data:
             students.append(User.get_user(student_dict.get('student_id')))
         return students
 
     def get_assignments(self):
-        res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('Assignment').select(
+            '*').eq('subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
-            assigns.append(Assignment(r['id'], r['subject_id'],
-                                      r['name'], r['description'], r['due_datetime']))
+            assigns.append(Assignment(
+                r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
         return assigns
 
     # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
-        res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
+        res = supabase_sec.table('Subject').select(
+            '*').eq('id', subject_id).execute().data
         if res:
             res = res[0]
             return Subject(res['id'], res['description'], res['professor_email'], res['name'])
@@ -147,7 +162,8 @@ class Subject:
         res = supabase_sec.table('Subject').select('*').execute()
         subs = []
         for r in res.data:
-            subs.append(Subject(r['id'], res['description'], r['professor_email'], r['name']))
+            subs.append(Subject(r['id'], res['description'],
+                        r['professor_email'], r['name']))
         return subs
 
 
@@ -162,7 +178,8 @@ class Assignment:
         self.due_datetime = due_datetime
         if due_datetime:
             # Separates datetime into date and time
-            self.due_datetime = datetime.datetime.strptime(due_datetime, "%Y-%m-%dT%H:%M:%S%z")
+            self.due_datetime = datetime.datetime.strptime(
+                due_datetime, "%Y-%m-%dT%H:%M:%S%z")
             self.due_date = self.due_datetime.date()
             self.due_time = self.due_datetime.time()
         else:
@@ -179,8 +196,8 @@ class Assignment:
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
     def get_assignment(subject_id, assignment_id):
-        res = supabase_sec.table('Assignment').select('*').eq('id', assignment_id).eq('subject_id',
-                                                                                      subject_id).execute().data
+        res = supabase_sec.table('Assignment').select(
+            '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
             return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['due_datetime'])
@@ -189,7 +206,8 @@ class Assignment:
     # Returns all assignments using a given subject_id
     @staticmethod
     def get_all_assignments(subject_id):
-        res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+        res = supabase_sec.table('Assignment').select(
+            '*').eq('subject_id', subject_id).execute().data
         if res:
             return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']) for r in res]
         return []
@@ -241,3 +259,5 @@ class Storage:
             if obj['name'] == user_id:
                 return True
         return False
+
+

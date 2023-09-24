@@ -13,7 +13,6 @@ common = Blueprint('common', __name__, template_folder=os.getcwd(
 ) + "/client/dist", static_folder=os.getcwd() + "/client/dist")
 
 # leave this here for now so that the testing will work
-@common.route('/privacy_policy', methods=["GET"])
 @common.route('/', methods=["GET"])
 def index():
     print("Serving Landing", common.static_folder + '/index.html')
@@ -23,19 +22,38 @@ def index():
 
 
 @common.route('/dashboard', methods=["GET"])
+@common.route('/privacy_policy')
+def privacy_policy(loginform=None, signupform=None):
+    template_data = {
+        "loginform": loginform,
+        "signupform": signupform,
+    }
+    if flask_login.current_user.is_authenticated:
+        print("Serving Authenticated Privacy Policy")
+        return render_template('routePrivacyPolicy/index.html', auth_user=True, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+    else:
+        print("Serving Anonymous Privacy Policy")
+        return render_template('routePrivacyPolicy/index.html', auth_user=False, template_data=json.dumps(template_data), csrf=flask_wtf.csrf.generate_csrf())
+
+
+@common.route('/dashboard', methods=["GET"])
 @flask_login.login_required
 def dashboard():
     print("Serving Dash")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "subjects": [],
+        "user_type": user_type,
         "random": 69,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
     user: User = flask_login.current_user
     for sub in user.get_subjects():
-        temp = {'id': sub.subject_id, 'name': sub.name, 'link': 'subjects/' + sub.subject_id}
+        temp = {'id': sub.subject_id, 'name': sub.name,
+                'link': 'subjects/' + sub.subject_id}
         template_data['subjects'].append(temp)
 
     return render_template('routeDashboard/index.html', template_data=template_data)
@@ -45,18 +63,21 @@ def dashboard():
 @flask_login.login_required
 def assignments():
     print("Serving Assignments")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
 
     template_data = {
         "upcoming": [],
         "past": [],
-        "user_type": "student",
+        "user_type": user_type,
         "random": 69,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
     user: User = flask_login.current_user
     db_asses: [Assignment] = user.get_assignments()
-    db_asses = sorted(db_asses, key=lambda x: (x.due_date is not None, x.due_date))
+    db_asses = sorted(db_asses, key=lambda x: (
+        x.due_date is not None, x.due_date))
     for ass in db_asses:
         temp = {
             "id": ass.subject_id,
