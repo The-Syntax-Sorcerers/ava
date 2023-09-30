@@ -5,9 +5,12 @@ import datetime
 import flask
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, send_from_directory, redirect, url_for, render_template, request
+from server.extensions import set_cookies
+from flask import Blueprint, send_from_directory, session, redirect, url_for, render_template, request
 from server.extensions import get_and_clear_cookies, supabase_anon, supabase_sec
 from server.models import User, Subject, Assignment
+from server.models.flaskforms import CreateAssignmentForm
+
 
 subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
                      template_folder=os.getcwd() + "/client/dist", static_folder=os.getcwd() + "/client/dist")
@@ -74,14 +77,28 @@ def upload_assignment(sub_id):
     user : User = flask_login.current_user
     user_type = user.get_user_type()
 
+    print("got user type")
+    form = CreateAssignmentForm()
     # Validating CSRF token prevents Cross-site forgery attacks!!
     # flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+    print("created form")
+    print(user_type)
+    if not user_type == "teacher":
+        print('User is not a teacher') 
+        return redirect(f"/subjects/{sub_id}")
 
-    if CreateAssignmentForm.validate onuser_type == "teacher":
-        data = {}
-        data['subject_id'] = sub_id
-        data['name'] = request.form.get('sub_name')
-        data['due_datetime'] = request.form.get('due_date')
-        data['description'] = request.form.get('description')
+    print(form)
 
-        supabase_sec.table('Assignment').insert([data]).execute()
+    if not form.validate_on_submit():
+        print("Form was not valid")
+        return redirect(f"/subjects/{sub_id}")
+
+    data = {}
+    data['subject_id'] = sub_id
+    data['name'] = request.form.get('name')
+    data['due_datetime'] = request.form.get('duedate')
+    data['description'] = request.form.get('desc')
+    print("Attempting to upload row")
+    supabase_sec.table('Assignment').insert([data]).execute()
+
+    return redirect(f"/subjects/{sub_id}/{data['name']}")
