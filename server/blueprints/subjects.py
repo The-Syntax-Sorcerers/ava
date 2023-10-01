@@ -102,4 +102,4 @@ def upload_assignment(sub_id):
         print(data)
         supabase_sec.table('Assignment').insert([data]).execute()
 
-    return redirect(f"/subjects/{sub_id}", csrf=flask_wtf.csrf.generate_csrf())
+    return redirect(f"/subjects/{sub_id}")
