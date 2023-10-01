@@ -10,7 +10,9 @@ class SignupForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     name = StringField('First Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(),
+                                                 EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
@@ -32,7 +34,9 @@ class UploadFileForm(FlaskForm):
     submit = SubmitField("Upload File")
     delete = SubmitField("Delete File")
 
+
 class CreateAssignmentForm(FlaskForm):
     name = StringField('SubjectName', validators=[DataRequired()])
-    duedate = DateField("Due Date", validators=[DataRequired()])
+    duedate = StringField("Due Date", validators=[DataRequired(),
+                                                  Regexp(r'^\d{2}\/\d{2}\/\d{4}$', message="Please use dd/mm/yyyy")])
     desc = StringField("Description", validators=[DataRequired()])

@@ -1,6 +1,7 @@
 import json
 import os
 import datetime
+from time import strptime, strftime
 
 import flask
 import flask_login
@@ -34,7 +35,7 @@ def subject_page(sub_id):
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
         "user_type": user_type,
         "random": 69,
-        "students": [{"name": "Jimmy", "link": "/profile"}]
+        "students": [{'name': student.name, 'id': student.id, 'link': '/profile'} for student in sub.get_students()]
     }
 
     for ass in asses:
@@ -50,7 +51,7 @@ def subject_page(sub_id):
         else:
             template_data['past'].append(temp)
 
-    return render_template('routeSubject/index.html', template_data=template_data)
+    return render_template('routeSubject/index.html', template_data=template_data, csrf=flask_wtf.csrf.generate_csrf())
 
 
 @subjects.route('/<sub_id>/<ass_id>', methods=["GET"])
@@ -59,46 +60,46 @@ def assignment_page(sub_id, ass_id):
     print("Serving Assignment page")
     user: User = flask_login.current_user
     user_type = user.get_user_type()
+    sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
     template_data = {
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
         "user_type": user_type,
-        "students": [{"name": "Jimmy", "link": "/profile"}]
+        "students": [{'name': student.name, 'id': student.id, 'link': '/profile'} for student in sub.get_students()]
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
+
 
 @subjects.route('/<sub_id>/create_assignment', methods=["POST"])
 @flask_login.login_required
 def upload_assignment(sub_id):
     print("uploading assignment")
-    user : User = flask_login.current_user
+    user: User = flask_login.current_user
     user_type = user.get_user_type()
 
     print("got user type")
     form = CreateAssignmentForm()
-    # Validating CSRF token prevents Cross-site forgery attacks!!
-    # flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+
+    # no csrf token found
+    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+
     print("created form")
-    print(user_type)
+    
     if not user_type == "teacher":
-        print('User is not a teacher') 
-        return redirect(f"/subjects/{sub_id}")
-
-    print(form)
-
-    if not form.validate_on_submit():
+        print('User is not a teacher')
+    elif not form.validate_on_submit():
         print("Form was not valid")
-        return redirect(f"/subjects/{sub_id}")
+    else:
+        data = {}
+        data['subject_id'] = sub_id
+        data['name'] = request.form.get('name')
+        data['due_datetime'] = strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y'))
+        data['description'] = request.form.get('desc')
+        print("Attempting to upload row")
+        print(data)
+        supabase_sec.table('Assignment').insert([data]).execute()
 
-    data = {}
-    data['subject_id'] = sub_id
-    data['name'] = request.form.get('name')
-    data['due_datetime'] = request.form.get('duedate')
-    data['description'] = request.form.get('desc')
-    print("Attempting to upload row")
-    supabase_sec.table('Assignment').insert([data]).execute()
-
-    return redirect(f"/subjects/{sub_id}/{data['name']}")
+    return redirect(f"/subjects/{sub_id}", csrf=flask_wtf.csrf.generate_csrf())
