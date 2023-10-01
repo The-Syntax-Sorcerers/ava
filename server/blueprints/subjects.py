@@ -5,8 +5,8 @@ import datetime
 import flask
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, send_from_directory, redirect, url_for, render_template
-from server.extensions import get_and_clear_cookies
+from flask import Blueprint, send_from_directory, redirect, url_for, render_template, request
+from server.extensions import get_and_clear_cookies, supabase_anon, supabase_sec
 from server.models import User, Subject, Assignment
 
 subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
@@ -67,3 +67,21 @@ def assignment_page(sub_id, ass_id):
 
     return render_template('routeAssignment/index.html', template_data=template_data)
 
+@subjects.route('/<sub_id>/create_assignment', methods=["POST"])
+@flask_login.login_required
+def upload_assignment(sub_id):
+    print("uploading assignment")
+    user : User = flask_login.current_user
+    user_type = user.get_user_type()
+
+    # Validating CSRF token prevents Cross-site forgery attacks!!
+    # flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+
+    if CreateAssignmentForm.validate onuser_type == "teacher":
+        data = {}
+        data['subject_id'] = sub_id
+        data['name'] = request.form.get('sub_name')
+        data['due_datetime'] = request.form.get('due_date')
+        data['description'] = request.form.get('description')
+
+        supabase_sec.table('Assignment').insert([data]).execute()

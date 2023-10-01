@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from werkzeug.datastructures import FileStorage
-from wtforms import StringField, PasswordField, SubmitField, FileField, SelectField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, FileField, SelectField, DateField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Regexp
 
 from server.models import User
 
@@ -31,3 +31,11 @@ class UploadFileForm(FlaskForm):
     file: FileStorage = FileField("File")
     submit = SubmitField("Upload File")
     delete = SubmitField("Delete File")
+
+class CreateAssignmentForm(FlaskForm):
+    # assignmentID = StringField('Assignment ID',
+    #                             validators=[DataRequired(),
+    #                                         Regexp(r'^\d{0,4}\w{1,10}$', message="Incorrect subject code format")])
+    name = StringField('SubjectName', validators=[DataRequired()])
+    duedate = DateField("Due Date", validators=[DataRequired()])
+    desc = StringField("Description", validators=[DataRequired()])
