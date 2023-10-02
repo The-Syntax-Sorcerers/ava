@@ -1,10 +1,9 @@
 from server import User
-from server.tests.conftest import get_CSRF_token, TEST_DATA
+from server.tests.conftest import get_CSRF_token, TEST_USER_DATA
 import pytest
 
 # this is probably going to break again, not sure why it is failing
 SIGN_UP_TESTCASES = [
-    # ([], 302),
     ([('name', '')], 302),
     ([('email', '')], 500),
     ([('password', '')], 302),
@@ -36,7 +35,7 @@ LOGIN_TESTCASES = [([], '/dashboard'),
 
 @pytest.mark.parametrize("changed_elems, route", LOGIN_TESTCASES)
 def test_login(client, changed_elems, route):
-    data = TEST_DATA.copy()
+    data = TEST_USER_DATA.copy()
     data['csrf_token'] = get_CSRF_token(client, '/')
     for elem in changed_elems:
         data[elem[0]] = elem[1]
