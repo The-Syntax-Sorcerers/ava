@@ -1,4 +1,4 @@
-import { Tooltip } from "@chakra-ui/tooltip";
+import { Tooltip } from "@chakra-ui/react";
 const TooltipHorizon = (props: {
   extra: string;
   trigger: JSX.Element;
