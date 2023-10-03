@@ -5,7 +5,9 @@ import datetime
 import flask
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, send_from_directory, redirect, url_for, render_template
+from flask import Blueprint, send_from_directory, request, redirect, url_for, render_template
+from werkzeug.datastructures.file_storage import FileStorage
+
 from server.extensions import get_and_clear_cookies
 from server.models import User, Subject, Assignment
 
@@ -65,5 +67,26 @@ def assignment_page(sub_id, ass_id):
         "students": [{"name": "Jimmy", "link": "/profile"}]
     }
 
+    return render_template('routeAssignment/index.html', template_data=template_data)
+
+
+@subjects.route('/<sub_id>/<ass_id>/submit_assignment', methods=["POST"])
+@flask_login.login_required
+def submit_assignment(sub_id, ass_id):
+    print("Serving Assignment Submission POST Route")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+
+    current_ass = Assignment.get_assignment(sub_id, ass_id)
+    template_data = {
+        "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
+                       "description": current_ass.description, "marks": "???/100"},
+        "user_type": user_type,
+        "students": [{"name": "Jimmy", "link": "/profile"}]
+    }
+
+    print("files received", request.files)
+    f: FileStorage = request.files['form_file']
+    print(f.read())
     return render_template('routeAssignment/index.html', template_data=template_data)
 
