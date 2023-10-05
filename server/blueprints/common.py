@@ -96,7 +96,7 @@ def assignments():
 @common.route('/profile', methods=["GET"])
 @flask_login.login_required
 def profile():
-    
+    # puncs = ['.', ',', ';', ':', '!', '?', '-', '(', ')', '\"', '\'', '`', '/']
     print("Serving Profile")
     template_data = {
         "comparison": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Automata Worksheet",

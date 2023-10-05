@@ -1,6 +1,8 @@
 from flask_login import UserMixin
 from supabase import Client
 import datetime
+import io
+import numpy as np
 
 from server.extensions import supabase_anon, supabase_sec
 
@@ -40,6 +42,30 @@ class User(UserMixin):
             res = res[0]
             return res['user_type']
         return None
+
+    def get_vectors(self):
+        past_files = [x for x in supabase_sec.storage.from_(
+            'ava-prod-past-assignments').list() if x.endswith(".npy")]
+
+        punc_vecs = []
+        sentence_vecs = []
+        word_vecs = []
+        
+
+        for f in past_files:
+            response = supabase_sec.storage.from_table(
+                'ava-prod-past-assignments').download(f)
+
+            # Check if the download was successful
+            if response.status_code == 200:
+                # Load the .npy file from the response content
+                npy_bytes = response.content
+                np_array = np.load(io.BytesIO(npy_bytes)).tolist()
+                punc_vecs.append(np_array[300:])
+                sentence_vecs.append(np_array[313:])
+                word_vecs.append(np_array[317:])
+
+        return punc_vecs, sentence_vecs, word_vecs
 
     @staticmethod
     def get_user(user_id):
