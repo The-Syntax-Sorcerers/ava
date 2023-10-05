@@ -90,6 +90,7 @@ def upload_assignment(sub_id):
     
     if not user_type == "teacher":
         print('User is not a teacher')
+        return redirect("/dashboard")
     elif not form.validate_on_submit():
         print("Form was not valid")
     else:
@@ -103,3 +104,48 @@ def upload_assignment(sub_id):
         supabase_sec.table('Assignment').insert([data]).execute()
 
     return redirect(f"/subjects/{sub_id}")
+
+
+@subjects.route('/<sub_id>/add_student', methods=["GET"])
+@flask_login.login_required
+def add_student_subject(sub_id):
+
+    return redirect(f"/subjects/{sub_id}")
+
+
+@subjects.route('/<sub_id>/student/<stud_id>', methods=["GET"])
+@flask_login.login_required
+def student_assignment(sub_id, stud_id):
+
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+    
+    if not user_type == "teacher":
+        print('User is not a teacher')
+        return redirect("/dashboard")
+    else:
+        print("Serving Profile")
+        
+        subj = Subject.get_subject(sub_id)
+        assignments = subj.get_assignments()
+
+        # will need to start grabbing from the db the scores
+        scores = [76, 82, 62, 56, 42, 91, 77, 7, 62]
+
+        template_data = {}
+        template_data["comparison"] = []
+        template_data["past"] = []
+        template_data["id"] = stud_id
+        template_data["allscores"] = scores
+        template_data["score"] = round(sum(scores) / len(scores))
+        
+        for ass in assignments:
+            print(ass)
+            data = ass.to_dict()
+            data['link'] = f'/{ass.subject_id}/{ass.id}'
+            if ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
+                template_data["comparison"].append(data)
+            else:
+                template_data["past"].append(data)
+
+    return render_template('routeProfile/index.html', template_data=template_data)

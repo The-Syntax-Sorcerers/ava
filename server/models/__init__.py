@@ -129,7 +129,6 @@ class Subject:
                 + f'prof_email: {self.professor_email}')
 
     def get_students(self):
-        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
         res = supabase_sec.table('StudentSubject').select(
             'student_id').eq('subject_id', self.subject_id).execute()
         students = []
@@ -212,6 +211,10 @@ class Assignment:
             return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']) for r in res]
         return []
 
+    # will return a dict representation
+    def to_dict(self):
+        return {"due_date": self.due_date, "id": self.id, "name": self.name}
+
 
 class Storage:
 
@@ -259,5 +262,3 @@ class Storage:
             if obj['name'] == user_id:
                 return True
         return False
-
-
