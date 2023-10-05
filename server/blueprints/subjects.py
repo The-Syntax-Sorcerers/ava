@@ -35,7 +35,8 @@ def subject_page(sub_id):
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
         "user_type": user_type,
         "random": 69,
-        "students": [{'name': student.name, 'id': student.id, 'link': '/profile'} for student in sub.get_students()]
+        "students": [{'name': student.name, 'id': student.id,
+                      'link': f'/subjects/{sub_id}/student/{student.id}'} for student in sub.get_students()]
     }
 
     for ass in asses:
@@ -67,7 +68,8 @@ def assignment_page(sub_id, ass_id):
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
         "user_type": user_type,
-        "students": [{'name': student.name, 'id': student.id, 'link': '/profile'} for student in sub.get_students()]
+        "students": [{'name': student.name, 'id': student.id,
+                      'link': f'/subjects/{sub_id}/student/{student.id}'} for student in sub.get_students()]
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
@@ -129,7 +131,7 @@ def student_assignment(sub_id, stud_id):
         subj = Subject.get_subject(sub_id)
         assignments = subj.get_assignments()
 
-        # will need to start grabbing from the db the scores
+        # will need to start grabbing scores from the db
         scores = [76, 82, 62, 56, 42, 91, 77, 7, 62]
 
         template_data = {}
@@ -142,7 +144,8 @@ def student_assignment(sub_id, stud_id):
         for ass in assignments:
             print(ass)
             data = ass.to_dict()
-            data['link'] = f'/{ass.subject_id}/{ass.id}'
+            # still not sure what a good link would be here
+            data['link'] = '/dashboard'
             if ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
                 template_data["comparison"].append(data)
             else:
