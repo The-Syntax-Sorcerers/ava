@@ -5,8 +5,8 @@ import datetime
 import flask
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, send_from_directory, redirect, url_for, render_template
-from server.extensions import get_and_clear_cookies
+from flask import Blueprint, send_from_directory, redirect, url_for, render_template, request
+from server.extensions import get_and_clear_cookies, supabase_sec, supabase_anon
 from server.models import User, Subject, Assignment
 
 subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
@@ -67,3 +67,38 @@ def assignment_page(sub_id, ass_id):
 
     return render_template('routeAssignment/index.html', template_data=template_data)
 
+
+
+@subjects.route('/create_subject', methods=['POST'])
+@flask_login.login_required
+def create_subject(sub_id):
+    print("uploading subject")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+    user_email = user.email
+
+    print("got user type")
+    form = CreateSubjectForm()
+
+    # no csrf token found
+    # flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+
+    print("created form")
+    
+    if not user_type == "teacher":
+        print('User is not a teacher')
+    elif not form.validate_on_submit():
+        print("Form was not valid")
+        # redirect to dashboard
+
+    else:
+        data = {}
+        data['id'] = sub_id
+        data['professor_email'] = user_email
+        data['name'] = request.form.get('name')
+        data['description'] = request.form.get('desc')
+        print("Attempting to upload row")
+        print(data)
+        supabase_sec.table('Subject').insert([data]).execute()
+
+    return redirect(url_for('common.dashboard'))
