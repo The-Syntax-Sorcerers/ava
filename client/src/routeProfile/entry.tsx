@@ -16,8 +16,47 @@ if ((globalThis as any).template_data === undefined) {
                         {"due_date": "02/26/2023", "id": "COMP123456",
                         "name": "Grok Worksheet 2", "link": "/ass"}],
         "id": 1171234,
-        "allscores": [76, 82, 62, 56, 42, 91, 77, 7, 62],
-        "score": 86,
+        "allScores":[{name: "All Scores",
+            data: [76, 82, 62, 56, 42, 91]}],
+        "allScoresLabels": ["A1", "A2", "A3", "P4", "A5", "P6"],
+        "avgScore": 86,
+        "submissionPie":  [63, 25, 12],
+        "submissionCategories": ["Success", "Failed", "Not Yet Submitted"],
+        "linePunctuation": [
+            {
+              name: "Periods",
+              data: [50, 64, 48, 66, 49, 68],
+              color: "#4318FF",
+            },
+            {
+              name: "Commas",
+              data: [30, 40, 24, 46, 20, 46],
+              color: "#6AD2FF",
+            },
+        ],
+        "lineSentences": [
+            {
+                name: "Count Sentences Under",
+                data: [30, 40, 24, 46, 20, 46],
+                color: "#255C99",
+            },
+            {
+              name: "Count Sentences Over",
+              data: [50, 64, 48, 66, 49, 68],
+              color: "#4318FF",
+            },
+            {
+                name: "Num Average Sentences",
+                data: [3, 11, 5, 8, 14, 9],
+                color: "#6AD2FF",
+              },
+            {
+              name: "Average Sentence Length",
+              data: [11, 16, 12, 13, 9, 7],
+              color: "#6AD2FF",
+            },
+        ]
+
     };
     // Calculate average of allscores and round to whole number
    const temp = (globalThis as any).template_data
@@ -35,12 +74,6 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ProfilePage 
-      id={(globalThis as any).template_data.id}
-      comparison={(globalThis as any).template_data.comparison}
-      past={(globalThis as any).template_data.past}
-      score={(globalThis as any).template_data.score}
-      allscores={(globalThis as any).template_data.allscores}
-    />
+    <ProfilePage data={(globalThis as any).template_data}/>
   </React.StrictMode>,
 )

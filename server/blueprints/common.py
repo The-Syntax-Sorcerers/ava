@@ -96,9 +96,8 @@ def assignments():
 @common.route('/profile', methods=["GET"])
 @flask_login.login_required
 def profile():
+    
     print("Serving Profile")
-
-    scores = [76, 82, 62, 56, 42, 91, 77, 7, 62]
     template_data = {
         "comparison": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Automata Worksheet",
                         "link": "/assignnent"},
@@ -111,8 +110,48 @@ def profile():
                  {"due_date": "02/26/2023", "id": "COMP123456",
                   "name": "Grok Worksheet 2", "link": "/ass"}],
         "id": 1171234,
-        "allscores": scores,
-        "score": round(sum(scores) / len(scores)),
+        "allScores": [{
+            "name": "Score",
+            "data": [76, 82, 62, 56, 42, 91]
+        }],
+        "allScoresLabels": ["A1", "A2", "A3", "P4", "A5", "P6"],
+        "avgScore": 86,
+        "submissionPie":  [63, 25, 12],
+        "submissionCategories": ["Success", "Failed", "Not Yet Submitted"],
+        "linePunctuation": [
+            {
+                "name": "Periods",
+                "data": [50, 64, 48, 66, 49, 68],
+                "color": "#4318FF",
+            },
+            {
+                "name": "Commas",
+                "data": [30, 40, 24, 46, 20, 46],
+                "color": "#6AD2FF",
+            },
+        ],
+        "lineSentences": [
+            {
+                "name": "Count Sentences Under",
+                "data": [30, 40, 24, 46, 20, 46],
+                "color": "#255C99",
+            },
+            {
+                "name": "Count Sentences Over",
+                "data": [50, 64, 48, 66, 49, 68],
+                "color": "#4318FF",
+            },
+            {
+                "name": "Num Average Sentences",
+                "data": [3, 11, 5, 8, 14, 9],
+                "color": "#6AD2FF",
+            },
+            {
+                "name": "Average Sentence Length",
+                "data": [11, 16, 12, 13, 9, 7],
+                "color": "#6AD2FF",
+            },
+        ]
     }
 
     return render_template('routeProfile/index.html', template_data=template_data)

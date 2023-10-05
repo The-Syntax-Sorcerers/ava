@@ -12,9 +12,12 @@ import student from '../assets/student.svg';
 import afterdrop from '../assets/afterdrop.svg';
 import beforedrop from '../assets/beforedrop.svg';
 
-export default function Profile({ id, comparison, past}: {id: number, comparison: any, past: any, score: number, allscores: [number]}) {
+export default function Profile({ data}: {data:any}) {
     const [showComparison, setShowComparison] = useState(true);
     const [showPast, setShowPast] = useState(true);
+    const id = data.id
+    const comparison = data.comparison
+    const past = data.past
     console.log("Profile page:", id, comparison, past)
     
     return (
@@ -31,11 +34,22 @@ export default function Profile({ id, comparison, past}: {id: number, comparison
                     </div>
                 </div>
                 <div className="container mx-auto flex flex-row flex-wrap gap-2 mb-5">
-                    <GraphCard/>
-                    <BarChartCard/>
-                    <PieChartCard/>
-                    <CircleProgressCard/>
-                    <GraphCard/>
+                    <div className="container basis-1/3">
+                        <GraphCard data={data.linePunctuation} optionsCategories={data.allScoresLabels} title="Punctuation Frequency"/>
+                    </div>
+                    <div className="container basis-1/3">
+                        <BarChartCard data={data.allScores}  /*optionsCategories={data.allScoresLabels}*/ title="All Scores"/> 
+                    </div>
+                    <div className="container basis-1/3">
+                        <PieChartCard data={data.submissionPie} title="Submission History"/>
+                    </div>
+                    <div className="container basis-1/3">
+                    </div>
+                        <CircleProgressCard data={data.avgScore} title="Average Score"/>
+                    <div className="container basis-1/3">
+                        <GraphCard data={data.lineSentences} optionsCategories={data.allScoresLabels} title="Sentence Analysis"/>
+                    </div>
+                    
 
                 </div>
                 <div className="container mx-auto">
