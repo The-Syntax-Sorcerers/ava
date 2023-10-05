@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import expand from "../../assets/expand.svg";
+import collapse from "../../assets/collapse.svg";
 
 const menuItems = [
     ['COMP10010'],
@@ -25,7 +27,7 @@ function DropdownItems({subtitle}: {subtitle: string}) {
     
     return (
         <>
-        <div className="border-2 rounded-b-lg w-full mb-1 mx-auto">
+        <div className="custom-dropdown-menu">
             {/* The list of menu items */}
             <ul className="">
                 {menuItems.map((menuItem) => (
@@ -59,16 +61,19 @@ export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in t
             onClick={handleDropdownClick} 
             className={`custom-dropdown-menu-button-styling
             ${showDropdown ? 'custom-dropdown-menu-button-selected rounded-t-lg' : 'custom-dropdown-menu-button-colouring rounded-lg'}`}>
-            { title }
-            {/* TODO: Add dropdown arrow
-            <img src={ menu } alt="Dropdown Menu"/>
-            <img src={${showDropdown ? { collapseIcon } : { expandIcon }}} alt="Expand/Collapse Icon"/>
-             */}
+            <div className="flex justify-center align-items">
+                { title }
+                {/* TODO: Add dropdown arrow */}
+                {showDropdown ? (
+                    <img src={ collapse } alt="Collapse Icon"/>) : (
+                    <img src={ expand } alt="Expand Icon"/>)
+                }
+            </div>
         </button>
         
         {/* Dropdown Elements */}
-        {showDropdown ?
-            (<DropdownItems subtitle={ subtitle }/>) : (null)
+        {showDropdown ? (
+            <DropdownItems subtitle={ subtitle }/>) : (null)
         }
         </>
     )

@@ -11,14 +11,17 @@ export default function ProfessorDashboard() {
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
-            <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
-                <div className="flex flex-col min-h-screen bg-white border-2 border-accent-primary-100 w-1/4 fixed top-35 rounded-3xl p-4">
-                    {/* Dropdown menus */}
-                    <DropdownMenu titles={ ['Subjects', 'subject'] }/>
-                    <button id="dropdownUsersButton" data-dropdown-toggle="dropdownUsers" data-dropdown-placement="bottom" class="custom-form-main-button" type="button">
-                        {/* TODO: Add dropdown arrow*/}
-                        Subjects
-                    </button>
+            <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6 min-h-scren">
+                <div className="flex justify-between min-h-screen rounded-3xl custom-dashboard-background-colouring">
+                    <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
+                        {/* Dropdown menus */}
+                        <DropdownMenu titles={ ['Subjects', 'subject'] }/>
+                        <DropdownMenu titles={ ['Students', 'student'] }/>
+                    </div>
+                    <div className="custom-dashboard-section w-2/5">
+                    </div>
+                    <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
+                    </div>
                 </div>
             </main>
             <Footer/>
