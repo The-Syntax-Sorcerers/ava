@@ -13,12 +13,13 @@ export default function AssignmentPage() {
     const assignment = data.assignment
     const user_type = data.user_type
 
+    const [showSubmitModal, setShowSubmitModal] = useState(data.showSubmitModal);
+    const serverVerificationSuccess = data.verificationSuccess;
     if(assignment !== undefined && assignment.due_date == null) assignment.due_date = "None"
 
-    console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
-    const [showSubmitModal, setShowSubmitModal] = useState(false);
 
-    
+    console.log("Rendering AssignmentPage with ass, user:", assignment, user_type)
+
     return (
         <div className="min-h-screen flex flex-col custom-pages">
             <LoggedInNavbar />
@@ -40,9 +41,9 @@ export default function AssignmentPage() {
                         </>
                     ) : (
                         <>
-                            <FileComponent setShowSubmitModal={setShowSubmitModal}/>
+                            <FileComponent />
                             {showSubmitModal ? (
-                                <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={false}/>
+                                <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={serverVerificationSuccess}/>
                             ) : null
                             }
                         </>

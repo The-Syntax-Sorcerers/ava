@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from storage3.utils import StorageException
 from supabase import Client
 import datetime
 
@@ -8,6 +9,8 @@ TEST_USER = {'name': 'Test Name',
              'email': 'nonrealuserfortesting@gmail.com',
              'password': 'secret_password',
              'confirmPassword': 'secret_password'}
+PAST_ASSIGNMENTS_BUCKET = 'ava-prod-past-assignments'
+CURRENT_ASSIGNMENTS_BUCKET = 'ava-prod-assignments'
 
 
 class User(UserMixin):
@@ -65,6 +68,7 @@ class User(UserMixin):
         return None
 
     # Deletes a user from the database
+    @staticmethod
     def delete_user(user_id, user_email, user_name, requesting_user):
         # Check if the requesting user is allowed to perform this action
         if requesting_user.is_admin or requesting_user.id == user_id:
@@ -221,40 +225,87 @@ class Storage:
         self.ass_bucket = 'ava-prod-assignments'
 
     @staticmethod
-    def construct_path(subject_id, assignment_id, user_id):
+    def list_past_assignments(user_email):
+        # If there are files in directory, return a list of file names
+        # Else, return an empty list
+
+        objects = []
+        username = user_email.split('@')[0]
+        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(username)
+        for obj in res:
+            if obj['name'] != '.emptyFolderPlaceholder':
+                objects.append(obj['name'])
+        return objects
+
+    @staticmethod
+    def get_past_files(user_email):
+        # Old method, likely not used
+        # If there are files in directory, return a python list of files (byte streams)
+        # Else, return an empty list
+
+        past_assignments = []
+        username = user_email.split('@')[0]
+        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(username)
+        for file_object in res:
+            try:
+                if file_object['name'] != '.emptyFolderPlaceholder':
+                    path = Storage.construct_path_past(username, file_object['name'])
+                    past_assignments.append(supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path))
+            except StorageException:
+                pass
+        return past_assignments
+
+    @staticmethod
+    def construct_path_past(username, filename):
+        return f'{username}/{filename}'
+
+    @staticmethod
+    def construct_path_current(subject_id, assignment_id, user_id):
         return f'{subject_id}/{assignment_id}/{user_id}'
 
-    def upload_assignment(self, file, subject_id, assignment_id, user_id):
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        if not self.exists_assignment_bool(subject_id, assignment_id, user_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(
-                path, file)
+    @staticmethod
+    def upload_current_assignment(file, subject_id, assignment_id, user_id):
+        path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+        if not Storage.exists_assignment_bool(subject_id, assignment_id, user_id):
+            return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).upload(path, file)
         return None
 
-    def download_assignment(self, subject_id, assignment_id, user_id):
+    @staticmethod
+    def download_current_assignment(subject_id, assignment_id, user_id):
         # Will return a byte stream.
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
+        # Essentially, it returns file.read(): byteStream in python.
+        try:
+            path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+            return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).download(path)
+        except StorageException:
+            return None
 
-    def delete_assignment(self, subject_id, assignment_id, user_id):
-        path = self.construct_path(subject_id, assignment_id, user_id)
-        return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
+    @staticmethod
+    def delete_current_assignment(subject_id, assignment_id, user_id):
+        path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+        try:
+            supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).remove(path)
+        except Exception:
+            pass
+        return
 
-    def exists_assignment(self, subject_id, assignment_id, user_id):
+    @staticmethod
+    def exists_assignment(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(
+        res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(
             f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return [obj]
         return []
 
-    def exists_assignment_bool(self, subject_id, assignment_id, user_id):
+    @staticmethod
+    def exists_assignment_bool(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(
-            self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(
+            CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True

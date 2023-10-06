@@ -1,12 +1,24 @@
 import DocViewer, {DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import {useState} from 'react';
 
-export default function FileComponent({setShowSubmitModal}: {setShowSubmitModal : any}) {
+export default function FileComponent() {
+
+    // const data = (globalThis as any).template_data
 
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
-    const refresh = () => window.location.reload()
+    const file_bytes = document.getElementById("file-bytes")!.getAttribute("content") || "";
+    console.log("File bytes:", file_bytes)
+    // log the type of variable file_bytes
+    console.log(typeof file_bytes)
+
+    // if assignment is submitted, show the submitted file
+    // if (data.file) {
+    //     //setSelectedDocs([data.file]);
+    //     setFileUploaded(false);
+    //     setFileSubmitted(true);
+    // }
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length === 1) {
@@ -44,12 +56,40 @@ export default function FileComponent({setShowSubmitModal}: {setShowSubmitModal 
 
         setFileSubmitted(true);
         setFileUploaded(false);
-        setShowSubmitModal(true)
     };
-    // handleSubmit()
-    setShowSubmitModal(false);
 
-    console.log(window.location.pathname)
+    const fetchSubmittedAssignment = async () => {
+        console.log("Fetching File")
+        try {
+            const response = await fetch(window.location.pathname + "/fetch_assignment_file");
+            if(response.status === 204) { return undefined; }
+            const blob = await response.blob();
+            console.log("Response:", response, "Blob", blob, "Blob text", blob.text())
+            // Create a File object from the received blob
+            console.log("Response headers:", response.headers)
+            const filename = response.headers.get('filename') || "default.txt";
+            const tempFile = new File([blob], filename, { type: response.headers.get('Content-Type') || undefined});
+    
+            // Now, you can use the tempFile object as needed
+            // Check if selectedDocs is empty list
+            return tempFile;
+        }catch (error) {
+            console.error('Error fetching PDF:', error);
+        }
+        
+    }
+
+    if (selectedDocs.length === 0) {
+        fetchSubmittedAssignment().then((tempFile) => {
+            if(tempFile !== undefined) {
+                console.log("Setting selectedDocs to", tempFile)
+                setSelectedDocs([tempFile]);
+                setFileSubmitted(true);
+            }
+        })
+    }
+    
+    
     return (
         <>
             <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
@@ -64,19 +104,11 @@ export default function FileComponent({setShowSubmitModal}: {setShowSubmitModal 
             {fileUploaded ? (
                 <div>
                     <UploadPreview selectedDocs={selectedDocs}/>
-
-                    <button
-                        className="px-6 py-3 font-bold text-sm shadow-md hover:shadow-lg custom-form-button"
-                        type="button"
-                        onClick={refresh}
-                        > Re-Upload
-                    </button>
-                    {/* method="post" action={window.location.pathname + "/submit_assignment"} encType="multipart/form-data" */}
                     <form onSubmit={handleSubmit} className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
-                    <input id="form_file" name="form_file" type="file" className="hidden" accept="text/plain"/>
+                        <input id="form_file" name="form_file" type="file" className="hidden" accept="text/plain"/>
                         <div>
                             <input id="link-checkbox1" type="checkbox" className="w-4 h-4 rounded" required />
-                            <label htmlFor="link-checkbox1" className="ml-2 text-sm font-semibold">I agree with the <a href="/privacy_policy" className="text-blue-600 hover:text-accent-secondary-600 transition duration-200">Privacy Policy</a></label>
+                            <label htmlFor="link-checkbox1" className="ml-2 text-sm font-medium">I agree with the <a href="/privacy_policy" className="text-blue-600 hover:text-accent-secondary-600 transition duration-200">Privacy Policy</a></label>
                         </div>
                         <div>
                             <input id="link-checkbox2" type="checkbox" className="w-4 h-4 rounded" required />
