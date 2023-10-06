@@ -48,7 +48,7 @@ function DropdownItems({subtitle}: {subtitle: string}) {
 export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in the items to show? */}) {
     const title = titles[0];
     const subtitle = titles[1];
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(true);
 
     {/* Opens and closes the dropdown menu */}
     const handleDropdownClick = () => {

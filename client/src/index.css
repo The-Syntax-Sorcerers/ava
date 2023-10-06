@@ -190,13 +190,21 @@
 
     /* This tag applies to the student info boxes */
     .custom-info-card {
-        @apply border-2 border-slate-100 w-3/4 flex justify-center items-center font-semibold text-sm py-2;
+        @apply border-2 border-slate-100 w-full flex justify-center items-center font-semibold text-sm py-2;
     }
 
     /* This tag applies to the view submission button in the submission history */
     .custom-view-submission-button {
         @apply uppercase font-semibold ease-in-out duration-200 rounded-lg my-2 px-2 py-2 text-xs w-full
         bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800 focus:bg-accent-secondary-400
+    }
+
+    .custom-text-divider {
+        @apply w-full text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-black 
+        after:inline-block after:relative after:align-middle after:w-1/3 
+        before:bg-black before:inline-block before:relative before:align-middle 
+        before:w-1/3 before:right-2 after:left-2 text-sm
+        mt-6 mb-6;
     }
 
     /* 
