@@ -22,6 +22,7 @@ function DropdownElement({menuItem}: {menuItem: string[]}) {
     );
 }
 
+// Allows dynamically adding the dropdown menu of items 
 function DropdownItems({subtitle}: {subtitle: string}) {
     {/* TODO: Grab the data from the server here? */}
     
@@ -35,7 +36,7 @@ function DropdownItems({subtitle}: {subtitle: string}) {
                 ))}
             </ul>
             {/* The option to create more of the menu items */}
-            <a class="custom-dropdown-menu-creation-button">
+            <a className="custom-dropdown-menu-creation-button">
                 Add new { subtitle }
             </a>
         </div>
@@ -43,7 +44,8 @@ function DropdownItems({subtitle}: {subtitle: string}) {
     )
 }
 
-export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in the button name, dropdown function, and the items to show? */}) {
+// Creates a dropdown menu of a given item type with the ability to add more of that item
+export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in the items to show? */}) {
     const title = titles[0];
     const subtitle = titles[1];
     const [showDropdown, setShowDropdown] = useState(false);
