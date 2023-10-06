@@ -36,7 +36,7 @@ def subject_page(sub_id):
         "user_type": user_type,
         "random": 69,
         "students": [{'name': student.name, 'id': student.id,
-                      'link': f'/subjects/{sub_id}/student/{student.id}'} for student in sub.get_students()]
+                      'link': ''} for student in sub.get_students()]
     }
 
     for ass in asses:
@@ -69,7 +69,7 @@ def assignment_page(sub_id, ass_id):
                        "description": current_ass.description, "marks": "???/100"},
         "user_type": user_type,
         "students": [{'name': student.name, 'id': student.id,
-                      'link': f'/subjects/{sub_id}/student/{student.id}'} for student in sub.get_students()]
+                      'link': ''} for student in sub.get_students()]
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
@@ -82,28 +82,20 @@ def upload_assignment(sub_id):
     user: User = flask_login.current_user
     user_type = user.get_user_type()
 
-    print("got user type")
-    form = CreateAssignmentForm()
-
-    # no csrf token found
-    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
-
-    print("created form")
-    
     if not user_type == "teacher":
         print('User is not a teacher')
-        return redirect("/dashboard")
-    elif not form.validate_on_submit():
-        print("Form was not valid")
-    else:
-        data = {}
-        data['subject_id'] = sub_id
-        data['name'] = request.form.get('name')
-        data['due_datetime'] = strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y'))
-        data['description'] = request.form.get('desc')
-        print("Attempting to upload row")
-        print(data)
-        supabase_sec.table('Assignment').insert([data]).execute()
+        #     return redirect("/dashboard")
+
+    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+
+    data = {
+        'subject_id': sub_id,
+        'name': request.form.get('name'),
+        'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
+        'description': request.form.get('desc'),
+    }
+    print("Attempting to Create Assignment", data)
+    Assignment.create_assignment(data)
 
     return redirect(f"/subjects/{sub_id}")
 
@@ -115,40 +107,3 @@ def add_student_subject(sub_id):
     return redirect(f"/subjects/{sub_id}")
 
 
-@subjects.route('/<sub_id>/student/<stud_id>', methods=["GET"])
-@flask_login.login_required
-def student_assignment(sub_id, stud_id):
-
-    user: User = flask_login.current_user
-    user_type = user.get_user_type()
-    
-    if not user_type == "teacher":
-        print('User is not a teacher')
-        return redirect("/dashboard")
-    else:
-        print("Serving Profile")
-        
-        subj = Subject.get_subject(sub_id)
-        assignments = subj.get_assignments()
-
-        # will need to start grabbing scores from the db
-        scores = [76, 82, 62, 56, 42, 91, 77, 7, 62]
-
-        template_data = {}
-        template_data["comparison"] = []
-        template_data["past"] = []
-        template_data["id"] = stud_id
-        template_data["allscores"] = scores
-        template_data["score"] = round(sum(scores) / len(scores))
-        
-        for ass in assignments:
-            print(ass)
-            data = ass.to_dict()
-            # still not sure what a good link would be here
-            data['link'] = '/dashboard'
-            if ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
-                template_data["comparison"].append(data)
-            else:
-                template_data["past"].append(data)
-
-    return render_template('routeProfile/index.html', template_data=template_data)
