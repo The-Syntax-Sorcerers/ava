@@ -65,7 +65,7 @@ export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in t
             ${showDropdown ? 'custom-dropdown-menu-button-selected rounded-t-lg' : 'custom-dropdown-menu-button-colouring rounded-lg'}`}>
             <div className="flex justify-center align-items">
                 { title }
-                {/* TODO: Add dropdown arrow */}
+                {/* Reactive dropdown arrow */}
                 {showDropdown ? (
                     <img src={ collapse } alt="Collapse Icon"/>) : (
                     <img src={ expand } alt="Expand Icon"/>)

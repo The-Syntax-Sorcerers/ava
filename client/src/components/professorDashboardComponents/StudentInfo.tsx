@@ -23,21 +23,30 @@ export default function StudentInfo() {
                 </div>
                 <div className="flex-grow h-0 border-t border-black"></div>
             </div>
-            <button className="custom-form-main-button w-5/6">
-                Make New Comparrison
-            </button>
+            {/* Submission History Table */}
+            <SubmissionTable/>
             {/* Page Divider */}
             <div className="relative flex items-center w-5/6 m-4">
                 <div className="flex-grow h-0 border-t border-black"></div>
                 <div className="flex justify-center items-center">
                     <h1 className="px-2 text-xs font-semibold">
-                        or
+                        make new submission
                     </h1>
                 </div>
                 <div className="flex-grow h-0 border-t border-black"></div>
             </div>
-            {/* Submission History Table */}
-            <SubmissionTable/>
+            <div className="relative flex items-center w-5/6 m-4">
+                <div className="flex-grow h-0 border-t border-black"></div>
+                <div className="flex justify-center items-center">
+                    <h1 className="px-2 text-xs font-semibold">
+                        make a one off comparrsion
+                    </h1>
+                </div>
+                <div className="flex-grow h-0 border-t border-black"></div>
+            </div>
+            <button className="custom-form-main-button w-5/6">
+                Make New Comparrison
+            </button>
         </div>
         </>
     )

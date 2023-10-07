@@ -209,7 +209,7 @@
      * ------------------------------------------------------------------------------------------
      */
 
-     /* This tag applies to the colouring of the background of the major sections of the dashboard*/
+    /* This tag applies to the colouring of the background of the major sections of the dashboard*/
     .custom-dashboard-background-colouring {
         @apply bg-white border-2 border-accent-primary-100
     }
@@ -218,6 +218,11 @@
     .custom-dashboard-section {
         @apply custom-dashboard-background-colouring
         flex flex-col min-h-full px-2 py-4;
+    }
+
+    /* This tag applies to the instructions at the top of the professor dashboard */
+    .custom-intruction-text {
+        @apply text-center text-sm font-semibold uppercase mb-4;
     }
 
     /* 
