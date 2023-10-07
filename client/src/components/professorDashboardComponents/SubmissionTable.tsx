@@ -16,6 +16,7 @@ const assignments = [
     ['Assignment 8', true, false],
 ]
 
+// Creates the validity indicator and view results button for submitted pieces of work
 function SubmittedIndicator({valid}: {valid: string}) {
     return (
         <div className="flex justify-between items-center w-2/5">
@@ -37,6 +38,7 @@ function SubmittedIndicator({valid}: {valid: string}) {
     )
 }
 
+// Creates the unverified indicator and submit button for assignments with open submissions
 function NotSubmittedIndicator() {
     return (
         <div className="flex justify-center items-center w-2/5">

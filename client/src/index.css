@@ -222,7 +222,12 @@
 
     /* This tag applies to the instructions at the top of the professor dashboard */
     .custom-intruction-text {
-        @apply text-center text-sm font-semibold uppercase mb-4;
+        @apply text-center text-base font-bold mb-4;
+    }
+
+    /* This tag applies to the student info page subtitles */
+    .custom-subtitle-text {
+        @apply text-center text-base font-semibold
     }
 
     /* 
