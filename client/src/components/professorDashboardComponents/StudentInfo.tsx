@@ -24,7 +24,7 @@ export default function StudentInfo() {
                 <div className="flex-grow h-0 border-t border-black"></div>
             </div>
             {/* Submission History Table */}
-            <SubmissionTable/>
+            <SubmissionTable title="Submission History"/>
             {/* Page Divider */}
             <div className="relative flex items-center w-5/6 m-4">
                 <div className="flex-grow h-0 border-t border-black"></div>
@@ -35,6 +35,8 @@ export default function StudentInfo() {
                 </div>
                 <div className="flex-grow h-0 border-t border-black"></div>
             </div>
+            {/* Unsubmitted Assignments Table */}
+            <SubmissionTable title="Unsubmitted Assignments"/>
             <div className="relative flex items-center w-5/6 m-4">
                 <div className="flex-grow h-0 border-t border-black"></div>
                 <div className="flex justify-center items-center">
