@@ -13,13 +13,29 @@ export default function StudentInfo() {
                     Current Student
                 </div>
             </div>
-            <button className="custom-form-main-button mt-4 w-5/6">
+            {/* Page Divider */}
+            <div className="relative flex items-center w-5/6 m-4">
+                <div className="flex-grow h-0 border-t border-black"></div>
+                <div className="flex justify-center items-center">
+                    <h1 className="px-2 text-xs font-semibold">
+                        compare to body of work
+                    </h1>
+                </div>
+                <div className="flex-grow h-0 border-t border-black"></div>
+            </div>
+            <button className="custom-form-main-button w-5/6">
                 Make New Comparrison
             </button>
             {/* Page Divider */}
-            <div className="custom-text-divider">
-                 or
-             </div>
+            <div className="relative flex items-center w-5/6 m-4">
+                <div className="flex-grow h-0 border-t border-black"></div>
+                <div className="flex justify-center items-center">
+                    <h1 className="px-2 text-xs font-semibold">
+                        or
+                    </h1>
+                </div>
+                <div className="flex-grow h-0 border-t border-black"></div>
+            </div>
             {/* Submission History Table */}
             <SubmissionTable/>
         </div>

@@ -5,10 +5,14 @@
 @layer components {
 
     :root {
+        /* Controls the colour gradient for the background of the website */
         --primary-bg: bg-indigo-200;
         --primary-contrast: bg-white;
         --secondary-bg: bg-gray-200;
         --secondary-contrast: bg-white;
+
+        /* Controls spacing of dividers around text */
+        --text-divider-gap: 1rem;
     }
 
     /* 
@@ -195,16 +199,8 @@
 
     /* This tag applies to the view submission button in the submission history */
     .custom-view-submission-button {
-        @apply uppercase font-semibold ease-in-out duration-200 rounded-lg my-2 px-2 py-2 text-xs w-full
+        @apply uppercase font-semibold ease-in-out duration-200 rounded-lg px-2 py-2 text-xs w-full
         bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800 focus:bg-accent-secondary-400
-    }
-
-    .custom-text-divider {
-        @apply w-full text-center overflow-hidden before:h-[1px] after:h-[1px] after:bg-black 
-        after:inline-block after:relative after:align-middle after:w-1/3 
-        before:bg-black before:inline-block before:relative before:align-middle 
-        before:w-1/3 before:right-2 after:left-2 text-sm
-        mt-6 mb-6;
     }
 
     /* 
