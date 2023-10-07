@@ -4,7 +4,7 @@ import collapse from "../../assets/collapse.svg";
 
 const submissionHistory = [
     ['Assignment 1', true, true],
-    ['Assignment 2', false, true],
+    ['Assignment 2', true, true],
     ['Assignment 3', false, true],
     ['Assignment 4', true, true],
 ]
@@ -94,7 +94,7 @@ function SubmissionList({title}: {title: string}) {
 
 // Creates a submission history table for dynamically displaying works based on the selected student
 export default function SubmissionTable({title}: {title: string}) {
-    const [showDropdown, setShowDropdown] = useState(true);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     {/* Opens and closes the submission history menu */}
     const handleDropdownClick = () => {
@@ -106,8 +106,8 @@ export default function SubmissionTable({title}: {title: string}) {
         <div className="flex justify-center align-center flex-col text-sm font-semibold w-5/6">
             <button 
                 onClick={handleDropdownClick} 
-                className={`border-2 pl-8 flex justify-center items-center uppercase font-semibold w-full px-3 py-2 text-sm
-                ${showDropdown ? "rounded-t-lg" : "rounded-lg"} `}>
+                className={`custom-collapsable-menu-button
+                ${showDropdown ? "custom-collapsable-menu-button-selected rounded-t-lg" : "rounded-lg"} `}>
                 { title }
                 {/* Reactive dropdown arrow */}
                 {showDropdown ? (

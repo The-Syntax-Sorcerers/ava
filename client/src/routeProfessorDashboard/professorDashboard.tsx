@@ -16,19 +16,19 @@ export default function ProfessorDashboard() {
                 <div className="flex justify-between min-h-screen rounded-3xl custom-dashboard-background-colouring">
                     {/* Sidebar */}
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
-                        <h1 className="custom-intruction-text">1. Select a student by subject</h1>
+                        <h1 className="custom-intruction-text">1. Select a Student by Subject</h1>
                         {/* Dropdown menus */}
                         <DropdownMenu titles={ ['Subjects', 'subject'] }/>
                         <DropdownMenu titles={ ['Students', 'student'] }/>
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
-                        <h1 className="custom-intruction-text">2. Select an item of work or submit a new one</h1>
+                        <h1 className="custom-intruction-text">2. Select an existing piece of work or submit a new one</h1>
                         <StudentInfo/>
                     </div>
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
-                    <h1 className="custom-intruction-text">3. Authorise and view results</h1>
+                    <h1 className="custom-intruction-text">3. Authorise and View Results</h1>
                     </div>
                 </div>
             </main>

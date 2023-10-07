@@ -161,10 +161,10 @@
 
     /* These tags apply to the colouring of the sidebar dropdown buttons */
     .custom-dropdown-menu-button-colouring {
-        @apply bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800;
+        @apply bg-button-light-blue hover:bg-button-blue hover:text-accent-primary-900;
     }
     .custom-dropdown-menu-button-selected {
-        @apply bg-violet-500;
+        @apply bg-button-blue-darker hover:bg-button-blue hover:text-accent-primary-900;
     }
 
     /* This tag applies to the dropdown list containing the dropdown elements */
@@ -197,10 +197,19 @@
         @apply border-2 border-slate-100 w-full flex justify-center items-center font-semibold text-sm py-2;
     }
 
-    /* This tag applies to the view submission button in the submission history */
+    /* These tags apply to the collapsable menu buttons */
+    .custom-collapsable-menu-button {
+        @apply border-2 pl-8 flex justify-center items-center uppercase font-semibold px-3 py-2 text-sm
+        bg-button-light-blue hover:bg-button-blue hover:text-accent-primary-900;
+    }
+    .custom-collapsable-menu-button-selected {
+        @apply bg-button-blue-darker hover:bg-button-blue hover:text-accent-primary-900;
+    }
+
+    /* This tag applies to the view interact buttons in the collapsable assignment menus */
     .custom-view-submission-button {
         @apply uppercase font-semibold ease-in-out duration-200 rounded-lg px-2 py-2 text-xs w-full
-        bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800 focus:bg-accent-secondary-400
+        bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800 focus:bg-accent-secondary-400;
     }
 
     /* 

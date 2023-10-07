@@ -16,28 +16,26 @@ export default function StudentInfo() {
                 </div>
             </div>
 
+            {/* Page Divider */}
+            <TextDivider text="Compare to body-of-work"/>
+            <button className="custom-form-main-button w-5/6">
+                Make New Comparrison
+            </button>
+
+            {/* Page Divider */}
+            <TextDivider text="View previous submissions"/>
             <h1 className="custom-subtitle-text">
-                Compare to body of work
             </h1>
             {/* Submission History Table */}
             <SubmissionTable title="Submission History"/>
 
             {/* Page Divider */}
-            <TextDivider text="or"/>
+            <TextDivider text="Make a new submission"/>
             <h1 className="custom-subtitle-text">
-                Make a new submission
+                
             </h1>
             {/* Unsubmitted Assignments Table */}
             <SubmissionTable title="Unsubmitted Assignments"/>
-
-            {/* Page Divider */}
-            <TextDivider text="or"/>
-            <h1 className="custom-subtitle-text">
-                Make a one off comparrsion  
-            </h1>
-            <button className="custom-form-main-button w-5/6">
-                Make New Comparrison
-            </button>
         </div>
         </>
     )
