@@ -17,7 +17,7 @@ const assignments = [
 ]
 
 // Creates the validity indicator and view results button for submitted pieces of work
-function SubmittedIndicator({valid}: {valid: string}) {
+function SubmittedIndicator({valid, click}: {valid: boolean, click: (event: any) => void}) {
     return (
         <div className="flex justify-between items-center w-2/5">
             {/* Indicates verification status on submitted works */}
@@ -31,7 +31,9 @@ function SubmittedIndicator({valid}: {valid: string}) {
                     X
                 </div>)
             }
-            <button className="custom-view-submission-button w-full">
+            <button 
+                onClick={ click }
+                className="custom-view-submission-button w-full">
                 View Results
             </button>
         </div>
@@ -39,13 +41,15 @@ function SubmittedIndicator({valid}: {valid: string}) {
 }
 
 // Creates the unverified indicator and submit button for assignments with open submissions
-function NotSubmittedIndicator() {
+function NotSubmittedIndicator({click}: {click: (event: any) => void}) {
     return (
         <div className="flex justify-center items-center w-2/5">
             <div className="text-lg font-semibold mr-4">
                 -
             </div>
-            <button className="custom-view-submission-button w-full">
+            <button 
+                onClick={ click }
+                className="custom-view-submission-button w-full">
                 Submit
             </button>
         </div>
@@ -53,7 +57,10 @@ function NotSubmittedIndicator() {
 }
 
 // Allows dynamically adding elements for previous submissions
-function SubmissionRowElement({title, valid, submitted}: {title: string, valid: boolean, submitted: boolean}) {
+function SubmissionRowElement({click, title, valid, submitted}: {click: (event: any) => void, 
+                                                                 title: string, 
+                                                                 valid: boolean, 
+                                                                 submitted: boolean}) {
     return (
         <li className="flex justify-between w-full py-2 border-x-2 border-b-2 pl-8 pr-4">
             <div className="flex justify-center items-center">
@@ -63,15 +70,17 @@ function SubmissionRowElement({title, valid, submitted}: {title: string, valid: 
             </div>
             {/* Changes action button and verification indicator based on whether assignment has been submitted or not */}
             {submitted ? (
-                <SubmittedIndicator valid={valid}/>) : (
-                <NotSubmittedIndicator/>)
+                <SubmittedIndicator click={ click } valid={ valid }/>) : (
+                <NotSubmittedIndicator click={ click }/>)
             }
         </li>
     )
 }
 
 // Creates the list of previously submitted assignments
-function SubmissionList({title}: {title: string}) {
+function SubmissionList({title, submittedClick, unsubmittedClick}: {title: string, 
+                                                                    submittedClick: (event: any) => void,
+                                                                    unsubmittedClick: (event: any) => void}) {
     return (
         <>
         <div>
@@ -79,9 +88,9 @@ function SubmissionList({title}: {title: string}) {
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (
                     assignments.map((assignment) => (
-                        <SubmissionRowElement title={assignment[0]} valid={assignment[1]} submitted={assignment[2]} />))) : (
+                        <SubmissionRowElement click={ unsubmittedClick } title={assignment[0]} valid={assignment[1]} submitted={assignment[2]} />))) : (
                     submissionHistory.map((submission) => (
-                        <SubmissionRowElement title={submission[0]} valid={submission[1]} submitted={submission[2]} />
+                        <SubmissionRowElement click={ submittedClick } title={submission[0]} valid={submission[1]} submitted={submission[2]} />
                     )))
                 }
             </ul>
@@ -93,7 +102,9 @@ function SubmissionList({title}: {title: string}) {
 }
 
 // Creates a submission history table for dynamically displaying works based on the selected student
-export default function SubmissionTable({title}: {title: string}) {
+export default function SubmissionTable({title, submittedClick, unsubmittedClick}: {title: string, 
+                                                                                   submittedClick: (event: any) => void,
+                                                                                   unsubmittedClick: (event: any) => void}) {
     const [showDropdown, setShowDropdown] = useState(false);
 
     {/* Opens and closes the submission history menu */}
@@ -117,7 +128,7 @@ export default function SubmissionTable({title}: {title: string}) {
             </button>
             {/* The list of previous works */}
             {showDropdown ? (
-                <SubmissionList title={ title }/>) : (null)
+                <SubmissionList title={ title } submittedClick={ submittedClick } unsubmittedClick={ unsubmittedClick }/>) : (null)
             }
         </div>
     )

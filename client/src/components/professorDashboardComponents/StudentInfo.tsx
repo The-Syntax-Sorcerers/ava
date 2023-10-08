@@ -2,7 +2,9 @@ import SubmissionTable from "./SubmissionTable";
 import TextDivider from "./TextDivider";
 
 // Creates the subsection of the dashboard relating to the information about a selected student
-export default function StudentInfo() {
+export default function StudentInfo({compare, results, upload}: {compare: (event: any) => void,
+                                                                 results: (event: any) => void, 
+                                                                 upload: (event: any) => void}) {
     return (
         <>
         <div className="flex justify-center items-center flex-col w-full">
@@ -18,7 +20,9 @@ export default function StudentInfo() {
 
             {/* Page Divider */}
             <TextDivider text="Compare to body-of-work"/>
-            <button className="custom-form-main-button w-5/6">
+            <button 
+                onClick={ compare }
+                className="custom-form-main-button w-5/6">
                 Make New Comparrison
             </button>
 
@@ -27,7 +31,7 @@ export default function StudentInfo() {
             <h1 className="custom-subtitle-text">
             </h1>
             {/* Submission History Table */}
-            <SubmissionTable title="Submission History"/>
+            <SubmissionTable title="Submission History" submittedClick={ results } unsubmittedClick={ upload }/>
 
             {/* Page Divider */}
             <TextDivider text="Make a new submission"/>
@@ -35,7 +39,7 @@ export default function StudentInfo() {
                 
             </h1>
             {/* Unsubmitted Assignments Table */}
-            <SubmissionTable title="Unsubmitted Assignments"/>
+            <SubmissionTable title="Unsubmitted Assignments" submittedClick={ results } unsubmittedClick={ upload }/>
         </div>
         </>
     )
