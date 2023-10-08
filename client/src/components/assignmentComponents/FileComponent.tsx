@@ -1,5 +1,6 @@
 import DocViewer, {DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import {useState} from 'react';
+import LoadingIcon from "../Loading";
 
 export default function FileComponent() {
 
@@ -7,6 +8,7 @@ export default function FileComponent() {
 
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
+    const [serverFetched, setServerFetched] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
     const file_bytes = document.getElementById("file-bytes")!.getAttribute("content") || "";
     console.log("File bytes:", file_bytes)
@@ -62,8 +64,11 @@ export default function FileComponent() {
         console.log("Fetching File")
         try {
             const response = await fetch(window.location.pathname + "/fetch_assignment_file");
+            
             if(response.status === 204) { return undefined; }
             const blob = await response.blob();
+            
+            
             console.log("Response:", response, "Blob", blob, "Blob text", blob.text())
             // Create a File object from the received blob
             console.log("Response headers:", response.headers)
@@ -86,13 +91,18 @@ export default function FileComponent() {
                 setSelectedDocs([tempFile]);
                 setFileSubmitted(true);
             }
+            setServerFetched(true);
         })
     }
     
     
     return (
-        <>
-            <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
+        <>  
+            <div className="flex items-center">
+                <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
+                <LoadingIcon hasLoaded={serverFetched}/>
+            </div>
+            
 
             {fileSubmitted ? (
                 <div>
