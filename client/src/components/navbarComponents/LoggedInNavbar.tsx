@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 // The list of link elements to add in [title, url] pairs
 const routes = [
+    ['Admin Dashboard', '/AdminDashboard'],
     ['Subjects', '/dashboard'],
     ['Assignments', '/assignments'],
     ['Profile', '/profile'],

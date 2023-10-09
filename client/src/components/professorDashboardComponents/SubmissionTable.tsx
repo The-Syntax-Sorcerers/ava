@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
+// import { title } from 'process';
 
 const submissionHistory = [
     ['Assignment 1', true, true],
@@ -17,7 +18,7 @@ const assignments = [
 ]
 
 // Creates the validity indicator and view results button for submitted pieces of work
-function SubmittedIndicator({valid, click}: {valid: boolean, click: (event: any) => void}) {
+function SubmittedIndicator({valid, click}: {valid: string | boolean, click: (event: any) => void}) {
     return (
         <div className="flex justify-between items-center w-2/5">
             {/* Indicates verification status on submitted works */}
@@ -57,10 +58,12 @@ function NotSubmittedIndicator({click}: {click: (event: any) => void}) {
 }
 
 // Allows dynamically adding elements for previous submissions
-function SubmissionRowElement({click, title, valid, submitted}: {click: (event: any) => void, 
-                                                                 title: string, 
-                                                                 valid: boolean, 
-                                                                 submitted: boolean}) {
+function SubmissionRowElement({click, inAssignment}: {click: (event: any) => void, inAssignment: (string | boolean)[]}) {
+    
+    const title = inAssignment[0];
+    const valid = inAssignment[1];
+    const submitted = inAssignment[2];
+
     return (
         <li className="flex justify-between w-full py-2 border-x-2 border-b-2 pl-8 pr-4">
             <div className="flex justify-center items-center">
@@ -88,9 +91,9 @@ function SubmissionList({title, submittedClick, unsubmittedClick}: {title: strin
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (
                     assignments.map((assignment) => (
-                        <SubmissionRowElement click={ unsubmittedClick } title={assignment[0]} valid={assignment[1]} submitted={assignment[2]} />))) : (
+                        <SubmissionRowElement click={ unsubmittedClick } inAssignment={assignment} />))) : (
                     submissionHistory.map((submission) => (
-                        <SubmissionRowElement click={ submittedClick } title={submission[0]} valid={submission[1]} submitted={submission[2]} />
+                        <SubmissionRowElement click={ submittedClick }  inAssignment={submission} />
                     )))
                 }
             </ul>

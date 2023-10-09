@@ -1,32 +1,29 @@
 import Dropzone from "../assignmentComponents/dropzone";
-import UploadPreview from "../assignmentComponents/uploadPreview";
+// import UploadPreview from "../assignmentComponents/uploadPreview";
 import UploadButton from "../assignmentComponents/uploadButton";
 import { useState } from 'react';
 
 // The format the states are stored in
 interface StatesDict {
-    [key: string]
+    [key: string]: string
 }
 
 export default function AnalysisSection({states, currentState, store}: {states: StatesDict,currentState: string, store: boolean}) {
 
     const [fileUploaded, setFileUploaded] = useState(false);
-    const [showSubmitModal, setShowSubmitModal] = useState(false);
-    const [fileSubmitted, setFileSubmitted] = useState(false);
-    const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length === 1) {
             setFileUploaded(true);
-            setFileSubmitted(false);
-            setSelectedDocs(Array.from(e.target.files));
+            // setFileSubmitted(false);
+            // setSelectedDocs(Array.from(e.target.files));
         }
     };
 
     const handleSubmit = () => {
-        setFileSubmitted(true);
         setFileUploaded(false);
-        setShowSubmitModal(true)
+        // setFileSubmitted(true);
+        // setShowSubmitModal(true)
     };
 
     return (

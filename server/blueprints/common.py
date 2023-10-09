@@ -116,3 +116,27 @@ def profile():
     }
 
     return render_template('routeProfile/index.html', template_data=template_data)
+
+
+@common.route('/AdminDashboard', methods=["GET"])
+@flask_login.login_required
+def professorDashboard():
+    print("Serving AdminDashboard")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+
+    if user_type != "teacher":
+        redirect(url_for('common.dashboard'))
+
+    template_data = {
+        "user_type": user_type,
+        "random": 69,
+    }
+
+    # # Getting the data from supabase & converting to JSON format as required.
+    # for sub in user.get_subjects():
+    #     temp = {'id': sub.subject_id, 'name': sub.name,
+    #             'link': 'subjects/' + sub.subject_id}
+    #     template_data['subjects'].append(temp)
+
+    return render_template('routeProfessorDashboard/index.html', template_data=template_data)
