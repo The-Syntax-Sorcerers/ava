@@ -8,22 +8,24 @@ const menuItems = [
 ];
 
 // Allows dynamically adding dropdown menu items
-function DropdownElement({menuItem}: {menuItem: string[]}) {
+function DropdownElement({menuItem, click}: {menuItem: string[], click: (event: any) => void}) {
     const title = menuItem[0];
 
     return (
         <>
         <li className='flex w-full'>
-            <a className="custom-dropdown-menu-element">
+            <button 
+                onClick={ click }
+                className="custom-dropdown-menu-element">
                 { title }
-            </a>
+            </button>
         </li>
         </>
     );
 }
 
 // Allows dynamically adding the dropdown menu of items 
-function DropdownItems({subtitle}: {subtitle: string}) {
+function DropdownItems({subtitle, click}: {subtitle: string, click: (event: any) => void}) {
     {/* TODO: Grab the data from the server here? */}
     
     return (
@@ -32,20 +34,21 @@ function DropdownItems({subtitle}: {subtitle: string}) {
             {/* The list of menu items */}
             <ul className="">
                 {menuItems.map((menuItem) => (
-                    <DropdownElement menuItem={ menuItem } />
+                    <DropdownElement menuItem={ menuItem } click={ click }/>
                 ))}
             </ul>
             {/* The option to create more of the menu items */}
-            <a className="custom-dropdown-menu-creation-button">
+            <button 
+                className="custom-dropdown-menu-creation-button">
                 Add new { subtitle }
-            </a>
+            </button>
         </div>
         </>
     )
 }
 
 // Creates a dropdown menu of a given item type with the ability to add more of that item
-export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in the items to show? */}) {
+export default function DropdownMenu({titles, click}: {titles: string[], click: (event: any) => void}) {
     const title = titles[0];
     const subtitle = titles[1];
     const [showDropdown, setShowDropdown] = useState(true);
@@ -75,7 +78,7 @@ export default function DropdownMenu({titles}: {titles: string[]}, {/* Pass in t
         
         {/* Dropdown Elements */}
         {showDropdown ? (
-            <DropdownItems subtitle={ subtitle }/>) : (null)
+            <DropdownItems subtitle={ subtitle } click={ click }/>) : (null)
         }
         </>
     )

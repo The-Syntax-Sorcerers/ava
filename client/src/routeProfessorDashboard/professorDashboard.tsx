@@ -46,6 +46,16 @@ export default function ProfessorDashboard() {
         console.log('submit');
     }
 
+    // handles the page logic after a new subject is selected
+    const handleSubjectSelection = () => {
+
+    }
+
+    // Handles the page logic after a new student is selected
+    const handleStudentSelection = () => {
+        setCurrentState(buttonModesConfig.idleMode);
+    }
+
 
     return (
         <div className="flex flex-col min-h-screen custom-pages">
@@ -56,8 +66,8 @@ export default function ProfessorDashboard() {
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
                         <h1 className="custom-intruction-text">1. Select a Student by Subject</h1>
                         {/* Dropdown menus */}
-                        <DropdownMenu titles={ ['Subjects', 'subject'] }/>
-                        <DropdownMenu titles={ ['Students', 'student'] }/>
+                        <DropdownMenu titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
+                        <DropdownMenu titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">

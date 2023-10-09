@@ -52,7 +52,12 @@ export default function AnalysisSection({states, currentState, store}: {states: 
         {/* TODO: Add a re-analyse button */}
         {currentState === states.resultsMode ? (
             <div className="flex flex-col justify-center">
-                <div className="flex justify-center items-center h-48 border-gray-400 border-2 border-dashed">
+                <div className="flex justify-center items-center h-12 border-gray-400 border-2 border-dashed">
+                    <h1>
+                        The score given to the work
+                    </h1>
+                </div>
+                <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
                     <h1>
                         Placeholder showing the uploaded text
                     </h1>
@@ -62,7 +67,7 @@ export default function AnalysisSection({states, currentState, store}: {states: 
                         Re-Analyse on current body-of-work
                     </button>
                 </div>
-                <div className="flex justify-center items-center h-96 border-gray-400 border-2 border-dashed">
+                <div className="flex justify-center items-center h-64 border-gray-400 border-2 border-dashed">
                     <h1>
                         Just imagine there's hella stats and stuff here
                     </h1>
