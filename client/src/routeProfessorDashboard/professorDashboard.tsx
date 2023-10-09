@@ -46,7 +46,7 @@ export default function ProfessorDashboard() {
         console.log('submit');
     }
 
-    // handles the page logic after a new subject is selected
+    // Handles the page logic after a new subject is selected
     const handleSubjectSelection = () => {
 
     }
