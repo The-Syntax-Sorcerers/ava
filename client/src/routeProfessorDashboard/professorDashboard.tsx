@@ -11,37 +11,41 @@ export default function ProfessorDashboard() {
     // const data = (globalThis as any).template_data
     // console.log("Rendering Ass with Assignments:", data.upcoming, data.past)
 
-    // Controls the state of the upload and analysis section of the page
-    const[idleMode, setIdleMode] = useState(true);
-    const [uploadMode, setUploadMode] = useState(false);
-    const [resultsMode, setResultsMode] = useState(false);
+    // The different modes of the analysis section, controlled by button clicks in the student section
+    const buttonModesConfig = {
+        idleMode: 'idle',
+        compareMode: 'compare',
+        resultsMode: 'results',
+        uploadMode: 'upload',
+    };
+
+    // Controls the current state of the analysis section based on which mode has been selected in the student info section
+    const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
 
     // Determines whether the analysis will save to the student's profile or not
     const [storeResults, setStoreResults] = useState(false);
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
-        setIdleMode(false);
-        setUploadMode(true);
         setStoreResults(false);
+        setCurrentState(buttonModesConfig.compareMode);
         console.log('compare');
     }
 
     // Handles page logic after the view results button in the submission history section has been clicked
     const handleResultsButton = () => {
-        setIdleMode(false);
-        setResultsMode(true);
         setStoreResults(false);
+        setCurrentState(buttonModesConfig.resultsMode);
         console.log('results');
     }
 
     // Handles the page logic after the upload button in the unsubmitted assignments section has been clicked
     const handleSubmitButton = () => {
-        setIdleMode(false);
-        setUploadMode(true);
         setStoreResults(true);
+        setCurrentState(buttonModesConfig.uploadMode);
         console.log('submit');
     }
+
 
     return (
         <div className="flex flex-col min-h-screen custom-pages">
@@ -67,7 +71,7 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-intruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection idle={ idleMode } upload={ uploadMode } results={ resultsMode } store={ storeResults } />
+                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } store={ storeResults } />
                     </div>
                 </div>
             </main>
