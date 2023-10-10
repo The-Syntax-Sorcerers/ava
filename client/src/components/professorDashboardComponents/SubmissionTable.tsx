@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Key, useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
 // import { title } from 'process';
@@ -90,12 +90,14 @@ function SubmissionList({title, submittedClick, unsubmittedClick}: {title: strin
             <ul>
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (
-                    assignments.map((assignment) => (
-                        <SubmissionRowElement click={ unsubmittedClick } inAssignment={assignment} />))) : (
-                    submissionHistory.map((submission) => (
-                        <SubmissionRowElement click={ submittedClick }  inAssignment={submission} />
-                    )))
-                }
+                    assignments.map((assignment, k: Key) => (
+                        <SubmissionRowElement click={ unsubmittedClick } inAssignment={assignment} key={k} />
+                    ))
+                ) : (
+                    submissionHistory.map((submission, k: Key) => (
+                        <SubmissionRowElement click={ submittedClick }  inAssignment={submission} key={k} />
+                    ))
+                )}
             </ul>
         </div>
         <div className="border-x-2 border-b-2 rounded-b-lg w-full h-4">
@@ -108,11 +110,10 @@ function SubmissionList({title, submittedClick, unsubmittedClick}: {title: strin
 export default function SubmissionTable({title, submittedClick, unsubmittedClick}: {title: string, 
                                                                                    submittedClick: (event: any) => void,
                                                                                    unsubmittedClick: (event: any) => void}) {
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(true);
 
     {/* Opens and closes the submission history menu */}
     const handleDropdownClick = () => {
-        console.log('clicked')
         setShowDropdown(!showDropdown)
     };
 

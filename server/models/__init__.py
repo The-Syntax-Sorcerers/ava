@@ -22,15 +22,23 @@ class User(UserMixin):
     def __repr__(self):
         return f'<User> id: {self.id}, email: {self.email}'
 
-    def get_subjects(self):
+    def get_teaching_and_studying_subjects(self):
         try:
             res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
             res2 = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
-            print(res.data)
-            print(res.data)
-            print(res.data + res2.data)
             subjects = []
             for student_dict in (res.data + res2.data):
+                d = student_dict.get('subject_id', student_dict.get('id'))
+                subjects.append(Subject.get_subject(d))
+            return subjects
+        except:
+            pass
+
+    def get_teaching_subject(self):
+        try:
+            res = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+            subjects = []
+            for student_dict in res.data:
                 d = student_dict.get('subject_id', student_dict.get('id'))
                 subjects.append(Subject.get_subject(d))
             return subjects
@@ -123,6 +131,12 @@ class User(UserMixin):
         supabase_sec.table('User').insert(dto).execute()
         print("Signed up:", email)
 
+    def get_payload_format(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+        }
 
 class Subject:
     def __init__(self, subject_id, description, professor_email, subject_name):

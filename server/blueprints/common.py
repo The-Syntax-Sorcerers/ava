@@ -50,7 +50,7 @@ def dashboard():
 
     # Getting the data from supabase & converting to JSON format as required.
     user: User = flask_login.current_user
-    for sub in user.get_subjects():
+    for sub in user.get_teaching_and_studying_subjects():
         temp = {'id': sub.subject_id, 'name': sub.name,
                 'link': 'subjects/' + sub.subject_id}
         template_data['subjects'].append(temp)
@@ -133,10 +133,15 @@ def professorDashboard():
         "random": 69,
     }
 
-    # # Getting the data from supabase & converting to JSON format as required.
-    # for sub in user.get_subjects():
-    #     temp = {'id': sub.subject_id, 'name': sub.name,
-    #             'link': 'subjects/' + sub.subject_id}
-    #     template_data['subjects'].append(temp)
+    # Getting the data from supabase & converting to JSON format as required.
+    subs = [s for s in user.get_teaching_subject()]
+    students = {}
+    for sub in subs:
+        students[sub.subject_id] = [stud.get_payload_format() for stud in sub.get_students()]
+    subs_payload = [sub.get_payload_format() for sub in subs]
 
+    template_data['subjectItems'] = subs_payload
+    template_data['studentItems'] = students
+    print(subs)
+    print(students)
     return render_template('routeProfessorDashboard/index.html', template_data=template_data)
