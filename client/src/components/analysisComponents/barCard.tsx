@@ -1,8 +1,8 @@
 // A simple graph card element that will contain a line graph of the data
 import BarChart from "../horizonComponents/charts/BarChart"; 
 import Card from "../horizonComponents/card";
-// export default function BarChartCard({title, data, optionsCategories}: {title:string, data:any, optionsCategories:[]}) {
-export default function BarChartCard({title, data}: {title:string, data:any}) {
+export default function BarChartCard({title, data, optionsCategories}: {title:string, data:any, optionsCategories:any}) {
+// export default function BarChartCard({title, data}: {title:string, data:any}) {
     const barChartOptions = {
         chart: {
           toolbar: {
@@ -24,8 +24,8 @@ export default function BarChartCard({title, data}: {title:string, data:any}) {
           theme: "dark",
         },
         xaxis: {
-          categories: ["1", "2", "3", "4", "5", "6"],//{optionsCategories},
-          show: false,
+          categories: {optionsCategories}, //["1", "2", "3", "4", "5", "6"],
+          show: true,
           labels: {
             show: true,
             style: {

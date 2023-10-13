@@ -11,7 +11,7 @@ email_validator
 datetime
 python-dotenv
 supabase
-
+randomcolor
 
 # ML Dependencies
 # numpy

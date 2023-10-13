@@ -13,6 +13,10 @@ class User(UserMixin):
         self.id = tid  # This variable needs to be called `id` to shadow variable of parent class `UserMixin`
         self.name = name
         self.email = email
+        self.success = 63
+        self.failed = 25
+        self.unsubmitted = 12
+        self.score_hist = [76, 82, 62, 56, 42, 91]
 
     def __repr__(self):
         return f'<User> id: {self.id}, email: {self.email}'
@@ -44,28 +48,71 @@ class User(UserMixin):
         return None
 
     def get_vectors(self):
-        past_files = [x for x in supabase_sec.storage.from_(
-            'ava-prod-past-assignments').list() if x.endswith(".npy")]
 
-        punc_vecs = []
-        sentence_vecs = []
-        word_vecs = []
-        
+        past_files = [x for x in supabase_sec.storage.from_(
+            'ava-prod-past-assignments').list("test") if x['name'].endswith(".npy")]
+        filenames = [x for x in supabase_sec.storage.from_(
+            'ava-prod-past-assignments').list("test") if x['name'].endswith(".txt")]
+        ['Periods', 'Commas', 'Semicolons', 'Colon', 'Exclaimation Marks',
+         'Question Marks', 'Dash', 'Open Parentheses', 'Close Parenthesis', 'Double Quote',
+         'Apostrophe', 'Tilda', 'Forward Slash']
+        punc_vecs = {
+            'Periods': [],
+            'Commas': [],
+            'Semicolons': [],
+            'Colons': [],
+            'Exclaimation Marks': [],
+            'Question Marks': [],
+            'Dashes': [],
+            'Open Parentheses': [],
+            'Close Parentheses': [],
+            'Double Quotes': [],
+            'Apostrophe/Single Quotes': [],
+            'Tilda': [],
+            'Forward Slash': [],
+        }
+
+        sentence_vecs = {
+            'Count of Sentences Over Average': [],
+            'Count of Sentences Under Average': [],
+            'Count of Average Sentences': [],
+            'Average Sentence Length': []
+        }
+
+        word_vecs = {
+            'rare_count': [],
+            'long_count': [],
+            'count_over_avg': [],
+            'count_under_avg': [],
+            'count_avg': [],
+            'ttr': []
+        }
 
         for f in past_files:
-            response = supabase_sec.storage.from_table(
-                'ava-prod-past-assignments').download(f)
+            response = supabase_sec.storage.from_(
+                'ava-prod-past-assignments').download(f'test/{f["name"]}')
 
-            # Check if the download was successful
-            if response.status_code == 200:
-                # Load the .npy file from the response content
-                npy_bytes = response.content
-                np_array = np.load(io.BytesIO(npy_bytes)).tolist()
-                punc_vecs.append(np_array[300:])
-                sentence_vecs.append(np_array[313:])
-                word_vecs.append(np_array[317:])
+            np_array = np.load(io.BytesIO(response)).tolist()
+            puncs_array = np_array[300:313]
 
-        return punc_vecs, sentence_vecs, word_vecs
+            # Add punctuation vector valies to
+            for i in range(len(puncs_array)):
+                punc_vecs[list(punc_vecs.keys())[i]].append(puncs_array[i])
+
+            sents_array = np_array[313:317]
+            for i in range(len(sents_array)):
+                sentence_vecs[list(sentence_vecs.keys())[i]
+                              ].append(sents_array[i])
+
+            words_array = np_array[317:]
+            for i in range(len(words_array)):
+                word_vecs[list(word_vecs.keys())[i]].append(words_array[i])
+
+        return punc_vecs, sentence_vecs, word_vecs, filenames
+
+    def get_scores(self):
+        average_score = round((sum(self.score_hist) / len(self.score_hist)))
+        return self.score_hist, average_score
 
     @staticmethod
     def get_user(user_id):

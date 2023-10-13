@@ -4,7 +4,7 @@ import AssignmentCard, {assignmentObj} from '../components/assignmentComponents/
 import Footer from '../components/landingComponents/Footer.tsx'
 import { useState } from 'react'
 import GraphCard from '../components/analysisComponents/graphCard.tsx'
-import BarChartCard from '../components/analysisComponents/barCard.tsx'
+// import BarChartCard from '../components/analysisComponents/barCard.tsx'
 import PieChartCard from '../components/analysisComponents/pieCard.tsx'
 import CircleProgressCard from '../components/analysisComponents/circleProgressCard.tsx'
 
@@ -34,20 +34,23 @@ export default function Profile({ data}: {data:any}) {
                     </div>
                 </div>
                 <div className="container mx-auto flex flex-row flex-wrap gap-2 mb-5">
-                    <div className="container basis-1/3">
-                        <GraphCard data={data.linePunctuation} optionsCategories={data.allScoresLabels} title="Punctuation Frequency"/>
+                    <div className="container basis-1/4">
+                        <GraphCard data={data.linePunctuation} optionsCategories={data.assignmentLabels} title="Punctuation Frequency"/>
                     </div>
-                    <div className="container basis-1/3">
-                        <BarChartCard data={data.allScores}  /*optionsCategories={data.allScoresLabels}*/ title="All Scores"/> 
+                    <div className="container basis-1/4">
+                        <GraphCard data={data.lineSentences} optionsCategories={data.assignmentLabels} title="Sentence Analysis"/>
                     </div>
-                    <div className="container basis-1/3">
+                    <div className="container basis-1/4">
+                        <GraphCard data={data.allScores}  optionsCategories={data.assignmentLabels} title="All Scores"/> 
+                    </div>
+                    <div className="container basis-1/4">
                         <PieChartCard data={data.submissionPie} title="Submission History"/>
                     </div>
-                    <div className="container basis-1/3">
-                    </div>
+                    <div className="container basis-1/4">
                         <CircleProgressCard data={data.avgScore} title="Average Score"/>
-                    <div className="container basis-1/3">
-                        <GraphCard data={data.lineSentences} optionsCategories={data.allScoresLabels} title="Sentence Analysis"/>
+                    </div>
+                    <div className="container basis-1/4">
+                        <GraphCard data={data.lineWords} optionsCategories={data.assignmentLabels} title="Word Analysis"/>
                     </div>
                     
 

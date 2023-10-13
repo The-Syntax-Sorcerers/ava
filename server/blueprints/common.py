@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import randomcolor
 
 import flask_login
 import flask_wtf.csrf
@@ -96,8 +97,26 @@ def assignments():
 @common.route('/profile', methods=["GET"])
 @flask_login.login_required
 def profile():
-    # puncs = ['.', ',', ';', ':', '!', '?', '-', '(', ')', '\"', '\'', '`', '/']
     print("Serving Profile")
+    user: User = flask_login.current_user
+    punc_vecs, sentence_vecs, word_vecs, filenames = user.get_vectors()
+    score_hist, avg_score = user.get_scores()
+
+    linePuncData = []
+    for k, v in punc_vecs.items():
+        color = randomcolor.RandomColor().generate()[0]
+        linePuncData.append({"name": k, "data": v, 'color': color})
+
+    lineSentenceData = []
+    for k, v in sentence_vecs.items():
+        color = randomcolor.RandomColor().generate()[0]
+        lineSentenceData.append({"name": k, "data": v, 'color': color})
+
+    lineWordData = []
+    for k, v in word_vecs.items():
+        color = randomcolor.RandomColor().generate()[0]
+        lineWordData.append({"name": k, "data": v, 'color': color})
+
     template_data = {
         "comparison": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Automata Worksheet",
                         "link": "/assignnent"},
@@ -109,49 +128,18 @@ def profile():
                   "name": "Grok Worksheet 1", "link": "/ass"},
                  {"due_date": "02/26/2023", "id": "COMP123456",
                   "name": "Grok Worksheet 2", "link": "/ass"}],
-        "id": 1171234,
+        "id": user.name,
         "allScores": [{
             "name": "Score",
-            "data": [76, 82, 62, 56, 42, 91]
+            "data": score_hist
         }],
-        "allScoresLabels": ["A1", "A2", "A3", "P4", "A5", "P6"],
-        "avgScore": 86,
-        "submissionPie":  [63, 25, 12],
+        "assignmentLabels": filenames,
+        "avgScore": avg_score,
+        "submissionPie":  [user.success, user.failed, user.unsubmitted],
         "submissionCategories": ["Success", "Failed", "Not Yet Submitted"],
-        "linePunctuation": [
-            {
-                "name": "Periods",
-                "data": [50, 64, 48, 66, 49, 68],
-                "color": "#4318FF",
-            },
-            {
-                "name": "Commas",
-                "data": [30, 40, 24, 46, 20, 46],
-                "color": "#6AD2FF",
-            },
-        ],
-        "lineSentences": [
-            {
-                "name": "Count Sentences Under",
-                "data": [30, 40, 24, 46, 20, 46],
-                "color": "#255C99",
-            },
-            {
-                "name": "Count Sentences Over",
-                "data": [50, 64, 48, 66, 49, 68],
-                "color": "#4318FF",
-            },
-            {
-                "name": "Num Average Sentences",
-                "data": [3, 11, 5, 8, 14, 9],
-                "color": "#6AD2FF",
-            },
-            {
-                "name": "Average Sentence Length",
-                "data": [11, 16, 12, 13, 9, 7],
-                "color": "#6AD2FF",
-            },
-        ]
+        "linePunctuation": linePuncData,
+        "lineSentences": lineSentenceData,
+        "lineWords": lineWordData,
     }
 
     return render_template('routeProfile/index.html', template_data=template_data)
