@@ -154,6 +154,13 @@ class Subject:
                 r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
         return assigns
 
+    def valid_student(self, stud_id):
+        if (supabase_sec.table("Student").select('*').eq('student_id', stud_id).execute() and
+            self.subject_id == supabase_sec.table('StudentSubject')
+            .select('subject_id').eq('student_id', stud_id).execute()):
+            return True
+        return False    
+
     # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
@@ -236,6 +243,24 @@ class Assignment:
         if res:
             return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']) for r in res]
         return []
+
+    @staticmethod
+    def create_assignment(data):
+        try:
+            supabase_sec.table('Assignment').insert([data]).execute()
+        except:
+            pass
+
+    def add_student_subj(self, student_id):
+        data = {'student_id': student_id, 'subject_id': self.subject_id}
+        try:
+            supabase_sec.table('StudentSubject').insert([data]).execute()
+        except:
+            pass
+
+    # will return a dict representation
+    def to_dict(self):
+        return {"due_date": self.due_date, "id": self.id, "name": self.name}
 
 
 class Storage:

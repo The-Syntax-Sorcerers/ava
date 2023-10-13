@@ -89,4 +89,37 @@ def create_subject():
     print("Attempting to Create Subject", sub)
     Subject.create_subject(sub)
 
-    return redirect(url_for('common.dashboard'))
+    data = {
+        'subject_id': sub_id,
+        'name': request.form.get('name'),
+        'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
+        'description': request.form.get('desc'),
+    }
+    print("Attempting to Create Assignment", data)
+    Assignment.create_assignment(data)
+
+    return redirect(f"/subjects/{sub_id}")
+
+
+@subjects.route('/<sub_id>/add_student', methods=["GET"])
+@flask_login.login_required
+def add_student_subject(sub_id):
+    print("adding student")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+
+    if not user_type == "teacher":
+        print('User is not a teacher')
+        return redirect("/dashboard")
+
+    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+    assignment = Assignment.get_assignment(sub_id)
+    stud_id = request.form.get('student_id')
+    if not assignment.valid_student(stud_id):
+        print('Student is not valid')
+    else:
+        assignment.add_student_subj(stud_id)
+        
+    return redirect(f"/subjects/{sub_id}")
+
+
