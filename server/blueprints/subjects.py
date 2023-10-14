@@ -62,6 +62,7 @@ def assignment_page(sub_id, ass_id):
     user: User = flask_login.current_user
     user_type = user.get_user_type()
     sub = Subject.get_subject(sub_id)
+    sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
     template_data = {
@@ -107,3 +108,22 @@ def add_student_subject(sub_id):
     return redirect(f"/subjects/{sub_id}")
 
 
+@subjects.route('/create_subject', methods=['POST'])
+@flask_login.login_required
+def create_subject():
+    print("uploading subject")
+    user: User = flask_login.current_user
+    user_type = user.get_user_type()
+    user_email = user.email
+
+    print("created form")
+    
+    if not user_type == "teacher":
+        print('User is not a teacher')
+        return redirect(url_for('common.dashboard'))
+
+    sub = Subject(request.form.get('id'), request.form.get('desc'), user_email, request.form.get('name'))
+    print("Attempting to Create Subject", sub)
+    Subject.create_subject(sub)
+
+    return redirect(url_for('common.dashboard'))
