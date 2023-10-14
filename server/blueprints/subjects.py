@@ -69,10 +69,10 @@ def assignment_page(sub_id, ass_id):
                       'link': ''} for student in sub.get_students()]
     }
 
-    return render_template('routeAssignment/index.html', template_data=template_data)
+    return render_template('routeAssignment/index.html', template_data=template_data, csrf=flask_wtf.csrf.generate_csrf())
 
 
-@subjects.route('/<sub_id>/create_subject', methods=["GET"])
+@subjects.route('/<sub_id>/create_subject', methods=["POST"])
 @flask_login.login_required
 def create_subject(sub_id):
     print("uploading subject")
@@ -102,7 +102,7 @@ def create_subject(sub_id):
     return redirect(f"/dashboard")
 
 
-@subjects.route('/<sub_id>/add_student', methods=["GET"])
+@subjects.route('/<sub_id>/add_student', methods=["POST"])
 @flask_login.login_required
 def add_student_subject(sub_id):
     print("adding student")
