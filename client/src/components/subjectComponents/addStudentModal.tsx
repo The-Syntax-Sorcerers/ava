@@ -9,6 +9,7 @@ export default function AddStudentForm({ setShowModal }) {
                 <h1> Add a Student to Subject </h1>
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
                     <form method="post" action={sendPost}>
+                        <input id="csrf_token" name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
                         {/* <!-- Student ID Input --> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="name" name="name"

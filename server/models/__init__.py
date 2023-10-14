@@ -123,7 +123,17 @@ class User(UserMixin):
         supabase_sec.table('User').insert(dto).execute()
         print("Signed up:", email)
 
+    @staticmethod
+    def user_exists(user_id):
+        try:
+            if supabase_sec.table("User").select('*').eq('id', user_id).execute():
+                return True
+        except:
+            pass
+        print("User does not exist")
+        return False
 
+    
 class Subject:
     def __init__(self, subject_id, description, professor_email, subject_name):
         self.subject_id = subject_id
@@ -153,12 +163,31 @@ class Subject:
                 r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
         return assigns
 
+    def is_student_in_subject(self, stud_id):
+        try:
+            data = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', stud_id).execute().data
+            if {'subject_id': self.subject_id} not in data:
+                print('student is not in the subject')
+                return True
+        except:
+            pass 
+        print('student is already in the subject')
+        return False
+
     def valid_student(self, stud_id):
-        if (supabase_sec.table("Student").select('*').eq('student_id', stud_id).execute() and
-            self.subject_id == supabase_sec.table('StudentSubject')
-            .select('subject_id').eq('student_id', stud_id).execute()):
+        print('tries to validate')
+        if (User.user_exists(stud_id) and self.is_student_in_subject(stud_id)):
+            print("is valid")
             return True
         return False    
+
+    def add_student(self, student_id):
+        data = {'student_id': student_id, 'subject_id': self.subject_id}
+        print('adds student')
+        try:
+            supabase_sec.table('StudentSubject').insert([data]).execute()
+        except:
+            pass
 
     # Returns a specific subject using a given subject_id
     @staticmethod
@@ -247,13 +276,6 @@ class Assignment:
     def create_assignment(data):
         try:
             supabase_sec.table('Assignment').insert([data]).execute()
-        except:
-            pass
-
-    def add_student_subj(self, student_id):
-        data = {'student_id': student_id, 'subject_id': self.subject_id}
-        try:
-            supabase_sec.table('StudentSubject').insert([data]).execute()
         except:
             pass
 

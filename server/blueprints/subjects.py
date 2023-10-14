@@ -119,7 +119,7 @@ def create_subject():
 
     return redirect(url_for('common.dashboard'))
 
-@subjects.route('/<sub_id>/add_student', methods=["GET"])
+@subjects.route('/<sub_id>/add_student', methods=["POST"])
 @flask_login.login_required
 def add_student_subject(sub_id):
     print("adding student")
@@ -131,11 +131,11 @@ def add_student_subject(sub_id):
         return redirect("/dashboard")
 
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
-    assignment = Assignment.get_assignment(sub_id)
-    stud_id = request.form.get('student_id')
-    if not assignment.valid_student(stud_id):
+    subject = Subject.get_subject(sub_id)
+    stud_id = request.form.get('name')
+    if not subject.valid_student(stud_id):
         print('Student is not valid')
     else:
-        assignment.add_student_subj(stud_id)
+        subject.add_student(stud_id)
         
     return redirect(f"/subjects/{sub_id}")
