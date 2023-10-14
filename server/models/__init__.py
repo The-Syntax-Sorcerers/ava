@@ -137,7 +137,6 @@ class Subject:
                 + f'prof_email: {self.professor_email}')
 
     def get_students(self):
-        # res = supabase_sec.table('StudentSubject').select('student_id, User(name, email)').eq('subject_id', self.subject_id).execute()
         res = supabase_sec.table('StudentSubject').select(
             'student_id').eq('subject_id', self.subject_id).execute()
         students = []
@@ -309,5 +308,3 @@ class Storage:
             if obj['name'] == user_id:
                 return True
         return False
-
-
