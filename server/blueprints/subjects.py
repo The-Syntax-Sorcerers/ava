@@ -1,6 +1,7 @@
 import json
 import os
 import datetime
+from time import strptime, strftime
 
 import flask
 import flask_login
@@ -71,9 +72,9 @@ def assignment_page(sub_id, ass_id):
     return render_template('routeAssignment/index.html', template_data=template_data)
 
 
-@subjects.route('/create_subject', methods=['POST'])
+@subjects.route('/<sub_id>/create_subject', methods=["GET"])
 @flask_login.login_required
-def create_subject():
+def create_subject(sub_id):
     print("uploading subject")
     user: User = flask_login.current_user
     user_type = user.get_user_type()
@@ -98,7 +99,7 @@ def create_subject():
     print("Attempting to Create Assignment", data)
     Assignment.create_assignment(data)
 
-    return redirect(f"/subjects/{sub_id}")
+    return redirect(f"/dashboard")
 
 
 @subjects.route('/<sub_id>/add_student', methods=["GET"])
