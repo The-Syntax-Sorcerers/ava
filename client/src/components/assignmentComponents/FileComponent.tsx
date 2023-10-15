@@ -1,4 +1,4 @@
-import DocViewer, {DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import {useState} from 'react';
 import LoadingIcon from "../Loading";
 
