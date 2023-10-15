@@ -11,9 +11,11 @@ from server.blueprints.common import common
 # Used for cleanup
 from server.models import User
 
-TEST_DATA = {'email': "test@gmail.com",
-             'password': "test"}
+TEST_USER_DATA = {'email': "test@gmail.com",
+                  'password': "test"}
 
+TEST_TEACHER_DATA = {'email': "prof@gmail.com",
+                     'password': "prof"}
 
 # Creates a test version of the application
 @pytest.fixture
@@ -51,14 +53,19 @@ def signup_client(signup_app):
 # Generates a test client with a user who has already logged in
 @pytest.fixture
 def auth_client(client):
-    # not in the correct format
-    login_test_user(client)
+    login_test_user(client, TEST_USER_DATA)
     yield client
     client.get('/logout', follow_redirects=True)
 
 
-def login_test_user(client):
-    data = TEST_DATA
+@pytest.fixture
+def auth_teacher_client(client):
+    login_test_user(client, TEST_TEACHER_DATA)
+    yield client
+    client.get('/logout', follow_redirects=True)
+
+def login_test_user(client, login_data):
+    data = login_data.copy()
     data['csrf_token'] = get_CSRF_token(client, '/')
     client.post('/', data=data, follow_redirects=True)
 

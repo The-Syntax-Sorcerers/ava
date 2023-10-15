@@ -1,12 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export default function CreateAssignmentForm({ setShowModal }) {
+    const currentURL = window.location.href;
+    const sendPost = `${currentURL}/create_assignment`
     return (
         <div onClick={() => setShowModal(false)} className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-shadow bg-opacity-25">
             <div onClick={e => e.stopPropagation()} className="relative w-1/3 p-6 container bg-main rounded-lg shadow-2xl text-center">
                 <h1> Add a New Assignment </h1>
                 <div className="relative w-auto my-6 mx-auto max-w-sm">
-                    <form method="post" action="/createClass">
+                    <form method="post" action={sendPost}>
+                        <input id="csrf_token" name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
                         {/* <!-- Assignment Name input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="name" name="name" 
