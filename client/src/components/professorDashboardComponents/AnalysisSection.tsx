@@ -38,9 +38,6 @@ export default function AnalysisSection({states, currentState, store}: {states: 
 
     return (
         <>
-        {/* TODO: Wrap all of these options into their own components */}
-        <h1>state = { currentState }, store = { store ? 'true' : 'false' }</h1>
-
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
         {currentState === states.IdleMode ? (
             <div className="flex justify-center items-center h-48 border-gray-400 border-2 border-dashed">
@@ -98,10 +95,10 @@ export default function AnalysisSection({states, currentState, store}: {states: 
             {fileUploaded ? (
                 <div>
                 {/* Render the upload preview or upload button */}
-                {/* <UploadPreview docs={selectedDocs.map((file) => ({
+                <UploadPreview docs={selectedDocs.map((file) => ({
                     uri: window.URL.createObjectURL(file),
                     fileName: file.name,
-                }))}/> */}
+                }))}/>
                 <UploadButton handleUpload={ handleUpload } />
                 <div className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
                     <div>

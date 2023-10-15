@@ -86,7 +86,7 @@ function SubmissionList({title, submittedClick, unsubmittedClick}: {title: strin
                                                                     unsubmittedClick: (event: any) => void}) {
     return (
         <>
-        <div>
+        <div className="overflow-auto max-h-[30vh]">
             <ul>
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (

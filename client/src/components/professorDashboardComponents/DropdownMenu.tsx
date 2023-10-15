@@ -36,7 +36,7 @@ function DropdownItems({setShow, menuItems, subtitle, click}: {setShow: any, men
         <>
         <div className="custom-dropdown-menu">
             {/* The list of menu items */}
-            <ul className="">
+            <ul className={`overflow-auto ${subtitle === 'student' ? "max-h-[80vh]" : "max-h-[30vh]"}`}>
                 {menuItems.map((menuItem: any, k: Key) => (
                     <DropdownElement menuItem={ menuItem } click={ click } key={k}/>
                 ))}
