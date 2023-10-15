@@ -29,7 +29,6 @@ def load_user(user_id):
 login_manager.init_app(app)
 login_manager.login_view = "common.index"
 
-
 app.register_blueprint(common)
 app.register_blueprint(auth)
 app.register_blueprint(subjects)
