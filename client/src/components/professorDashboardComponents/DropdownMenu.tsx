@@ -1,23 +1,27 @@
-import { useState } from 'react';
+import { Key, useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
+import CreateSubjectModal from '../subjectComponents/createSubjectModal';
 
-const menuItems = [
-    ['COMP10010'],
-    ['COMP10020'],
-];
 
 // Allows dynamically adding dropdown menu items
-function DropdownElement({menuItem, click}: {menuItem: string[], click: (event: any) => void}) {
-    const title = menuItem[0];
+function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) => void}) {
+    const name = menuItem.id + ": " + menuItem.name;
 
     return (
         <>
         <li className='flex w-full'>
+            {/* <div  
+                onClick={ click }
+                datatype={ menuItem.id }
+                className="custom-dropdown-menu-element cursor-pointer">
+                { name } </div> */}
             <button 
                 onClick={ click }
-                className="custom-dropdown-menu-element">
-                { title }
+                value={ menuItem.id }
+                className="custom-dropdown-menu-element disabled"
+                >
+                { name }
             </button>
         </li>
         </>
@@ -25,7 +29,7 @@ function DropdownElement({menuItem, click}: {menuItem: string[], click: (event: 
 }
 
 // Allows dynamically adding the dropdown menu of items 
-function DropdownItems({subtitle, click}: {subtitle: string, click: (event: any) => void}) {
+function DropdownItems({setShow, menuItems, subtitle, click}: {setShow: any, menuItems: string[], subtitle: string, click: (event: any) => void}) {
     {/* TODO: Grab the data from the server here? */}
     
     return (
@@ -33,12 +37,13 @@ function DropdownItems({subtitle, click}: {subtitle: string, click: (event: any)
         <div className="custom-dropdown-menu">
             {/* The list of menu items */}
             <ul className="">
-                {menuItems.map((menuItem) => (
-                    <DropdownElement menuItem={ menuItem } click={ click }/>
+                {menuItems.map((menuItem: any, k: Key) => (
+                    <DropdownElement menuItem={ menuItem } click={ click } key={k}/>
                 ))}
             </ul>
             {/* The option to create more of the menu items */}
             <button 
+                onClick={() => setShow(true)}
                 className="custom-dropdown-menu-creation-button">
                 Add new { subtitle }
             </button>
@@ -48,16 +53,15 @@ function DropdownItems({subtitle, click}: {subtitle: string, click: (event: any)
 }
 
 // Creates a dropdown menu of a given item type with the ability to add more of that item
-export default function DropdownMenu({titles, click}: {titles: string[], click: (event: any) => void}) {
+export default function DropdownMenu({subjectItems, currentSubject, titles, click}: {subjectItems: any, currentSubject: any, titles: string[], click: (event: any) => void}) {
     const title = titles[0];
     const subtitle = titles[1];
     const [showDropdown, setShowDropdown] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const menuItems = (title === 'Students') ? currentSubject.students : Object.values(subjectItems);
 
     {/* Opens and closes the dropdown menu */}
-    const handleDropdownClick = () => {
-        console.log('clicked')
-        setShowDropdown(!showDropdown)
-    };
+    const handleDropdownClick = () => { setShowDropdown(!showDropdown) };
 
     return (
         <>
@@ -78,8 +82,14 @@ export default function DropdownMenu({titles, click}: {titles: string[], click: 
         
         {/* Dropdown Elements */}
         {showDropdown ? (
-            <DropdownItems subtitle={ subtitle } click={ click }/>) : (null)
+            <DropdownItems menuItems={menuItems} subtitle={ subtitle } setShow={setShowModal} click={ click }/>) : (null)
         }
+
+        {showModal ? (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <CreateSubjectModal setShowModal={setShowModal}/>
+            </div>
+        ) : null}
         </>
     )
 }

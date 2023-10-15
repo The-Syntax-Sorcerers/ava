@@ -5,25 +5,29 @@ import StudentInfo from '../components/professorDashboardComponents/StudentInfo.
 import AnalysisSection from '../components/professorDashboardComponents/AnalysisSection.tsx'
 import { useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export default function ProfessorDashboard() {
-    // const data = (globalThis as any).template_data
-    // console.log("Rendering Ass with Assignments:", data.upcoming, data.past)
 
-    // The different modes of the analysis section, controlled by button clicks in the student section
-    const buttonModesConfig = {
-        idleMode: 'idle',
-        compareMode: 'compare',
-        resultsMode: 'results',
-        uploadMode: 'upload',
-    };
+// The different modes of the analysis section, controlled by button clicks in the student section
+const buttonModesConfig = {
+    idleMode: 'idle',
+    compareMode: 'compare',
+    resultsMode: 'results',
+    uploadMode: 'upload',
+};
+
+
+export default function ProfessorDashboard() {
+    const data = (globalThis as any).template_data
+    const subjectItems = data.subjectItems;
+    const subjectItemsArray = Object.values(subjectItems);
+    console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
 
     // Determines whether the analysis will save to the student's profile or not
     const [storeResults, setStoreResults] = useState(false);
+    const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
+    const [currentStudent, setCurrentStudent]: any = useState(currentSubject.students[0]);
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
@@ -46,17 +50,31 @@ export default function ProfessorDashboard() {
         console.log('submit');
     }
 
-    // Handles the page logic after a new subject is selected
-    const handleSubjectSelection = () => {
+    
+    // console.log("current subject is set to", currentSubject)
+    // console.log(currentSubject.id)
+    // console.log("Active", currentSubject)
 
+    // Handles the page logic after a new subject is selected
+    const handleSubjectSelection: React.FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+        setCurrentSubject(subjectItems[event.currentTarget.value]);
+        setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
+        // console.log("current subject is set to", currentSubject)
+        // console.log("SubjectHandler", event.currentTarget);
     }
 
     // Handles the page logic after a new student is selected
-    const handleStudentSelection = () => {
+    const handleStudentSelection: React.FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+        const student = currentSubject.students.find((s: any) => s.id == event.currentTarget.value);
+        setCurrentStudent(student);
+        // console.log("current student is set to", currentStudent)
+        // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
     }
 
-
+    console.log("============================================================")
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
@@ -66,13 +84,16 @@ export default function ProfessorDashboard() {
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
                         <h1 className="custom-intruction-text">1. Select a Student by Subject</h1>
                         {/* Dropdown menus */}
-                        <DropdownMenu titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
-                        <DropdownMenu titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
+                        <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems}  titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
+                        <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems} titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
                         <h1 className="custom-intruction-text">2. Select an existing piece of work or submit a new one</h1>
                         <StudentInfo 
+                            allSubjects={subjectItems}
+                            currentSubject={currentSubject}
+                            currentStudent={currentStudent}
                             compare={ handleCompareButton } 
                             results={ handleResultsButton } 
                             upload={ handleSubmitButton }

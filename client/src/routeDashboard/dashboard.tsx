@@ -1,7 +1,7 @@
 import LoggedInNavbar from "../components/navbarComponents/LoggedInNavbar";
 import SubjectCard from "../components/subjectComponents/subjectCard.tsx";
 import Footer from '../components/landingComponents/Footer.tsx'
-import CreateClassForm from '../components/subjectComponents/createClassModal.tsx'
+import CreateSubjectModal from '../components/subjectComponents/createSubjectModal.tsx'
 import { Key, useState } from 'react'
 
 interface SubjectObj {
@@ -43,7 +43,7 @@ export default function Dashboard({subjects, userType} : {subjects: [SubjectObj]
                 </div>
                 {showModal ? (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <CreateClassForm setShowModal={setShowModal}/>
+                    <CreateSubjectModal setShowModal={setShowModal}/>
                 </div>
                 ) : null}
             </main>

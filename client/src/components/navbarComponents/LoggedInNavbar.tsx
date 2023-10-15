@@ -1,21 +1,30 @@
 import logo from "../../assets/logo.svg";
 import menu from "../../assets/menu.svg";
 import DropdownList from "./DropdownList";
-import { useState } from 'react';
+import { Key, useState } from 'react';
 
 
 // The list of link elements to add in [title, url] pairs
 const routes = [
-    ['Admin Dashboard', '/AdminDashboard'],
-    ['Subjects', '/dashboard'],
-    ['Assignments', '/assignments'],
-    ['Profile', '/profile'],
+    ['Admin Dashboard', '/AdminDashboard', "teacher"],
+    ['Subjects', '/dashboard', "student"],
+    ['Assignments', '/assignments', "student"],
+    ['Profile', '/profile', "student"],
 ]
 
 // Allows dynamically adding link elements to the navbar
 function NavBarElement({route}: {route: string[]}) {
+    const data = (globalThis as any).template_data;
+    const user_type = data.user_type;
+
     const title = route[0];
     const url = route[1];
+    const routeType = route[2];
+
+    if(routeType === "teacher" && user_type !== "teacher") {    
+        return null;
+    }
+
 
     return (
         <li>
@@ -28,6 +37,7 @@ function NavBarElement({route}: {route: string[]}) {
 
 // Creates a navbar for authenticated users to naviagte the website quickly and easily
 export default function LoggedInNavbar() {
+
     const [showDropdown, setShowDropdown] = useState(false);
 
     {/* Opens and closes the dropdown menu */}
@@ -48,8 +58,9 @@ export default function LoggedInNavbar() {
                     <div className="flex items-center">
                         {/* Narbar link elements */}
                         <ul className="flex space-x-4">
-                            {routes.map((route) => (
-                                <NavBarElement route={ route }/>
+                            {routes.map((route, k: Key) => (
+                                
+                                <NavBarElement route={ route } key={k}/>
                             ))}
                         </ul>
                         {/* Dropdown menu button */}

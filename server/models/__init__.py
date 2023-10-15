@@ -22,12 +22,28 @@ class User(UserMixin):
     def __repr__(self):
         return f'<User> id: {self.id}, email: {self.email}'
 
-    def get_subjects(self):
-        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
-        subjects = []
-        for student_dict in res.data:
-            subjects.append(Subject.get_subject(student_dict.get('subject_id')))
-        return subjects
+    def get_teaching_and_studying_subjects(self):
+        try:
+            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+            res2 = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+            subjects = []
+            for student_dict in (res.data + res2.data):
+                d = student_dict.get('subject_id', student_dict.get('id'))
+                subjects.append(Subject.get_subject(d))
+            return subjects
+        except:
+            pass
+
+    def get_teaching_subject(self):
+        try:
+            res = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+            subjects = []
+            for student_dict in res.data:
+                d = student_dict.get('subject_id', student_dict.get('id'))
+                subjects.append(Subject.get_subject(d))
+            return subjects
+        except:
+            pass
 
     def get_assignments(self):
         res = supabase_sec.table('StudentSubject').select('subject_id'
@@ -115,6 +131,12 @@ class User(UserMixin):
         supabase_sec.table('User').insert(dto).execute()
         print("Signed up:", email)
 
+    def get_payload_format(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+        }
 
 class Subject:
     def __init__(self, subject_id, description, professor_email, subject_name):
@@ -165,6 +187,23 @@ class Subject:
             subs.append(Subject(r['id'], res['description'],
                         r['professor_email'], r['name']))
         return subs
+
+    @staticmethod
+    def create_subject(temp_sub):
+
+        try:
+            supabase_sec.table('Subject').insert(temp_sub.get_payload_format()).execute()
+        except:
+            pass
+
+    def get_payload_format(self):
+        data = {
+            'id': self.subject_id,
+            'name': self.name,
+            'description': self.description,
+            'professor_email': self.professor_email
+        }
+        return data
 
 
 class Assignment:
