@@ -1,7 +1,7 @@
 
 # Flask Dependencies
 flask
-werkzeug
+Werkzeug==2.3.7
 WTForms
 
 flask_login

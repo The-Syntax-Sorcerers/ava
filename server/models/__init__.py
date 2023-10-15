@@ -26,11 +26,19 @@ class User(UserMixin):
         return f'<User> id: {self.id}, email: {self.email}'
 
     def get_subjects(self):
-        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
-        subjects = []
-        for student_dict in res.data:
-            subjects.append(Subject.get_subject(student_dict.get('subject_id')))
-        return subjects
+        try:
+            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+            res2 = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+            print(res.data)
+            print(res.data)
+            print(res.data + res2.data)
+            subjects = []
+            for student_dict in (res.data + res2.data):
+                d = student_dict.get('subject_id', student_dict.get('id'))
+                subjects.append(Subject.get_subject(d))
+            return subjects
+        except:
+            pass
 
     def get_assignments(self):
         res = supabase_sec.table('StudentSubject').select('subject_id'
@@ -74,7 +82,7 @@ class User(UserMixin):
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
                 res = supabase_sec.table('User').select('*').eq('id', id).execute().data
-                if ((res['email'] == user_email) and (res['name'] == user_name)):
+                if (res['email'] == user_email) and (res['name'] == user_name):
                     # Send a DELETE request to the Supabase table to delete the user by ID
                     res = supabase_sec.table('User').delete().eq('id', user_id).execute()
 
@@ -170,16 +178,33 @@ class Subject:
                         r['professor_email'], r['name']))
         return subs
 
+    @staticmethod
+    def create_subject(temp_sub):
+        try:
+            supabase_sec.table('Subject').insert(temp_sub.get_payload_format()).execute()
+        except:
+            pass
+
+    def get_payload_format(self):
+        data = {
+            'id': self.subject_id,
+            'name': self.name,
+            'description': self.description,
+            'professor_email': self.professor_email
+        }
+        return data
+
 
 class Assignment:
 
     def __init__(self, assignment_id, subject_id,
-                 assignment_name, description, due_datetime=None):
+                 assignment_name, description, submission_locked, due_datetime=None):
         self.id = assignment_id
         self.subject_id = subject_id
         self.name = assignment_name
         self.description = description
         self.due_datetime = due_datetime
+        self.submission_locked = submission_locked
         if due_datetime:
             # Separates datetime into date and time
             self.due_datetime = datetime.datetime.strptime(
@@ -195,7 +220,8 @@ class Assignment:
                 + f'subject_id: {self.subject_id}, '
                 + f'due_datetime: {self.due_datetime}, '
                 + f'due_date: {self.due_date}, '
-                + f'due_time: {self.due_time}')
+                + f'due_time: {self.due_time}, '
+                + f'submission_locked: {self.submission_locked}')
 
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
@@ -204,17 +230,20 @@ class Assignment:
             '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['due_datetime'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'], res['due_datetime'])
         return None
 
     # Returns all assignments using a given subject_id
     @staticmethod
-    def get_all_assignments(subject_id):
-        res = supabase_sec.table('Assignment').select(
-            '*').eq('subject_id', subject_id).execute().data
+    def get_all_assignments(subject_id=None):
+        if subject_id:
+            res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+        else:
+            res = supabase_sec.table('Assignment').select('*').execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']) for r in res]
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']) for r in res]
         return []
+
 
 
 class Storage:
@@ -223,6 +252,7 @@ class Storage:
         self.initialised = True
         self.supabase_sec = sec
         self.ass_bucket = 'ava-prod-assignments'
+        self.past_ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
     def list_past_assignments(user_email):
@@ -310,5 +340,65 @@ class Storage:
             if obj['name'] == user_id:
                 return True
         return False
+
+    def cron_get_all_uploaded_assignments(self, subject_id, assignment_id):
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
+        final_dict = {}
+        try:
+            res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+            for obj in res:
+                temp_user_id = obj['name']
+                final_dict[temp_user_id] = self.download_assignment(subject_id, assignment_id, temp_user_id)
+            self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
+            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq('id', assignment_id).execute()
+        except:
+            pass
+
+        return final_dict
+
+    def __cron_delete_entire_assignments_folder(self, subject_id, assignment_id):
+        try:
+            path = f'{subject_id}/{assignment_id}'
+            return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
+        except:
+            return None
+
+
+class PastStorage:
+
+    def __init__(self, sec=supabase_sec):
+        self.initialised = True
+        self.supabase_sec = sec
+        self.ass_bucket = 'ava-prod-past-assignments'
+
+    @staticmethod
+    def construct_path(user_id, assignment_id):
+        return f'{user_id}/{assignment_id}'
+
+    def upload_assignment(self, file, user_id, assignment_id):
+        path = self.construct_path(user_id, assignment_id)
+        if not self.exists_assignment(user_id, assignment_id):
+            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
+        return None
+
+    def download_assignment(self, user_id, assignment_id):
+        # Will return a byte stream.
+        try:
+            path = self.construct_path(user_id, assignment_id)
+            return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
+        except:
+            return None
+
+    def exists_assignment(self, user_id, assignment_id):
+        # if the folder is empty, db returns 1 element in list[0]
+        # as a placeholder
+        res = self.supabase_sec.storage.from_(self.ass_bucket).list(
+            f'{user_id}/{assignment_id}')
+        for obj in res:
+            if obj['name'] == user_id:
+                return [obj]
+        return []
+
 
 
