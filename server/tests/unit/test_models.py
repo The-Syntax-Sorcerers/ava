@@ -38,7 +38,7 @@ def test_new_assignment_due_datetime():
     # GIVEN an assignment object
     # WHEN a new assignment is created with a due_datetime
     # THEN check that subject has an id, a subject_id, a name, a due date, and a due_time
-    assignment = Assignment(1, 2, "Test Assignment", "Test subject description", "2023-09-06T11:07:23+00:00")
+    assignment = Assignment(1, 2, "Test Assignment", "Test subject description", False, "2023-09-06T11:07:23+00:00")
     assert assignment.id == 1
     assert assignment.subject_id == 2
     assert assignment.name == "Test Assignment"
@@ -49,7 +49,7 @@ def test_new_assignment_due_datetime():
     # GIVEN an assignment object
     # WHEN a new assignment is created with a due_datetime (hour greater than 12)
     # THEN check that subject has an id, a subject_id, a name, a due date, and a due_time
-    assignment = Assignment(1, 2, "Test Assignment", "Test subject description", "2023-09-06T13:07:23+00:00")
+    assignment = Assignment(1, 2, "Test Assignment", "Test subject description", False, "2023-09-06T13:07:23+00:00")
     assert assignment.id == 1
     assert assignment.subject_id == 2
     assert assignment.name == "Test Assignment"
