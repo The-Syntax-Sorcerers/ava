@@ -80,7 +80,7 @@ jobs:
       - name: Build project
         run: |
           rm -rf client/dist
-          npm run build --prefix client
+          npm run build --prefix client --force
 
       - name: Check for Staged Changes
         run: |
