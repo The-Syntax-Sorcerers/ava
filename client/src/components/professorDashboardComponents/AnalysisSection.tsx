@@ -159,9 +159,11 @@ export default function AnalysisSection({states, currentState, store}: {states: 
                     </h1>
                 </div>
                 <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
-                    <h1>
-                        Placeholder showing the uploaded text
-                    </h1>
+                    {/* Render the uploaded assignment */}
+                    {/* <UploadPreview docs={selectedDocs.map((file) => ({
+                        uri: window.URL.createObjectURL(file),
+                        fileName: file.name,
+                    }))}/> */}
                 </div>
                 <div className="flex justify-center">
                     <button className="custom-form-button w-1/2 my-4">
