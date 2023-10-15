@@ -53,7 +53,7 @@ export default function AnalysisSection({states, currentState, store}: {states: 
         {/* 2. For comparing against the student */}
         {currentState === states.compareMode ? (
             <>
-                <h1 className="text-2xl font-semibold mb-4 mt-5">Submission</h1>
+                <h1 className="text-2xl font-semibold mb-4 mt-5 text-center">Comparrison Mode</h1>
                 {fileSubmitted ? (
                     <div>
                     <p className="text-base mb-4">Looks Like you've already submitted an assignment. Do you want to submit another one?</p>
@@ -87,12 +87,15 @@ export default function AnalysisSection({states, currentState, store}: {states: 
                 ):null
                 }
             </>
-        ) : (null)
-        }
+        ) : (
+            null
+        )}
 
         {/* 3. For uploading for the student */}
         {currentState === states.uploadMode ? (
-            fileUploaded ? (
+            <>
+            <h1 className="text-2xl font-semibold mb-4 mt-5 text-center">Current Assignemnt</h1>
+            {fileUploaded ? (
                 <div>
                 {/* Render the upload preview or upload button */}
                 {/* <UploadPreview docs={selectedDocs.map((file) => ({
@@ -138,13 +141,13 @@ export default function AnalysisSection({states, currentState, store}: {states: 
                     </button>
                 </div>
                 </div>
-                ) : (
-                    <Dropzone handleUpload={ handleUpload } />
-                )
             ) : (
+                <Dropzone handleUpload={ handleUpload } />
+            )}
+            </>
+        ) : (
             null
-            )
-        }
+        )}
 
 
         {/* 4. For looking at previously submitted works */}

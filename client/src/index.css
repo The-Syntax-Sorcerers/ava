@@ -176,7 +176,7 @@
     .custom-dropdown-menu-element {
         @apply ease-in-out text-sm font-medium transition duration-300 flex justify-start items-center
         bg-transparent hover:bg-violet-300 text-slate-900  hover:text-violet-800
-        pl-10 py-2 w-full;
+        px-2 py-2 w-full;
     }
 
     /* This tag applies to the item creation button of the dropdown menu */
@@ -209,10 +209,10 @@
 
     /* Styles the primary action buttons on the auth forms */
     .custom-info-card {
-        @apply cursor-default font-medium ease-in-out duration-200 rounded-lg
-        bg-button-light-blue text-accent-primary-800 hover:bg-accent-secondary-300 hover:text-accent-secondary-800
-        w-full px-3 py-2 pb-2.5 pt-2.5 dark:active:shadow inline-block leading-normal
-        border-2 border-slate-100 w-full flex justify-center items-center font-semibold text-sm;
+        @apply cursor-default ease-in-out duration-200 rounded-lg text-base
+        border-button-light-blue 
+        w-full px-3 py-0.5 dark:active:shadow leading-normal
+        border-2 flex flex-col justify-between items-center;
     }
 
     /* 

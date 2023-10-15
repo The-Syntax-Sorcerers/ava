@@ -15,16 +15,24 @@ export default function StudentInfo({allSubjects, currentSubject, currentStudent
             <div className="flex justify-center items-center flex-col w-full">
                 {/* Current Selection Cards */}
                 <div className="flex justify-center items-center w-5/6 gap-2 mb-4">
-                    <button 
+                    {/* <button 
                         className="custom-info-card">
                         {currentSubject.id + ": " + currentSubject.name}
-                    </button>
+                    </button> */}
+                    <div className="custom-info-card">
+                        <div className="font-bold">{ currentSubject.name }</div>
+                        <div className="text-slate-800">{ currentSubject.id }</div>
+                    </div>
                     {/* Pass in the keys in `allSubjects` */}
                     {/* <AddNewSubject subjects={Object.keys(allSubjects)}/> */}
-                    <button 
+                    {/* <button 
                         className="custom-info-card">
                         {currentStudent.id + ": " + currentStudent.name}
-                    </button>
+                    </button> */}
+                    <div className="custom-info-card">
+                        <div className="font-bold">{ currentStudent.name }</div>
+                        <div className="text-slate-800">{ currentStudent.id }</div>
+                    </div>
                 </div>
 
                 {/* Page Divider */}

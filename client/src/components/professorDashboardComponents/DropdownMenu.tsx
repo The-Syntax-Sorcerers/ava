@@ -6,8 +6,6 @@ import CreateSubjectModal from '../subjectComponents/createSubjectModal';
 
 // Allows dynamically adding dropdown menu items
 function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) => void}) {
-    const name = menuItem.id + ": " + menuItem.name;
-
     return (
         <>
         <li className='flex w-full'>
@@ -19,9 +17,11 @@ function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) 
             <button 
                 onClick={ click }
                 value={ menuItem.id }
-                className="custom-dropdown-menu-element disabled"
-                >
-                { name }
+                className="custom-dropdown-menu-element disabled">
+                <div className="flex justify-between w-full gap-1">
+                    <div className="font-semibold">{ menuItem.name }</div>
+                    <div className="">{ menuItem.id }</div>
+                </div>
             </button>
         </li>
         </>
