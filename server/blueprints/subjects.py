@@ -69,7 +69,6 @@ def assignment_page(sub_id, ass_id):
     user: User = flask_login.current_user
     user_type = user.get_user_type()
     sub = Subject.get_subject(sub_id)
-    sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
     cookies = get_and_clear_cookies()
