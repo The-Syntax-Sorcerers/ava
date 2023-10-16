@@ -71,6 +71,7 @@ class User(UserMixin):
             if res:
                 res = res[0]
                 return User(res['id'], res['email'], res['name'], res['user_type'])
+            sleep(0.2)
         return None
 
     # Deletes a user from the database
