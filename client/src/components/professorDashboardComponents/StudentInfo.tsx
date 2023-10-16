@@ -4,7 +4,8 @@ import SubmissionTable from "./SubmissionTable";
 import TextDivider from "./TextDivider";
 
 // Creates the subsection of the dashboard relating to the information about a selected student
-export default function StudentInfo({allSubjects, currentSubject, currentStudent, compare, results, upload}: {allSubjects: any, currentSubject: any, currentStudent: any, 
+export default function StudentInfo({allSubjects, subAss, unsubAss, currentSubject, currentStudent, compare, results, upload}: {
+    allSubjects: any, subAss: any, unsubAss: any, currentSubject: any, currentStudent: any, 
     compare: (event: any) => void, results: (event: any) => void, upload: (event: any) => void}) {
 
         // Find the student with id `currentstudent` in the current subject.students
@@ -48,7 +49,7 @@ export default function StudentInfo({allSubjects, currentSubject, currentStudent
                 <h1 className="custom-subtitle-text">
                 </h1>
                 {/* Submission History Table */}
-                <SubmissionTable title="Submission History" submittedClick={ results } unsubmittedClick={ upload }/>
+                <SubmissionTable title="Submission History" submittedClick={ results } unsubmittedClick={ upload } currAss={ subAss }/>
 
                 {/* Page Divider */}
                 <TextDivider text="Make a new submission"/>
@@ -56,7 +57,7 @@ export default function StudentInfo({allSubjects, currentSubject, currentStudent
                     
                 </h1>
                 {/* Unsubmitted Assignments Table */}
-                <SubmissionTable title="Unsubmitted Assignments" submittedClick={ results } unsubmittedClick={ upload }/>
+                <SubmissionTable title="Unsubmitted Assignments" submittedClick={ results } unsubmittedClick={ upload } currAss={ unsubAss }/>
             </div>
             </>
         );

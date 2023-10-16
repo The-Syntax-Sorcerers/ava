@@ -3,20 +3,6 @@ import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
 // import { title } from 'process';
 
-const submissionHistory = [
-    ['Assignment 1', true, true],
-    ['Assignment 2', true, true],
-    ['Assignment 3', false, true],
-    ['Assignment 4', true, true],
-]
-
-const assignments = [
-    ['Assignment 5', true, false],
-    ['Assignment 6', false, false],
-    ['Assignment 7', false, false],
-    ['Assignment 8', true, false],
-]
-
 // Creates the validity indicator and view results button for submitted pieces of work
 function SubmittedIndicator({valid, click}: {valid: string | boolean, click: (event: any) => void}) {
     return (
@@ -58,17 +44,18 @@ function NotSubmittedIndicator({click}: {click: (event: any) => void}) {
 }
 
 // Allows dynamically adding elements for previous submissions
-function SubmissionRowElement({click, inAssignment}: {click: (event: any) => void, inAssignment: (string | boolean)[]}) {
+function SubmissionRowElement({click, name, score}: {
+    click: (event: any) => void, name: string, score: number | null}) {
     
-    const title = inAssignment[0];
-    const valid = inAssignment[1];
-    const submitted = inAssignment[2];
+    // Parsing whether the current assignment has been submitted or not
+    const submitted = score !== null;
+    const valid = (submitted) && (score > 0.5) ? true : false;
 
     return (
         <li className="flex justify-between w-full py-2 border-x-2 border-b-2 pl-8 pr-4">
             <div className="flex justify-center items-center">
                 <div>
-                    { title }
+                    { name }
                 </div>
             </div>
             {/* Changes action button and verification indicator based on whether assignment has been submitted or not */}
@@ -81,21 +68,20 @@ function SubmissionRowElement({click, inAssignment}: {click: (event: any) => voi
 }
 
 // Creates the list of previously submitted assignments
-function SubmissionList({title, submittedClick, unsubmittedClick}: {title: string, 
-                                                                    submittedClick: (event: any) => void,
-                                                                    unsubmittedClick: (event: any) => void}) {
+function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
+    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: any}) {
     return (
         <>
         <div className="overflow-auto max-h-[30vh]">
             <ul>
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (
-                    assignments.map((assignment, k: Key) => (
-                        <SubmissionRowElement click={ unsubmittedClick } inAssignment={assignment} key={k} />
+                    currAss.map((a, k: Key) => (
+                        <SubmissionRowElement click={ unsubmittedClick } name={ a.name } score={ a.score } key={ k } />
                     ))
                 ) : (
-                    submissionHistory.map((submission, k: Key) => (
-                        <SubmissionRowElement click={ submittedClick }  inAssignment={submission} key={k} />
+                    currAss.map((a, k: Key) => (
+                        <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } key={ k } />
                     ))
                 )}
             </ul>
@@ -107,9 +93,9 @@ function SubmissionList({title, submittedClick, unsubmittedClick}: {title: strin
 }
 
 // Creates a submission history table for dynamically displaying works based on the selected student
-export default function SubmissionTable({title, submittedClick, unsubmittedClick}: {title: string, 
-                                                                                   submittedClick: (event: any) => void,
-                                                                                   unsubmittedClick: (event: any) => void}) {
+export default function SubmissionTable({title, submittedClick, unsubmittedClick, currAss}: {
+    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: any}) {
+
     const [showDropdown, setShowDropdown] = useState(true);
 
     {/* Opens and closes the submission history menu */}
@@ -132,7 +118,7 @@ export default function SubmissionTable({title, submittedClick, unsubmittedClick
             </button>
             {/* The list of previous works */}
             {showDropdown ? (
-                <SubmissionList title={ title } submittedClick={ submittedClick } unsubmittedClick={ unsubmittedClick }/>) : (null)
+                <SubmissionList title={ title } submittedClick={ submittedClick } unsubmittedClick={ unsubmittedClick } currAss={ currAss }/>) : (null)
             }
         </div>
     )

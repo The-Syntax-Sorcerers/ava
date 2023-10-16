@@ -14,11 +14,28 @@ const buttonModesConfig = {
     uploadMode: 'upload',
 };
 
-
 export default function ProfessorDashboard() {
+    // Update the assignments based on the current student
+    function updateAssignments() {
+        const submittedAssignments = [];
+        const unsubmittedAssignments = [];
+    
+        for (const submission of currentAssignments) {
+            if (submission.score !== null) {
+                submittedAssignments.push({ score: submission.score, name: assignmentItems.name });
+            } else {
+                unsubmittedAssignments.push({ score: null, name: assignmentItems.name });
+            }
+        }
+    
+        setSubmittedAssignments(submittedAssignments);
+        setUnsubmittedAssignments(unsubmittedAssignments);
+    }
+
     const data = (globalThis as any).template_data
     const subjectItems = data.subjectItems;
     const subjectItemsArray = Object.values(subjectItems);
+    const assignmentItems = data.assignmentItems;
     console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
@@ -26,8 +43,17 @@ export default function ProfessorDashboard() {
 
     // Determines whether the analysis will save to the student's profile or not
     const [storeResults, setStoreResults] = useState(false);
+
+    // Stores the currently selected student and subject
     const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
     const [currentStudent, setCurrentStudent]: any = useState(currentSubject.students[0]);
+    const [currentAssignments, setCurrentAssignements]: any = useState(currentStudent.submissions);
+    console.log("Yo", currentAssignments);
+
+    // Stores the currently selected student's assignments as submitted and unsubmitted groups
+    const [submittedAssignments, setSubmittedAssignments]: any = useState([]);
+    const [unsubmittedAssignments, setUnsubmittedAssignments]: any = useState([]);
+    updateAssignments();
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
@@ -50,7 +76,6 @@ export default function ProfessorDashboard() {
         console.log('submit');
     }
 
-    
     // console.log("current subject is set to", currentSubject)
     // console.log(currentSubject.id)
     // console.log("Active", currentSubject)
@@ -60,6 +85,7 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         setCurrentSubject(subjectItems[event.currentTarget.value]);
         setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
+        setCurrentAssignements(currentStudent.submissions);
         // console.log("current subject is set to", currentSubject)
         // console.log("SubjectHandler", event.currentTarget);
     }
@@ -69,6 +95,9 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         const student = currentSubject.students.find((s: any) => s.id == event.currentTarget.value);
         setCurrentStudent(student);
+        setCurrentAssignements(currentStudent.submissions)
+        updateAssignments();
+        console.log("Yo", currentAssignments);
         // console.log("current student is set to", currentStudent)
         // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
@@ -91,7 +120,9 @@ export default function ProfessorDashboard() {
                     <div className="custom-dashboard-section w-2/5">
                         <h1 className="custom-intruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
                         <StudentInfo 
-                            allSubjects={subjectItems}
+                            allSubjects={ subjectItems }
+                            subAss={ submittedAssignments }
+                            unsubAss={ unsubmittedAssignments }
                             currentSubject={currentSubject}
                             currentStudent={currentStudent}
                             compare={ handleCompareButton } 
