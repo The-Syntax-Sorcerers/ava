@@ -89,7 +89,7 @@ export default function ProfessorDashboard() {
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
-                        <h1 className="custom-intruction-text">2. Select an existing piece of work or submit a new one</h1>
+                        <h1 className="custom-intruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
                         <StudentInfo 
                             allSubjects={subjectItems}
                             currentSubject={currentSubject}

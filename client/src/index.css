@@ -211,8 +211,11 @@
     .custom-info-card {
         @apply cursor-default ease-in-out duration-200 rounded-lg text-base
         border-button-light-blue 
-        w-full px-3 py-0.5 dark:active:shadow leading-normal
-        border-2 flex flex-col justify-between items-center;
+        w-full max-w-[50%] px-3 py-0.5 leading-normal border-2 flex flex-col justify-center items-center min-h-max;
+    }
+
+    .custom-info-card-content {
+        @apply text-center break-all max-w-full flex
     }
 
     /* 
