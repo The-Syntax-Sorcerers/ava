@@ -22,9 +22,9 @@ export default function ProfessorDashboard() {
     
         for (const submission of assignments) {
             if (submission.similarity_score !== null) {
-                submittedAssignments.push({ score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name });
+                submittedAssignments.push({ id: submission.assignment_id, score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name });
             } else {
-                unsubmittedAssignments.push({ score: null, name: assignmentItems[submission.assignment_id].name });
+                unsubmittedAssignments.push({ id: submission.assignment_id, score: null, name: assignmentItems[submission.assignment_id].name });
             }
         }
     
@@ -33,6 +33,35 @@ export default function ProfessorDashboard() {
 
         console.log("sub", submittedAssignments);
         console.log("unsub", unsubmittedAssignments);
+    }
+
+    // Update current assignment based on assignment clicked
+    function updateFocusedAssignment(value: any[]) {
+        const focus_id = value[0];
+        const score = value[1];
+
+        for (const a in unsubmittedAssignments) {
+            if (unsubmittedAssignments[a].id === focus_id) {
+                setFocusedAssignment({id: focus_id, name: unsubmittedAssignments[a].name})
+                if (score !== null) {
+                    updateFocusedResults(value);
+                }
+                return;
+            }
+        }
+    }
+
+    // Update current assignment score based on assignment clicked
+    function updateFocusedResults(value: any[]) {
+        const focus_id = value[0];
+        const score = value[1];
+
+        for (const a in currentAssignments) {
+            if (currentAssignments[a].assignment_id === focus_id) {
+                setFocusAssignmentScore(score)
+                return;
+            }
+        }
     }
 
     const data = (globalThis as any).template_data
@@ -47,7 +76,11 @@ export default function ProfessorDashboard() {
     // Stores the currently selected student and subject
     const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
     const [currentStudent, setCurrentStudent]: any = useState(currentSubject.students[0]);
-    const [currentAssignments, setCurrentAssignements]: any = useState(currentStudent.submissions);
+    const [currentAssignments, setCurrentAssignments]: any = useState(currentStudent.submissions);
+
+    // Stores the currently selected assignment info
+    const [focusedAssignment, setFocusedAssignment]: any = useState(null);
+    const [focusedAssignmentScore, setFocusAssignmentScore]: any = useState(null);
 
     // Stores the currently selected student's assignments as submitted and unsubmitted groups
     const [submittedAssignments, setSubmittedAssignments]: any = useState([]);
@@ -64,14 +97,17 @@ export default function ProfessorDashboard() {
     }
 
     // Handles page logic after the view results button in the submission history section has been clicked
-    const handleResultsButton = () => {
+    const handleResultsButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.resultsMode);
-        console.log('results');
+        setFocusedAssignment(currentAssignments[event.currentTarget.value]);
+        setFocusAssignmentScore();
+        console.log('results', event.currentTarget.value);
     }
 
     // Handles the page logic after the upload button in the unsubmitted assignments section has been clicked
-    const handleSubmitButton = () => {
+    const handleSubmitButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.uploadMode);
+        setFocusedAssignment(currentAssignments[event.currentTarget.value]);
         console.log('submit');
     }
 
@@ -84,7 +120,7 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         setCurrentSubject(subjectItems[event.currentTarget.value]);
         setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
-        setCurrentAssignements(currentStudent.submissions);
+        setCurrentAssignments(currentStudent.submissions);
         updateAssignments(subjectItems[event.currentTarget.value].students[0].submissions);
         // console.log("current subject is set to", currentSubject)
         // console.log("SubjectHandler", event.currentTarget);
@@ -98,7 +134,7 @@ export default function ProfessorDashboard() {
         console.log("before", currentAssignments);
         console.log("student", student);
         console.log("adding", student.submissions);
-        setCurrentAssignements(student.submissions);
+        setCurrentAssignments(student.submissions);
         updateAssignments(student.submissions);
         console.log("after", currentAssignments);
         // console.log("current student is set to", currentStudent)

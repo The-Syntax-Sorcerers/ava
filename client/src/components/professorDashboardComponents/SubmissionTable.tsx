@@ -4,21 +4,22 @@ import collapse from "../../assets/collapse.svg";
 // import { title } from 'process';
 
 // Creates the validity indicator and view results button for submitted pieces of work
-function SubmittedIndicator({valid, click}: {valid: string | boolean, click: (event: any) => void}) {
+function SubmittedIndicator({valid, click, id, score}: {valid: string | boolean, click: (event: any) => void, id: number, score: number}) {
     return (
         <div className="flex justify-between items-center w-2/5">
             {/* Indicates verification status on submitted works */}
             {valid ? (
                 // Indicates a succesfully verified submission
-                <div className="text-lg font-semibold text-green-400 mr-4">
+                <div className="text-lg font-semibold text-green-400 mr-6 max-w-[1px]">
                     &#10003;
                 </div>) : (
                 // Indicates an unsuccesfully verified submission
-                <div className="text-lg font-semibold text-red-400 mr-4">
+                <div className="text-lg font-semibold text-red-400 mr-6 max-w-[1px]">
                     X
                 </div>)
             }
             <button 
+                value={ [id, score] }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
                 View Results
@@ -28,13 +29,14 @@ function SubmittedIndicator({valid, click}: {valid: string | boolean, click: (ev
 }
 
 // Creates the unverified indicator and submit button for assignments with open submissions
-function NotSubmittedIndicator({click}: {click: (event: any) => void}) {
+function NotSubmittedIndicator({click, id}: {click: (event: any) => void, id: number}) {
     return (
         <div className="flex justify-center items-center w-2/5">
-            <div className="text-lg font-semibold mr-4">
+            <div className="text-lg font-semibold mr-6 max-w-[1px]">
                 -
             </div>
             <button 
+                value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
                 Submit
@@ -44,8 +46,8 @@ function NotSubmittedIndicator({click}: {click: (event: any) => void}) {
 }
 
 // Allows dynamically adding elements for previous submissions
-function SubmissionRowElement({click, name, score}: {
-    click: (event: any) => void, name: string, score: number | null}) {
+function SubmissionRowElement({click, name, score, id}: {
+    click: (event: any) => void, name: string, score: number | null, id: number}) {
     
     // Parsing whether the current assignment has been submitted or not
     const submitted = score !== null;
@@ -60,8 +62,8 @@ function SubmissionRowElement({click, name, score}: {
             </div>
             {/* Changes action button and verification indicator based on whether assignment has been submitted or not */}
             {submitted ? (
-                <SubmittedIndicator click={ click } valid={ valid }/>) : (
-                <NotSubmittedIndicator click={ click }/>)
+                <SubmittedIndicator click={ click } valid={ valid } id={ id }/>) : (
+                <NotSubmittedIndicator click={ click } id={ id }/>)
             }
         </li>
     )
@@ -82,11 +84,11 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
                 {/* TODO: Remove this washed logic check when implementing backend */}
                 {title==="Unsubmitted Assignments" ? (
                     currAss.map((a, k: Key) => (
-                        <SubmissionRowElement click={ unsubmittedClick } name={ a.name } score={ a.score } key={ k } />
+                        <SubmissionRowElement click={ unsubmittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
                     ))
                 ) : (
                     currAss.map((a, k: Key) => (
-                        <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } key={ k } />
+                        <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
                     ))
                 )}
             </ul>
