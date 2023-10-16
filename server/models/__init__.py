@@ -65,11 +65,14 @@ class User(UserMixin):
 
     @staticmethod
     def get_user_with_email(user_email):
-        res = supabase_sec.table('User').select(
-            '*').eq('email', user_email).execute().data
-        if res:
-            res = res[0]
-            return User(res['id'], res['email'], res['name'])
+        try:
+            res = supabase_sec.table('User').select(
+                '*').eq('email', user_email).execute().data
+            if res:
+                res = res[0]
+                return User(res['id'], res['email'], res['name'])
+        except:
+            pass
         return None
 
     # Deletes a user from the database
@@ -160,7 +163,7 @@ class Subject:
         assigns = []
         for r in res.data:
             assigns.append(Assignment(
-                r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
+                r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']))
         return assigns
 
     def is_student_in_subject(self, stud_id):
@@ -181,8 +184,8 @@ class Subject:
             return True
         return False    
 
-    def add_student(self, student_id):
-        data = {'student_id': student_id, 'subject_id': self.subject_id}
+    def add_student(self, student: User):
+        data = {'student_id': student.id, 'subject_id': self.subject_id}
         print('adds student')
         try:
             supabase_sec.table('StudentSubject').insert([data]).execute()

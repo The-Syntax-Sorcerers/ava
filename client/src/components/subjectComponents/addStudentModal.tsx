@@ -12,9 +12,9 @@ export default function AddStudentForm({ setShowModal }) {
                         <input id="csrf_token" name="csrf_token" type="hidden" value={document.getElementById("csrf-token")!.getAttribute("content") || ""}></input>
                         {/* <!-- Student ID Input --> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
-                            <input type="name" name="name"
+                            <input type="email" name="email"
                             className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                            placeholder="Student ID" />
+                            placeholder="Student Email" />
                         </div>
                         <button
                             className="inline-block w-full rounded px-6 pb-2 pt-2.5 font-semibold text-md

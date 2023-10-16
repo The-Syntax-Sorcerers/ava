@@ -46,7 +46,7 @@ def subject_page(sub_id):
             "due_date": ass.due_datetime,
             "link": f'/subjects/{ass.subject_id}/{ass.id}'
         }
-        print(ass.due_datetime, datetime.datetime)
+        print(ass.due_datetime)
         if ass.due_datetime and ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
             template_data['upcoming'].append(temp)
         else:
@@ -101,13 +101,6 @@ def upload_assignment(sub_id):
     return redirect(f"/subjects/{sub_id}")
 
 
-@subjects.route('/<sub_id>/add_student', methods=["GET"])
-@flask_login.login_required
-def add_student_subject(sub_id):
-
-    return redirect(f"/subjects/{sub_id}")
-
-
 @subjects.route('/create_subject', methods=['POST'])
 @flask_login.login_required
 def create_subject():
@@ -141,10 +134,11 @@ def add_student_subject(sub_id):
 
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
     subject = Subject.get_subject(sub_id)
-    stud_id = request.form.get('name')
-    if not subject.valid_student(stud_id):
+    stud = User.get_user_with_email(request.form.get('email'))
+
+    if not subject.valid_student(stud.id):
         print('Student is not valid')
     else:
-        subject.add_student(stud_id)
+        subject.add_student(stud)
         
     return redirect(f"/subjects/{sub_id}")
