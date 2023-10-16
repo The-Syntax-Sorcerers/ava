@@ -332,29 +332,28 @@ class PastStorage:
         self.ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
-    def construct_path(user_id, assignment_id):
-        return f'{user_id}/{assignment_id}'
+    def construct_path(user_id, subject_id, assignment_id):
+        return f'{user_id}/{subject_id}-{assignment_id}'
 
-    def upload_assignment(self, file, user_id, assignment_id):
-        path = self.construct_path(user_id, assignment_id)
-        if not self.exists_assignment(user_id, assignment_id):
+    def upload_assignment(self, file, user_id, subject_id, assignment_id):
+        path = self.construct_path(user_id, subject_id, assignment_id)
+        if not self.exists_assignment(user_id, subject_id, assignment_id):
             return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
         return None
 
-    def download_assignment(self, user_id, assignment_id):
+    def download_assignment(self, user_id, subject_id, assignment_id):
         # Will return a byte stream.
         try:
-            path = self.construct_path(user_id, assignment_id)
+            path = self.construct_path(user_id, subject_id, assignment_id)
             return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
         except:
             return None
 
-    def exists_assignment(self, user_id, assignment_id):
+    def exists_assignment(self, user_id, subject_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(
-            f'{user_id}/{assignment_id}')
+        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{user_id}')
         for obj in res:
-            if obj['name'] == user_id:
+            if obj['name'] == f'{subject_id}-{assignment_id}':
                 return [obj]
         return []
