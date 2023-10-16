@@ -62,6 +62,7 @@ def assignment_page(sub_id, ass_id):
     user: User = flask_login.current_user
     user_type = user.get_user_type()
     sub = Subject.get_subject(sub_id)
+    sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
     template_data = {
@@ -98,6 +99,14 @@ def upload_assignment(sub_id):
     Assignment.create_assignment(data)
 
     return redirect(f"/subjects/{sub_id}")
+
+
+@subjects.route('/<sub_id>/add_student', methods=["GET"])
+@flask_login.login_required
+def add_student_subject(sub_id):
+
+    return redirect(f"/subjects/{sub_id}")
+
 
 @subjects.route('/create_subject', methods=['POST'])
 @flask_login.login_required
