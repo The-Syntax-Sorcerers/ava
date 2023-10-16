@@ -1,3 +1,5 @@
+from time import sleep
+
 from flask_login import UserMixin
 from storage3.utils import StorageException
 from supabase import Client
@@ -15,25 +17,26 @@ CURRENT_ASSIGNMENTS_BUCKET = 'ava-prod-assignments'
 
 class User(UserMixin):
 
-    def __init__(self, tid, email, name):
+    def __init__(self, tid, email, name, user_type):
         # This variable needs to be called
         # `id` to shadow variable of parent class `UserMixin`
         self.id = tid
         self.name = name
         self.email = email
+        self.user_type = user_type
 
     def __repr__(self):
         return f'<User> id: {self.id}, email: {self.email}'
 
     def get_subjects(self):
         try:
-            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
-            res2 = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
-            print(res.data)
-            print(res.data)
-            print(res.data + res2.data)
+            if self.user_type == 'student':
+                res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+            else:
+                res = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+
             subjects = []
-            for student_dict in (res.data + res2.data):
+            for student_dict in res.data:
                 d = student_dict.get('subject_id', student_dict.get('id'))
                 subjects.append(Subject.get_subject(d))
             return subjects
@@ -41,20 +44,14 @@ class User(UserMixin):
             pass
 
     def get_assignments(self):
-        res = supabase_sec.table('StudentSubject').select('subject_id'
-                                                          ).eq('student_id', self.id).execute()
-        assigns = []
-        for student_dict in res.data:
-            assigns += Assignment.get_all_assignments(
-                subject_id=student_dict['subject_id'])
-        return assigns
-
-    def get_user_type(self):
-        res = supabase_sec.table('User').select(
-            '*').eq('email', self.email).execute().data
-        if res:
-            res = res[0]
-            return res['user_type']
+        for i in range(5):
+            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+            if res:
+                assigns = []
+                for student_dict in res.data:
+                    assigns += Assignment.get_all_assignments(subject_id=student_dict['subject_id'])
+                return assigns
+            sleep(0.2)
         return None
 
     @staticmethod
@@ -63,7 +60,7 @@ class User(UserMixin):
             '*').eq('id', user_id).execute().data
         if res:
             res = res[0]
-            return User(res['id'], res['email'], res['name'])
+            return User(res['id'], res['email'], res['name'], res['user_type'])
         return None
 
     @staticmethod
@@ -72,7 +69,7 @@ class User(UserMixin):
             '*').eq('email', user_email).execute().data
         if res:
             res = res[0]
-            return User(res['id'], res['email'], res['name'])
+            return User(res['id'], res['email'], res['name'], res['user_type'])
         return None
 
     # Deletes a user from the database
@@ -105,10 +102,10 @@ class User(UserMixin):
 
     @staticmethod
     # gets test user credentials
-    def get_test_user(loginData=False):
+    def get_test_user(login_data=False):
         if supabase_sec.table('User').select('*').eq('email', TEST_USER['email']).execute():
             User.delete_test_user()
-        if loginData:
+        if login_data:
             return {TEST_USER['email'], TEST_USER['password']}
         return TEST_USER.copy()
 
@@ -149,8 +146,7 @@ class Subject:
         return students
 
     def get_assignments(self):
-        res = supabase_sec.table('Assignment').select(
-            '*').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
             assigns.append(Assignment(
@@ -160,11 +156,13 @@ class Subject:
     # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
-        res = supabase_sec.table('Subject').select(
-            '*').eq('id', subject_id).execute().data
-        if res:
-            res = res[0]
-            return Subject(res['id'], res['description'], res['professor_email'], res['name'])
+        for i in range(5):
+            res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
+            print(res)
+            if res:
+                res = res[0]
+                return Subject(res['id'], res['description'], res['professor_email'], res['name'])
+            sleep(0.2)
         return None
 
     # Returns every subject
@@ -258,7 +256,6 @@ class Assignment:
         return {"due_date": self.due_date, "id": self.id, "name": self.name}
 
 
-
 class Storage:
 
     def __init__(self, sec=supabase_sec):
@@ -328,7 +325,7 @@ class Storage:
         path = Storage.construct_path_current(subject_id, assignment_id, user_id)
         try:
             supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).remove(path)
-        except Exception:
+        except:
             pass
         return
 
@@ -362,7 +359,7 @@ class Storage:
             res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
             for obj in res:
                 temp_user_id = obj['name']
-                final_dict[temp_user_id] = self.download_assignment(subject_id, assignment_id, temp_user_id)
+                final_dict[temp_user_id] = self.download_current_assignment(subject_id, assignment_id, temp_user_id)
             self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
             self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq('id', assignment_id).execute()
         except:

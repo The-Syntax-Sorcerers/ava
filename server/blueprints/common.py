@@ -40,11 +40,10 @@ def privacy_policy(loginform=None, signupform=None):
 def dashboard():
     print("Serving Dash")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     template_data = {
         "subjects": [],
-        "user_type": user_type,
+        "user_type": user.user_type,
         "random": 69,
     }
 
@@ -63,12 +62,11 @@ def dashboard():
 def assignments():
     print("Serving Assignments")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     template_data = {
         "upcoming": [],
         "past": [],
-        "user_type": user_type,
+        "user_type": user.user_type,
         "random": 69,
     }
 
@@ -77,6 +75,7 @@ def assignments():
     db_asses: [Assignment] = user.get_assignments()
     db_asses = sorted(db_asses, key=lambda x: (
         x.due_date is not None, x.due_date))
+
     for ass in db_asses:
         temp = {
             "id": ass.subject_id,

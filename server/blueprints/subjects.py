@@ -3,7 +3,7 @@ import json
 import os
 import datetime
 import sys
-from time import strptime, strftime
+from time import strptime, strftime, sleep
 
 import flask
 import flask_login
@@ -30,9 +30,9 @@ subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
 def subject_page(sub_id):
     print("Serving Subject page")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     sub = Subject.get_subject(sub_id)
+    sleep(0.1)
     asses = sub.get_assignments()
     asses = sorted(asses, key=lambda x: (x.due_date is not None, x.due_date))
 
@@ -40,7 +40,7 @@ def subject_page(sub_id):
         "upcoming": [],
         "past": [],
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
-        "user_type": user_type,
+        "user_type": user.user_type,
         "random": 69,
         "students": [{'name': student.name, 'id': student.id,
                       'link': ''} for student in sub.get_students()]
@@ -67,7 +67,6 @@ def subject_page(sub_id):
 def assignment_page(sub_id, ass_id):
     print("Serving Assignment page")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
     sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
@@ -76,7 +75,7 @@ def assignment_page(sub_id, ass_id):
     template_data = {
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
-        "user_type": user_type,
+        "user_type": user.user_type,
         "students": [{'name': student.name, 'id': student.id,
                       'link': ''} for student in sub.get_students()],
         "showSubmitModal": cookies.get('showModal', False),
@@ -143,14 +142,13 @@ def fetch_assignment(sub_id, ass_id):
   
 @subjects.route('/<sub_id>/create_assignment', methods=["POST"])
 @flask_login.login_required
-def upload_assignment(sub_id):
+def create_assignment(sub_id):
     print("uploading assignment")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
-    if not user_type == "teacher":
+    if not user.user_type == "teacher":
         print('User is not a teacher')
-        #     return redirect("/dashboard")
+        return redirect("/dashboard")
 
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
@@ -178,17 +176,12 @@ def add_student_subject(sub_id):
 def create_subject():
     print("uploading subject")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
-    user_email = user.email
 
-    print("created form")
-    
-    if not user_type == "teacher":
+    if not user.user_type == "teacher":
         print('User is not a teacher')
         return redirect(url_for('common.dashboard'))
 
-    sub = Subject(request.form.get('id'), request.form.get('desc'), user_email, request.form.get('name'))
-    print("Attempting to Create Subject", sub)
-    Subject.create_subject(sub)
+    sub = Subject(request.form.get('id'), request.form.get('desc'), user.email, request.form.get('name'))
 
+    Subject.create_subject(sub)
     return redirect(url_for('common.dashboard'))
