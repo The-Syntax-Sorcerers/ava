@@ -100,8 +100,8 @@ if ((globalThis as any).template_data === undefined) {
                         name: "Harrison",
                         email: "Harrison@gmail.com",
                         submissions: [
-                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 41, similarity_score: 0.5 },
-                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 41, similarity_score: 0.6 },
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 41, similarity_score: 0.3 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 41, similarity_score: 0.2 },
                             { subject_id: 'BIOL65432', assignment_id: 3, user_id: 41, similarity_score: 0.7 },
                             { subject_id: 'HIST30004', assignment_id: 4, user_id: 41, similarity_score: 0.4 },
                             { subject_id: 'ARTS10010', assignment_id: 5, user_id: 41, similarity_score: null },

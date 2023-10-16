@@ -25,7 +25,6 @@ function NavBarElement({route}: {route: string[]}) {
         return null;
     }
 
-
     return (
         <li>
             <a href={url} className="custom-navbar-link-element">

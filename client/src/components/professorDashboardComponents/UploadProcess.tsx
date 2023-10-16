@@ -8,19 +8,19 @@ import VerificationSuccess from "../assignmentComponents/verificationSuccessModa
 export default function UploadProcess() {
     const [fileUploaded, setFileUploaded] = useState(false);
     const [showSubmitModal, setShowSubmitModal] = useState(false);
-    const [fileSubmitted, setFileSubmitted] = useState(false);
+    //const [fileSubmitted, setFileSubmitted] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length === 1) {
             setFileUploaded(true);
-            setFileSubmitted(false);
+            //setFileSubmitted(false);
             setSelectedDocs(Array.from(e.target.files));
         }
     };
     
     const handleSubmit = () => {
-        setFileSubmitted(true);
+        //setFileSubmitted(true);
         setFileUploaded(false);
         setShowSubmitModal(true)
     };

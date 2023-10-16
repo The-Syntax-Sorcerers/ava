@@ -3,7 +3,7 @@ import Footer from '../components/landingComponents/Footer.tsx'
 import DropdownMenu from '../components/professorDashboardComponents/DropdownMenu.tsx'
 import StudentInfo from '../components/professorDashboardComponents/StudentInfo.tsx'
 import AnalysisSection from '../components/professorDashboardComponents/AnalysisSection.tsx'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 // The different modes of the analysis section, controlled by button clicks in the student section
@@ -16,20 +16,23 @@ const buttonModesConfig = {
 
 export default function ProfessorDashboard() {
     // Update the assignments based on the current student
-    function updateAssignments() {
+    function updateAssignments(assignments: any) {
         const submittedAssignments = [];
         const unsubmittedAssignments = [];
     
-        for (const submission of currentAssignments) {
-            if (submission.score !== null) {
-                submittedAssignments.push({ score: submission.score, name: assignmentItems.name });
+        for (const submission of assignments) {
+            if (submission.similarity_score !== null) {
+                submittedAssignments.push({ score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name });
             } else {
-                unsubmittedAssignments.push({ score: null, name: assignmentItems.name });
+                unsubmittedAssignments.push({ score: null, name: assignmentItems[submission.assignment_id].name });
             }
         }
     
         setSubmittedAssignments(submittedAssignments);
         setUnsubmittedAssignments(unsubmittedAssignments);
+
+        console.log("sub", submittedAssignments);
+        console.log("unsub", unsubmittedAssignments);
     }
 
     const data = (globalThis as any).template_data
@@ -41,37 +44,33 @@ export default function ProfessorDashboard() {
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
 
-    // Determines whether the analysis will save to the student's profile or not
-    const [storeResults, setStoreResults] = useState(false);
-
     // Stores the currently selected student and subject
     const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
     const [currentStudent, setCurrentStudent]: any = useState(currentSubject.students[0]);
     const [currentAssignments, setCurrentAssignements]: any = useState(currentStudent.submissions);
-    console.log("Yo", currentAssignments);
 
     // Stores the currently selected student's assignments as submitted and unsubmitted groups
     const [submittedAssignments, setSubmittedAssignments]: any = useState([]);
     const [unsubmittedAssignments, setUnsubmittedAssignments]: any = useState([]);
-    updateAssignments();
+    // Calls the function a single time to initialise assignments
+    useEffect(() => {
+        updateAssignments(currentAssignments);
+    }, []);
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
-        setStoreResults(false);
         setCurrentState(buttonModesConfig.compareMode);
         console.log('compare');
     }
 
     // Handles page logic after the view results button in the submission history section has been clicked
     const handleResultsButton = () => {
-        setStoreResults(false);
         setCurrentState(buttonModesConfig.resultsMode);
         console.log('results');
     }
 
     // Handles the page logic after the upload button in the unsubmitted assignments section has been clicked
     const handleSubmitButton = () => {
-        setStoreResults(true);
         setCurrentState(buttonModesConfig.uploadMode);
         console.log('submit');
     }
@@ -86,6 +85,7 @@ export default function ProfessorDashboard() {
         setCurrentSubject(subjectItems[event.currentTarget.value]);
         setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
         setCurrentAssignements(currentStudent.submissions);
+        updateAssignments(subjectItems[event.currentTarget.value].students[0].submissions);
         // console.log("current subject is set to", currentSubject)
         // console.log("SubjectHandler", event.currentTarget);
     }
@@ -95,9 +95,12 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         const student = currentSubject.students.find((s: any) => s.id == event.currentTarget.value);
         setCurrentStudent(student);
-        setCurrentAssignements(currentStudent.submissions)
-        updateAssignments();
-        console.log("Yo", currentAssignments);
+        console.log("before", currentAssignments);
+        console.log("student", student);
+        console.log("adding", student.submissions);
+        setCurrentAssignements(student.submissions);
+        updateAssignments(student.submissions);
+        console.log("after", currentAssignments);
         // console.log("current student is set to", currentStudent)
         // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
@@ -120,7 +123,6 @@ export default function ProfessorDashboard() {
                     <div className="custom-dashboard-section w-2/5">
                         <h1 className="custom-intruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
                         <StudentInfo 
-                            allSubjects={ subjectItems }
                             subAss={ submittedAssignments }
                             unsubAss={ unsubmittedAssignments }
                             currentSubject={currentSubject}
@@ -133,7 +135,7 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-intruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } store={ storeResults } />
+                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState }/>
                     </div>
                 </div>
             </main>

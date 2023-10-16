@@ -49,7 +49,7 @@ function SubmissionRowElement({click, name, score}: {
     
     // Parsing whether the current assignment has been submitted or not
     const submitted = score !== null;
-    const valid = (submitted) && (score > 0.5) ? true : false;
+    const valid = (submitted) && (score >= 0.5) ? true : false;
 
     return (
         <li className="flex justify-between w-full py-2 border-x-2 border-b-2 pl-8 pr-4">
@@ -67,9 +67,14 @@ function SubmissionRowElement({click, name, score}: {
     )
 }
 
+type currAssType = {
+    name: string;
+    score: number | null;
+};
+
 // Creates the list of previously submitted assignments
 function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
-    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: any}) {
+    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: currAssType[]}) {
     return (
         <>
         <div className="overflow-auto max-h-[30vh]">

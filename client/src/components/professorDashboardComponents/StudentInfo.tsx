@@ -1,11 +1,9 @@
-// import AddNewStudent from "./AddNewStudent";
-import AddNewSubject from "./AddNewSubject";
 import SubmissionTable from "./SubmissionTable";
 import TextDivider from "./TextDivider";
 
 // Creates the subsection of the dashboard relating to the information about a selected student
-export default function StudentInfo({allSubjects, subAss, unsubAss, currentSubject, currentStudent, compare, results, upload}: {
-    allSubjects: any, subAss: any, unsubAss: any, currentSubject: any, currentStudent: any, 
+export default function StudentInfo({subAss, unsubAss, currentSubject, currentStudent, compare, results, upload}: {
+    subAss: any, unsubAss: any, currentSubject: any, currentStudent: any, 
     compare: (event: any) => void, results: (event: any) => void, upload: (event: any) => void}) {
 
         // Find the student with id `currentstudent` in the current subject.students

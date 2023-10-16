@@ -1,9 +1,3 @@
-import Dropzone from "../assignmentComponents/dropzone";
-// import UploadPreview from "../assignmentComponents/uploadPreview";
-import UploadButton from "../assignmentComponents/uploadButton";
-import { useState } from 'react';
-import UploadPreview from "../assignmentComponents/uploadPreview";
-import VerificationSuccess from "../assignmentComponents/verificationSuccessModal";
 import UploadProcess from "./UploadProcess";
 
 // The format the states are stored in
@@ -16,27 +10,7 @@ interface StatesDict {
 {/* <input id="link-checkbox" type="checkbox"
 className="w-4 h-4 rounded" /> */}
 
-export default function AnalysisSection({states, currentState, store}: {states: StatesDict,currentState: string, store: boolean}) {
-
-    const [fileUploaded, setFileUploaded] = useState(false);
-    const [showSubmitModal, setShowSubmitModal] = useState(false);
-    const [fileSubmitted, setFileSubmitted] = useState(false);
-    const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
-
-    const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.length === 1) {
-            setFileUploaded(true);
-            setFileSubmitted(false);
-            setSelectedDocs(Array.from(e.target.files));
-        }
-    };
-    
-    const handleSubmit = () => {
-        setFileSubmitted(true);
-        setFileUploaded(false);
-        setShowSubmitModal(true)
-    };
-
+export default function AnalysisSection({states, currentState}: {states: StatesDict,currentState: string}) {
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
