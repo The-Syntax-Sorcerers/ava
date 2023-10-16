@@ -154,7 +154,7 @@ class Subject:
         assigns = []
         for r in res.data:
             assigns.append(Assignment(
-                r['id'], r['subject_id'], r['name'], r['description'], r['due_datetime']))
+                r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']))
         return assigns
 
     # Returns a specific subject using a given subject_id
@@ -173,7 +173,7 @@ class Subject:
         res = supabase_sec.table('Subject').select('*').execute()
         subs = []
         for r in res.data:
-            subs.append(Subject(r['id'], res['description'],
+            subs.append(Subject(r['id'], r['description'],
                         r['professor_email'], r['name']))
         return subs
 
