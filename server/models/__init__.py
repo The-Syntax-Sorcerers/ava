@@ -65,11 +65,12 @@ class User(UserMixin):
 
     @staticmethod
     def get_user_with_email(user_email):
-        res = supabase_sec.table('User').select(
-            '*').eq('email', user_email).execute().data
-        if res:
-            res = res[0]
-            return User(res['id'], res['email'], res['name'], res['user_type'])
+        for i in range(5):
+            res = supabase_sec.table('User').select('*').eq('email', user_email).execute().data
+            print("GET USER RESULT:", res)
+            if res:
+                res = res[0]
+                return User(res['id'], res['email'], res['name'], res['user_type'])
         return None
 
     # Deletes a user from the database
