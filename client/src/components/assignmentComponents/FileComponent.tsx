@@ -1,6 +1,6 @@
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import {useState} from 'react';
 import LoadingIcon from "../Loading";
+import './file.css'
 
 export default function FileComponent() {
 
@@ -10,19 +10,10 @@ export default function FileComponent() {
     const [fileSubmitted, setFileSubmitted] = useState(false);
     const [serverFetched, setServerFetched] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
-    const file_bytes = document.getElementById("file-bytes")!.getAttribute("content") || "";
-    console.log("File bytes:", file_bytes)
-    // log the type of variable file_bytes
-    console.log(typeof file_bytes)
-
-    // if assignment is submitted, show the submitted file
-    // if (data.file) {
-    //     //setSelectedDocs([data.file]);
-    //     setFileUploaded(false);
-    //     setFileSubmitted(true);
-    // }
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+
         if (e.target.files?.length === 1) {
             setFileUploaded(true);
             setFileSubmitted(false);
@@ -162,36 +153,25 @@ function Dropzone({handleUpload }: {handleUpload: (event: any) => void}) {
     );
 }
 
-function UploadPreview({selectedDocs}: {selectedDocs : any}) {
-
+function UploadPreview({ selectedDocs }: { selectedDocs: any }) {
+    // #view=FitH&scrollbar=0&toolbar=0&statusbar=0&messages=0&navpanes=0
     const docs = selectedDocs.map((file: any) => ({
-        uri: window.URL.createObjectURL(file),
-        fileName: file.name,
-        fileType: file.type,
-        f: file,
-    }))
-    console.log(docs)
-
+                uri: window.URL.createObjectURL(file) + '#view=FitH&scrollbar=0&toolbar=0&statusbar=0&messages=0&navpanes=0',
+                fileName: file.name,
+                fileType: file.type
+            }))
+    const docUrl = docs.length > 0 ? docs[0].uri : '';
+  
     return (
-        <div className="flex flex-col items-center justify-center w-full mb-10 max-h-screen">
-            <h1 className="text-2xl font-semibold mb-4">{docs[0].fileName}</h1>
-                <DocViewer
-                    documents={docs}
-
-                    pluginRenderers={DocViewerRenderers}
-                    className="container rounded-lg bg-slate-50 overflow-auto overscroll-auto shadow-inner p-6"
-                    style={{ height: 700 }}
-                    config={{
-                        header: {
-                            disableHeader: true,
-                            disableFileName: false,
-                            retainURLParams: true,
-                        },
-                        pdfVerticalScrollByDefault: false,
-                    }}
-                />
-
-        </div> 
+      <div className="flex flex-col items-center justify-center w-full mb-10 max-h-screen">
+        <h1 className="text-2xl font-semibold mb-4">{docs[0]?.fileName}</h1>
+        <iframe
+          src={docUrl}
+          className="container rounded-lg bg-zinc-600 overflow-auto overscroll-auto shadow-lg p-6"
+          style={{ height: 700, width: '60%' }}
+          title={selectedDocs[0]?.fileName}
+        />
+      </div>
     );
-}
+  }
 
