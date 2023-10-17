@@ -1,18 +1,18 @@
-import json
+import io
 import os
 import datetime
-from time import strptime, strftime
+from time import strptime, strftime, sleep
 
-import flask
 import flask_login
 import flask_wtf.csrf
-from server.extensions import set_cookies
-from flask import Blueprint, send_from_directory, session, redirect, url_for, render_template, request
-from server.extensions import get_and_clear_cookies, supabase_anon, supabase_sec
-from server.models import User, Subject, Assignment
-from server.models.flaskforms import CreateAssignmentForm
+
+from flask import Blueprint, request, redirect, url_for, render_template, make_response
+from server.extensions import get_and_clear_cookies, supabase_sec, supabase_anon, set_cookies
+from server.models import User, Subject, Assignment, Storage
+from werkzeug.datastructures.file_storage import FileStorage
 
 
+ALLOWED_FILE_TYPES = ['text/plain', 'application/pdf']
 subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
                      template_folder=os.getcwd() + "/client/dist", static_folder=os.getcwd() + "/client/dist")
 
@@ -23,9 +23,9 @@ subjects = Blueprint('subjects', __name__, url_prefix='/subjects',
 def subject_page(sub_id):
     print("Serving Subject page")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     sub = Subject.get_subject(sub_id)
+    sleep(0.1)
     asses = sub.get_assignments()
     asses = sorted(asses, key=lambda x: (x.due_date is not None, x.due_date))
 
@@ -33,7 +33,7 @@ def subject_page(sub_id):
         "upcoming": [],
         "past": [],
         "subject": {"id": sub.subject_id, "description": sub.description, "prof": sub.professor_email},
-        "user_type": user_type,
+        "user_type": user.user_type,
         "random": 69,
         "students": [{'name': student.name, 'id': student.id,
                       'link': ''} for student in sub.get_students()]
@@ -60,32 +60,88 @@ def subject_page(sub_id):
 def assignment_page(sub_id, ass_id):
     print("Serving Assignment page")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
-    sub = Subject.get_subject(sub_id)
     sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
+    cookies = get_and_clear_cookies()
+
     template_data = {
         "assignment": {"id": current_ass.subject_id, "name": current_ass.name, "due_date": current_ass.due_datetime,
                        "description": current_ass.description, "marks": "???/100"},
-        "user_type": user_type,
+        "user_type": user.user_type,
         "students": [{'name': student.name, 'id': student.id,
-                      'link': ''} for student in sub.get_students()]
+                      'link': ''} for student in sub.get_students()],
+        "showSubmitModal": cookies.get('showModal', False),
+        "verificationSuccess": cookies.get('verificationSuccess', False)
     }
 
     return render_template('routeAssignment/index.html', template_data=template_data)
 
 
+@subjects.route('/<sub_id>/<ass_id>/submit_assignment', methods=["POST"])
+@flask_login.login_required
+def submit_assignment(sub_id, ass_id):
+    print("Serving Assignment Submission POST Route")
+
+    user: User = flask_login.current_user
+    file: FileStorage = request.files['form_file']
+    temp_cookies = {
+        "showModal": True,
+        "verificationSuccess": False,
+    }
+
+    if file.content_type not in ALLOWED_FILE_TYPES:
+        temp_cookies['status'] = 403
+        temp_cookies['error'] = 'Invalid File Type!'  # Triggered when a form is submitted & there is an error
+    else:
+        file_bytes = file.read()    # Check if it is a PDF: bs.startswith(b'%PDF-1.')
+        Storage.delete_current_assignment(sub_id, ass_id, user.id)
+        if Storage.upload_current_assignment(file_bytes, sub_id, ass_id, user.id):
+            temp_cookies['verificationSuccess'] = True
+
+    set_cookies(temp_cookies)
+    return redirect(url_for('subjects.assignment_page', sub_id=sub_id, ass_id=ass_id))
+
+
+@subjects.route('/<sub_id>/<ass_id>/fetch_assignment_file', methods=["GET"])
+@flask_login.login_required
+def fetch_assignment(sub_id, ass_id):
+    print("Fetch Assignment File GET Route")
+    user: User = flask_login.current_user
+
+    is_submitted = Storage.exists_assignment_bool(str(sub_id), str(ass_id), str(user.id))
+
+    if is_submitted:
+        file_bytes = Storage.download_current_assignment(str(sub_id), str(ass_id), str(user.id))
+        file_object = io.BytesIO(file_bytes)
+
+        file_name = f'{str(sub_id)}-a{str(ass_id)}-u{str(user.id)}'
+        if file_bytes.startswith(b'%PDF-1.'):
+            file_type = 'application/pdf'
+            file_name += '.pdf'
+        else:
+            file_type = 'text/plain'
+            file_name += '.txt'
+
+        response = make_response(file_object)
+        response.headers['Content-Type'] = file_type
+        response.headers['Content-Disposition'] = 'attachment; filename=' + file_name
+        response.headers['filename'] = file_name
+        return response
+
+    NO_CONTENT_RESPONSE = ('', 204)
+    return NO_CONTENT_RESPONSE
+
+  
 @subjects.route('/<sub_id>/create_assignment', methods=["POST"])
 @flask_login.login_required
-def upload_assignment(sub_id):
+def create_assignment(sub_id):
     print("uploading assignment")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
-    if not user_type == "teacher":
+    if not user.user_type == "teacher":
         print('User is not a teacher')
-        #     return redirect("/dashboard")
+        return redirect("/dashboard")
 
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
@@ -113,17 +169,12 @@ def add_student_subject(sub_id):
 def create_subject():
     print("uploading subject")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
-    user_email = user.email
 
-    print("created form")
-    
-    if not user_type == "teacher":
+    if not user.user_type == "teacher":
         print('User is not a teacher')
         return redirect(url_for('common.dashboard'))
 
-    sub = Subject(request.form.get('id'), request.form.get('desc'), user_email, request.form.get('name'))
-    print("Attempting to Create Subject", sub)
-    Subject.create_subject(sub)
+    sub = Subject(request.form.get('id'), request.form.get('desc'), user.email, request.form.get('name'))
 
+    Subject.create_subject(sub)
     return redirect(url_for('common.dashboard'))

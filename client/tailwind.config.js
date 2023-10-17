@@ -32,6 +32,7 @@ export default {
             'lighter': '#838583',
             'error-red': '#EF4444',
             'card-border': '#D3F3EE',
+            'preview-border': '#525659',
             'accent-primary': colors.teal,
             'accent-secondary': colors.violet,
             'accent-gray': colors.gray,
