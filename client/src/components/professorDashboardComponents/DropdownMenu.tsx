@@ -76,7 +76,7 @@ export default function DropdownMenu({subjectItems, currentSubject, titles, clic
         
         {/* Dropdown Elements */}
         {showDropdown ? (
-            <DropdownItems menuItems={menuItems} subtitle={ subtitle } click={ click }/>) : (null)
+            <DropdownItems menuItems={ menuItems } subtitle={ subtitle } click={ click }/>) : (null)
         }
         </>
     )

@@ -6,14 +6,11 @@ interface StatesDict {
     [key: string]: string
 }
 
-
 //{/* Add a tick button & keep trak of the selected ones */}
 {/* <input id="link-checkbox" type="checkbox"
 className="w-4 h-4 rounded" /> */}
 
 export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict,currentState: string, assignment: any}) {
-    console.log('state', currentState);
-    console.log('states', states);
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
