@@ -8,7 +8,6 @@ export default function StudentInfo({subAss, unsubAss, currentSubject, currentSt
 
         // Find the student with id `currentstudent` in the current subject.students
         // const student = currentSubject.students.find((student: any) => student.id === currentStudent.id);
-        console.log("current", currentSubject)
         return (
             <>
             <div className="flex justify-center items-center flex-col w-full">

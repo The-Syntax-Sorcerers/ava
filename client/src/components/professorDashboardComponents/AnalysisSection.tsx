@@ -10,7 +10,8 @@ interface StatesDict {
 {/* <input id="link-checkbox" type="checkbox"
 className="w-4 h-4 rounded" /> */}
 
-export default function AnalysisSection({states, currentState}: {states: StatesDict,currentState: string}) {
+export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict,currentState: string, assignment: any}) {
+    console.log('giving', assignment);
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
@@ -24,14 +25,14 @@ export default function AnalysisSection({states, currentState}: {states: StatesD
 
         {/* 2. For comparing against the student */}
         {currentState === states.compareMode ? (
-            <UploadProcess/>
+            <UploadProcess ass={ assignment }/>
         ) : (
             null
         )}
 
         {/* 3. For uploading for the student */}
         {currentState === states.uploadMode ? (
-            <UploadProcess/>
+            <UploadProcess ass={ assignment }/>
         ) : (
             null
         )}
@@ -43,9 +44,18 @@ export default function AnalysisSection({states, currentState}: {states: StatesD
         {/* TODO: Add a re-analyse button */}
         {currentState === states.resultsMode ? (
             <div className="flex flex-col justify-center">
+                <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                    { assignment.name }
+                </h1>
+                <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
+                    Description:
+                    <p className="pl-4 font-normal">
+                        { assignment.desc }
+                    </p>
+                </p>
                 <div className="flex justify-center items-center h-12 border-gray-400 border-2 border-dashed">
                     <h1>
-                        The score given to the work
+                        { assignment.score }
                     </h1>
                 </div>
                 <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">

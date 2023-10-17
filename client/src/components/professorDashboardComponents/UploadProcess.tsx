@@ -5,7 +5,8 @@ import { useState } from 'react';
 import UploadPreview from "../assignmentComponents/uploadPreview";
 import VerificationSuccess from "../assignmentComponents/verificationSuccessModal";
 
-export default function UploadProcess() {
+export default function UploadProcess({ass}: {ass: any}) {
+    console.log('passed', ass);
     const [fileUploaded, setFileUploaded] = useState(false);
     const [showSubmitModal, setShowSubmitModal] = useState(false);
     //const [fileSubmitted, setFileSubmitted] = useState(false);
@@ -27,7 +28,15 @@ export default function UploadProcess() {
 
     return (
         <>
-        <h1 className="text-2xl font-semibold mb-4 mt-5 text-center">Current Assignemnt</h1>
+        <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+            { ass.name }
+        </h1>
+        <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
+                    Description:
+                    <p className="pl-4 font-normal">
+                        { ass.desc }
+                    </p>
+                </p>
         {fileUploaded ? (
             <div>
             {/* Render the upload preview or upload button */}

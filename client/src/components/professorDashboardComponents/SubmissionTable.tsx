@@ -4,7 +4,7 @@ import collapse from "../../assets/collapse.svg";
 // import { title } from 'process';
 
 // Creates the validity indicator and view results button for submitted pieces of work
-function SubmittedIndicator({valid, click, id, score}: {valid: string | boolean, click: (event: any) => void, id: number, score: number}) {
+function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click: (event: any) => void, id: number}) {
     return (
         <div className="flex justify-between items-center w-2/5">
             {/* Indicates verification status on submitted works */}
@@ -19,10 +19,10 @@ function SubmittedIndicator({valid, click, id, score}: {valid: string | boolean,
                 </div>)
             }
             <button 
-                value={ [id, score] }
+                value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                View Results
+                View Results {id}
             </button>
         </div>
     )
@@ -39,7 +39,7 @@ function NotSubmittedIndicator({click, id}: {click: (event: any) => void, id: nu
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                Submit
+                Submit {id}
             </button>
         </div>
     )
@@ -72,6 +72,7 @@ function SubmissionRowElement({click, name, score, id}: {
 type currAssType = {
     name: string;
     score: number | null;
+    id: number;
 };
 
 // Creates the list of previously submitted assignments
@@ -87,9 +88,11 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
                         <SubmissionRowElement click={ unsubmittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
                     ))
                 ) : (
-                    currAss.map((a, k: Key) => (
-                        <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
-                    ))
+                    currAss.map((a, k: Key) => {
+                        return (
+                            <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
+                        )
+                    })
                 )}
             </ul>
         </div>

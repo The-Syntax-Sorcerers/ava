@@ -22,9 +22,11 @@ export default function ProfessorDashboard() {
     
         for (const submission of assignments) {
             if (submission.similarity_score !== null) {
-                submittedAssignments.push({ id: submission.assignment_id, score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name });
+                submittedAssignments.push({ id: submission.assignment_id, score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name,
+                    desc: assignmentItems[submission.assignment_id].description});
             } else {
-                unsubmittedAssignments.push({ id: submission.assignment_id, score: null, name: assignmentItems[submission.assignment_id].name });
+                unsubmittedAssignments.push({ id: submission.assignment_id, score: null, name: assignmentItems[submission.assignment_id].name,
+                    desc: assignmentItems[submission.assignment_id].description});
             }
         }
     
@@ -36,29 +38,21 @@ export default function ProfessorDashboard() {
     }
 
     // Update current assignment based on assignment clicked
-    function updateFocusedAssignment(value: any[]) {
-        const focus_id = value[0];
-        const score = value[1];
-
+    function updateFocusedAssignment(focus_id: number) {
+        console.log('id', focus_id, typeof focus_id);
+        // Clicked on an unsubmitted assignment
         for (const a in unsubmittedAssignments) {
             if (unsubmittedAssignments[a].id === focus_id) {
-                setFocusedAssignment({id: focus_id, name: unsubmittedAssignments[a].name})
-                if (score !== null) {
-                    updateFocusedResults(value);
-                }
+                setFocusedAssignment({id: focus_id, name: unsubmittedAssignments[a].name, score: null, desc: unsubmittedAssignments[a].desc})
+                console.log("setting", {id: focus_id, name: unsubmittedAssignments[a].name, score: null, desc: unsubmittedAssignments[a].desc});
                 return;
             }
         }
-    }
-
-    // Update current assignment score based on assignment clicked
-    function updateFocusedResults(value: any[]) {
-        const focus_id = value[0];
-        const score = value[1];
-
-        for (const a in currentAssignments) {
-            if (currentAssignments[a].assignment_id === focus_id) {
-                setFocusAssignmentScore(score)
+        // Clicked in a submitted assignment
+        for (const a in submittedAssignments) {
+            if (submittedAssignments[a].id === focus_id) {
+                setFocusedAssignment({id: focus_id, name: submittedAssignments[a].name, score: submittedAssignments[a].score, desc: submittedAssignments[a].desc})
+                console.log("setting", {id: focus_id, name: submittedAssignments[a].name, score: submittedAssignments[a].score, desc: submittedAssignments[a].desc});
                 return;
             }
         }
@@ -68,7 +62,7 @@ export default function ProfessorDashboard() {
     const subjectItems = data.subjectItems;
     const subjectItemsArray = Object.values(subjectItems);
     const assignmentItems = data.assignmentItems;
-    console.log("Rendering AdminDash with Data:", data)
+    // console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
@@ -80,7 +74,6 @@ export default function ProfessorDashboard() {
 
     // Stores the currently selected assignment info
     const [focusedAssignment, setFocusedAssignment]: any = useState(null);
-    const [focusedAssignmentScore, setFocusAssignmentScore]: any = useState(null);
 
     // Stores the currently selected student's assignments as submitted and unsubmitted groups
     const [submittedAssignments, setSubmittedAssignments]: any = useState([]);
@@ -93,22 +86,18 @@ export default function ProfessorDashboard() {
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
         setCurrentState(buttonModesConfig.compareMode);
-        console.log('compare');
     }
 
     // Handles page logic after the view results button in the submission history section has been clicked
     const handleResultsButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.resultsMode);
-        setFocusedAssignment(currentAssignments[event.currentTarget.value]);
-        setFocusAssignmentScore();
-        console.log('results', event.currentTarget.value);
+        updateFocusedAssignment(parseInt(event.currentTarget.value));
     }
 
     // Handles the page logic after the upload button in the unsubmitted assignments section has been clicked
     const handleSubmitButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.uploadMode);
-        setFocusedAssignment(currentAssignments[event.currentTarget.value]);
-        console.log('submit');
+        updateFocusedAssignment(parseInt(event.currentTarget.value));
     }
 
     // console.log("current subject is set to", currentSubject)
@@ -122,6 +111,7 @@ export default function ProfessorDashboard() {
         setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
         setCurrentAssignments(currentStudent.submissions);
         updateAssignments(subjectItems[event.currentTarget.value].students[0].submissions);
+        setFocusedAssignment(null);
         // console.log("current subject is set to", currentSubject)
         // console.log("SubjectHandler", event.currentTarget);
     }
@@ -131,18 +121,15 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         const student = currentSubject.students.find((s: any) => s.id == event.currentTarget.value);
         setCurrentStudent(student);
-        console.log("before", currentAssignments);
-        console.log("student", student);
-        console.log("adding", student.submissions);
         setCurrentAssignments(student.submissions);
         updateAssignments(student.submissions);
-        console.log("after", currentAssignments);
+        setFocusedAssignment(null);
         // console.log("current student is set to", currentStudent)
         // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
     }
 
-    console.log("============================================================")
+    // console.log("============================================================")
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
@@ -171,7 +158,7 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-intruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState }/>
+                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/>
                     </div>
                 </div>
             </main>
