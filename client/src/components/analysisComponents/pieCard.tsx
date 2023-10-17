@@ -12,8 +12,8 @@ export default function PieChartCard({title, data}: {title:string, data:any}) {
     //     randomColors.push(randomColor() as string);
     // }
     const pieChartOptions = {
-        labels: ["Success", "Failed", "Not Yet Submitted"],
-        colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
+        labels: ["Failed", "Success"],
+        colors: ["#4318FF", "#6AD2FF"],
         chart: {
           width: "30%",
         },

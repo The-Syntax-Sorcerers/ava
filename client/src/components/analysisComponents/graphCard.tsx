@@ -17,7 +17,7 @@ export default function GraphCard({title, data, optionsCategories}: {title:strin
             type: "line",
             width: "100%",
             toolbar: {
-            show: true,
+            show: false,
             },
         },
     
