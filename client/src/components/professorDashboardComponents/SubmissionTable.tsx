@@ -22,7 +22,7 @@ function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click:
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                View Results {id}
+                View Results
             </button>
         </div>
     )
@@ -39,9 +39,18 @@ function NotSubmittedIndicator({click, id}: {click: (event: any) => void, id: nu
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                Submit {id}
+                Submit
             </button>
         </div>
+    )
+}
+
+// Indicates there is nothing to put in the table
+function EmptyListElement() {
+    return (
+        <li className="w-full py-2 border-x-2 border-b-2 pl-8 pr-4 text-center">
+            Nothing to see here &#128064;
+        </li>
     )
 }
 
@@ -82,17 +91,18 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
         <>
         <div className="overflow-auto max-h-[30vh]">
             <ul>
-                {/* TODO: Remove this washed logic check when implementing backend */}
-                {title==="Unsubmitted Assignments" ? (
-                    currAss.map((a, k: Key) => (
-                        <SubmissionRowElement click={ unsubmittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
-                    ))
-                ) : (
-                    currAss.map((a, k: Key) => {
-                        return (
-                            <SubmissionRowElement click={ submittedClick } name={ a.name } score={ a.score } id={ a.id } key={ k } />
-                        )
-                    })
+                {currAss.length === 0 ? (
+                    <EmptyListElement />
+                    ) : (
+                    title === "Unsubmitted Assignments" ? (
+                        currAss.map((a, k) => (
+                        <SubmissionRowElement click={unsubmittedClick} name={a.name} score={a.score} id={a.id} key={k} />
+                        ))
+                    ) : (
+                        currAss.map((a, k) => (
+                        <SubmissionRowElement click={submittedClick} name={a.name} score={a.score} id={a.id} key={k} />
+                        ))
+                    )
                 )}
             </ul>
         </div>

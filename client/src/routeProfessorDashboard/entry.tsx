@@ -174,51 +174,240 @@ if ((globalThis as any).template_data === undefined) {
                 name: "Math",
                 professor: "Dr. Smith",
                 students: [
-                    { id: 11, name: "Alice", email: "Alice@gmail.com" },
-                    { id: 12, name: "Bob", email: "Bob@gmail.com" },
-                    { id: 13, name: "Eve", email: "Eve@gmail.com" },
-                    { id: 14, name: "Frank", email: "Frank@gmail.com" },
-                    { id: 15, name: "Grace", email: "Grace@gmail.com" },
-                    { id: 16, name: "Hank", email: "Hank@gmail.com" },
-                    { id: 17, name: "Ivy", email: "Ivy@gmail.com" },
-                    { id: 18, name: "Jack", email: "Jack@gmail.com" },
-                    { id: 19, name: "Karen", email: "Karen@gmail.com" },
-                    { id: 20, name: "Liam", email: "Liam@gmail.com" },
-                ],
+                    {
+                        id: 101,
+                        name: "Alice",
+                        email: "Alice@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 101, similarity_score: 0.8 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 101, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 101, similarity_score: null },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 101, similarity_score: null },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 101, similarity_score: null },
+                        ],
+                    },
+                    {
+                        id: 102,
+                        name: "Bob",
+                        email: "Bob@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 102, similarity_score: 0.2 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 102, similarity_score: 0.3 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 102, similarity_score: 0.3 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 102, similarity_score: 0.1 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 102, similarity_score: 0.2 },
+                        ]
+                    },
+                    {
+                        id: 103,
+                        name: "Charlie",
+                        email: "Charlie@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 103, similarity_score: 0.9 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 103, similarity_score: 0.8 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 103, similarity_score: 0.7 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 103, similarity_score: 0.6 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 103, similarity_score: 0.2 },
+                        ]
+                    },
+                    {
+                        id: 104,
+                        name: "David",
+                        email: "David@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 104, similarity_score: 0.6 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 104, similarity_score: 0.9 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 104, similarity_score: 0.5 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 104, similarity_score: null },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 104, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 105,
+                        name: "Ella",
+                        email: "Ella@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 105, similarity_score: null },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 105, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 105, similarity_score: 0.9 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 105, similarity_score: 0.8 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 105, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 106,
+                        name: "Fiona",
+                        email: "Fiona@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 106, similarity_score: 0.7 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 106, similarity_score: 0.49 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 106, similarity_score: 0.44 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 106, similarity_score: 0.6 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 106, similarity_score: null },
+                        ]
+                    },
+                ]
+                
             },
             "BIOL65432": {
                 id: "BIOL65432",
                 name: "Biology",
                 professor: "Dr. Jones",
                 students: [
-                    { id: 21, name: "Mia", email: "Mia@gmail.com" },
-                    { id: 22, name: "Noah", email: "Noah@gmail.com" },
-                    { id: 23, name: "Olivia", email: "Olivia@gmail.com" },
-                    { id: 24, name: "Parker", email: "Parker@gmail.com" },
-                    { id: 25, name: "Quinn", email: "Quinn@gmail.com" },
-                    { id: 26, name: "Ryan", email: "Ryan@gmail.com" },
-                    { id: 27, name: "Sophia", email: "Sophia@gmail.com" },
-                    { id: 28, name: "Tyler", email: "Tyler@gmail.com" },
-                    { id: 29, name: "Uma", email: "Uma@gmail.com" },
-                    { id: 30, name: "Vincent", email: "Vincent@gmail.com" },
-                ],
+                    {
+                        id: 201,
+                        name: "Eleanor",
+                        email: "Eleanor@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 201, similarity_score: null },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 201, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 201, similarity_score: null },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 201, similarity_score: null },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 201, similarity_score: null },
+                        ],
+                    },
+                    {
+                        id: 202,
+                        name: "Frederick",
+                        email: "Frederick@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 202, similarity_score: 0.77 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 202, similarity_score: 0.64 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 202, similarity_score: 0.88 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 202, similarity_score: 0.73 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 202, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 203,
+                        name: "Gabriella",
+                        email: "Gabriella@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 203, similarity_score: 0.92 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 203, similarity_score: 0.81 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 203, similarity_score: 0.95 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 203, similarity_score: 0.87 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 203, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 204,
+                        name: "Henry",
+                        email: "Henry@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 204, similarity_score: 0.69 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 204, similarity_score: 0.56 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 204, similarity_score: 0.75 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 204, similarity_score: 0.61 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 204, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 205,
+                        name: "Isabella",
+                        email: "Isabella@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 205, similarity_score: 0.86 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 205, similarity_score: 0.74 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 205, similarity_score: 0.91 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 205, similarity_score: 0.79 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 205, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 206,
+                        name: "James",
+                        email: "James@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 206, similarity_score: 0.78 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 206, similarity_score: 0.65 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 206, similarity_score: 0.87 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 206, similarity_score: 0.72 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 206, similarity_score: null },
+                        ]
+                    },
+                ]
+                
             },
             "HIST30004": {
                 id: "HIST30004",
                 name: "History",
                 professor: "Dr. Davis",
                 students: [
-                    { id: 31, name: "Wendy", email: "Wendy@gmail.com" },
-                    { id: 32, name: "Xander", email: "Xander@gmail.com" },
-                    { id: 33, name: "Yasmine", email: "Yasmine@gmail.com" },
-                    { id: 34, name: "Zane", email: "Zane@gmail.com" },
-                    { id: 35, name: "Ava", email: "Ava@gmail.com" },
-                    { id: 36, name: "Ben", email: "Ben@gmail.com" },
-                    { id: 37, name: "Caleb", email: "Caleb@gmail.com" },
-                    { id: 38, name: "Daisy", email: "Daisy@gmail.com" },
-                    { id: 39, name: "Ethan", email: "Ethan@gmail.com" },
-                    { id: 40, name: "Fiona", email: "Fiona@gmail.com" },
-                ],
+                    {
+                        id: 301,
+                        name: "Oliver",
+                        email: "Oliver@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 301, similarity_score: 0.45 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 301, similarity_score: 0.62 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 301, similarity_score: 0.38 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 301, similarity_score: null },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 301, similarity_score: 0.43 },
+                        ],
+                    },
+                    {
+                        id: 302,
+                        name: "Sophia",
+                        email: "Sophia@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 302, similarity_score: 0.57 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 302, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 302, similarity_score: 0.48 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 302, similarity_score: 0.52 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 302, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 303,
+                        name: "William",
+                        email: "William@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 303, similarity_score: null },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 303, similarity_score: 0.42 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 303, similarity_score: 0.53 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 303, similarity_score: null },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 303, similarity_score: 0.49 },
+                        ]
+                    },
+                    {
+                        id: 304,
+                        name: "Charlotte",
+                        email: "Charlotte@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 304, similarity_score: 0.47 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 304, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 304, similarity_score: 0.36 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 304, similarity_score: 0.58 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 304, similarity_score: null },
+                        ]
+                    },
+                    {
+                        id: 305,
+                        name: "Benjamin",
+                        email: "Benjamin@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 305, similarity_score: 0.49 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 305, similarity_score: 0.51 },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 305, similarity_score: null },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 305, similarity_score: 0.44 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 305, similarity_score: 0.46 },
+                        ],
+                    },
+                    {
+                        id: 306,
+                        name: "Ava",
+                        email: "Ava@gmail.com",
+                        submissions: [
+                            { subject_id: 'MATH12345', assignment_id: 1, user_id: 306, similarity_score: 0.55 },
+                            { subject_id: 'MATH12345', assignment_id: 2, user_id: 306, similarity_score: null },
+                            { subject_id: 'BIOL65432', assignment_id: 3, user_id: 306, similarity_score: 0.41 },
+                            { subject_id: 'HIST30004', assignment_id: 4, user_id: 306, similarity_score: 0.47 },
+                            { subject_id: 'ARTS10010', assignment_id: 5, user_id: 306, similarity_score: 0.53 },
+                        ]
+                    },
+                ]
+                
             },
         }
     

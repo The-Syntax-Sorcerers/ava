@@ -1,7 +1,6 @@
 import { Key, useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
-import CreateSubjectModal from '../subjectComponents/createSubjectModal';
 
 
 // Allows dynamically adding dropdown menu items
@@ -29,7 +28,7 @@ function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) 
 }
 
 // Allows dynamically adding the dropdown menu of items 
-function DropdownItems({setShow, menuItems, subtitle, click}: {setShow: any, menuItems: string[], subtitle: string, click: (event: any) => void}) {
+function DropdownItems({menuItems, subtitle, click}: {menuItems: string[], subtitle: string, click: (event: any) => void}) {
     {/* TODO: Grab the data from the server here? */}
     
     return (
@@ -41,12 +40,8 @@ function DropdownItems({setShow, menuItems, subtitle, click}: {setShow: any, men
                     <DropdownElement menuItem={ menuItem } click={ click } key={k}/>
                 ))}
             </ul>
-            {/* The option to create more of the menu items */}
-            <button 
-                onClick={() => setShow(true)}
-                className="custom-dropdown-menu-creation-button">
-                Add new { subtitle }
-            </button>
+            <div className="border-t-2 rounded-b-lg w-full h-4">
+            </div>
         </div>
         </>
     )
@@ -57,7 +52,6 @@ export default function DropdownMenu({subjectItems, currentSubject, titles, clic
     const title = titles[0];
     const subtitle = titles[1];
     const [showDropdown, setShowDropdown] = useState(true);
-    const [showModal, setShowModal] = useState(false);
     const menuItems = (title === 'Students') ? currentSubject.students : Object.values(subjectItems);
 
     {/* Opens and closes the dropdown menu */}
@@ -82,14 +76,8 @@ export default function DropdownMenu({subjectItems, currentSubject, titles, clic
         
         {/* Dropdown Elements */}
         {showDropdown ? (
-            <DropdownItems menuItems={menuItems} subtitle={ subtitle } setShow={setShowModal} click={ click }/>) : (null)
+            <DropdownItems menuItems={menuItems} subtitle={ subtitle } click={ click }/>) : (null)
         }
-
-        {showModal ? (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <CreateSubjectModal setShowModal={setShowModal}/>
-            </div>
-        ) : null}
         </>
     )
 }

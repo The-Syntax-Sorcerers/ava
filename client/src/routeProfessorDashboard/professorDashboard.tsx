@@ -112,6 +112,7 @@ export default function ProfessorDashboard() {
         setCurrentAssignments(currentStudent.submissions);
         updateAssignments(subjectItems[event.currentTarget.value].students[0].submissions);
         setFocusedAssignment(null);
+        setCurrentState(buttonModesConfig.idleMode);
         // console.log("current subject is set to", currentSubject)
         // console.log("SubjectHandler", event.currentTarget);
     }
@@ -127,6 +128,11 @@ export default function ProfessorDashboard() {
         // console.log("current student is set to", currentStudent)
         // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
+    }
+
+    // Handles the page logic after an assignment has been submitted
+    const handleSubmission = () => {
+
     }
 
     // console.log("============================================================")

@@ -12,12 +12,13 @@ interface StatesDict {
 className="w-4 h-4 rounded" /> */}
 
 export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict,currentState: string, assignment: any}) {
-    console.log('giving', assignment);
+    console.log('state', currentState);
+    console.log('states', states);
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
-        {currentState === states.IdleMode ? (
-            <div className="flex justify-center items-center h-48 border-gray-400 border-2 border-dashed">
+        {currentState === states.idleMode ? (
+            <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
                 <h1>
                     Please select a file action (Section 2)
                 </h1>
@@ -31,7 +32,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
                 Comparrison Mode
             </h1>
             <p className="text-base mb-2 pl-2 flex flex-col">
-                Select a document to compare against any subsection of the student's body of work without uploading it to their profile
+                Upload a document to compare against the student's body of work without uploading it to their profile
             </p>
             <UploadProcess/>
             </>

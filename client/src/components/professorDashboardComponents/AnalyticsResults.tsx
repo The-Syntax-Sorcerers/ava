@@ -19,6 +19,7 @@ export default function AnalyticsResults({ass}: {ass: any}) {
             </div>
             <div className="flex justify-center items-center h-12 border-gray-400 border-2 border-solid">
                 <h1>
+                    Similarity Score:&#160;
                     { ass.score }
                 </h1>
             </div>
