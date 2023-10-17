@@ -167,8 +167,8 @@ export default function ProfessorDashboard() {
                         <StudentInfo 
                             subAss={ submittedAssignments }
                             unsubAss={ unsubmittedAssignments }
-                            currentSubject={currentSubject}
-                            currentStudent={currentStudent}
+                            currentSubject={ currentSubject }
+                            currentStudent={ currentStudent }
                             compare={ handleCompareButton } 
                             results={ handleResultsButton } 
                             upload={ handleSubmitButton }

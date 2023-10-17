@@ -2,6 +2,17 @@ import { useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
 
+
+// The type of objects being passed in
+type currAssType = {
+    assignment_id: number;
+    description: string;
+    name: string;
+    similarity_score: number;
+    subject_id: string;
+    user_id: number;
+};
+
 // Creates the validity indicator and view results button for submitted pieces of work
 function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click: (event: any) => void, id: number}) {
     return (
@@ -77,12 +88,6 @@ function SubmissionRowElement({click, name, score, id}: {
     )
 }
 
-type currAssType = {
-    name: string;
-    score: number | null;
-    id: number;
-};
-
 // Creates the list of previously submitted assignments
 function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
     title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: currAssType[]}) {
@@ -94,12 +99,12 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
                     <EmptyListElement />
                     ) : (
                     title === "Unsubmitted Assignments" ? (
-                        currAss.map((a, k) => (
-                        <SubmissionRowElement click={unsubmittedClick} name={a.name} score={a.score} id={a.id} key={k} />
+                        currAss.map((a) => (
+                        <SubmissionRowElement click={unsubmittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     ) : (
                         currAss.map((a, k) => (
-                        <SubmissionRowElement click={submittedClick} name={a.name} score={a.score} id={a.id} key={k} />
+                        <SubmissionRowElement click={submittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     )
                 )}
@@ -113,7 +118,7 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
 
 // Creates a submission history table for dynamically displaying works based on the selected student
 export default function SubmissionTable({title, submittedClick, unsubmittedClick, currAss}: {
-    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: any}) {
+    title: string, submittedClick: (event: any) => void, unsubmittedClick: (event: any) => void, currAss: currAssType[]}) {
 
     const [showDropdown, setShowDropdown] = useState(true);
 
