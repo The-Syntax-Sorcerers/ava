@@ -2,7 +2,6 @@ from time import sleep
 
 from flask_login import UserMixin
 from storage3.utils import StorageException
-from supabase import Client
 import datetime
 
 from server.extensions import supabase_anon, supabase_sec

@@ -4,10 +4,9 @@ import os
 
 import flask_login
 import flask_wtf.csrf
-import pytz
-from flask import Blueprint, render_template, send_from_directory, redirect, url_for
+from flask import Blueprint, render_template
 from server.extensions import get_and_clear_cookies
-from server.models import User, Subject, Assignment
+from server.models import User, Assignment
 
 common = Blueprint('common', __name__, template_folder=os.getcwd(
 ) + "/client/dist", static_folder=os.getcwd() + "/client/dist")

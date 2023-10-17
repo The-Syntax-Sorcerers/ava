@@ -1,17 +1,10 @@
 import io
-import json
 import os
 import datetime
-import sys
 from time import strptime, strftime, sleep
 
-import flask
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, send_from_directory, session, redirect, url_for, render_template, request
-from server.extensions import get_and_clear_cookies, supabase_anon, supabase_sec, set_cookies
-from server.models import User, Subject, Assignment
-from server.models.flaskforms import CreateAssignmentForm
 
 from flask import Blueprint, request, redirect, url_for, render_template, make_response
 from server.extensions import get_and_clear_cookies, supabase_sec, supabase_anon, set_cookies
