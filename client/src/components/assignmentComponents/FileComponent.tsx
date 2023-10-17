@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import LoadingIcon from "../Loading";
-import './file.css'
 
 export default function FileComponent() {
 
@@ -21,7 +20,7 @@ export default function FileComponent() {
         }
     };
 
-    const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    const handleSubmit = async (event: any) => {
 
         event.preventDefault();
     
@@ -29,6 +28,11 @@ export default function FileComponent() {
           alert('Please select a file.');
           return;
         }
+
+        console.log(event)
+        // Disable the submit button
+        event.target.elements.submitButton.disabled = true;
+        event.target.elements.submitButton.className = event.target.elements.submitButton.className + "bg-gray-200"
     
         const formData = new FormData();
         formData.append('form_file', selectedDocs[0]);
@@ -86,7 +90,7 @@ export default function FileComponent() {
         })
     }
     
-    
+    var subButton = document.getElementById('submitButton') as HTMLButtonElement;
     return (
         <>  
             <div className="flex items-center">
@@ -116,10 +120,13 @@ export default function FileComponent() {
                             <label htmlFor="link-checkbox2" className="ml-2 text-sm font-medium">I hereby acknowledge that all work submitted in this assignment is my original work, created solely by me, unless otherwise indicated.</label>
                         </div>
                         <button
-                            className="rounded-lg px-3 py-3 font-bold text-sm shadow-md hover:shadow-lg custom-form-button"
+                            id="submitButton"
+                            className="rounded-lg px-3 py-3 font-bold text-sm shadow-md hover:shadow-lg custom-form-button
+                            flex justify-center items-center"
                             type="submit"
                             >
                                 Submit
+                               {subButton && subButton.disabled ? <LoadingIcon hasLoaded={false}></LoadingIcon> : null}
                         </button>
                     </form>
                 </div>
@@ -156,22 +163,31 @@ function Dropzone({handleUpload }: {handleUpload: (event: any) => void}) {
 function UploadPreview({ selectedDocs }: { selectedDocs: any }) {
     // #view=FitH&scrollbar=0&toolbar=0&statusbar=0&messages=0&navpanes=0
     const docs = selectedDocs.map((file: any) => ({
-                uri: window.URL.createObjectURL(file) + '#view=FitH&scrollbar=0&toolbar=0&statusbar=0&messages=0&navpanes=0',
+                uri: window.URL.createObjectURL(file) + '#view=FitH&scrollbar=0&statusbar=0&messages=0&navpanes=0',
                 fileName: file.name,
                 fileType: file.type
             }))
-    const docUrl = docs.length > 0 ? docs[0].uri : '';
-  
+    const doc = docs.length > 0 ? docs[0] : '';
+
+    if(docs.length > 0) {
+        return (
+            <>
+                <div className="flex flex-col items-center justify-center w-full mb-10 max-h-screen">
+                    <h1 className="text-2xl font-semibold mb-4">{doc.fileName}</h1>
+                    <iframe
+                        src={doc.uri}
+                        className="container rounded-3xl overflow-auto overscroll-auto shadow-lg p-6 bg-preview-border"
+                        style={{ height: 700, width: '70%' }}
+                        title={doc.fileName}
+                    />
+                </div>
+            </>
+        );
+    }
     return (
-      <div className="flex flex-col items-center justify-center w-full mb-10 max-h-screen">
-        <h1 className="text-2xl font-semibold mb-4">{docs[0]?.fileName}</h1>
-        <iframe
-          src={docUrl}
-          className="container rounded-lg bg-zinc-600 overflow-auto overscroll-auto shadow-lg p-6"
-          style={{ height: 700, width: '60%' }}
-          title={selectedDocs[0]?.fileName}
-        />
-      </div>
+        <>
+        </>
     );
+    
   }
 
