@@ -1,7 +1,7 @@
 
 # Flask Dependencies
 flask
-werkzeug
+Werkzeug==2.3.7
 WTForms
 
 flask_login
@@ -19,3 +19,12 @@ randomcolor
 # gensim
 
 # Front-End Dependencies
+
+# Testing dependencies
+pytest
+pytest-flask
+
+# Testing requirements
+beautifulsoup4==4.12.2
+pre-commit==3.4.0
+pytest-dotenv

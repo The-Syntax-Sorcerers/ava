@@ -8,15 +8,15 @@ import flask_wtf.csrf
 import pytz
 from flask import Blueprint, render_template, send_from_directory, redirect, url_for
 from server.extensions import get_and_clear_cookies
-from server.models.models import User, Subject, Assignment
+from server.models import User, Subject, Assignment
 
 common = Blueprint('common', __name__, template_folder=os.getcwd(
-)+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+) + "/client/dist", static_folder=os.getcwd() + "/client/dist")
 
-
-@common.route('/',  methods=["GET"])
+# leave this here for now so that the testing will work
+@common.route('/', methods=["GET"])
 def index():
-    print("Serving Landing", common.static_folder+'/index.html')
+    print("Serving Landing", common.static_folder + '/index.html')
 
     cookies = get_and_clear_cookies()
     return render_template('routeIndex/index.html', template_data=cookies, csrf=flask_wtf.csrf.generate_csrf())
@@ -59,7 +59,7 @@ def dashboard():
     return render_template('routeDashboard/index.html', template_data=template_data)
 
 
-@common.route('/assignments',  methods=["GET"])
+@common.route('/assignments', methods=["GET"])
 @flask_login.login_required
 def assignments():
     print("Serving Assignments")
@@ -74,7 +74,7 @@ def assignments():
     }
 
     # Getting the data from supabase & converting to JSON format as required.
-
+    user: User = flask_login.current_user
     db_asses: [Assignment] = user.get_assignments()
     db_asses = sorted(db_asses, key=lambda x: (
         x.due_date is not None, x.due_date))
