@@ -4,7 +4,7 @@ import os
 
 import flask_login
 import flask_wtf.csrf
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from server.extensions import get_and_clear_cookies
 from server.models import User, Assignment
 
@@ -48,7 +48,7 @@ def dashboard():
 
     # Getting the data from supabase & converting to JSON format as required.
     user: User = flask_login.current_user
-    for sub in user.get_teaching_and_studying_subjects():
+    for sub in user.get_subjects():
         temp = {'id': sub.subject_id, 'name': sub.name,
                 'link': 'subjects/' + sub.subject_id}
         template_data['subjects'].append(temp)
@@ -121,7 +121,7 @@ def profile():
 def professorDashboard():
     print("Serving AdminDashboard")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
+    user_type = user.user_type
 
     if user_type != "teacher":
         redirect(url_for('common.dashboard'))
@@ -132,7 +132,7 @@ def professorDashboard():
     }
 
     # Getting the data from supabase & converting to JSON format as required.
-    subs = [s for s in user.get_teaching_subject()]
+    subs = [s for s in user.get_subjects()]
     students = {}
     for sub in subs:
         students[sub.subject_id] = [stud.get_payload_format() for stud in sub.get_students()]
