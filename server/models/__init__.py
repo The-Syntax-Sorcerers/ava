@@ -386,19 +386,22 @@ class PastStorage:
         self.ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
-    def construct_path(user_id, subject_id, assignment_id):
-        return f'{user_id}/{subject_id}-{assignment_id}'
+    def construct_path(user_email, subject_id, assignment_id):
+        user_name = user_email.split('@')[0]
+        return f'{user_name}/{subject_id}-{assignment_id}'
 
     def upload_assignment(self, file, user_id, subject_id, assignment_id):
-        path = self.construct_path(user_id, subject_id, assignment_id)
+        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
+        path = self.construct_path(res[0].user_email, subject_id, assignment_id)
         if not self.exists_assignment(user_id, subject_id, assignment_id):
             return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
         return None
 
     def download_assignment(self, user_id, subject_id, assignment_id):
         # Will return a byte stream.
+        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
         try:
-            path = self.construct_path(user_id, subject_id, assignment_id)
+            path = self.construct_path(res[0].user_email, subject_id, assignment_id)
             return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
         except:
             return None
