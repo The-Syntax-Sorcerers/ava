@@ -8,6 +8,7 @@ from server.models import User, Subject, Assignment, Storage
 from server.blueprints.common import common
 from server.blueprints.auth import auth
 from server.blueprints.subjects import subjects
+from server.blueprints.cron import cronjob
 
 socket.setdefaulttimeout(15)
 test_config = None
@@ -32,21 +33,4 @@ login_manager.login_view = "common.index"
 app.register_blueprint(common)
 app.register_blueprint(auth)
 app.register_blueprint(subjects)
-
-######################## Test Config ################################
-
-
-# u = User(9, 'test@gmail.com', 'test')
-
-# sub = Subject.get_subject('COMP123456')
-# print("Sub", sub)
-# print("Ass", sub.get_assignments())
-
-# s = Storage()
-# s.upload_assignment('test.txt', 'COMP123456', '420', 'bluffmaster')
-# print("Upload Complete!")
-# print(s.exists_assignment_bool('COMP123456', '1', '9'))
-
-
-# res = s.delete_assignment('COMP123456', '420', 'bluffmaster')
-# print(res)
+app.register_blueprint(cronjob)
