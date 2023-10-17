@@ -131,9 +131,9 @@ export default function ProfessorDashboard() {
     }
 
     // Handles the page logic after an assignment has been submitted
-    const handleSubmission = () => {
+    // const handleSubmission = () => {
 
-    }
+    // }
 
     // console.log("============================================================")
     return (
@@ -143,14 +143,14 @@ export default function ProfessorDashboard() {
                 <div className="flex justify-between min-h-screen rounded-3xl custom-dashboard-background-colouring">
                     {/* Sidebar */}
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
-                        <h1 className="custom-intruction-text">1. Select a Student by Subject</h1>
+                        <h1 className="custom-instruction-text">1. Select a Student by Subject</h1>
                         {/* Dropdown menus */}
                         <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems}  titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
                         <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems} titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
-                        <h1 className="custom-intruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
+                        <h1 className="custom-instruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
                         <StudentInfo 
                             subAss={ submittedAssignments }
                             unsubAss={ unsubmittedAssignments }
@@ -163,7 +163,7 @@ export default function ProfessorDashboard() {
                     </div>
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
-                        <h1 className="custom-intruction-text">3. Authorise and View Results</h1>
+                        <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
                         <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/>
                     </div>
                 </div>

@@ -236,8 +236,8 @@
     }
 
     /* This tag applies to the instructions at the top of the professor dashboard */
-    .custom-intruction-text {
-        @apply text-center text-base font-bold mb-4;
+    .custom-instruction-text {
+        @apply text-center text-base font-bold mb-4 w-full;
     }
 
     /* This tag applies to the student info page subtitles */

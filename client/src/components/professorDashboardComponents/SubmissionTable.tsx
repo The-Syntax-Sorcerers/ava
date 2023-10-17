@@ -1,7 +1,6 @@
-import { Key, useState } from 'react';
+import { useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
-// import { title } from 'process';
 
 // Creates the validity indicator and view results button for submitted pieces of work
 function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click: (event: any) => void, id: number}) {

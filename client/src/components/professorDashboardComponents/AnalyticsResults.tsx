@@ -17,8 +17,8 @@ export default function AnalyticsResults({ass}: {ass: any}) {
                     fileName: file.name,
                 }))}/> */}
             </div>
-            <div className="flex justify-center items-center h-12 border-gray-400 border-2 border-solid">
-                <h1>
+            <div className="flex justify-center">
+                <h1 className="flex justify-center items-center h-12 border-gray-100 border-2 border-solid rounded-full w-3/4 mt-1">
                     Similarity Score:&#160;
                     { ass.score }
                 </h1>
