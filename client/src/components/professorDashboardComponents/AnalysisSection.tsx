@@ -1,5 +1,6 @@
+import FileComponent from "../assignmentComponents/FileComponent";
 import AnalyticsResults from "./AnalyticsResults";
-import UploadProcess from "./UploadProcess";
+// import UploadProcess from "./UploadProcess";
 
 // The format the states are stored in
 interface StatesDict {
@@ -31,7 +32,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
             <p className="text-base mb-2 pl-2 flex flex-col">
                 Upload a document to compare against the student's body of work without uploading it to their profile
             </p>
-            <UploadProcess/>
+            <FileComponent />
             </>
         ) : (
             null
@@ -49,7 +50,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
                     { assignment.desc }
                 </p>
             </p>
-            <UploadProcess/>
+            <FileComponent />
             </>
         ) : (
             null
