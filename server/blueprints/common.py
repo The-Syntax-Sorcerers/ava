@@ -144,4 +144,4 @@ def professorDashboard():
     template_data['studentItems'] = students
     print(subs)
     print(students)
-    return render_template('routeProfessorDashboard/index.html', template_data=template_data)
+    return render_template('routeProfessorDashboard/index.html')
