@@ -1,3 +1,4 @@
+import AnalyticsResults from "./AnalyticsResults";
 import UploadProcess from "./UploadProcess";
 
 // The format the states are stored in
@@ -25,14 +26,33 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
 
         {/* 2. For comparing against the student */}
         {currentState === states.compareMode ? (
-            <UploadProcess ass={ assignment }/>
+            <>
+            <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                Comparrison Mode
+            </h1>
+            <p className="text-base mb-2 pl-2 flex flex-col">
+                Select a document to compare against any subsection of the student's body of work without uploading it to their profile
+            </p>
+            <UploadProcess/>
+            </>
         ) : (
             null
         )}
 
         {/* 3. For uploading for the student */}
         {currentState === states.uploadMode ? (
-            <UploadProcess ass={ assignment }/>
+            <>
+            <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                { assignment.name }
+            </h1>
+            <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
+                Description:
+                <p className="pl-4 font-normal">
+                    { assignment.desc }
+                </p>
+            </p>
+            <UploadProcess/>
+            </>
         ) : (
             null
         )}
@@ -43,39 +63,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
         {/* TODO: Add all of the statistical components */}
         {/* TODO: Add a re-analyse button */}
         {currentState === states.resultsMode ? (
-            <div className="flex flex-col justify-center">
-                <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
-                    { assignment.name }
-                </h1>
-                <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
-                    Description:
-                    <p className="pl-4 font-normal">
-                        { assignment.desc }
-                    </p>
-                </p>
-                <div className="flex justify-center items-center h-12 border-gray-400 border-2 border-dashed">
-                    <h1>
-                        { assignment.score }
-                    </h1>
-                </div>
-                <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
-                    {/* Render the uploaded assignment */}
-                    {/* <UploadPreview docs={selectedDocs.map((file) => ({
-                        uri: window.URL.createObjectURL(file),
-                        fileName: file.name,
-                    }))}/> */}
-                </div>
-                <div className="flex justify-center">
-                    <button className="custom-form-button w-1/2 my-4">
-                        Re-Analyse on current body-of-work
-                    </button>
-                </div>
-                <div className="flex justify-center items-center h-64 border-gray-400 border-2 border-dashed">
-                    <h1>
-                        Just imagine there's hella stats and stuff here
-                    </h1>
-                </div>
-            </div>) : (null)
+            <AnalyticsResults ass={ assignment }/>) : (null)
         }
         </>
     )

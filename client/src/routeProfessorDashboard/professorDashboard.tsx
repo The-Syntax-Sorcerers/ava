@@ -133,7 +133,7 @@ export default function ProfessorDashboard() {
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
-            <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6 min-h-scren">
+            <main className="container flex-grow box-border pt-28 pb-12 w-[100vw] min-h-scren min-w-[85vw] mx-auto">
                 <div className="flex justify-between min-h-screen rounded-3xl custom-dashboard-background-colouring">
                     {/* Sidebar */}
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
