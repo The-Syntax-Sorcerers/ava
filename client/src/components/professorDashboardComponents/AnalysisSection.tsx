@@ -1,15 +1,10 @@
 import FileComponent from "../assignmentComponents/FileComponent";
 import AnalyticsResults from "./AnalyticsResults";
-import UploadProcess from "./UploadProcess";
 
 // The format the states are stored in
 interface StatesDict {
     [key: string]: string
 }
-
-//{/* Add a tick button & keep trak of the selected ones */}
-{/* <input id="link-checkbox" type="checkbox"
-className="w-4 h-4 rounded" /> */}
 
 export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict,currentState: string, assignment: any}) {
     return (
@@ -56,11 +51,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
             null
         )}
 
-
         {/* 4. For looking at previously submitted works */}
-        {/*<UploadPreview/>*/}
-        {/* TODO: Add all of the statistical components */}
-        {/* TODO: Add a re-analyse button */}
         {currentState === states.resultsMode ? (
             <AnalyticsResults ass={ assignment }/>) : (null)
         }
