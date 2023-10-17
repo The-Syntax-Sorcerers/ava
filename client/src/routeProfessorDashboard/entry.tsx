@@ -32,355 +32,568 @@ if ((globalThis as any).template_data === undefined) {
                 id: "ARTS10010",
                 name: "Art",
                 professor: "Dr. Taylor",
-                students: {
-                    41: {
-                        id: 41,
-                        name: "Grace",
-                        email: "Grace@gmail.com",
-                        submissions: [
-                            {
-                                subject_id: 'MATH12345',
-                                assignment_id: 1,
-                                similarity_score: 0.5,
-                                name: "Math Assignment 1",
-                                description: "Solving equations"
-                            },
-                            {
-                                subject_id: 'MATH12345',
-                                assignment_id: 2,
-                                similarity_score: 0.6,
-                                name: "Math Assignment 2",
-                                description: "Graph plotting"
-                            },
-                            {
-                                subject_id: 'BIOL65432',
-                                assignment_id: 3,
-                                user_id: 41,
-                                similarity_score: 0.7,
-                                name: "Biology Assignment 1",
-                                description: "Cell structure"
-                            },
-                            {
-                                subject_id: 'HIST30004',
-                                assignment_id: 4,
-                                user_id: 41,
-                                similarity_score: 0.4,
-                                name: "History Assignment 1",
-                                description: "Ancient civilizations"
-                            },
-                            {
-                                subject_id: 'ARTS10010',
-                                assignment_id: 5,
-                                user_id: 41,
-                                similarity_score: null,
-                                name: "Art Assignment 1",
-                                description: "Canvas painting"
-                            },
-                        ]
+                students: [41, 42, 44, 46, 48, 49]
+            },
+            "MATH12345": {
+                id: "MATH12345",
+                name: "Math",
+                professor: "Dr. Smith",
+                students: [43, 44, 45, 47, 49, 50]
+            },
+            "BIOL65432": {
+                id: "BIOL65432",
+                name: "Biology",
+                professor: "Dr. Jones",
+                students: [41, 42, 43, 45, 47, 48]
+            },
+            "HIST30004": {
+                id: "HIST30004",
+                name: "History",
+                professor: "Dr. Davis",
+                students: [42, 44, 45, 46, 49, 50]
+            },
+        },
+        studentItems: {
+            41: {
+                id: 41,
+                name: "Alice",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Math Challenge",
+                        description: "Solve complex mathematical problems",
+                        similarity_score: 0.75,
+                        subject_id: 'MATH12345',
+                        user_id: 41,
                     },
-                    "MATH12345": {
-                        id: "MATH12345",
-                        name: "Math",
-                        professor: "Dr. Smith",
-                        students: {
-                            101: {
-                                id: 101,
-                                name: "Alice",
-                                email: "Alice@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        similarity_score: 0.8,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        similarity_score: null,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 101,
-                                        similarity_score: null,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 101,
-                                        similarity_score: null,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 101,
-                                        similarity_score: null,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]
-                            },
-                            102: {
-                                id: 102,
-                                name: "Bob",
-                                email: "Bob@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        user_id: 102,
-                                        similarity_score: 0.2,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        user_id: 102,
-                                        similarity_score: 0.3,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 102,
-                                        similarity_score: 0.3,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 102,
-                                        similarity_score: 0.1,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 102,
-                                        similarity_score: 0.2,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]
-                            },
-                        }
+                    {
+                        assignment_id: 2,
+                        name: "Science Exploration",
+                        description: "Investigate scientific phenomena",
+                        similarity_score: 0.62,
+                        subject_id: 'SCIENCE20001',
+                        user_id: 41,
                     },
-                    "BIOL65432": {
-                        id: "BIOL65432",
-                        name: "Biology",
-                        professor: "Dr. Jones",
-                        students: {
-                            201: {
-                                id: 201,
-                                name: "Eleanor",
-                                email: "Eleanor@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        user_id: 201,
-                                        similarity_score: null,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        user_id: 201,
-                                        similarity_score: null,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 201,
-                                        similarity_score: null,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 201,
-                                        similarity_score: null,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 201,
-                                        similarity_score: null,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]
-                            },
-                            202: {
-                                id: 202,
-                                name: "Frederick",
-                                email: "Frederick@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        user_id: 202,
-                                        similarity_score: 0.77,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        user_id: 202,
-                                        similarity_score: 0.64,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 202,
-                                        similarity_score: 0.88,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 202,
-                                        similarity_score: 0.73,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 202,
-                                        similarity_score: null,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]}
-                        },
+                    {
+                        assignment_id: 3,
+                        name: "History Quest",
+                        description: "Explore historical events and figures",
+                        similarity_score: 0.45,
+                        subject_id: 'HIST30004',
+                        user_id: 41,
                     },
-                    "HIST30004": {
-                        id: "HIST30004",
-                        name: "History",
-                        professor: "Dr. Davis",
-                        students: {
-                            301: {
-                                id: 301,
-                                name: "Oliver",
-                                email: "Oliver@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        user_id: 301,
-                                        similarity_score: 0.45,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        user_id: 301,
-                                        similarity_score: 0.62,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 301,
-                                        similarity_score: 0.38,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 301,
-                                        similarity_score: null,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 301,
-                                        similarity_score: 0.43,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]
-                            },
-                            302: {
-                                id: 302,
-                                name: "Sophia",
-                                email: "Sophia@gmail.com",
-                                submissions: [
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 1,
-                                        user_id: 302,
-                                        similarity_score: 0.57,
-                                        name: "Math Assignment 1",
-                                        description: "Algebraic Equations"
-                                    },
-                                    {
-                                        subject_id: 'MATH12345',
-                                        assignment_id: 2,
-                                        user_id: 302,
-                                        similarity_score: null,
-                                        name: "Math Assignment 2",
-                                        description: "Geometric Shapes"
-                                    },
-                                    {
-                                        subject_id: 'BIOL65432',
-                                        assignment_id: 3,
-                                        user_id: 302,
-                                        similarity_score: 0.48,
-                                        name: "Biology Assignment 1",
-                                        description: "Cell Structure"
-                                    },
-                                    {
-                                        subject_id: 'HIST30004',
-                                        assignment_id: 4,
-                                        user_id: 302,
-                                        similarity_score: 0.52,
-                                        name: "History Assignment 1",
-                                        description: "Ancient Civilizations"
-                                    },
-                                    {
-                                        subject_id: 'ARTS10010',
-                                        assignment_id: 5,
-                                        user_id: 302,
-                                        similarity_score: null,
-                                        name: "Art Assignment 1",
-                                        description: "Canvas Painting"
-                                    },
-                                ]
-                            }
-                        }
+                    {
+                        assignment_id: 4,
+                        name: "Literary Odyssey",
+                        description: "Analyze classic literature",
+                        similarity_score: null,
+                        subject_id: 'LIT10010',
+                        user_id: 41,
                     },
-                        
-                }
-            }
+                    {
+                        assignment_id: 5,
+                        name: "Artistic Expression",
+                        description: "Create original artworks",
+                        similarity_score: 0.88,
+                        subject_id: 'ARTS10010',
+                        user_id: 41,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Challenge",
+                        description: "Explore the wonders of life",
+                        similarity_score: 0.3,
+                        subject_id: 'BIOL65432',
+                        user_id: 41,
+                    },
+                ],
+            },
+            42: {
+                id: 42,
+                name: "Bob",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Math Puzzles",
+                        description: "Solve intricate math puzzles",
+                        similarity_score: 0.58,
+                        subject_id: 'MATH12345',
+                        user_id: 42,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Chemistry Exploration",
+                        description: "Investigate chemical reactions",
+                        similarity_score: 0.71,
+                        subject_id: 'SCIENCE20001',
+                        user_id: 42,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Historical Analysis",
+                        description: "Analyze historical documents",
+                        similarity_score: 0.4,
+                        subject_id: 'HIST30004',
+                        user_id: 42,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Literary Journey",
+                        description: "Explore famous literary works",
+                        similarity_score: null,
+                        subject_id: 'LIT10010',
+                        user_id: 42,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Creative Artwork",
+                        description: "Produce original artwork",
+                        similarity_score: 0.82,
+                        subject_id: 'ARTS10010',
+                        user_id: 42,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Quest",
+                        description: "Investigate biological phenomena",
+                        similarity_score: 0.35,
+                        subject_id: 'BIOL65432',
+                        user_id: 42,
+                    },
+                ],
+            },
+            43: {
+                id: 43,
+                name: "Charlie",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Science Challenge",
+                        description: "Solve challenging science problems",
+                        similarity_score: 0.7,
+                        subject_id: 'SCIENCE20001',
+                        user_id: 43,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Historical Exploration",
+                        description: "Explore historical events and figures",
+                        similarity_score: 0.55,
+                        subject_id: 'HIST30004',
+                        user_id: 43,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Literary Analysis",
+                        description: "Analyze classic literature",
+                        similarity_score: 0.6,
+                        subject_id: 'LIT10010',
+                        user_id: 43,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Artistic Creation",
+                        description: "Create original artworks",
+                        similarity_score: null,
+                        subject_id: 'ARTS10010',
+                        user_id: 43,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Biology Challenge",
+                        description: "Solve challenging biology problems",
+                        similarity_score: 0.72,
+                        subject_id: 'BIOL65432',
+                        user_id: 43,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Math Puzzles",
+                        description: "Solve intricate math puzzles",
+                        similarity_score: 0.65,
+                        subject_id: 'MATH12345',
+                        user_id: 43,
+                    },
+                ],
+            },
+            44: {
+                id: 44,
+                name: "David",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Math Challenges",
+                        description: "Solve challenging math problems",
+                        similarity_score: 0.78,
+                        subject_id: 'MATH12345',
+                        user_id: 44,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Science Discovery",
+                        description: "Discover scientific phenomena",
+                        similarity_score: null,
+                        subject_id: 'SCIENCE20001',
+                        user_id: 44,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Historical Quest",
+                        description: "Embark on a historical journey",
+                        similarity_score: 0.6,
+                        subject_id: 'HIST30004',
+                        user_id: 44,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Literary Exploration",
+                        description: "Explore classic literature",
+                        similarity_score: 0.45,
+                        subject_id: 'LIT10010',
+                        user_id: 44,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Artistic Expression",
+                        description: "Express creativity through art",
+                        similarity_score: 0.82,
+                        subject_id: 'ARTS10010',
+                        user_id: 44,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Journey",
+                        description: "Journey through the world of biology",
+                        similarity_score: 0.4,
+                        subject_id: 'BIOL65432',
+                        user_id: 44,
+                    },
+                ],
+            },
+            45: {
+                id: 45,
+                name: "Ella",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Physics Challenge",
+                        description: "Take on challenging physics problems",
+                        similarity_score: 0.65,
+                        subject_id: 'PHYSICS20001',
+                        user_id: 45,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Geography Exploration",
+                        description: "Explore geographical phenomena",
+                        similarity_score: null,
+                        subject_id: 'GEOG10010',
+                        user_id: 45,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Art Appreciation",
+                        description: "Appreciate various forms of art",
+                        similarity_score: 0.73,
+                        subject_id: 'ARTS10010',
+                        user_id: 45,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Environmental Studies",
+                        description: "Study the environment and ecology",
+                        similarity_score: 0.54,
+                        subject_id: 'ENVSCI12345',
+                        user_id: 45,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Math Puzzles",
+                        description: "Solve intricate math puzzles",
+                        similarity_score: 0.69,
+                        subject_id: 'MATH12345',
+                        user_id: 45,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Literary Journey",
+                        description: "Embark on a literary adventure",
+                        similarity_score: 0.48,
+                        subject_id: 'LIT10010',
+                        user_id: 45,
+                    },
+                ],
+            },
+            46: {
+                id: 46,
+                name: "Fiona",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Chemistry Challenges",
+                        description: "Take on challenging chemistry problems",
+                        similarity_score: 0.78,
+                        subject_id: 'CHEM20001',
+                        user_id: 46,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Cultural Exploration",
+                        description: "Explore diverse cultures and traditions",
+                        similarity_score: null,
+                        subject_id: 'CULTSTUDY10010',
+                        user_id: 46,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Creative Writing",
+                        description: "Express creativity through writing",
+                        similarity_score: 0.67,
+                        subject_id: 'CREATIVEWRITING12345',
+                        user_id: 46,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "History and Society",
+                        description: "Explore the history of societies",
+                        similarity_score: 0.58,
+                        subject_id: 'HISTSOCIETY20001',
+                        user_id: 46,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Artistic Expression",
+                        description: "Express creativity through art",
+                        similarity_score: 0.62,
+                        subject_id: 'ARTS10010',
+                        user_id: 46,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Journey",
+                        description: "Journey through the world of biology",
+                        similarity_score: 0.44,
+                        subject_id: 'BIOL65432',
+                        user_id: 46,
+                    },
+                ],
+            },
+            47: {
+                id: 47,
+                name: "William",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Physics Adventure",
+                        description: "Embark on a physics adventure",
+                        similarity_score: 0.62,
+                        subject_id: 'PHYSICS20001',
+                        user_id: 47,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Geology Expedition",
+                        description: "Explore the wonders of geology",
+                        similarity_score: null,
+                        subject_id: 'GEOLOGY10010',
+                        user_id: 47,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Creative Arts Showcase",
+                        description: "Showcase your creativity through art",
+                        similarity_score: 0.73,
+                        subject_id: 'ARTS10010',
+                        user_id: 47,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Environmental Exploration",
+                        description: "Explore the environment and its mysteries",
+                        similarity_score: 0.54,
+                        subject_id: 'ENVSCI12345',
+                        user_id: 47,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Math Challenges",
+                        description: "Take on challenging math problems",
+                        similarity_score: 0.69,
+                        subject_id: 'MATH12345',
+                        user_id: 47,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Literature Voyage",
+                        description: "Embark on a literary voyage of discovery",
+                        similarity_score: 0.48,
+                        subject_id: 'LIT10010',
+                        user_id: 47,
+                    },
+                ],
+            },
+            48: {
+                id: 48,
+                name: "Olivia",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Chemistry Quest",
+                        description: "Embark on a quest to master chemistry",
+                        similarity_score: 0.78,
+                        subject_id: 'CHEM20001',
+                        user_id: 48,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Cultural Insights",
+                        description: "Gain insights into diverse cultures",
+                        similarity_score: null,
+                        subject_id: 'CULTSTUDY10010',
+                        user_id: 48,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Creative Writing Challenge",
+                        description: "Challenge your creative writing skills",
+                        similarity_score: 0.67,
+                        subject_id: 'CREATIVEWRITING12345',
+                        user_id: 48,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Societal History",
+                        description: "Explore the history of societies and civilizations",
+                        similarity_score: 0.58,
+                        subject_id: 'HISTSOCIETY20001',
+                        user_id: 48,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Artistic Expression Showcase",
+                        description: "Showcase your artistic expressions",
+                        similarity_score: 0.62,
+                        subject_id: 'ARTS10010',
+                        user_id: 48,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Odyssey",
+                        description: "Embark on a biology odyssey of discovery",
+                        similarity_score: 0.44,
+                        subject_id: 'BIOL65432',
+                        user_id: 48,
+                    },
+                ],
+            },   
+            49: {
+                id: 49,
+                name: "Henry",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Physics Challenges",
+                        description: "Take on challenging physics problems",
+                        similarity_score: 0.71,
+                        subject_id: 'PHYSICS20001',
+                        user_id: 49,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Art Exploration",
+                        description: "Explore the world of art and creativity",
+                        similarity_score: null,
+                        subject_id: 'ARTS10010',
+                        user_id: 49,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "History Mysteries",
+                        description: "Uncover mysteries from the pages of history",
+                        similarity_score: 0.59,
+                        subject_id: 'HIST30004',
+                        user_id: 49,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Math Puzzles",
+                        description: "Solve intriguing math puzzles and riddles",
+                        similarity_score: 0.62,
+                        subject_id: 'MATH12345',
+                        user_id: 49,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Biology Insights",
+                        description: "Gain insights into the world of biology",
+                        similarity_score: 0.67,
+                        subject_id: 'BIOL65432',
+                        user_id: 49,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Literary Explorations",
+                        description: "Embark on explorations of literary classics",
+                        similarity_score: 0.53,
+                        subject_id: 'LIT10010',
+                        user_id: 49,
+                    },
+                ],
+            },
+            50: {
+                id: 50,
+                name: "Sophia",
+                submissions: [
+                    {
+                        assignment_id: 1,
+                        name: "Chemistry Challenges",
+                        description: "Take on challenging chemistry assignments",
+                        similarity_score: 0.74,
+                        subject_id: 'CHEM20001',
+                        user_id: 50,
+                    },
+                    {
+                        assignment_id: 2,
+                        name: "Cultural Studies",
+                        description: "Explore the rich tapestry of cultures worldwide",
+                        similarity_score: null,
+                        subject_id: 'CULTSTUDY10010',
+                        user_id: 50,
+                    },
+                    {
+                        assignment_id: 3,
+                        name: "Creative Writing Journey",
+                        description: "Embark on a creative writing journey of discovery",
+                        similarity_score: 0.68,
+                        subject_id: 'CREATIVEWRITING12345',
+                        user_id: 50,
+                    },
+                    {
+                        assignment_id: 4,
+                        name: "Societal Transformations",
+                        description: "Examine transformations in societies over time",
+                        similarity_score: 0.56,
+                        subject_id: 'HISTSOCIETY20001',
+                        user_id: 50,
+                    },
+                    {
+                        assignment_id: 5,
+                        name: "Artistic Expressions",
+                        description: "Express your creativity through various art forms",
+                        similarity_score: 0.61,
+                        subject_id: 'ARTS10010',
+                        user_id: 50,
+                    },
+                    {
+                        assignment_id: 6,
+                        name: "Biology Discoveries",
+                        description: "Discover fascinating biological phenomena",
+                        similarity_score: 0.49,
+                        subject_id: 'BIOL65432',
+                        user_id: 50,
+                    },
+                ],
+            },                     
         }
     };
     console.log("Mock data:", (globalThis as any).template_data)

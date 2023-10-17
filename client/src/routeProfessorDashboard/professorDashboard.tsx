@@ -15,23 +15,27 @@ const buttonModesConfig = {
 };
 
 export default function ProfessorDashboard() {
-    // Update the assignments based on the current student
+    // Update the assignments to display based on the current student
     function updateAssignments(assignments: any) {
+        // Assignments for the submission history dropdown
         const submittedAssignments = [];
+        // Assignments for the unsubmitted assignments dropdown
         const unsubmittedAssignments = [];
     
+        // Checking whether the assignment has a submission score to determine set ownership
         for (const submission of assignments) {
             if (submission.similarity_score !== null) {
-                submittedAssignments.push({ id: submission.assignment_id, score: submission.similarity_score, name: assignmentItems[submission.assignment_id].name,
-                    desc: assignmentItems[submission.assignment_id].description});
+                submittedAssignments.push(submission);
             } else {
-                unsubmittedAssignments.push({ id: submission.assignment_id, score: null, name: assignmentItems[submission.assignment_id].name,
-                    desc: assignmentItems[submission.assignment_id].description});
+                unsubmittedAssignments.push(submission);
             }
         }
     
         setSubmittedAssignments(submittedAssignments);
         setUnsubmittedAssignments(unsubmittedAssignments);
+
+        console.log('subs', submittedAssignments);
+        console.log('unsubs', unsubmittedAssignments);
     }
 
     // Update current assignment based on assignment clicked
@@ -52,31 +56,46 @@ export default function ProfessorDashboard() {
         }
     }
 
+    // Update current list of students based on subject clicked
+    function updateStudentList(subject_id: string) {
+        // Student ids stored in the subject
+        const student_ids: number[] = subjectItems[subject_id].students;
+        // Grabbing students from the list of students by collected ids
+        const students: {[key: string]: object} = {};
+        for (const i in student_ids) {
+            students[student_ids[i]] = studentItems[student_ids[i]];
+        }
+        setCurrentStudents(students);
+    }
+
+    // Reading in the data from the server or the mock data
     const data = (globalThis as any).template_data
     const subjectItems = data.subjectItems;
     const subjectItemsArray = Object.values(subjectItems);
-    const assignmentItems = data.assignmentItems;
+    const studentItems = data.studentItems;
     console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
 
-    // Stores the currently selected student and subject
+    // Stores the currently selected student, subject, and set of assignments
     const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
-    const [currentStudent, setCurrentStudent]: any = useState(currentSubject.students[0]);
-    const [currentAssignments, setCurrentAssignments]: any = useState(currentStudent.submissions)
-
-    // Calls the function a single time to initialise assignments
-    useEffect(() => {
-        updateAssignments(currentAssignments);
-    }, []);
+    const [currentStudent, setCurrentStudent]: any = useState(studentItems[currentSubject.students[0]]);
+    // const [currentAssignments, setCurrentAssignments]: any = useState(currentStudent.submissions)
+    const [submittedAssignments, setSubmittedAssignments]: any = useState([]); // Student's submitted assignments
+    const [unsubmittedAssignments, setUnsubmittedAssignments]: any = useState([]); //student's unsubmitted assignments
+    const [currentStudents, setCurrentStudents]: any = useState([]); // Students in current subject
 
     // Stores the currently selected assignment info
     const [focusedAssignment, setFocusedAssignment]: any = useState(null);
 
-    // Stores the currently selected student's assignments as submitted and unsubmitted groups
-    const [submittedAssignments, setSubmittedAssignments]: any = useState([]);
-    const [unsubmittedAssignments, setUnsubmittedAssignments]: any = useState([]);
+    // Calls the function a single time to initialise assignment and student data on startup
+    useEffect(() => {
+        updateAssignments(currentStudent.submissions);
+        updateStudentList(currentSubject.id);
+    }, []);
+
+    console.log("EVERYTHING WORKS UP TO HERE", currentSubject, currentStudent, submittedAssignments, unsubmittedAssignments, currentStudents)
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
@@ -95,33 +114,32 @@ export default function ProfessorDashboard() {
         updateFocusedAssignment(parseInt(event.currentTarget.value));
     }
 
-    // console.log("current subject is set to", currentSubject)
-    // console.log(currentSubject.id)
-    // console.log("Active", currentSubject)
-
-    // Handles the page logic after a new subject is selected
+    // Handles the page logic after a new subject is selected based on returned subject_id
     const handleSubjectSelection: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        setCurrentSubject(subjectItems[event.currentTarget.value]);
-        setCurrentStudent(subjectItems[event.currentTarget.value].students[0])
-        setCurrentAssignments(currentStudent.submissions);
-        updateAssignments(subjectItems[event.currentTarget.value].students[0].submissions);
+        // Collected subject id
+        const subject_id = event.currentTarget.value;
+        
+        // TODO: Check these actually work
+        setCurrentSubject(subjectItems[subject_id]);
+        updateStudentList(subject_id)
+        setCurrentStudent(studentItems[subjectItems[subject_id].students[0]])
+        // setCurrentAssignments(studentItems[subjectItems[subject_id].students[0]]);
+        updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
-        // console.log("current subject is set to", currentSubject)
-        // console.log("SubjectHandler", event.currentTarget);
     }
 
     // Handles the page logic after a new student is selected
     const handleStudentSelection: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        const student = currentSubject.students.find((s: any) => s.id == event.currentTarget.value);
-        setCurrentStudent(student);
-        setCurrentAssignments(student.submissions);
-        updateAssignments(student.submissions);
+        const student_id = event.currentTarget.value;
+
+        // TODO: Check these actually work
+        setCurrentStudent(studentItems[student_id]);
+        // setCurrentAssignments(studentItems[student_id].submissions);
+        updateAssignments(studentItems[student_id].submissions);
         setFocusedAssignment(null);
-        // console.log("current student is set to", currentStudent)
-        // console.log("StudentHandler", event.currentTarget.value);
         setCurrentState(buttonModesConfig.idleMode);
     }
 
@@ -140,8 +158,8 @@ export default function ProfessorDashboard() {
                     <div className="custom-dashboard-section w-1/5 rounded-l-3xl">
                         <h1 className="custom-instruction-text">1. Select a Student by Subject</h1>
                         {/* Dropdown menus */}
-                        <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems}  titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
-                        <DropdownMenu currentSubject={currentSubject} subjectItems={subjectItems} titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
+                        <DropdownMenu itemsList={ subjectItems }  titles={ ['Subjects', 'subject'] } click={ handleSubjectSelection }/>
+                        <DropdownMenu itemsList={ currentStudents } titles={ ['Students', 'student'] } click={ handleStudentSelection }/>
                     </div>
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
@@ -159,7 +177,7 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/>
+                        {/* <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/> */}
                     </div>
                 </div>
             </main>

@@ -28,13 +28,14 @@ function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) 
 }
 
 // Allows dynamically adding the dropdown menu of items 
-function DropdownItems({menuItems, subtitle, click}: {menuItems: string[], subtitle: string, click: (event: any) => void}) {
+function DropdownItems({menuItems, subtitle, click}: {menuItems: object[], subtitle: string, click: (event: any) => void}) {
     {/* TODO: Grab the data from the server here? */}
     
     return (
         <>
         <div className="custom-dropdown-menu">
             {/* The list of menu items */}
+            {/* Sets max height based on content type */}
             <ul className={`overflow-auto ${subtitle === 'student' ? "max-h-[80vh]" : "max-h-[30vh]"}`}>
                 {menuItems.map((menuItem: any, k: Key) => (
                     <DropdownElement menuItem={ menuItem } click={ click } key={k}/>
@@ -48,11 +49,11 @@ function DropdownItems({menuItems, subtitle, click}: {menuItems: string[], subti
 }
 
 // Creates a dropdown menu of a given item type with the ability to add more of that item
-export default function DropdownMenu({subjectItems, currentSubject, titles, click}: {subjectItems: any, currentSubject: any, titles: string[], click: (event: any) => void}) {
+export default function DropdownMenu({itemsList, titles, click}: {itemsList: any, titles: string[], click: (event: any) => void}) {
     const title = titles[0];
     const subtitle = titles[1];
     const [showDropdown, setShowDropdown] = useState(true);
-    const menuItems = (title === 'Students') ? currentSubject.students : Object.values(subjectItems);
+    const menuItems: object[] = Object.values(itemsList);
 
     {/* Opens and closes the dropdown menu */}
     const handleDropdownClick = () => { setShowDropdown(!showDropdown) };
