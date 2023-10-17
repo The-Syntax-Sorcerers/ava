@@ -26,7 +26,7 @@ def login():
     # Validating CSRF token prevents Cross-site forgery attacks!!
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
 
     try:

@@ -64,8 +64,10 @@ class User(UserMixin):
 
     @staticmethod
     def get_user_with_email(user_email):
+
         for i in range(5):
-            res = supabase_sec.table('User').select('*').eq('email', user_email).execute().data
+            print("Finding email", user_email)
+            res = supabase_sec.table('User').select('id, email, name, user_type').eq('email', user_email).execute().data
             print("GET USER RESULT:", res)
             if res:
                 res = res[0]
