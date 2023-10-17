@@ -99,8 +99,8 @@ def assignments():
 def profile():
     print("Serving Profile")
     user: User = flask_login.current_user
-    punc_vecs, sentence_vecs, word_vecs, filenames = user.get_vectors()
-    score_hist, avg_score = user.get_scores()
+    punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
+        all_scores, failures, successful, avg_score = user.get_vectors()
 
     linePuncData = []
     for k, v in punc_vecs.items():
@@ -131,12 +131,18 @@ def profile():
         "id": user.name,
         "allScores": [{
             "name": "Score",
-            "data": score_hist
+            "data": all_scores,
+            "color": randomcolor.RandomColor().generate()[0]
         }],
-        "assignmentLabels": filenames,
+        "wordCounts": [{
+            "name": "Word Count",
+            "data": word_counts,
+            "color": randomcolor.RandomColor().generate()[0]
+        }],
+        "assignmentLabels": assignmentLabels,
         "avgScore": avg_score,
-        "submissionPie":  [user.success, user.failed, user.unsubmitted],
-        "submissionCategories": ["Success", "Failed", "Not Yet Submitted"],
+        "submissionPie":  [failures, successful],
+        "submissionCategories": ["Failed", "Success"],
         "linePunctuation": linePuncData,
         "lineSentences": lineSentenceData,
         "lineWords": lineWordData,

@@ -15,9 +15,9 @@ export default function GraphCard({title, data, optionsCategories}: {title:strin
         },
         chart: {
             type: "line",
-            width: "30%",
+            width: "100%",
             toolbar: {
-            show: false,
+            show: true,
             },
         },
     
@@ -43,18 +43,18 @@ export default function GraphCard({title, data, optionsCategories}: {title:strin
             show: false,
         },
         xaxis: {
-                axisBorder: {
-                show: false,
-                },
-                axisTicks: {
-                show: false,
-                },
-                labels: {
+            axisBorder: {
+            show: false,
+            },
+            axisTicks: {
+            show: false,
+            },
+            labels: {
                 style: {
-                    colors: "#A3AED0",
-                    fontSize: "12px",
-                    fontWeight: "500",
-                },
+                        colors: "#A3AED0",
+                        fontSize: "12px",
+                        fontWeight: "500",
+                    },
             },
             type: "text",
             range: undefined,
@@ -62,12 +62,12 @@ export default function GraphCard({title, data, optionsCategories}: {title:strin
         },
     
         yaxis: {
-            show: false,
+            show: true,
         },
     };
 
     return (
-        <Card extra="items-center rounded-md shadow-none p-5 text-center">
+        <Card extra="items-center rounded-md shadow-none p-2 text-center">
             <h1 className="text-lg font-semibold mb-4 mt-5">{title}</h1>
             <LineChart
             chartData={data}

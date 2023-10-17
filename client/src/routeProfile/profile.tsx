@@ -34,24 +34,28 @@ export default function Profile({ data}: {data:any}) {
                     </div>
                 </div>
                 <div className="container mx-auto flex flex-row flex-wrap gap-2 mb-5">
-                    <div className="container basis-1/4">
+                    <div className="container w-1/2 h-full">
                         <GraphCard data={data.linePunctuation} optionsCategories={data.assignmentLabels} title="Punctuation Frequency"/>
                     </div>
-                    <div className="container basis-1/4">
+                    <div className="container w-1/3 h-full">
                         <GraphCard data={data.lineSentences} optionsCategories={data.assignmentLabels} title="Sentence Analysis"/>
                     </div>
-                    <div className="container basis-1/4">
+                    <div className="container w-1/3">
                         <GraphCard data={data.allScores}  optionsCategories={data.assignmentLabels} title="All Scores"/> 
                     </div>
-                    <div className="container basis-1/4">
+                    <div className="container w-1/4">
                         <PieChartCard data={data.submissionPie} title="Submission History"/>
                     </div>
-                    <div className="container basis-1/4">
+                    <div className="container w-1/4">
                         <CircleProgressCard data={data.avgScore} title="Average Score"/>
                     </div>
-                    <div className="container basis-1/4">
+                    <div className="container w-1/2">
                         <GraphCard data={data.lineWords} optionsCategories={data.assignmentLabels} title="Word Analysis"/>
                     </div>
+                    <div className="container w-1/3">
+                        <GraphCard data={data.wordCounts} optionsCategories={data.assignmentLabels} title="Word Counts"/>
+                    </div>
+                    
                     
 
                 </div>

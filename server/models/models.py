@@ -13,10 +13,6 @@ class User(UserMixin):
         self.id = tid  # This variable needs to be called `id` to shadow variable of parent class `UserMixin`
         self.name = name
         self.email = email
-        self.success = 63
-        self.failed = 25
-        self.unsubmitted = 12
-        self.score_hist = [76, 82, 62, 56, 42, 91]
 
     def __repr__(self):
         return f'<User> id: {self.id}, email: {self.email}'
@@ -49,25 +45,18 @@ class User(UserMixin):
 
     def get_vectors(self):
 
-        past_files = [x for x in supabase_sec.storage.from_(
-            'ava-prod-past-assignments').list("test") if x['name'].endswith(".npy")]
-        filenames = [x for x in supabase_sec.storage.from_(
-            'ava-prod-past-assignments').list("test") if x['name'].endswith(".txt")]
-        ['Periods', 'Commas', 'Semicolons', 'Colon', 'Exclaimation Marks',
-         'Question Marks', 'Dash', 'Open Parentheses', 'Close Parenthesis', 'Double Quote',
-         'Apostrophe', 'Tilda', 'Forward Slash']
         punc_vecs = {
             'Periods': [],
             'Commas': [],
             'Semicolons': [],
             'Colons': [],
-            'Exclaimation Marks': [],
+            'Exclamations': [],
             'Question Marks': [],
             'Dashes': [],
             'Open Parentheses': [],
             'Close Parentheses': [],
             'Double Quotes': [],
-            'Apostrophe/Single Quotes': [],
+            'Apostrophe': [],
             'Tilda': [],
             'Forward Slash': [],
         }
@@ -80,39 +69,66 @@ class User(UserMixin):
         }
 
         word_vecs = {
-            'rare_count': [],
-            'long_count': [],
-            'count_over_avg': [],
-            'count_under_avg': [],
-            'count_avg': [],
-            'ttr': []
+            'Rare Word Count': [],
+            'Long Word Count': [],
+            'Count Over Average': [],
+            'Count Under Average': [],
+            'Count Average': [],
+            'Average Word Length': [],
+            'Token Type Ratio': []
         }
+        word_counts = []
+        assignmentLabels = []
+        all_scores = []
 
-        for f in past_files:
-            response = supabase_sec.storage.from_(
-                'ava-prod-past-assignments').download(f'test/{f["name"]}')
+        # Query Supabase table
+        response = supabase_sec.table('SubjectAssignmentUser').select(
+            '*').eq('user_id', self.id).execute()
+        for res in response.data:
+            assignmentLabels.append(
+                str(res['subject_id']) + "-" + str(res['assignment_id']))
+            punc_vecs['Periods'].append(res['punc_periods'])
+            punc_vecs['Commas'].append(res['punc_commas'])
+            punc_vecs['Semicolons'].append(res['punc_semicolons'])
+            punc_vecs['Colons'].append(res['punc_colons'])
+            punc_vecs['Exclamations'].append(res['punc_exclamations'])
+            punc_vecs['Question Marks'].append(res['punc_questions'])
+            punc_vecs['Dashes'].append(res['punc_dashes'])
+            punc_vecs['Open Parentheses'].append(res['punc_open_par'])
+            punc_vecs['Close Parentheses'].append(res['punc_close_par'])
+            punc_vecs['Double Quotes'].append(res['punc_double_quotes'])
+            punc_vecs['Apostrophe'].append(res['punc_apostrophes'])
+            punc_vecs['Tilda'].append(res['punc_tilda'])
+            punc_vecs['Forward Slash'].append(res['punc_forward_slash'])
+            sentence_vecs['Count of Sentences Over Average'].append(
+                round(res['sent_over_avg'], 1))
+            sentence_vecs['Count of Sentences Under Average'].append(round(
+                res['sent_under_avg'], 1))
+            sentence_vecs['Count of Average Sentences'].append(round(
+                res['sent_count_avg'], 1))
+            sentence_vecs['Average Sentence Length'].append(round(
+                res['sent_avg_length'], 1))
+            word_vecs['Rare Word Count'].append(
+                round(res['word_rare_count'], 1))
+            word_vecs['Long Word Count'].append(
+                round(res['word_long_count'], 1))
+            word_vecs['Count Over Average'].append(
+                round(res['word_over_avg'], 1))
+            word_vecs['Count Under Average'].append(
+                round(res['word_under_avg'], 1))
+            word_vecs['Count Average'].append(round(res['word_count_avg'], 1))
+            word_vecs['Average Word Length'].append(
+                round(res['word_avg_length'], 1))
+            word_vecs['Token Type Ratio'].append(round(res['word_ttr'], 1))
+            word_counts.append(res['word_count'])
+            all_scores.append(res['similarity_score'])
 
-            np_array = np.load(io.BytesIO(response)).tolist()
-            puncs_array = np_array[300:313]
+        successful = [x for x in all_scores if x > 0.5]
+        failures = len(all_scores) - len(successful)
+        avg_score = sum(all_scores) / len(all_scores)
 
-            # Add punctuation vector valies to
-            for i in range(len(puncs_array)):
-                punc_vecs[list(punc_vecs.keys())[i]].append(puncs_array[i])
-
-            sents_array = np_array[313:317]
-            for i in range(len(sents_array)):
-                sentence_vecs[list(sentence_vecs.keys())[i]
-                              ].append(sents_array[i])
-
-            words_array = np_array[317:]
-            for i in range(len(words_array)):
-                word_vecs[list(word_vecs.keys())[i]].append(words_array[i])
-
-        return punc_vecs, sentence_vecs, word_vecs, filenames
-
-    def get_scores(self):
-        average_score = round((sum(self.score_hist) / len(self.score_hist)))
-        return self.score_hist, average_score
+        return punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
+            all_scores, failures, len(successful), avg_score
 
     @staticmethod
     def get_user(user_id):
