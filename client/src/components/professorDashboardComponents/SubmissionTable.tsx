@@ -32,7 +32,7 @@ function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click:
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                View Results
+                View Results { id }
             </button>
         </div>
     )
@@ -49,7 +49,7 @@ function NotSubmittedIndicator({click, id}: {click: (event: any) => void, id: nu
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                Submit
+                Submit { id }
             </button>
         </div>
     )
@@ -103,7 +103,7 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
                         <SubmissionRowElement click={unsubmittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     ) : (
-                        currAss.map((a, k) => (
+                        currAss.map((a) => (
                         <SubmissionRowElement click={submittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     )

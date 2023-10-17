@@ -1,3 +1,4 @@
+import FileComponent from "../assignmentComponents/FileComponent";
 import AnalyticsResults from "./AnalyticsResults";
 import UploadProcess from "./UploadProcess";
 
@@ -15,7 +16,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
         {currentState === states.idleMode ? (
-            <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
+            <div className="flex justify-center items-center h-full border-gray-400 border-2 border-dashed rounded-lg">
                 <h1>
                     Please select a file action (Section 2)
                 </h1>
@@ -31,7 +32,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
             <p className="text-base mb-2 pl-2 flex flex-col">
                 Upload a document to compare against the student's body of work without uploading it to their profile
             </p>
-            <UploadProcess/>
+            <FileComponent/>
             </>
         ) : (
             null
@@ -46,10 +47,10 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
             <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
                 Description:
                 <p className="pl-4 font-normal">
-                    { assignment.desc }
+                    { assignment.description }
                 </p>
             </p>
-            <UploadProcess/>
+            <FileComponent/>
             </>
         ) : (
             null

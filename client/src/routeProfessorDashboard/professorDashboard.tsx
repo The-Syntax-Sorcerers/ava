@@ -39,18 +39,11 @@ export default function ProfessorDashboard() {
     }
 
     // Update current assignment based on assignment clicked
-    function updateFocusedAssignment(focus_id: number) {
-        // Clicked on an unsubmitted assignment
-        for (const a in unsubmittedAssignments) {
-            if (unsubmittedAssignments[a].id === focus_id) {
-                setFocusedAssignment({id: focus_id, name: unsubmittedAssignments[a].name, score: null, desc: unsubmittedAssignments[a].desc})
-                return;
-            }
-        }
-        // Clicked in a submitted assignment
-        for (const a in submittedAssignments) {
-            if (submittedAssignments[a].id === focus_id) {
-                setFocusedAssignment({id: focus_id, name: submittedAssignments[a].name, score: submittedAssignments[a].score, desc: submittedAssignments[a].desc})
+    function updateFocusedAssignment(student_id: number, focus_id: number) {
+        const assignments = studentItems[student_id].submissions
+        for (const i in assignments) {
+            if (assignments[i].assignment_id === focus_id) {
+                setFocusedAssignment(assignments[i])
                 return;
             }
         }
@@ -105,13 +98,13 @@ export default function ProfessorDashboard() {
     // Handles page logic after the view results button in the submission history section has been clicked
     const handleResultsButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.resultsMode);
-        updateFocusedAssignment(parseInt(event.currentTarget.value));
+        updateFocusedAssignment(currentStudent.id, parseInt(event.currentTarget.value));
     }
 
     // Handles the page logic after the upload button in the unsubmitted assignments section has been clicked
     const handleSubmitButton: React.FormEventHandler<HTMLFormElement> = (event) => {
         setCurrentState(buttonModesConfig.uploadMode);
-        updateFocusedAssignment(parseInt(event.currentTarget.value));
+        updateFocusedAssignment(currentStudent.id, parseInt(event.currentTarget.value));
     }
 
     // Handles the page logic after a new subject is selected based on returned subject_id
@@ -177,7 +170,7 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
-                        {/* <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/> */}
+                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/>
                     </div>
                 </div>
             </main>

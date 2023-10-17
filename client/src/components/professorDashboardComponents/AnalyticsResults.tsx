@@ -7,7 +7,7 @@ export default function AnalyticsResults({ass}: {ass: any}) {
             <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
                 Description:
                 <p className="pl-4 font-normal">
-                    { ass.desc }
+                    { ass.description }
                 </p>
             </p>
             <div className="flex justify-center items-center h-80 border-gray-400 border-2 border-dashed">
@@ -20,7 +20,7 @@ export default function AnalyticsResults({ass}: {ass: any}) {
             <div className="flex justify-center">
                 <h1 className="flex justify-center items-center h-12 border-gray-100 border-2 border-solid rounded-full w-3/4 mt-1">
                     Similarity Score:&#160;
-                    { ass.score }
+                    { ass.similarity_score }
                 </h1>
             </div>
             <div className="flex justify-center">
