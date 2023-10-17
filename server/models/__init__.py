@@ -24,8 +24,10 @@ class User(UserMixin):
 
     def get_subjects(self):
         try:
-            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
-            res2 = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+            res = supabase_sec.table('StudentSubject').select(
+                'subject_id').eq('student_id', self.id).execute()
+            res2 = supabase_sec.table('Subject').select(
+                'id').eq('professor_email', self.email).execute()
             print(res.data)
             print(res.data)
             print(res.data + res2.data)
@@ -77,10 +79,12 @@ class User(UserMixin):
         # Check if the requesting user is allowed to perform this action
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
-                res = supabase_sec.table('User').select('*').eq('id', id).execute().data
+                res = supabase_sec.table('User').select(
+                    '*').eq('id', id).execute().data
                 if (res['email'] == user_email) and (res['name'] == user_name):
                     # Send a DELETE request to the Supabase table to delete the user by ID
-                    res = supabase_sec.table('User').delete().eq('id', user_id).execute()
+                    res = supabase_sec.table('User').delete().eq(
+                        'id', user_id).execute()
 
                 if res.status_code == 200:
                     return True
@@ -94,10 +98,98 @@ class User(UserMixin):
         else:
             return False
 
+    def get_vectors(self):
+
+        punc_vecs = {
+            'Periods': [],
+            'Commas': [],
+            'Semicolons': [],
+            'Colons': [],
+            'Exclamations': [],
+            'Question Marks': [],
+            'Dashes': [],
+            'Open Parentheses': [],
+            'Close Parentheses': [],
+            'Double Quotes': [],
+            'Apostrophe': [],
+            'Tilda': [],
+            'Forward Slash': [],
+        }
+
+        sentence_vecs = {
+            'Count of Sentences Over Average': [],
+            'Count of Sentences Under Average': [],
+            'Count of Average Sentences': [],
+            'Average Sentence Length': []
+        }
+
+        word_vecs = {
+            'Rare Word Count': [],
+            'Long Word Count': [],
+            'Count Over Average': [],
+            'Count Under Average': [],
+            'Count Average': [],
+            'Average Word Length': [],
+            'Token Type Ratio': []
+        }
+        word_counts = []
+        assignmentLabels = []
+        all_scores = []
+
+        # Query Supabase table
+        response = supabase_sec.table('SubjectAssignmentUser').select(
+            '*').eq('user_id', self.id).execute()
+        for res in response.data:
+            assignmentLabels.append(
+                str(res['subject_id']) + "-" + str(res['assignment_id']))
+            punc_vecs['Periods'].append(res['punc_periods'])
+            punc_vecs['Commas'].append(res['punc_commas'])
+            punc_vecs['Semicolons'].append(res['punc_semicolons'])
+            punc_vecs['Colons'].append(res['punc_colons'])
+            punc_vecs['Exclamations'].append(res['punc_exclamations'])
+            punc_vecs['Question Marks'].append(res['punc_questions'])
+            punc_vecs['Dashes'].append(res['punc_dashes'])
+            punc_vecs['Open Parentheses'].append(res['punc_open_par'])
+            punc_vecs['Close Parentheses'].append(res['punc_close_par'])
+            punc_vecs['Double Quotes'].append(res['punc_double_quotes'])
+            punc_vecs['Apostrophe'].append(res['punc_apostrophes'])
+            punc_vecs['Tilda'].append(res['punc_tilda'])
+            punc_vecs['Forward Slash'].append(res['punc_forward_slash'])
+            sentence_vecs['Count of Sentences Over Average'].append(
+                round(res['sent_over_avg'], 1))
+            sentence_vecs['Count of Sentences Under Average'].append(round(
+                res['sent_under_avg'], 1))
+            sentence_vecs['Count of Average Sentences'].append(round(
+                res['sent_count_avg'], 1))
+            sentence_vecs['Average Sentence Length'].append(round(
+                res['sent_avg_length'], 1))
+            word_vecs['Rare Word Count'].append(
+                round(res['word_rare_count'], 1))
+            word_vecs['Long Word Count'].append(
+                round(res['word_long_count'], 1))
+            word_vecs['Count Over Average'].append(
+                round(res['word_over_avg'], 1))
+            word_vecs['Count Under Average'].append(
+                round(res['word_under_avg'], 1))
+            word_vecs['Count Average'].append(round(res['word_count_avg'], 1))
+            word_vecs['Average Word Length'].append(
+                round(res['word_avg_length'], 1))
+            word_vecs['Token Type Ratio'].append(round(res['word_ttr'], 1))
+            word_counts.append(res['word_count'])
+            all_scores.append(res['similarity_score'])
+
+        successful = [x for x in all_scores if x > 0.5]
+        failures = len(all_scores) - len(successful)
+        avg_score = sum(all_scores) / len(all_scores)
+
+        return punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
+            all_scores, failures, len(successful), avg_score
+
     @staticmethod
     # Deletes user created during testing
     def delete_test_user():
-        supabase_sec.table('User').delete().eq('email', TEST_USER['email']).execute()
+        supabase_sec.table('User').delete().eq(
+            'email', TEST_USER['email']).execute()
 
     @staticmethod
     # gets test user credentials
@@ -176,7 +268,8 @@ class Subject:
     @staticmethod
     def create_subject(temp_sub):
         try:
-            supabase_sec.table('Subject').insert(temp_sub.get_payload_format()).execute()
+            supabase_sec.table('Subject').insert(
+                temp_sub.get_payload_format()).execute()
         except:
             pass
 
@@ -232,7 +325,8 @@ class Assignment:
     @staticmethod
     def get_all_assignments(subject_id=None):
         if subject_id:
-            res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+            res = supabase_sec.table('Assignment').select(
+                '*').eq('subject_id', subject_id).execute().data
         else:
             res = supabase_sec.table('Assignment').select('*').execute().data
         if res:
@@ -249,7 +343,6 @@ class Assignment:
     # will return a dict representation
     def to_dict(self):
         return {"due_date": self.due_date, "id": self.id, "name": self.name}
-
 
 
 class Storage:
@@ -305,12 +398,16 @@ class Storage:
         # as a placeholder
         final_dict = {}
         try:
-            res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+            res = self.supabase_sec.storage.from_(
+                self.ass_bucket).list(f'{subject_id}/{assignment_id}')
             for obj in res:
                 temp_user_id = obj['name']
-                final_dict[temp_user_id] = self.download_assignment(subject_id, assignment_id, temp_user_id)
-            self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
-            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq('id', assignment_id).execute()
+                final_dict[temp_user_id] = self.download_assignment(
+                    subject_id, assignment_id, temp_user_id)
+            self.__cron_delete_entire_assignments_folder(
+                subject_id, assignment_id)
+            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq(
+                'subject_id', subject_id).eq('id', assignment_id).execute()
         except:
             pass
 
@@ -352,7 +449,8 @@ class PastStorage:
     def exists_assignment(self, user_id, subject_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{user_id}')
+        res = self.supabase_sec.storage.from_(
+            self.ass_bucket).list(f'{user_id}')
         for obj in res:
             if obj['name'] == f'{subject_id}-{assignment_id}':
                 return [obj]
