@@ -1,4 +1,3 @@
-import flask_login
 import pytest
 
 PRIVATE_ROUTES_TESTCASES = [('/dashboard', 200),

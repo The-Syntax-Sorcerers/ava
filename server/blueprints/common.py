@@ -5,13 +5,12 @@ import randomcolor
 
 import flask_login
 import flask_wtf.csrf
-import pytz
-from flask import Blueprint, render_template, send_from_directory, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for
 from server.extensions import get_and_clear_cookies
-from server.models import User, Subject, Assignment
+from server.models import User, Assignment
 
-common = Blueprint('common', __name__, template_folder=os.getcwd(
-) + "/client/dist", static_folder=os.getcwd() + "/client/dist")
+common = Blueprint('common', __name__, template_folder=os.getcwd() + "/client/dist",
+                   static_folder=os.getcwd() + "/client/dist")
 
 # leave this here for now so that the testing will work
 
@@ -43,12 +42,10 @@ def privacy_policy(loginform=None, signupform=None):
 def dashboard():
     print("Serving Dash")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     template_data = {
         "subjects": [],
-        "user_type": user_type,
-        "random": 69,
+        "user_type": user.user_type,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
@@ -66,13 +63,11 @@ def dashboard():
 def assignments():
     print("Serving Assignments")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
     template_data = {
         "upcoming": [],
         "past": [],
-        "user_type": user_type,
-        "random": 69,
+        "user_type": user.user_type,
     }
 
     # Getting the data from supabase & converting to JSON format as required.
@@ -80,6 +75,7 @@ def assignments():
     db_asses: [Assignment] = user.get_assignments()
     db_asses = sorted(db_asses, key=lambda x: (
         x.due_date is not None, x.due_date))
+
     for ass in db_asses:
         temp = {
             "id": ass.subject_id,
@@ -151,3 +147,41 @@ def profile():
     }
 
     return render_template('routeProfile/index.html', template_data=template_data)
+
+
+@common.route('/AdminDashboard', methods=["GET"])
+@flask_login.login_required
+def admin_dashboard():
+    print("Serving Admin Dashboard")
+    user: User = flask_login.current_user
+    user_type = user.user_type
+
+    if user_type != "teacher":
+        redirect(url_for('common.dashboard'))
+
+    subject_items, student_items = make_items(user)
+    template_data = {
+        "user_type": user_type,
+        "subjectItems": subject_items,
+        "studentItems": student_items
+    }
+
+    return render_template('routeProfessorDashboard/index.html', template_data=template_data)
+
+
+def make_items(user: User):
+    subject_items, student_items = {}, {}
+    big_student_set = set()
+
+    subs = user.get_subjects()
+    for sub in subs:
+        studs = sub.get_student_ids_list()
+        big_student_set.update(studs)
+
+        subject_items[sub.subject_id] = sub.get_payload_format()
+        subject_items[sub.subject_id]['students'] = studs
+
+    for stud in big_student_set:
+        student_items[stud] = User.get_user_json(stud)
+    
+    return subject_items, student_items

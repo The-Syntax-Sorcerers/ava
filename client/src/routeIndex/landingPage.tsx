@@ -49,8 +49,7 @@ export default function LandingPage() {
                                 
                                 
                                 <button
-                                    className="mt-5 mr-1 mb-1 px-6 py-3 font-bold text-sm shadow-md hover:shadow-lg 
-                                    custom-form-button"
+                                    className="mt-5 mr-1 mb-1 px-6 py-3 font-bold text-sm shadow-md hover:shadow-lg custom-form-button"
                                     type="button"
                                     onClick={handleLoginClick}
                                 > Get Started

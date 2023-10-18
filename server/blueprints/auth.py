@@ -8,8 +8,7 @@ from flask import Blueprint, flash, redirect, url_for, request
 from gotrue.errors import AuthApiError
 from postgrest import APIError
 
-from server.extensions import supabase_anon, set_cookies, get_cookies, clear_cookies
-from server.models.flaskforms import LoginForm
+from server.extensions import supabase_anon, set_cookies, clear_cookies
 from server.models import User
 
 auth = Blueprint('auth', __name__, template_folder=os.getcwd() + "/client/dist",
@@ -27,7 +26,7 @@ def login():
     # Validating CSRF token prevents Cross-site forgery attacks!!
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
 
     try:
