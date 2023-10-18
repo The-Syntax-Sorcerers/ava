@@ -100,7 +100,7 @@
     /* Styles the colour and text of navbar link elements */
     .custom-navbar-element {
         @apply ease-in-out text-sm font-medium rounded-lg transition duration-200 flex justify-center items-center
-        bg-transparent hover:bg-violet-300 text-slate-900  hover:text-violet-800 focus:bg-violet-500;
+        bg-transparent hover:bg-violet-300 text-slate-900 hover:text-violet-800 focus:focus:bg-accent-secondary-400;
     }
 
     /* Styles the pinned navbar link elements*/
@@ -129,7 +129,7 @@
     /* Styles the colour and interactivity of the subject and assignment cards */
     .custom-school-cards {
         @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-50
-        hover:bg-accent-primary-400 hover:border-accent-primary-400 hover:scale-105 transition-transform 
+        hover:bg-accent-primary-300 hover:border-accent-primary-200 hover:scale-105 transition-transform 
         duration-300;
     }
 

@@ -7,10 +7,11 @@ def test_new_user():
     # GIVEN a user object
     # WHEN a new user is created
     # THEN check that user has a tid, an email, and a name
-    user = User(1, 'test@email.com', 'Test User')
+    user = User(1, 'test@email.com', 'Test User', 'student')
     assert user.id == 1
     assert user.email == 'test@email.com'
     assert user.name == 'Test User'
+    assert user.user_type == 'student'
 
 
 def test_new_subject():

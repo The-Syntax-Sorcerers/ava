@@ -25,7 +25,7 @@ def cron():
             current_storage = storage.cron_get_all_uploaded_assignments(temp_subject_id, temp_ass_id)
             for k in current_storage.keys():
                 temp_user_id = k
-                past_storage.upload_assignment(current_storage[temp_user_id], temp_user_id, temp_ass_id)
+                past_storage.upload_assignment(current_storage[temp_user_id], temp_user_id, temp_subject_id, temp_ass_id)
 
         print("Assignments checked: ", len(all_assignments))
         print("Assignments locked: ", len(time_passed_assignments))
