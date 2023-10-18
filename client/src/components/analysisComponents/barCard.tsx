@@ -1,7 +1,9 @@
-// A simple graph card element that will contain a line graph of the data
+// A simple graph card element that will contain a bar chart of the data
+// !!! This card is currently being unused for our dashboards but can be added later
+
 import BarChart from "../horizonComponents/charts/BarChart"; 
 import Card from "../horizonComponents/card";
-export default function BarChartCard({title, data, optionsCategories}: {title:string, data:any, optionsCategories:any}) {
+export default function BarChartCard({title, data}: {title:string, data:any}) {
 // export default function BarChartCard({title, data}: {title:string, data:any}) {
     const barChartOptions = {
         chart: {
@@ -24,7 +26,7 @@ export default function BarChartCard({title, data, optionsCategories}: {title:st
           theme: "dark",
         },
         xaxis: {
-          categories: {optionsCategories}, //["1", "2", "3", "4", "5", "6"],
+          categories: ["1", "2", "3", "4", "5", "6"],
           show: true,
           labels: {
             show: true,
@@ -112,7 +114,7 @@ export default function BarChartCard({title, data, optionsCategories}: {title:st
     )
 }
 
-// Example data and options:
+// Example data format:
 // export const barChartDataDailyTraffic = [
 //     {
 //       name: "Daily Traffic",
