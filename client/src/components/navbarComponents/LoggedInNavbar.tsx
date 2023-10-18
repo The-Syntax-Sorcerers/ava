@@ -7,7 +7,6 @@ const routes = [
     ['Admin Dashboard', '/AdminDashboard', "teacher"],
     ['Subjects', '/dashboard', "student"],
     ['Assignments', '/assignments', "student"],
-    // ['Profile', '/profile'],
     ['Log Out', '/logout', 'student']
 ]
 

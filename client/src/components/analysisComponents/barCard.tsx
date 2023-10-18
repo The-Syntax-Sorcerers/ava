@@ -1,9 +1,15 @@
 // A simple graph card element that will contain a bar chart of the data
-// !!! This card is currently being unused for our dashboards but can be added later
-
 import BarChart from "../horizonComponents/charts/BarChart"; 
 import Card from "../horizonComponents/card";
-export default function BarChartCard({title, data}: {title:string, data:any}) {
+
+export const puncLabels: string[] = ['Periods','Commas','Semicolons','Colons','Exclamations','Question Marks',
+    'Dashes', 'Open Parentheses', 'Close Parentheses','Double Quotes','Apostrophe','Tilda','Forward Slash'];
+export const sentLabels: string[] = ['Over Average', 'Under Average',
+    'Average Length','Count Average'];
+export const wordLabels: string[] = ['Rare Count', 'Long Count', 'Over Average', 'Under Average',
+    'Count Average','Average Length', 'Token Type Ratio'];
+
+export default function BarChartCard({title, data, optionsCategories}: {title:string, data:any, optionsCategories:any}) {
 // export default function BarChartCard({title, data}: {title:string, data:any}) {
     const barChartOptions = {
         chart: {
@@ -23,16 +29,16 @@ export default function BarChartCard({title, data}: {title:string, data:any}) {
               fontFamily: undefined,
             },
           },
-          theme: "dark",
+          theme: "light",
         },
         xaxis: {
-          categories: ["1", "2", "3", "4", "5", "6"],
-          show: true,
+          categories: optionsCategories,
+          show: false,
           labels: {
             show: true,
             style: {
               colors: "#A3AED0",
-              fontSize: "14px",
+              fontSize: "10px",
               fontWeight: "500",
             },
           },
@@ -44,7 +50,7 @@ export default function BarChartCard({title, data}: {title:string, data:any}) {
           },
         },
         yaxis: {
-          show: false,
+          show: true,
           color: "black",
           labels: {
             show: true,
@@ -105,7 +111,6 @@ export default function BarChartCard({title, data}: {title:string, data:any}) {
     return (
         <Card extra="container-lg flex-auto items-center rounded-md shadow-none p-5 text-center">
             <h1 className="text-lg font-semibold mb-4 mt-5">{title}</h1>
-            {/* <p>{optionsCategories}</p> */}
             <BarChart
             chartData={data}
             chartOptions={barChartOptions}
@@ -114,7 +119,7 @@ export default function BarChartCard({title, data}: {title:string, data:any}) {
     )
 }
 
-// Example data format:
+// Example data and options:
 // export const barChartDataDailyTraffic = [
 //     {
 //       name: "Daily Traffic",

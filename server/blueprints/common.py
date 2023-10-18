@@ -1,7 +1,6 @@
 import datetime
 import json
 import os
-import randomcolor
 
 import flask_login
 import flask_wtf.csrf
@@ -92,62 +91,6 @@ def assignments():
     return render_template('routeAssignments/index.html', template_data=template_data)
 
 
-@common.route('/profile', methods=["GET"])
-@flask_login.login_required
-def profile():
-    print("Serving Profile")
-    user: User = flask_login.current_user
-    punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
-        all_scores, failures, successful, avg_score = user.get_vectors()
-
-    linePuncData = []
-    for k, v in punc_vecs.items():
-        color = randomcolor.RandomColor().generate()[0]
-        linePuncData.append({"name": k, "data": v, 'color': color})
-
-    lineSentenceData = []
-    for k, v in sentence_vecs.items():
-        color = randomcolor.RandomColor().generate()[0]
-        lineSentenceData.append({"name": k, "data": v, 'color': color})
-
-    lineWordData = []
-    for k, v in word_vecs.items():
-        color = randomcolor.RandomColor().generate()[0]
-        lineWordData.append({"name": k, "data": v, 'color': color})
-
-    template_data = {
-        "comparison": [{"due_date": "12/12/2023", "id": "COMP123456", "name": "Automata Worksheet",
-                        "link": "/assignnent"},
-                       {"due_date": "10/17/2023", "id": "COMP123456",
-                        "name": "NFA assignment 2", "link": "/ass"},
-                       {"due_date": "10/01/2023", "id": "MAST30026",
-                        "name": "Bayesian inference 4", "link": "/ass"}],
-        "past": [{"due_date": "08/30/2023", "id": "COMP123456",
-                  "name": "Grok Worksheet 1", "link": "/ass"},
-                 {"due_date": "02/26/2023", "id": "COMP123456",
-                  "name": "Grok Worksheet 2", "link": "/ass"}],
-        "id": user.name,
-        "allScores": [{
-            "name": "Score",
-            "data": all_scores,
-            "color": randomcolor.RandomColor().generate()[0]
-        }],
-        "wordCounts": [{
-            "name": "Word Count",
-            "data": word_counts,
-            "color": randomcolor.RandomColor().generate()[0]
-        }],
-        "assignmentLabels": assignmentLabels,
-        "avgScore": avg_score,
-        "submissionPie":  [failures, successful],
-        "submissionCategories": ["Failed", "Success"],
-        "linePunctuation": linePuncData,
-        "lineSentences": lineSentenceData,
-        "lineWords": lineWordData,
-    }
-
-    return render_template('routeProfile/index.html', template_data=template_data)
-
 
 @common.route('/AdminDashboard', methods=["GET"])
 @flask_login.login_required
@@ -183,5 +126,5 @@ def make_items(user: User):
 
     for stud in big_student_set:
         student_items[stud] = User.get_user_json(stud)
-    
+
     return subject_items, student_items

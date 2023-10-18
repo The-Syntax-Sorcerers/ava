@@ -132,7 +132,6 @@ export default function ProfessorDashboard() {
 
     return (
         <div className="flex flex-col min-h-screen custom-pages">
-            <LoggedInNavbar />
             <main className="container flex-grow box-border pt-28 pb-12 w-[100vw] min-h-scren min-w-[85vw] mx-auto">
                 <div className="flex justify-between min-h-screen rounded-3xl custom-dashboard-background-colouring">
                     {/* Sidebar */}
@@ -158,10 +157,16 @@ export default function ProfessorDashboard() {
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection states={ buttonModesConfig } currentState={ currentState } assignment={ focusedAssignment }/>
+                        <AnalysisSection 
+                            states={ buttonModesConfig } 
+                            currentState={ currentState } 
+                            assignment={ focusedAssignment }
+                            analytics={ currentStudent.analytics }
+                        />
                     </div>
                 </div>
             </main>
+            <LoggedInNavbar/>
             <Footer/>
         </div>
     )
