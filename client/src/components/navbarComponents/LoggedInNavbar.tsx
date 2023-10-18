@@ -4,16 +4,25 @@ import { Key } from 'react';
 
 // The list of link elements to add in [title, url] pairs
 const routes = [
-    ['Subjects', '/dashboard'],
-    ['Assignments', '/assignments'],
+    ['Admin Dashboard', '/AdminDashboard', "teacher"],
+    ['Subjects', '/dashboard', "student"],
+    ['Assignments', '/assignments', "student"],
     // ['Profile', '/profile'],
-    ['Log Out', '/logout']
+    ['Log Out', '/logout', 'student']
 ]
 
 // Allows dynamically adding link elements to the navbar
 function NavBarElement({route}: {route: string[]}) {
+    const data = (globalThis as any).template_data;
+    const user_type = data.user_type;
+
     const title = route[0];
     const url = route[1];
+    const routeType = route[2];
+
+    if(routeType === "teacher" && user_type !== "teacher") {
+        return null;
+    }
 
     return (
         <li>
