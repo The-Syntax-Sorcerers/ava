@@ -32,7 +32,7 @@ function SubmittedIndicator({valid, click, id}: {valid: string | boolean, click:
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                View Results A-{ id }
+                View Results
             </button>
         </div>
     )
@@ -49,7 +49,7 @@ function NotSubmittedIndicator({click, id}: {click: (event: any) => void, id: nu
                 value={ id }
                 onClick={ click }
                 className="custom-view-submission-button w-full">
-                Submit A-{ id }
+                Submit
             </button>
         </div>
     )
