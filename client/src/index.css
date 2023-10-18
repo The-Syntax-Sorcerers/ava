@@ -214,6 +214,7 @@
         w-full max-w-[50%] px-3 py-0.5 leading-normal border-2 flex flex-col justify-center items-center min-h-max;
     }
 
+    /* This tag applies to the text of the cards displaying current subject/student selection */
     .custom-info-card-content {
         @apply text-center break-all max-w-full flex
     }
@@ -247,7 +248,7 @@
 
     /* 
      * ------------------------------------------------------------------------------------------
-     *
+     * Miscellaneous
      * ------------------------------------------------------------------------------------------
      */
 
