@@ -106,19 +106,20 @@ def create_subject():
         print('User is not a teacher')
         return redirect(url_for('common.dashboard'))
 
-    sub = Subject(request.form.get('id'), request.form.get('desc'), user.email, request.form.get('name'))
+    sub = Subject(request.form.get('id'), request.form.get(
+        'desc'), user.email, request.form.get('name'))
 
     Subject.create_subject(sub)
     return redirect(url_for('common.dashboard'))
+
 
 @subjects.route('/<sub_id>/add_student', methods=["POST"])
 @flask_login.login_required
 def add_student_subject(sub_id):
     print("adding student")
     user: User = flask_login.current_user
-    user_type = user.get_user_type()
 
-    if not user_type == "teacher":
+    if not user.user_type == "teacher":
         print('User is not a teacher')
         return redirect("/dashboard")
 
@@ -130,5 +131,5 @@ def add_student_subject(sub_id):
         print('Student is not valid')
     else:
         subject.add_student(stud)
-        
+
     return redirect(f"/subjects/{sub_id}")
