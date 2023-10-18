@@ -1,30 +1,18 @@
-
-# Flask Dependencies
-flask
-Werkzeug==2.3.7
-WTForms
-
-flask_login
-flask-wtf
-email_validator
-
-datetime
-python-dotenv
-supabase
-randomcolor
-
-# ML Dependencies
-# numpy
-# nltk
-# gensim
-
-# Front-End Dependencies
-
-# Testing dependencies
-pytest
-pytest-flask
-
-# Testing requirements
-beautifulsoup4==4.12.2
-pre-commit==3.4.0
-pytest-dotenv
+# Final reqs
+DateTime~=5.2
+pytest~=7.4.1
+beautifulsoup4~=4.12.2
+flask~=2.3.3
+storage3~=0.5.4
+supabase~=1.0.4
+werkzeug~=2.3.7
+WTForms~=3.0.1
+gotrue~=1.0.4
+postgrest~=0.10.8
+pytest-dotenv~=0.5.2
+pytest-flask~=1.2.0
+python-dateutil~=2.8.2
+python-dotenv~=1.0.0
+Flask-Login~=0.6.2
+Flask-WTF~=1.1.1
+randomcolor~=0.4.4.6
