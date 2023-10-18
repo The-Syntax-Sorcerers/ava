@@ -8,11 +8,11 @@ from flask import Blueprint, flash, redirect, url_for, request
 from gotrue.errors import AuthApiError
 from postgrest import APIError
 
-from server.extensions import supabase_anon, set_cookies, get_cookies, clear_cookies
-from server.models.flaskforms import LoginForm
-from server.models.models import User
+from server.extensions import supabase_anon, set_cookies, clear_cookies
+from server.models import User
 
-auth = Blueprint('auth', __name__, template_folder=os.getcwd()+"/client/dist", static_folder=os.getcwd()+"/client/dist")
+auth = Blueprint('auth', __name__, template_folder=os.getcwd() + "/client/dist",
+                 static_folder=os.getcwd() + "/client/dist")
 
 
 @auth.route('/login', methods=["POST"])
@@ -26,7 +26,7 @@ def login():
     # Validating CSRF token prevents Cross-site forgery attacks!!
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
-    email = request.form.get('email')
+    email = request.form.get('email').lower()
     password = request.form.get('password')
 
     try:
@@ -50,7 +50,7 @@ def login():
         }
 
     set_cookies(temp_cookies)
-    return redirect(url_for('common.dashboard'))
+    return redirect(url_for('common.index'))
 
 
 @auth.route('/signup', methods=['POST'])
@@ -69,6 +69,8 @@ def signup():
     email = request.form.get('email')
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
+    print(password)
+    print(confirmPassword)
 
     if password != confirmPassword:
         temp_cookies = {
@@ -94,7 +96,7 @@ def signup():
             return redirect(url_for('common.index'))
 
         except (AuthApiError, APIError) as e:
-            if type(e) == AuthApiError:
+            if e is AuthApiError:
 
                 temp_cookies = {
                     "showModal": True,
@@ -103,7 +105,7 @@ def signup():
                     "signup_error": e.message,
                     "signupform": request.form
                 }
-            elif type(e) == APIError:
+            elif e is APIError:
                 temp_cookies = {
                     "showModal": True,
                     "showLogin": False,

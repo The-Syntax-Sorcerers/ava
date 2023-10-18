@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ava - Professor Dashboard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      {% if template_data %}
+          globalThis.template_data = {{ template_data | tojson | safe }};
+      {% endif %}
+      console.log("GlobalThis set! \nTemplate Data ==", globalThis.template_data);
+    </script>
+    <script type="module" src="./entry.tsx"></script>
+  </body>
+</html>

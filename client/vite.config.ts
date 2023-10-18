@@ -12,12 +12,15 @@ export default defineConfig({
   plugins: [react(),
     redirect({from: '/', to: '/routeIndex/'}),
     redirect({from: '/dashboard', to: '/routeDashboard/'}),
+    redirect({from: '/login', to: '/routeDashboard/'}),
+    redirect({from: '/signup', to: '/routeDashboard/'}),
     redirect({from: '/subject', to: '/routeSubject/'}),
     redirect({from: '/assignments', to: '/routeAssignments/'}),
     redirect({from: '/logout', to: '/routeIndex/'}),
     redirect({from: '/profile', to: '/routeProfile/'}),
     redirect({from: '/privacy_policy', to: '/routePrivacyPolicy/'}),
     redirect({from: '/assignment', to: '/routeAssignment/'}),
+    redirect({from: '/AdminDashboard', to: '/routeProfessorDashboard/'}),
   ],
   build: {
     outDir,
@@ -30,7 +33,8 @@ export default defineConfig({
         privacyPolicy: resolve(root, 'routePrivacyPolicy', 'index.html'),
         subject: resolve(root, 'routeSubject', 'index.html'),
         assignment: resolve(root, 'routeAssignment', 'index.html'),
-        profile: resolve(root, 'routeProfile', 'index.html')
+        profile: resolve(root, 'routeProfile', 'index.html'),
+        AdminDashboard: resolve(root, 'routeProfessorDashboard', 'index.html')
       }
     }
   },

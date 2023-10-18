@@ -1,7 +1,7 @@
 import './subject.css'
 import ReactDOM from "react-dom/client";
 import React from "react";
-import AssignmentsPage from "./subject";
+import SubjectPage from "./subject";
 
 if ((globalThis as any).template_data === undefined) {
     (globalThis as any).template_data = {
@@ -17,7 +17,8 @@ if ((globalThis as any).template_data === undefined) {
                             "name": "Stupid Assignment 2", "link": "/ass"}],
         "subject": {"id": "BSBS873295", "name": "Intro to BS",
                     "description": "Bullshit is everywhere, and we've had enough. We want to teach people to detect and defuse bullshit where ever it may arise.",
-                    "prof": "Carl T. Bergstrom"}
+                    "prof": "Carl T. Bergstrom"},
+        "students": [{"name": "Jimmy", "link": "/profile"}],
     };
     console.log("Mock data:", (globalThis as any).template_data)
 }
@@ -28,6 +29,6 @@ else {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AssignmentsPage/>
+    <SubjectPage/>
   </React.StrictMode>,
 )
