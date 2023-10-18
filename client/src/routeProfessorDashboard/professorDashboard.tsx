@@ -74,7 +74,6 @@ export default function ProfessorDashboard() {
     // Stores the currently selected student, subject, and set of assignments
     const [currentSubject, setCurrentSubject]: any = useState(subjectItemsArray[0]);
     const [currentStudent, setCurrentStudent]: any = useState(studentItems[currentSubject.students[0]]);
-    // const [currentAssignments, setCurrentAssignments]: any = useState(currentStudent.submissions)
     const [submittedAssignments, setSubmittedAssignments]: any = useState([]); // Student's submitted assignments
     const [unsubmittedAssignments, setUnsubmittedAssignments]: any = useState([]); //student's unsubmitted assignments
     const [currentStudents, setCurrentStudents]: any = useState([]); // Students in current subject
@@ -110,14 +109,11 @@ export default function ProfessorDashboard() {
     // Handles the page logic after a new subject is selected based on returned subject_id
     const handleSubjectSelection: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
-        // Collected subject id
         const subject_id = event.currentTarget.value;
         
-        // TODO: Check these actually work
         setCurrentSubject(subjectItems[subject_id]);
         updateStudentList(subject_id)
         setCurrentStudent(studentItems[subjectItems[subject_id].students[0]])
-        // setCurrentAssignments(studentItems[subjectItems[subject_id].students[0]]);
         updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
@@ -128,20 +124,12 @@ export default function ProfessorDashboard() {
         event.preventDefault();
         const student_id = event.currentTarget.value;
 
-        // TODO: Check these actually work
         setCurrentStudent(studentItems[student_id]);
-        // setCurrentAssignments(studentItems[student_id].submissions);
         updateAssignments(studentItems[student_id].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
     }
 
-    // Handles the page logic after an assignment has been submitted
-    // const handleSubmission = () => {
-
-    // }
-
-    // console.log("============================================================")
     return (
         <div className="flex flex-col min-h-screen custom-pages">
             <LoggedInNavbar />
@@ -178,4 +166,3 @@ export default function ProfessorDashboard() {
         </div>
     )
 }
-

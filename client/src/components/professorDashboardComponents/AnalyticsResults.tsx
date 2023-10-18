@@ -1,5 +1,6 @@
 import FileComponent from "../assignmentComponents/FileComponent";
 
+// Creates the subsection of the analysis section that shows the results and analytics of the current assignment upload
 export default function AnalyticsResults({ass}: {ass: any}) {
     return (
         <div className="flex flex-col justify-center">
@@ -13,7 +14,6 @@ export default function AnalyticsResults({ass}: {ass: any}) {
                 </p>
             </p>
 
-            
             <div className="flex justify-center">
                 <h1 className="flex justify-center items-center h-12 border-gray-100 border-2 border-solid rounded-full w-3/4 mt-1">
                     Similarity Score:&#160;
@@ -33,7 +33,6 @@ export default function AnalyticsResults({ass}: {ass: any}) {
                 </button>
             </div>
             
-
             <div className="justify-center items-center">
                 <FileComponent subject_id={ass.subject_id} assignment_id={ass.assignment_id} user_id={ass.user_id} />
             </div>

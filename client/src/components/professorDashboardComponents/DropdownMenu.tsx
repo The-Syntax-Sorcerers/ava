@@ -8,11 +8,6 @@ function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) 
     return (
         <>
         <li className='flex w-full'>
-            {/* <div  
-                onClick={ click }
-                datatype={ menuItem.id }
-                className="custom-dropdown-menu-element cursor-pointer">
-                { name } </div> */}
             <button 
                 onClick={ click }
                 value={ menuItem.id }
@@ -29,8 +24,6 @@ function DropdownElement({menuItem, click}: {menuItem: any, click: (event: any) 
 
 // Allows dynamically adding the dropdown menu of items 
 function DropdownItems({menuItems, subtitle, click}: {menuItems: object[], subtitle: string, click: (event: any) => void}) {
-    {/* TODO: Grab the data from the server here? */}
-    
     return (
         <>
         <div className="custom-dropdown-menu">

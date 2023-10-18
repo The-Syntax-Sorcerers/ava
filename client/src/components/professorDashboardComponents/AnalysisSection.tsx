@@ -6,8 +6,8 @@ interface StatesDict {
     [key: string]: string
 }
 
+// Creates the subsection of the dashboard relating to the assignment upload status and results
 export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict, currentState: string, assignment: any}) {
-
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}

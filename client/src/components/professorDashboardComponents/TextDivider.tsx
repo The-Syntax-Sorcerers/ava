@@ -2,13 +2,13 @@
 export default function TextDivider({text}: {text: string}) {
     return (
         <div className="flex items-center w-11/12 m-4">
-                <div className="flex-grow h-0 border-t border-black"></div>
-                <div className="flex justify-center items-center">
-                    <h1 className="px-2 text-xs font-semibold">
-                        { text }
-                    </h1>
-                </div>
-                <div className="flex-grow h-0 border-t border-black"></div>
+            <div className="flex-grow h-0 border-t border-black"></div>
+            <div className="flex justify-center items-center">
+                <h1 className="px-2 text-xs font-semibold">
+                    { text }
+                </h1>
             </div>
+            <div className="flex-grow h-0 border-t border-black"></div>
+        </div>
     )
 }
