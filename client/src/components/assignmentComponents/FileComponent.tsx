@@ -1,9 +1,8 @@
 import {useState} from 'react';
 import LoadingIcon from "../Loading";
 
-export default function FileComponent() {
-
-    // const data = (globalThis as any).template_data
+export default function FileComponent({subject_id, assignment_id, user_id, previewWidth}: {subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
+    console.log("Renderinf FileComponent for", subject_id, assignment_id, user_id);
 
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
@@ -29,15 +28,24 @@ export default function FileComponent() {
           return;
         }
 
-        console.log(event)
+
+
+        let endpoint: string;
+        if(user_id !== undefined) {
+            endpoint = `/submit_assignment/${subject_id}/${assignment_id}/${user_id}`
+        }
+        else {
+            endpoint = `/submit_assignment/${subject_id}/${assignment_id}`
+        }
+        
         // Disable the submit button
+        console.log(event)
         event.target.elements.submitButton.disabled = true;
-        event.target.elements.submitButton.className = event.target.elements.submitButton.className + "bg-gray-200"
+        // event.target.elements.submitButton.className = event.target.elements.submitButton.className + "bg-gray-200"
     
         const formData = new FormData();
         formData.append('form_file', selectedDocs[0]);
         
-        const endpoint = window.location.pathname + "/submit_assignment"
         try {
           const response = await fetch(endpoint, {
             method: 'POST',
@@ -57,9 +65,18 @@ export default function FileComponent() {
 
     const fetchSubmittedAssignment = async () => {
         console.log("Fetching File")
+
+        let endpoint: string;
+        if(user_id !== undefined) {
+            endpoint = `/fetch_assignment/${subject_id}/${assignment_id}/${user_id}`
+        }
+        else {
+            endpoint = `/fetch_assignment/${subject_id}/${assignment_id}`
+        }
+        console.log('getting endpoint', endpoint)
+
         try {
-            const response = await fetch(window.location.pathname + "/fetch_assignment_file");
-            
+            const response = await fetch(endpoint);
             if(response.status === 204) { return undefined; }
             const blob = await response.blob();
             
@@ -67,7 +84,7 @@ export default function FileComponent() {
             console.log("Response:", response, "Blob", blob, "Blob text", blob.text())
             // Create a File object from the received blob
             console.log("Response headers:", response.headers)
-            const filename = response.headers.get('filename') || "default.txt";
+            const filename = response.headers.get('filename') || "Filename Not Found";
             const tempFile = new File([blob], filename, { type: response.headers.get('Content-Type') || undefined});
     
             // Now, you can use the tempFile object as needed
@@ -101,14 +118,14 @@ export default function FileComponent() {
 
             {fileSubmitted ? (
                 <div>
-                    <UploadPreview selectedDocs={selectedDocs}/>
+                    <UploadPreview selectedDocs={selectedDocs} previewWidth={previewWidth} />
                     <p className="text-base mb-4">Looks Like you've already submitted an assignment. Do you want to submit another one?</p>
                 </div>
             ) : (<></>)}
 
             {fileUploaded ? (
                 <div>
-                    <UploadPreview selectedDocs={selectedDocs}/>
+                    <UploadPreview selectedDocs={selectedDocs} previewWidth={previewWidth} />
                     <form onSubmit={handleSubmit} className="flex items-center grid grid-cols-1 auto-cols-auto gap-4 mt-10">
                         <input id="form_file" name="form_file" type="file" className="hidden" accept="text/plain"/>
                         <div>
@@ -160,7 +177,7 @@ function Dropzone({handleUpload }: {handleUpload: (event: any) => void}) {
     );
 }
 
-function UploadPreview({ selectedDocs }: { selectedDocs: any }) {
+function UploadPreview({ selectedDocs, previewWidth }: { selectedDocs: any, previewWidth?: any }) {
     // #view=FitH&scrollbar=0&toolbar=0&statusbar=0&messages=0&navpanes=0
     const docs = selectedDocs.map((file: any) => ({
                 uri: window.URL.createObjectURL(file) + '#view=FitH&scrollbar=0&statusbar=0&messages=0&navpanes=0',
@@ -168,6 +185,10 @@ function UploadPreview({ selectedDocs }: { selectedDocs: any }) {
                 fileType: file.type
             }))
     const doc = docs.length > 0 ? docs[0] : '';
+
+    if(previewWidth == undefined) {
+        previewWidth = '100%'
+    }
 
     if(docs.length > 0) {
         return (
@@ -177,7 +198,7 @@ function UploadPreview({ selectedDocs }: { selectedDocs: any }) {
                     <iframe
                         src={doc.uri}
                         className="container rounded-3xl overflow-auto overscroll-auto shadow-lg p-6 bg-preview-border"
-                        style={{ height: 700, width: '70%' }}
+                        style={{ height: 700, width: previewWidth }}
                         title={doc.fileName}
                     />
                 </div>
