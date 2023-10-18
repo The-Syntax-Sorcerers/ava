@@ -81,8 +81,8 @@ class User(UserMixin):
         # Check if the requesting user is allowed to perform this action
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
-                res = supabase_sec.table('User').select('*').eq('id', id).execute().data
-                if res['email'] == user_email and res['name'] == user_name:
+                res = supabase_sec.table('User').select('*').eq('id', user_id).execute().data
+                if res[0]['email'] == user_email and res[0]['name'] == user_name:
                     # Send a DELETE request to the Supabase table to delete the user by ID
                     res = supabase_sec.table('User').delete().eq('id', user_id).execute()
 
@@ -311,9 +311,6 @@ class Storage:
 
     def __init__(self, sec=supabase_sec):
         self.initialised = True
-        self.supabase_sec = sec
-        self.ass_bucket = 'ava-prod-assignments'
-        self.past_ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
     def list_past_assignments(user_email):
@@ -395,34 +392,35 @@ class Storage:
     def exists_assignment_bool(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = supabase_sec.storage.from_(
-            CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
         return False
 
-    def cron_get_all_uploaded_assignments(self, subject_id, assignment_id):
+    @staticmethod
+    def cron_get_all_uploaded_assignments(subject_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
         final_dict = {}
         try:
-            res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+            res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
             for obj in res:
                 temp_user_id = obj['name']
-                final_dict[temp_user_id] = self.download_current_assignment(subject_id, assignment_id, temp_user_id)
-            self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
-            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq(
+                final_dict[temp_user_id] = Storage.download_current_assignment(subject_id, assignment_id, temp_user_id)
+            Storage.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
+            supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq(
                 'id', assignment_id).execute()
         except:
             pass
 
         return final_dict
 
-    def __cron_delete_entire_assignments_folder(self, subject_id, assignment_id):
+    @staticmethod
+    def __cron_delete_entire_assignments_folder(subject_id, assignment_id):
         try:
             path = f'{subject_id}/{assignment_id}'
-            return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
+            return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).remove(path)
         except:
             return None
 
@@ -431,35 +429,44 @@ class PastStorage:
 
     def __init__(self, sec=supabase_sec):
         self.initialised = True
-        self.supabase_sec = sec
-        self.ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
-    def construct_path(user_email, subject_id, assignment_id):
+    def construct_path(user_email, assignment_id):
         user_name = user_email.split('@')[0]
-        return f'{user_name}/{subject_id}-{assignment_id}'
+        return f'{user_name}/{assignment_id}'
 
-    def upload_assignment(self, file, user_id, subject_id, assignment_id):
-        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
-        path = self.construct_path(res[0].user_email, subject_id, assignment_id)
-        if not self.exists_assignment(user_id, subject_id, assignment_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
-        return None
+    @staticmethod
+    def upload_assignment(file, user_id, assignment_id):
+        res = supabase_sec.table('User').select('email').eq('id', user_id).execute().data
+        path = PastStorage.construct_path(res[0]['email'], assignment_id)
 
-    def download_assignment(self, user_id, subject_id, assignment_id):
+        PastStorage.delete_assignment(res[0]['email'], assignment_id)
+        return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).upload(path, file)
+
+    @staticmethod
+    def download_assignment(user_id, assignment_id):
         # Will return a byte stream.
         res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
         try:
-            path = self.construct_path(res[0].user_email, subject_id, assignment_id)
-            return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
+            path = PastStorage.construct_path(res[0].user_email, assignment_id)
+            return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
         except:
             return None
 
-    def exists_assignment(self, user_id, subject_id, assignment_id):
+    @staticmethod
+    def delete_assignment(user_email, assignment_id):
+        path = PastStorage.construct_path(user_email, assignment_id)
+        try:
+            return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).remove(path)
+        except:
+            return
+
+    @staticmethod
+    def exists_assignment(self, user_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{user_id}')
+        res = self.supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{user_id}')
         for obj in res:
-            if obj['name'] == f'{subject_id}-{assignment_id}':
+            if obj['name'] == f'{assignment_id}':
                 return [obj]
         return []
