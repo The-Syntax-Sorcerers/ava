@@ -6,7 +6,8 @@ interface StatesDict {
     [key: string]: string
 }
 
-export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict,currentState: string, assignment: any}) {
+export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict, currentState: string, assignment: any}) {
+
     return (
         <>
         {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
@@ -21,13 +22,13 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
         {/* 2. For comparing against the student */}
         {currentState === states.compareMode ? (
             <>
-            <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
-                Comparrison Mode
-            </h1>
-            <p className="text-base mb-2 pl-2 flex flex-col">
-                Upload a document to compare against the student's body of work without uploading it to their profile
-            </p>
-            <FileComponent/>
+                <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                    Comparrison Mode
+                </h1>
+                <p className="text-base mb-2 pl-2 flex flex-col">
+                    Upload a document to compare against the student's body of work without uploading it to their profile
+                </p>
+                {/* <FileComponent subject_id={} assignment_id={} user_id={}/> */}
             </>
         ) : (
             null
@@ -36,16 +37,16 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
         {/* 3. For uploading for the student */}
         {currentState === states.uploadMode ? (
             <>
-            <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
-                { assignment.name }
-            </h1>
-            <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
-                Description:
-                <p className="pl-4 font-normal">
-                    { assignment.description }
+                <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                    { assignment.name }
+                </h1>
+                <p className="text-base font-semibold mb-2 pl-2 flex flex-col">
+                    Description:
+                    <p className="pl-4 font-normal">
+                        { assignment.description }
+                    </p>
                 </p>
-            </p>
-            <FileComponent/>
+                <FileComponent subject_id={assignment.subject_id} assignment_id={assignment.assignment_id} user_id={assignment.user_id} />
             </>
         ) : (
             null

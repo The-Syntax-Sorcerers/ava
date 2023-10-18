@@ -82,7 +82,7 @@ class User(UserMixin):
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
                 res = supabase_sec.table('User').select('*').eq('id', id).execute().data
-                if (res['email'] == user_email) and (res['name'] == user_name):
+                if res['email'] == user_email and res['name'] == user_name:
                     # Send a DELETE request to the Supabase table to delete the user by ID
                     res = supabase_sec.table('User').delete().eq('id', user_id).execute()
 
@@ -126,6 +126,22 @@ class User(UserMixin):
 
         supabase_sec.table('User').insert(dto).execute()
         print("Signed up:", email)
+
+    @staticmethod
+    def get_user_json(user_id):
+        u = User.get_user(user_id)
+        payload = u.get_payload_format()
+        payload['submissions'] = u.get_assignments_json()
+        return payload
+
+    def get_assignments_json(self):
+        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+
+        assigns = []
+        for data_dict in res.data:
+            sub_id = data_dict['subject_id']
+            assigns += Assignment.get_all_assignments_json(sub_id, self.id)
+        return assigns
 
     def get_payload_format(self):
         return {
@@ -183,7 +199,7 @@ class Subject:
         subs = []
         for r in res.data:
             subs.append(Subject(r['id'], r['description'],
-                        r['professor_email'], r['name']))
+                                r['professor_email'], r['name']))
         return subs
 
     @staticmethod
@@ -192,6 +208,10 @@ class Subject:
             supabase_sec.table('Subject').insert(temp_sub.get_payload_format()).execute()
         except:
             pass
+
+    def get_student_ids_list(self):
+        res = supabase_sec.table('StudentSubject').select('student_id').eq('subject_id', self.subject_id).execute()
+        return [student_dict.get('student_id') for student_dict in res.data]
 
     def get_payload_format(self):
         data = {
@@ -241,8 +261,16 @@ class Assignment:
                 '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
         if res:
             res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'], res['due_datetime'])
+            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'],
+                              res['due_datetime'])
         return None
+
+    @staticmethod
+    def create_assignment(data):
+        try:
+            supabase_sec.table('Assignment').insert([data]).execute()
+        except:
+            pass
 
     # Returns all assignments using a given subject_id
     @staticmethod
@@ -252,19 +280,31 @@ class Assignment:
         else:
             res = supabase_sec.table('Assignment').select('*').execute().data
         if res:
-            return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']) for r in res]
+            return [Assignment(r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'],
+                               r['due_datetime']) for r in res]
         return []
 
+    # Returns all assignments using a given subject_id
     @staticmethod
-    def create_assignment(data):
-        try:
-            supabase_sec.table('Assignment').insert([data]).execute()
-        except:
-            pass
+    def get_all_assignments_json(subject_id, user_id):
+        ass = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+        final_list = []
 
-    # will return a dict representation
-    def to_dict(self):
-        return {"due_date": self.due_date, "id": self.id, "name": self.name}
+        for a in ass:
+            res = supabase_sec.table('SubjectAssignmentUser').select('similarity_score').eq('subject_id',
+                    subject_id).eq('assignment_id', a['id']).eq('user_id', user_id).execute()
+
+            similarity_score = res.data[0]['similarity_score'] if res.data else None
+            final_list.append({
+                "assignment_id": a['id'],
+                "subject_id": subject_id,
+                "user_id": user_id,
+                "description": a['description'],
+                "name": a['name'],
+                "similarity_score": similarity_score
+            })
+
+        return final_list
 
 
 class Storage:
@@ -372,7 +412,8 @@ class Storage:
                 temp_user_id = obj['name']
                 final_dict[temp_user_id] = self.download_current_assignment(subject_id, assignment_id, temp_user_id)
             self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
-            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq('id', assignment_id).execute()
+            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq(
+                'id', assignment_id).execute()
         except:
             pass
 

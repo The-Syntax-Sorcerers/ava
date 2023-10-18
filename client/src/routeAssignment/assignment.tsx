@@ -25,7 +25,7 @@ export default function AssignmentPage() {
             <LoggedInNavbar />
             <main className="container mx-auto flex-grow box-border pt-28 pb-12 w-5/6">
                 <div className="container mx-auto">
-                    <h1 className="text-2xl font-semibold mb-4">{assignment.id} - {assignment.name}</h1>
+                    <h1 className="text-2xl font-semibold mb-4">{assignment.subject_id} - {assignment.name}</h1>
                     <h2 className="text-lg font-semibold mb-4">Due on: {assignment.due_date}</h2>
                     <p className="text-base mb-4">Description: {assignment.description}</p>
                     <p className="text-base mb-4">Marks: {assignment.marks}</p>
@@ -41,7 +41,7 @@ export default function AssignmentPage() {
                         </>
                     ) : (
                         <>
-                            <FileComponent />
+                            <FileComponent subject_id={assignment['subject_id']} assignment_id={assignment['id']} previewWidth={'70%'} />
                             {showSubmitModal ? (
                                 <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={serverVerificationSuccess}/>
                             ) : null
