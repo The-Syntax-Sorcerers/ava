@@ -43,7 +43,9 @@ export default function AnalysisSection({states, currentState, assignment, analy
                 <CircleProgressCard data={analytics.avgScore} title="Average Score"/>
                 <GraphCard data={analytics.lineWords} optionsCategories={analytics.assignmentLabels} title="Word Analysis"/>
                 <GraphCard data={analytics.wordCounts} optionsCategories={analytics.assignmentLabels} title="Word Counts"/>
-            </div>) : (null)
+            </div>
+
+        ) : (null)
         }
 
         {/* 2. For comparing against the student */}

@@ -2,12 +2,13 @@ import {useEffect, useState} from 'react';
 import LoadingIcon from "../Loading";
 
 export default function FileComponent({user_email, subject_id, assignment_id, user_id, previewWidth}: {user_email: any, subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
-    console.log("Renderinf FileComponent for", subject_id, assignment_id, user_id);
+    console.log("Rendering FileComponent for", subject_id, assignment_id, user_id);
 
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
     const [serverFetched, setServerFetched] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
+    const [showLoading, setShowLoading] = useState(false);
 
     useEffect(() => {
         // Reset selectedDocs when props change
@@ -36,7 +37,9 @@ export default function FileComponent({user_email, subject_id, assignment_id, us
           return;
         }
 
-
+        // Disable the submit button
+        console.log(event)
+        event.target.elements.submitButton.disabled = true;
 
         let endpoint: string;
         if(user_id !== undefined) {
@@ -46,14 +49,12 @@ export default function FileComponent({user_email, subject_id, assignment_id, us
             endpoint = `/submit_assignment/${subject_id}/${assignment_id}`
         }
         
-        // Disable the submit button
-        console.log(event)
-        event.target.elements.submitButton.disabled = true;
-        // event.target.elements.submitButton.className = event.target.elements.submitButton.className + "bg-gray-200"
-    
+
         const formData = new FormData();
         formData.append('form_file', selectedDocs[0]);
         
+        event.target.elements.submitButton.innerHTML = 'Finalizing Submission & Running ML Model'
+        setShowLoading(true);
         try {
           const response = await fetch(endpoint, {
             method: 'POST',
@@ -159,21 +160,7 @@ export default function FileComponent({user_email, subject_id, assignment_id, us
     
         fetchData();
     }, [selectedDocs, serverFetched]);
-    
-    
 
-    // if (selectedDocs.length === 0) {
-    //     fetchSubmittedAssignment().then((tempFile) => {
-    //         if(tempFile !== undefined) {
-    //             console.log("Setting selectedDocs to", tempFile)
-    //             setSelectedDocs([tempFile]);
-    //             setFileSubmitted(true);
-    //         }
-    //         setServerFetched(true);
-    //     })
-    // }
-    
-    const subButton = document.getElementById('submitButton') as HTMLButtonElement;
     return (
         <>  
             <div className="flex items-center">
@@ -208,8 +195,7 @@ export default function FileComponent({user_email, subject_id, assignment_id, us
                             flex justify-center items-center"
                             type="submit"
                             >
-                                Submit
-                               {subButton && subButton.disabled ? <LoadingIcon hasLoaded={false}></LoadingIcon> : null}
+                            Submit {showLoading ? < LoadingIcon hasLoaded={false} /> : null}
                         </button>
                     </form>
                 </div>
