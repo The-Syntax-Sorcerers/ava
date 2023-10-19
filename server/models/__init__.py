@@ -138,7 +138,7 @@ class User(UserMixin):
 
         # Query Supabase table
         response = supabase_sec.table('SubjectAssignmentUser').select(
-            '*').eq('user_id', self.id).execute()
+            '*').eq('user_id', self.id).order('created_at', desc=False).execute()
         for res in response.data:
             assignmentLabels.append(str(res['assignment_id']))
             punc_vecs['Periods'].append(res['punc_periods'])
@@ -175,11 +175,14 @@ class User(UserMixin):
                 round(res['word_avg_length'], 1))
             word_vecs['Token Type Ratio'].append(round(res['word_ttr'], 1))
             word_counts.append(res['word_count'])
-            all_scores.append(res['similarity_score'])
+            all_scores.append(round(res['similarity_score'], 2)*100)
 
-        successful = [x for x in all_scores if x > 0.5]
+        successful = [x for x in all_scores if x > 50]
         failures = len(all_scores) - len(successful)
-        avg_score = sum(all_scores) / len(all_scores)
+        if len(all_scores) > 0:
+            avg_score = round(sum(all_scores) / len(all_scores))
+        else:
+            avg_score = 0
 
         return punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
             all_scores, failures, len(successful), avg_score
