@@ -41,21 +41,15 @@ def submit_assignment(sub_id, ass_id, user_id):
         if Storage.upload_current_assignment(file_bytes, sub_id, ass_id, user_id):
             temp_cookies['verificationSuccess'] = True
 
-        run_ml(file_bytes, sub_id, ass_id, user_id)
+        invoke_lambda_function(sub_id, ass_id, user_id)
+        PastStorage.upload_assignment(file_bytes, user_id, ass_id)
 
     set_cookies(temp_cookies)
     return redirect(url_for('subjects.assignment_page', sub_id=sub_id, ass_id=ass_id))
 
 
-def run_ml(file_bytes, subject_id, ass_id, user_id):
+def invoke_lambda_function(subject_id, assignment_id, user_id):
     user_email = supabase_sec.table('User').select('email').eq('id', user_id).execute().data[0]['email']
-
-    lambda_response = invoke_lambda_function(user_email, subject_id, ass_id, user_id)
-    PastStorage.upload_assignment(file_bytes, user_id, ass_id)
-    return lambda_response
-
-
-def invoke_lambda_function(user_email, subject_id, assignment_id, user_id):
 
     base = 'https://venmji33ak3elhyzxs4l7qkahu0nltef.lambda-url.ap-southeast-2.on.aws'
     params = f'/predict?user_email={user_email}&subject_id={subject_id}&assignment_id={assignment_id}&user_id={user_id}'
@@ -72,7 +66,7 @@ def invoke_lambda_function(user_email, subject_id, assignment_id, user_id):
     response = requests.get(lambda_url, headers=headers)
 
     # Return the response from the Lambda function
-    print(response.text)
+    print("lambda Response", response.text)
     return response.text
 
 
