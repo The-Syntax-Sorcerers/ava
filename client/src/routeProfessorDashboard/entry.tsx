@@ -596,6 +596,410 @@ if ((globalThis as any).template_data === undefined) {
             },                     
         }
     };
+
+
+    (globalThis as any).template_data = {
+        "studentItems": {
+            "9": {
+                "analytics": {
+                    "allScores": [
+                        {
+                            "color": "#e21bd2",
+                            "data": [
+                                100
+                            ],
+                            "name": "Score"
+                        }
+                    ],
+                    "assignmentLabels": [
+                        "1"
+                    ],
+                    "avgScore": 100,
+                    "linePunctuation": [
+                        {
+                            "color": "#ffc1c5",
+                            "data": [
+                                12
+                            ],
+                            "name": "Periods"
+                        },
+                        {
+                            "color": "#e08d82",
+                            "data": [
+                                1
+                            ],
+                            "name": "Commas"
+                        },
+                        {
+                            "color": "#31006b",
+                            "data": [
+                                0
+                            ],
+                            "name": "Semicolons"
+                        },
+                        {
+                            "color": "#f884ff",
+                            "data": [
+                                0
+                            ],
+                            "name": "Colons"
+                        },
+                        {
+                            "color": "#a1dde0",
+                            "data": [
+                                0
+                            ],
+                            "name": "Exclamations"
+                        },
+                        {
+                            "color": "#c7bcf4",
+                            "data": [
+                                0
+                            ],
+                            "name": "Question Marks"
+                        },
+                        {
+                            "color": "#43e8df",
+                            "data": [
+                                0
+                            ],
+                            "name": "Dashes"
+                        },
+                        {
+                            "color": "#9cdee5",
+                            "data": [
+                                0
+                            ],
+                            "name": "Open Parentheses"
+                        },
+                        {
+                            "color": "#23ffe5",
+                            "data": [
+                                0
+                            ],
+                            "name": "Close Parentheses"
+                        },
+                        {
+                            "color": "#56ce06",
+                            "data": [
+                                0
+                            ],
+                            "name": "Double Quotes"
+                        },
+                        {
+                            "color": "#a5291c",
+                            "data": [
+                                0
+                            ],
+                            "name": "Apostrophe"
+                        },
+                        {
+                            "color": "#f8ffaf",
+                            "data": [
+                                0
+                            ],
+                            "name": "Tilda"
+                        },
+                        {
+                            "color": "#6aa6c9",
+                            "data": [
+                                0
+                            ],
+                            "name": "Forward Slash"
+                        }
+                    ],
+                    "lineSentences": [
+                        {
+                            "color": "#d6068d",
+                            "data": [
+                                2
+                            ],
+                            "name": "Count of Sentences Over Average"
+                        },
+                        {
+                            "color": "#c5f27d",
+                            "data": [
+                                2
+                            ],
+                            "name": "Count of Sentences Under Average"
+                        },
+                        {
+                            "color": "#877add",
+                            "data": [
+                                0
+                            ],
+                            "name": "Count of Average Sentences"
+                        },
+                        {
+                            "color": "#a9c6e8",
+                            "data": [
+                                29.8
+                            ],
+                            "name": "Average Sentence Length"
+                        }
+                    ],
+                    "lineWords": [
+                        {
+                            "color": "#bb2bff",
+                            "data": [
+                                23
+                            ],
+                            "name": "Rare Word Count"
+                        },
+                        {
+                            "color": "#54f792",
+                            "data": [
+                                30
+                            ],
+                            "name": "Long Word Count"
+                        },
+                        {
+                            "color": "#b2750c",
+                            "data": [
+                                36
+                            ],
+                            "name": "Count Over Average"
+                        },
+                        {
+                            "color": "#ac49e5",
+                            "data": [
+                                36
+                            ],
+                            "name": "Count Under Average"
+                        },
+                        {
+                            "color": "#4af795",
+                            "data": [
+                                10
+                            ],
+                            "name": "Count Average"
+                        },
+                        {
+                            "color": "#03ad1c",
+                            "data": [
+                                5
+                            ],
+                            "name": "Average Word Length"
+                        },
+                        {
+                            "color": "#8ea9f9",
+                            "data": [
+                                0.4
+                            ],
+                            "name": "Token Type Ratio"
+                        }
+                    ],
+                    "submissionCategories": [
+                        "Failed",
+                        "Success"
+                    ],
+                    "submissionPie": [
+                        0,
+                        1
+                    ],
+                    "wordCounts": [
+                        {
+                            "color": "#e8bf96",
+                            "data": [
+                                119
+                            ],
+                            "name": "Word Count"
+                        }
+                    ]
+                },
+                "email": "test@gmail.com",
+                "id": 9,
+                "name": "Test",
+                "submissions": [
+                    {
+                        "assignment_id": 10,
+                        "description": "Write stuff in your own words. Do not use ChatGPT or any AI to assist you. WE CAN TELL!!",
+                        "name": "Time 1",
+                        "punc_vec": [
+                            {
+                                "data": null,
+                                "name": "Punctuation Counts"
+                            }
+                        ],
+                        "sent_vec": [
+                            {
+                                "data": null,
+                                "name": "Sentence Analysis"
+                            }
+                        ],
+                        "similarity_score": null,
+                        "subject_id": "TIME10010",
+                        "user_id": 9,
+                        "word_count": null,
+                        "word_vec": [
+                            {
+                                "data": null,
+                                "name": "Word Analysis"
+                            }
+                        ]
+                    },
+                    {
+                        "assignment_id": 7,
+                        "description": "Write stuff in your own words. Do not use ChatGPT or any AI to assist you. WE CAN TELL!!",
+                        "name": "Time 2",
+                        "punc_vec": [
+                            {
+                                "data": null,
+                                "name": "Punctuation Counts"
+                            }
+                        ],
+                        "sent_vec": [
+                            {
+                                "data": null,
+                                "name": "Sentence Analysis"
+                            }
+                        ],
+                        "similarity_score": null,
+                        "subject_id": "TIME10010",
+                        "user_id": 9,
+                        "word_count": null,
+                        "word_vec": [
+                            {
+                                "data": null,
+                                "name": "Word Analysis"
+                            }
+                        ]
+                    },
+                    {
+                        "assignment_id": 1,
+                        "description": "Write stuff in your own words. Do not use ChatGPT or any AI to assist you. WE CAN TELL!!",
+                        "name": "Some BS Assignment",
+                        "punc_vec": [
+                            {
+                                "data": [
+                                    12,
+                                    1,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "name": "Punctuation Counts"
+                            }
+                        ],
+                        "sent_vec": [
+                            {
+                                "data": [
+                                    2,
+                                    2,
+                                    0,
+                                    29.8
+                                ],
+                                "name": "Sentence Analysis"
+                            }
+                        ],
+                        "similarity_score": 1,
+                        "subject_id": "COMP123456",
+                        "user_id": 9,
+                        "word_count": 119,
+                        "word_vec": [
+                            {
+                                "data": [
+                                    23,
+                                    30,
+                                    36,
+                                    36,
+                                    10,
+                                    5,
+                                    0.4
+                                ],
+                                "name": "Word Analysis"
+                            }
+                        ]
+                    },
+                    {
+                        "assignment_id": 23,
+                        "description": "no",
+                        "name": "we want to hire a salesman.",
+                        "punc_vec": [
+                            {
+                                "data": null,
+                                "name": "Punctuation Counts"
+                            }
+                        ],
+                        "sent_vec": [
+                            {
+                                "data": null,
+                                "name": "Sentence Analysis"
+                            }
+                        ],
+                        "similarity_score": null,
+                        "subject_id": "COMP123456",
+                        "user_id": 9,
+                        "word_count": null,
+                        "word_vec": [
+                            {
+                                "data": null,
+                                "name": "Word Analysis"
+                            }
+                        ]
+                    },
+                    {
+                        "assignment_id": 2,
+                        "description": "Write stuff in your own words. Do not use ChatGPT or any AI to assist you. WE CAN TELL!!",
+                        "name": "Assignment 2",
+                        "punc_vec": [
+                            {
+                                "data": null,
+                                "name": "Punctuation Counts"
+                            }
+                        ],
+                        "sent_vec": [
+                            {
+                                "data": null,
+                                "name": "Sentence Analysis"
+                            }
+                        ],
+                        "similarity_score": null,
+                        "subject_id": "COMP123456",
+                        "user_id": 9,
+                        "word_count": null,
+                        "word_vec": [
+                            {
+                                "data": null,
+                                "name": "Word Analysis"
+                            }
+                        ]
+                    }
+                ],
+                "user_type": "student"
+            }
+        },
+        "subjectItems": {
+            "COMP123456": {
+                "description": "This is a basic Description.",
+                "id": "COMP123456",
+                "name": "Intro to DSA",
+                "professor_email": "prof@gmail.com",
+                "students": [
+                    9
+                ]
+            },
+            "TIME10010": {
+                "description": "This is a basic Description.",
+                "id": "TIME10010",
+                "name": "Intro to Time Management",
+                "professor_email": "prof@gmail.com",
+                "students": [
+                    9
+                ]
+            }
+        },
+        "user_type": "teacher"
+    }
+
     console.log("Mock data:", (globalThis as any).template_data)
 }
 else {

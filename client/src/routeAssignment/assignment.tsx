@@ -41,7 +41,7 @@ export default function AssignmentPage() {
                         </>
                     ) : (
                         <>
-                            <FileComponent subject_id={assignment['subject_id']} assignment_id={assignment['id']} previewWidth={'70%'} />
+                            <FileComponent user_email={''} subject_id={assignment['subject_id']} assignment_id={assignment['id']} previewWidth={'70%'} />
                             {showSubmitModal ? (
                                 <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={serverVerificationSuccess}/>
                             ) : null

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import LoadingIcon from "../Loading";
 
-export default function FileComponent({subject_id, assignment_id, user_id, previewWidth}: {subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
+export default function FileComponent({user_email, subject_id, assignment_id, user_id, previewWidth}: {user_email: any, subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
     console.log("Renderinf FileComponent for", subject_id, assignment_id, user_id);
 
     const [fileUploaded, setFileUploaded] = useState(false);
@@ -15,7 +15,7 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
         setFileSubmitted(false);
         setServerFetched(false);
         setFileUploaded(false); 
-    }, [subject_id, assignment_id, user_id]);
+    }, [user_email, subject_id, assignment_id, user_id]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -62,6 +62,9 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
     
           // Handle the response as needed
           console.log('Server response:', response);
+
+          // Call the Lambda function after submitting the assignment
+          await invokeLambdaFunction(user_email, subject_id, assignment_id, user_id);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -69,6 +72,35 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
 
         setFileSubmitted(true);
         setFileUploaded(false);
+    };
+
+    const invokeLambdaFunction = async (
+        user_email: string,
+        subject_id: string,
+        assignment_id: string,
+        user_id: string
+    ) => {
+        try {
+            // Lambda function URL
+            const lambdaBaseURL =
+            'https://venmji33ak3elhyzxs4l7qkahu0nltef.lambda-url.ap-southeast-2.on.aws';
+            const lambdaURL = `${lambdaBaseURL}/predict?user_email=${user_email}&subject_id=${subject_id}&assignment_id=${assignment_id}&user_id=${user_id}`;
+
+            // Make a GET request to the Lambda function URL
+            const lambdaResponse = await fetch(lambdaURL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log("lambdaResponse", lambdaResponse)
+            // Check if the request was successful based on status code
+            if (lambdaResponse.ok) { console.log('Lambda function executed successfully.'); } 
+            else { console.error('Error invoking Lambda function:', lambdaResponse.status); }
+        } 
+        catch (error) { 
+            console.error('Error invoking Lambda function:', error); 
+        }
     };
 
     const fetchSubmittedAssignment = async () => {

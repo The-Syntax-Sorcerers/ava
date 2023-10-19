@@ -1,8 +1,23 @@
 import FileComponent from "../assignmentComponents/FileComponent";
 import BarChartCard, { puncLabels, sentLabels, wordLabels } from "../analysisComponents/barCard";
+import { useEffect, useState } from "react";
 
 // Creates the subsection of the analysis section that shows the results and analytics of the current assignment upload
 export default function AnalyticsResults({ass}: {ass: any}) {
+
+    const [userEmail, setUserEmail] = useState('');
+
+    // Reading in the data from the server or the mock data
+    const data = (globalThis as any).template_data
+    const studentItems = data.studentItems;
+
+    useEffect(() => {
+        // Reset selectedDocs when props change
+        if(ass !== undefined && ass !== null) {
+            setUserEmail(studentItems[ass.user_id].email);
+        }
+    }, [ass]);
+
     return (
         <div className="flex flex-col justify-center">
             <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
@@ -41,7 +56,7 @@ export default function AnalyticsResults({ass}: {ass: any}) {
             </div>
             
             <div className="justify-center items-center">
-                <FileComponent subject_id={ass.subject_id} assignment_id={ass.assignment_id} user_id={ass.user_id} />
+                <FileComponent user_email={userEmail} subject_id={ass.subject_id} assignment_id={ass.assignment_id} user_id={ass.user_id} />
             </div>
         </div>
     )

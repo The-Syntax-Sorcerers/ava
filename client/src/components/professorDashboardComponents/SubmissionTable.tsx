@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Key, useState } from 'react';
 import expand from "../../assets/expand.svg";
 import collapse from "../../assets/collapse.svg";
 
@@ -99,12 +99,12 @@ function SubmissionList({title, submittedClick, unsubmittedClick, currAss}: {
                     <EmptyListElement />
                     ) : (
                     title === "Unsubmitted Assignments" ? (
-                        currAss.map((a) => (
-                        <SubmissionRowElement click={unsubmittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
+                        currAss.map((a, k: Key) => (
+                        <SubmissionRowElement key={k} click={unsubmittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     ) : (
-                        currAss.map((a) => (
-                        <SubmissionRowElement click={submittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
+                        currAss.map((a, k: Key) => (
+                        <SubmissionRowElement key={k} click={submittedClick} name={a.name} score={a.similarity_score} id={a.assignment_id}/>
                         ))
                     )
                 )}
