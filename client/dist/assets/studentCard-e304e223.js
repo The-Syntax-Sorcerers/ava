@@ -1,0 +1,1 @@
+import{j as e}from"./Footer-4485b5ea.js";function t({stu:s}){return e.jsx("a",{href:s.link,children:e.jsx("div",{className:"cursor-pointer custom-subject-cards",children:e.jsx("h3",{className:"text-base font-semibold mb-1",children:s.name})})})}export{t as S};
