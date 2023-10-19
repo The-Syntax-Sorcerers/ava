@@ -41,7 +41,7 @@ def submit_assignment(sub_id, ass_id, user_id):
         if Storage.upload_current_assignment(file_bytes, sub_id, ass_id, user_id):
             temp_cookies['verificationSuccess'] = True
 
-        invoke_lambda_function(sub_id, ass_id, user_id)
+        # invoke_lambda_function(sub_id, ass_id, user_id)
         PastStorage.upload_assignment(file_bytes, user_id, ass_id)
 
     set_cookies(temp_cookies)

@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
 import LoadingIcon from "../Loading";
 
-export default function FileComponent({subject_id, assignment_id, user_id, previewWidth}: {subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
-    console.log("Renderinf FileComponent for", subject_id, assignment_id, user_id);
+export default function FileComponent({user_email, subject_id, assignment_id, user_id, previewWidth}: {user_email: any, subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
+    console.log("Rendering FileComponent for", subject_id, assignment_id, user_id);
 
     const [fileUploaded, setFileUploaded] = useState(false);
     const [fileSubmitted, setFileSubmitted] = useState(false);
     const [serverFetched, setServerFetched] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
+    const [showLoading, setShowLoading] = useState(false);
 
     useEffect(() => {
         // Reset selectedDocs when props change
@@ -15,7 +16,7 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
         setFileSubmitted(false);
         setServerFetched(false);
         setFileUploaded(false); 
-    }, [subject_id, assignment_id, user_id]);
+    }, [user_email, subject_id, assignment_id, user_id]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -36,7 +37,9 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
           return;
         }
 
-
+        // Disable the submit button
+        console.log(event)
+        event.target.elements.submitButton.disabled = true;
 
         let endpoint: string;
         if(user_id !== undefined) {
@@ -46,14 +49,12 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
             endpoint = `/submit_assignment/${subject_id}/${assignment_id}`
         }
         
-        // Disable the submit button
-        console.log(event)
-        event.target.elements.submitButton.disabled = true;
-        // event.target.elements.submitButton.className = event.target.elements.submitButton.className + "bg-gray-200"
-    
+
         const formData = new FormData();
         formData.append('form_file', selectedDocs[0]);
         
+        event.target.elements.submitButton.innerHTML = 'Finalizing Submission & Running ML Model'
+        setShowLoading(true);
         try {
           const response = await fetch(endpoint, {
             method: 'POST',
@@ -62,6 +63,9 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
     
           // Handle the response as needed
           console.log('Server response:', response);
+
+          // Call the Lambda function after submitting the assignment
+          await invokeLambdaFunction(user_email, subject_id, assignment_id, user_id);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -69,6 +73,35 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
 
         setFileSubmitted(true);
         setFileUploaded(false);
+    };
+
+    const invokeLambdaFunction = async (
+        user_email: string,
+        subject_id: string,
+        assignment_id: string,
+        user_id: string
+    ) => {
+        try {
+            // Lambda function URL
+            const lambdaBaseURL =
+            'https://venmji33ak3elhyzxs4l7qkahu0nltef.lambda-url.ap-southeast-2.on.aws';
+            const lambdaURL = `${lambdaBaseURL}/predict?user_email=${user_email}&subject_id=${subject_id}&assignment_id=${assignment_id}&user_id=${user_id}`;
+
+            // Make a GET request to the Lambda function URL
+            const lambdaResponse = await fetch(lambdaURL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log("lambdaResponse", lambdaResponse)
+            // Check if the request was successful based on status code
+            if (lambdaResponse.ok) { console.log('Lambda function executed successfully.'); } 
+            else { console.error('Error invoking Lambda function:', lambdaResponse.status); }
+        } 
+        catch (error) { 
+            console.error('Error invoking Lambda function:', error); 
+        }
     };
 
     const fetchSubmittedAssignment = async () => {
@@ -127,21 +160,7 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
     
         fetchData();
     }, [selectedDocs, serverFetched]);
-    
-    
 
-    // if (selectedDocs.length === 0) {
-    //     fetchSubmittedAssignment().then((tempFile) => {
-    //         if(tempFile !== undefined) {
-    //             console.log("Setting selectedDocs to", tempFile)
-    //             setSelectedDocs([tempFile]);
-    //             setFileSubmitted(true);
-    //         }
-    //         setServerFetched(true);
-    //     })
-    // }
-    
-    const subButton = document.getElementById('submitButton') as HTMLButtonElement;
     return (
         <>  
             <div className="flex items-center">
@@ -176,8 +195,7 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
                             flex justify-center items-center"
                             type="submit"
                             >
-                                Submit
-                               {subButton && subButton.disabled ? <LoadingIcon hasLoaded={false}></LoadingIcon> : null}
+                            Submit {showLoading ? < LoadingIcon hasLoaded={false} /> : null}
                         </button>
                     </form>
                 </div>

@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import FileComponent from "../assignmentComponents/FileComponent";
 import AnalyticsResults from "./AnalyticsResults";
 import GraphCard from "../analysisComponents/graphCard";
@@ -12,6 +13,21 @@ interface StatesDict {
 // Creates the subsection of the dashboard relating to the assignment upload status and results
 export default function AnalysisSection({states, currentState, assignment, analytics}: 
         {states: StatesDict, currentState: string, assignment: any, analytics: any}) {
+    
+    const [userEmail, setUserEmail] = useState('');
+
+    // Reading in the data from the server or the mock data
+    const data = (globalThis as any).template_data
+    const studentItems = data.studentItems;
+
+    useEffect(() => {
+        // Reset selectedDocs when props change
+        if(assignment !== undefined && assignment !== null) {
+            setUserEmail(studentItems[assignment.user_id].email);
+        }
+    }, [assignment]);
+    
+    
     return (
         <>
         {/* When idle just display student stats */}
@@ -27,7 +43,9 @@ export default function AnalysisSection({states, currentState, assignment, analy
                 <CircleProgressCard data={analytics.avgScore} title="Average Score"/>
                 <GraphCard data={analytics.lineWords} optionsCategories={analytics.assignmentLabels} title="Word Analysis"/>
                 <GraphCard data={analytics.wordCounts} optionsCategories={analytics.assignmentLabels} title="Word Counts"/>
-            </div>) : (null)
+            </div>
+
+        ) : (null)
         }
 
         {/* 2. For comparing against the student */}
@@ -57,7 +75,7 @@ export default function AnalysisSection({states, currentState, assignment, analy
                         { assignment.description }
                     </p>
                 </p>
-                <FileComponent subject_id={assignment.subject_id} assignment_id={assignment.assignment_id} user_id={assignment.user_id} />
+                <FileComponent user_email={userEmail} subject_id={assignment.subject_id} assignment_id={assignment.assignment_id} user_id={assignment.user_id} />
             </>
         ) : (
             null

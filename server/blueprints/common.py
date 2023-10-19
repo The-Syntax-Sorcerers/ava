@@ -91,7 +91,6 @@ def assignments():
     return render_template('routeAssignments/index.html', template_data=template_data)
 
 
-
 @common.route('/AdminDashboard', methods=["GET"])
 @flask_login.login_required
 def admin_dashboard():
