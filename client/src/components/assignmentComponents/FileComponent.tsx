@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import LoadingIcon from "../Loading";
 
-export default function FileComponent({user_email, subject_id, assignment_id, user_id, previewWidth}: {user_email: any, subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
+export default function FileComponent({user_email, subject_id, assignment_id, user_id, previewWidth}: {user_email: any, subject_id: any, assignment_id: any, user_id: any, previewWidth?: any}) {
     console.log("Rendering FileComponent for", subject_id, assignment_id, user_id);
 
     const [fileUploaded, setFileUploaded] = useState(false);

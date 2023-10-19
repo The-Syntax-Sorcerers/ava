@@ -13,6 +13,7 @@ export default function AssignmentPage() {
     const assignment = data.assignment
     const user_type = data.user_type
     const user_email = data.user_email
+    const user_id = data.user_id
 
     const [showSubmitModal, setShowSubmitModal] = useState(data.showSubmitModal);
     const serverVerificationSuccess = data.verificationSuccess;
@@ -42,7 +43,7 @@ export default function AssignmentPage() {
                         </>
                     ) : (
                         <>
-                            <FileComponent user_email={user_email} subject_id={assignment['subject_id']} assignment_id={assignment['id']} previewWidth={'70%'} />
+                            <FileComponent user_email={user_email} subject_id={assignment['subject_id']} assignment_id={assignment['id']} user_id={user_id} previewWidth={'70%'} />
                             {showSubmitModal ? (
                                 <VerificationSuccess setShowSubmitModal={setShowSubmitModal} result={serverVerificationSuccess}/>
                             ) : null

@@ -65,6 +65,7 @@ def assignment_page(sub_id, ass_id):
                        "marks": "???/100"},
         "user_type": user.user_type,
         "user_email": user.email,
+        "user_id": user.id,
         "students": [{'name': student.name, 'id': student.id, 'link': ''} for student in sub.get_students()],
         "showSubmitModal": cookies.get('showModal', False),
         "verificationSuccess": cookies.get('verificationSuccess', False)

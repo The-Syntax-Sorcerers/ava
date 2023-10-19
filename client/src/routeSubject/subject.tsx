@@ -46,9 +46,14 @@ export default function SubjectPage() {
                     </div>
                     <h1 className="text-2xl font-semibold mb-4 mt-5">Past Assignments</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {data.past.map((assignment: assignmentObj, rkey: Key) => (
+                    {data.past.length === 0 ? (
+                        <h2> Nothing to see here &#128064; </h2>
+                    ) : (
+                        data.past.map((assignment: assignmentObj, rkey: Key) => (
                             <AssignmentCard ass={assignment} key={rkey} inSubject={true} />
-                        ))}
+                        ))
+                    )}
+                        
                     </div>
                 </div>
                 
