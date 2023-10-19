@@ -41,7 +41,6 @@ def subject_page(sub_id):
             "due_date": ass.due_datetime,
             "link": f'/subjects/{ass.subject_id}/{ass.id}'
         }
-
         if ass.due_datetime and ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
             template_data['upcoming'].append(temp)
         else:
@@ -70,7 +69,7 @@ def assignment_page(sub_id, ass_id):
         "verificationSuccess": cookies.get('verificationSuccess', False)
     }
 
-    return render_template('routeAssignment/index.html', template_data=template_data)
+    return render_template('routeAssignment/index.html', template_data=template_data, csrf=flask_wtf.csrf.generate_csrf())
 
 
 @subjects.route('/<sub_id>/create_assignment', methods=["POST"])
@@ -97,12 +96,6 @@ def create_assignment(sub_id):
     return redirect(f"/subjects/{sub_id}")
 
 
-@subjects.route('/<sub_id>/add_student', methods=["GET"])
-@flask_login.login_required
-def add_student_subject(sub_id):
-    return redirect(f"/subjects/{sub_id}")
-
-
 @subjects.route('/create_subject', methods=['POST'])
 @flask_login.login_required
 def create_subject():
@@ -113,7 +106,30 @@ def create_subject():
         print('User is not a teacher')
         return redirect(url_for('common.dashboard'))
 
-    sub = Subject(request.form.get('id'), request.form.get('desc'), user.email, request.form.get('name'))
+    sub = Subject(request.form.get('id'), request.form.get(
+        'desc'), user.email, request.form.get('name'))
 
     Subject.create_subject(sub)
     return redirect(url_for('common.dashboard'))
+
+
+@subjects.route('/<sub_id>/add_student', methods=["POST"])
+@flask_login.login_required
+def add_student_subject(sub_id):
+    print("adding student")
+    user: User = flask_login.current_user
+
+    if not user.user_type == "teacher":
+        print('User is not a teacher')
+        return redirect("/dashboard")
+
+    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+    subject = Subject.get_subject(sub_id)
+    stud = User.get_user_with_email(request.form.get('email'))
+
+    if not subject.valid_student(stud.id):
+        print('Student is not valid')
+    else:
+        subject.add_student(stud)
+
+    return redirect(f"/subjects/{sub_id}")

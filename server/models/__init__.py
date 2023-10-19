@@ -218,6 +218,16 @@ class User(UserMixin):
         print("Signed up:", email)
 
     @staticmethod
+
+    def user_exists(user_id):
+        try:
+            if supabase_sec.table("User").select('*').eq('id', user_id).execute():
+                return True
+        except:
+            pass
+        print("User does not exist")
+        return False
+
     def get_user_json(user_id):
         u = User.get_user(user_id)
 
@@ -284,7 +294,7 @@ class User(UserMixin):
             "user_type": self.user_type
         }
 
-
+    
 class Subject:
     def __init__(self, subject_id, description, professor_email, subject_name):
         self.subject_id = subject_id
@@ -313,6 +323,32 @@ class Subject:
             assigns.append(Assignment(
                 r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']))
         return assigns
+
+    def is_student_in_subject(self, stud_id):
+        try:
+            data = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', stud_id).execute().data
+            if {'subject_id': self.subject_id} not in data:
+                print('student is not in the subject')
+                return True
+        except:
+            pass 
+        print('student is already in the subject')
+        return False
+
+    def valid_student(self, stud_id):
+        print('tries to validate')
+        if (User.user_exists(stud_id) and self.is_student_in_subject(stud_id)):
+            print("is valid")
+            return True
+        return False    
+
+    def add_student(self, student: User):
+        data = {'student_id': student.id, 'subject_id': self.subject_id}
+        print('adds student')
+        try:
+            supabase_sec.table('StudentSubject').insert([data]).execute()
+        except:
+            pass
 
     # Returns a specific subject using a given subject_id
     @staticmethod
