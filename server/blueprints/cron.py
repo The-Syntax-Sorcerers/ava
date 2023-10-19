@@ -16,8 +16,7 @@ def cron():
         all_assignments = Assignment.get_all_assignments()
 
         time_passed_assignments = [a for a in all_assignments if a.due_datetime
-                                   and a.due_datetime <= datetime.now(
-            a.due_datetime.tzinfo) and not a.submission_locked]
+                                   and a.due_datetime <= datetime.now(a.due_datetime.tzinfo) and not a.submission_locked]
 
         for past_ass in time_passed_assignments:
             temp_subject_id = past_ass.subject_id
@@ -25,8 +24,7 @@ def cron():
             current_storage = storage.cron_get_all_uploaded_assignments(temp_subject_id, temp_ass_id)
             for k in current_storage.keys():
                 temp_user_id = k
-                past_storage.upload_assignment(current_storage[temp_user_id], temp_user_id, temp_subject_id,
-                                               temp_ass_id)
+                PastStorage.upload_assignment(current_storage[temp_user_id], temp_user_id, temp_ass_id)
 
         print("Assignments checked: ", len(all_assignments))
         print("Assignments locked: ", len(time_passed_assignments))
