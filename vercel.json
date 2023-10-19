@@ -6,7 +6,10 @@
   "builds": [
     {
       "src": "server/__init__.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxDuration": 120
+      }
     }
   ],
   "routes": [
