@@ -463,8 +463,7 @@ class Assignment:
 
         for a in ass:
             res = supabase_sec.table('SubjectAssignmentUser') \
-                .select('*').eq('subject_id', subject_id) \
-                .eq('assignment_id', a['id'])\
+                .select('*').eq('assignment_id', a['id']) \
                 .eq('user_id', user_id).execute()
             if res.data:
                 similarity_score = res.data[0]['similarity_score']
