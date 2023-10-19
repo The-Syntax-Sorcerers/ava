@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import LoadingIcon from "../Loading";
 
 export default function FileComponent({subject_id, assignment_id, user_id, previewWidth}: {subject_id: any, assignment_id: any, user_id?: any, previewWidth?: any}) {
@@ -8,6 +8,14 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
     const [fileSubmitted, setFileSubmitted] = useState(false);
     const [serverFetched, setServerFetched] = useState(false);
     const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
+
+    useEffect(() => {
+        // Reset selectedDocs when props change
+        setSelectedDocs([]);
+        setFileSubmitted(false);
+        setServerFetched(false);
+        setFileUploaded(false); 
+    }, [subject_id, assignment_id, user_id]);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -96,18 +104,44 @@ export default function FileComponent({subject_id, assignment_id, user_id, previ
         
     }
 
-    if (selectedDocs.length === 0) {
-        fetchSubmittedAssignment().then((tempFile) => {
-            if(tempFile !== undefined) {
-                console.log("Setting selectedDocs to", tempFile)
-                setSelectedDocs([tempFile]);
-                setFileSubmitted(true);
+    useEffect(() => {
+        const fetchData = async () => {
+            if (selectedDocs.length === 0) {
+                try {
+                    let tempFile;
+                    if (!serverFetched) {
+                        tempFile = await fetchSubmittedAssignment();
+                    }
+                    
+                    if (tempFile !== undefined) {
+                        console.log("Setting selectedDocs to", tempFile)
+                        setSelectedDocs([tempFile]);
+                        setFileSubmitted(true);
+                    }
+                    setServerFetched(true);
+                } catch (error) {
+                    console.error('Error fetching submitted assignment:', error);
+                }
             }
-            setServerFetched(true);
-        })
-    }
+        };
     
-    var subButton = document.getElementById('submitButton') as HTMLButtonElement;
+        fetchData();
+    }, [selectedDocs, serverFetched]);
+    
+    
+
+    // if (selectedDocs.length === 0) {
+    //     fetchSubmittedAssignment().then((tempFile) => {
+    //         if(tempFile !== undefined) {
+    //             console.log("Setting selectedDocs to", tempFile)
+    //             setSelectedDocs([tempFile]);
+    //             setFileSubmitted(true);
+    //         }
+    //         setServerFetched(true);
+    //     })
+    // }
+    
+    const subButton = document.getElementById('submitButton') as HTMLButtonElement;
     return (
         <>  
             <div className="flex items-center">
