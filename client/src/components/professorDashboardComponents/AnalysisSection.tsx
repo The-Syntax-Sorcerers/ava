@@ -1,5 +1,8 @@
 import FileComponent from "../assignmentComponents/FileComponent";
 import AnalyticsResults from "./AnalyticsResults";
+import GraphCard from "../analysisComponents/graphCard";
+import PieChartCard from "../analysisComponents/pieCard";
+import CircleProgressCard from "../analysisComponents/circleProgressCard";
 
 // The format the states are stored in
 interface StatesDict {
@@ -7,16 +10,23 @@ interface StatesDict {
 }
 
 // Creates the subsection of the dashboard relating to the assignment upload status and results
-export default function AnalysisSection({states, currentState, assignment}: {states: StatesDict, currentState: string, assignment: any}) {
-    
+export default function AnalysisSection({states, currentState, assignment, analytics}: 
+        {states: StatesDict, currentState: string, assignment: any, analytics: any}) {
     return (
         <>
-        {/* TODO: 1. Make new type that just asks for user to select choice from number 2 */}
+        {/* When idle just display student stats */}
         {currentState === states.idleMode ? (
-            <div className="flex justify-center items-center h-full border-gray-400 border-2 border-dashed rounded-lg">
-                <h1>
-                    Please select a file action (Section 2)
+            <div className="flex justify-center items-center h-full flex-wrap">
+                <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
+                    Student Analytics
                 </h1>
+                <GraphCard data={analytics.linePunctuation} optionsCategories={analytics.assignmentLabels} title="Punctuation Frequency"/>
+                <GraphCard data={analytics.lineSentences} optionsCategories={analytics.assignmentLabels} title="Sentence Analysis"/>
+                <GraphCard data={analytics.allScores}  optionsCategories={analytics.assignmentLabels} title="All Scores"/> 
+                <PieChartCard data={analytics.submissionPie} title="Submission History"/>
+                <CircleProgressCard data={analytics.avgScore} title="Average Score"/>
+                <GraphCard data={analytics.lineWords} optionsCategories={analytics.assignmentLabels} title="Word Analysis"/>
+                <GraphCard data={analytics.wordCounts} optionsCategories={analytics.assignmentLabels} title="Word Counts"/>
             </div>) : (null)
         }
 
@@ -24,7 +34,7 @@ export default function AnalysisSection({states, currentState, assignment}: {sta
         {currentState === states.compareMode ? (
             <>
                 <h1 className="text-2xl font-semibold mb-4 mt-4 text-center">
-                    Comparrison Mode
+                    Comparison Mode
                 </h1>
                 <p className="text-base mb-2 pl-2 flex flex-col">
                     Upload a document to compare against the student's body of work without uploading it to their profile

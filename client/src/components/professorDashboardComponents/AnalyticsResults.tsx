@@ -1,4 +1,5 @@
 import FileComponent from "../assignmentComponents/FileComponent";
+import BarChartCard, { puncLabels, sentLabels, wordLabels } from "../analysisComponents/barCard";
 
 // Creates the subsection of the analysis section that shows the results and analytics of the current assignment upload
 export default function AnalyticsResults({ass}: {ass: any}) {
@@ -20,11 +21,17 @@ export default function AnalyticsResults({ass}: {ass: any}) {
                     { ass.similarity_score }
                 </h1>
             </div>
-
-            <div className="flex justify-center items-center h-64 border-gray-400 border-2 border-dashed">
-                <h1>
-                    Just imagine there's hella stats and stuff here
+            <div className="flex justify-center">
+                <h1 className="flex justify-center items-center h-12 border-gray-100 border-2 border-solid rounded-full w-3/4 mt-1">
+                    Word Count:&#160;
+                    { ass.word_count }
                 </h1>
+            </div>
+
+            <div className="flex justify-center items-center flex-wrap">
+                <BarChartCard data={ass.punc_vec as any} optionsCategories={puncLabels}title="Punctuation Counts" />
+                <BarChartCard data={ass.sent_vec as any} optionsCategories={sentLabels}title="Sentence Analysis" />
+                <BarChartCard data={ass.word_vec as any} optionsCategories={wordLabels}title="Word Analysis" />
             </div>
 
             <div className="flex justify-center">
