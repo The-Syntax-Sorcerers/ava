@@ -14,7 +14,7 @@ export default function CreateAssignmentForm({ setShowModal }) {
                         <div className="relative mb-6" data-te-input-wrapper-init>
                             <input type="name" name="name" 
                             className="mt-1 px-3 py-2 bg-white shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
-                            placeholder="Class Name" />
+                            placeholder="Assignment Name" />
                         </div>
                         {/* <!-- Due Date input--> */}
                         <div className="relative mb-6" data-te-input-wrapper-init>
