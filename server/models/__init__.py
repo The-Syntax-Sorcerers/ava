@@ -79,7 +79,8 @@ class User(UserMixin):
         # Check if the requesting user is allowed to perform this action
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
-                res = supabase_sec.table('User').select('*').eq('id', user_id).execute().data
+                res = supabase_sec.table('User').select(
+                    '*').eq('id', user_id).execute().data
                 if res[0]['email'] == user_email and res[0]['name'] == user_name:
                     # Send a DELETE request to the Supabase table to delete the user by ID
                     res = supabase_sec.table('User').delete().eq(
@@ -217,7 +218,6 @@ class User(UserMixin):
         print("Signed up:", email)
 
     @staticmethod
-
     def user_exists(user_id):
         try:
             if supabase_sec.table("User").select('*').eq('id', user_id).execute():
@@ -293,7 +293,7 @@ class User(UserMixin):
             "user_type": self.user_type
         }
 
-    
+
 class Subject:
     def __init__(self, subject_id, description, professor_email, subject_name):
         self.subject_id = subject_id
@@ -325,12 +325,13 @@ class Subject:
 
     def is_student_in_subject(self, stud_id):
         try:
-            data = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', stud_id).execute().data
+            data = supabase_sec.table('StudentSubject').select(
+                'subject_id').eq('student_id', stud_id).execute().data
             if {'subject_id': self.subject_id} not in data:
                 print('student is not in the subject')
                 return True
         except:
-            pass 
+            pass
         print('student is already in the subject')
         return False
 
@@ -339,7 +340,7 @@ class Subject:
         if (User.user_exists(stud_id) and self.is_student_in_subject(stud_id)):
             print("is valid")
             return True
-        return False    
+        return False
 
     def add_student(self, student: User):
         data = {'student_id': student.id, 'subject_id': self.subject_id}
@@ -497,11 +498,11 @@ class Assignment:
                 word_count = res.data[0]['word_count']
 
             else:
-                similarity_score = None
-                punc_vec = None
-                sent_vec = None
-                word_vec = None
-                word_count = None
+                similarity_score = 0
+                punc_vec = []
+                sent_vec = []
+                word_vec = []
+                word_count = 0
 
             final_list.append({
                 "assignment_id": a['id'],
@@ -611,7 +612,8 @@ class Storage:
     def exists_assignment_bool(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(
+            f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
@@ -623,12 +625,16 @@ class Storage:
         # as a placeholder
         final_dict = {}
         try:
-            res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
+            res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(
+                f'{subject_id}/{assignment_id}')
             for obj in res:
                 temp_user_id = obj['name']
-                final_dict[temp_user_id] = Storage.download_current_assignment(subject_id, assignment_id, temp_user_id)
-            Storage.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
-            supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq('id', assignment_id).execute()
+                final_dict[temp_user_id] = Storage.download_current_assignment(
+                    subject_id, assignment_id, temp_user_id)
+            Storage.__cron_delete_entire_assignments_folder(
+                subject_id, assignment_id)
+            supabase_sec.table('Assignment').update({'submission_locked': True}).eq(
+                'subject_id', subject_id).eq('id', assignment_id).execute()
         except:
             pass
 
@@ -655,7 +661,8 @@ class PastStorage:
 
     @staticmethod
     def upload_assignment(file, user_id, assignment_id):
-        res = supabase_sec.table('User').select('email').eq('id', user_id).execute().data
+        res = supabase_sec.table('User').select(
+            'email').eq('id', user_id).execute().data
         path = PastStorage.construct_path(res[0]['email'], assignment_id)
 
         PastStorage.delete_assignment(res[0]['email'], assignment_id)
@@ -664,7 +671,8 @@ class PastStorage:
     @staticmethod
     def download_assignment(user_id, assignment_id):
         # Will return a byte stream.
-        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
+        res = supabase_sec.table('User').select(
+            'user_email').eq('id', user_id).execute()
         try:
             path = PastStorage.construct_path(res[0].user_email, assignment_id)
             return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
@@ -683,7 +691,8 @@ class PastStorage:
     def exists_assignment(self, user_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(f'{user_id}')
+        res = supabase_sec.storage.from_(
+            PAST_ASSIGNMENTS_BUCKET).list(f'{user_id}')
         for obj in res:
             if obj['name'] == f'{assignment_id}':
                 return [obj]

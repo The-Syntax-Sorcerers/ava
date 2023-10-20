@@ -21,6 +21,8 @@ function NavBarElement({route}: {route: string[]}) {
 
     if(routeType === "teacher" && user_type !== "teacher") {
         return null;
+    } else if (title == "Assignments" && user_type !== "student"){
+        return null;
     }
 
     return (

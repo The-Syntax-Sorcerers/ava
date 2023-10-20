@@ -22,7 +22,7 @@ export default function AddStudentForm({ setShowModal }) {
                             bg-button-light-blue text-teal-800 hover:bg-violet-300 hover:text-violet-800"
                             type="submit"
                         >
-                            Publish
+                            Add Student
                         </button>
                     </form>
                     <button
