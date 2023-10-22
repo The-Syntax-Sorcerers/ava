@@ -89,16 +89,19 @@ def create_assignment(sub_id):
 
     # check that these elements of the form are not null
     if not request.form.get('id') and not request.form.get('name'):
-        return redirect(url_for('common.dashboard'))
-
-    data = {
-        'subject_id': sub_id,
-        'name': request.form.get('name'),
-        'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
-        'description': request.form.get('desc'),
-    }
-    print("Attempting to Create Assignment", data)
-    Assignment.create_assignment(data)
+        return redirect(f"/subjects/{sub_id}")
+    try: 
+        data = {
+            'subject_id': sub_id,
+            'name': request.form.get('name'),
+            'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
+            'description': request.form.get('desc'),
+        }
+        print("Attempting to Create Assignment", data)
+        Assignment.create_assignment(data)
+    except:
+        print("Did not create data correctly")
+        pass
 
     return redirect(f"/subjects/{sub_id}")
 
