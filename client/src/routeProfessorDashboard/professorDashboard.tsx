@@ -80,7 +80,9 @@ export default function ProfessorDashboard() {
 
     // Calls the function a single time to initialise assignment and student data on startup
     useEffect(() => {
-        updateAssignments(currentStudent.submissions);
+        if (currentStudent.submissions.size() !== 0) {
+            updateAssignments(currentStudent.submissions);
+        }
         updateStudentList(currentSubject.id);
     }, []);
 
