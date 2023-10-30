@@ -33,9 +33,6 @@ export default function ProfessorDashboard() {
     
         setSubmittedAssignments(submittedAssignments);
         setUnsubmittedAssignments(unsubmittedAssignments);
-
-        console.log('subs', submittedAssignments);
-        console.log('unsubs', unsubmittedAssignments);
     }
 
     // Update current assignment based on assignment clicked
@@ -63,10 +60,9 @@ export default function ProfessorDashboard() {
 
     // Reading in the data from the server or the mock data
     const data = (globalThis as any).template_data
-    const subjectItems = data.subjectItems;
-    const subjectItemsArray = Object.values(subjectItems);
+    const subjectItems: { [key: string]: { students: number[] } } = data.subjectItems;
+    const subjectItemsArray: { students: number[] }[] = Object.values(subjectItems).filter((item: { students: number[] }) => item.students.length > 0);
     const studentItems = data.studentItems;
-    console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
@@ -80,14 +76,13 @@ export default function ProfessorDashboard() {
 
     // Stores the currently selected assignment info
     const [focusedAssignment, setFocusedAssignment]: any = useState(null);
+    const [focusedAnalytics, setFocusedAnalytics]: any = useState(currentStudent.analytics);
 
     // Calls the function a single time to initialise assignment and student data on startup
     useEffect(() => {
         updateAssignments(currentStudent.submissions);
         updateStudentList(currentSubject.id);
     }, []);
-
-    console.log("EVERYTHING WORKS UP TO HERE", currentSubject, currentStudent, submittedAssignments, unsubmittedAssignments, currentStudents)
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
@@ -112,11 +107,12 @@ export default function ProfessorDashboard() {
         const subject_id = event.currentTarget.value;
         
         setCurrentSubject(subjectItems[subject_id]);
-        updateStudentList(subject_id)
-        setCurrentStudent(studentItems[subjectItems[subject_id].students[0]])
+        updateStudentList(subject_id);
+        setCurrentStudent(studentItems[subjectItems[subject_id].students[0]]);
         updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
+        setFocusedAnalytics(studentItems[subjectItems[subject_id].students[0]].analytics);
     }
 
     // Handles the page logic after a new student is selected
@@ -128,6 +124,7 @@ export default function ProfessorDashboard() {
         updateAssignments(studentItems[student_id].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
+        setFocusedAnalytics(studentItems[student_id].analytics);
     }
 
     return (
@@ -161,7 +158,7 @@ export default function ProfessorDashboard() {
                             states={ buttonModesConfig } 
                             currentState={ currentState } 
                             assignment={ focusedAssignment }
-                            analytics={ currentStudent.analytics }
+                            analytics={ focusedAnalytics }
                         />
                     </div>
                 </div>
