@@ -424,15 +424,18 @@ class Assignment:
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
     def get_assignment(subject_id, assignment_id):
-        res = supabase_sec.table('Assignment').select(
-            '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
-        if not res:
+        try:
             res = supabase_sec.table('Assignment').select(
                 '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
-        if res:
-            res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'],
-                              res['due_datetime'])
+            if not res:
+                res = supabase_sec.table('Assignment').select(
+                    '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
+            if res:
+                res = res[0]
+                return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'],
+                                  res['due_datetime'])
+        except:
+            pass
         return None
 
     @staticmethod
