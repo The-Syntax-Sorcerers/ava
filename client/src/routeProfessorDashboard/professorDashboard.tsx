@@ -5,7 +5,6 @@ import StudentInfo from '../components/professorDashboardComponents/StudentInfo.
 import AnalysisSection from '../components/professorDashboardComponents/AnalysisSection.tsx'
 import { useState, useEffect } from 'react';
 
-
 // The different modes of the analysis section, controlled by button clicks in the student section
 const buttonModesConfig = {
     idleMode: 'idle',
@@ -76,11 +75,16 @@ export default function ProfessorDashboard() {
 
     // Stores the currently selected assignment info
     const [focusedAssignment, setFocusedAssignment]: any = useState(null);
-    const [focusedAnalytics, setFocusedAnalytics]: any = useState(currentStudent.analytics);
+    const [focusedAnalytics, setFocusedAnalytics]: any = useState(null);
+    const [seed, setSeed] = useState(1);
+    const reset = () => {
+        setSeed(Math.random());
+    }
+       
 
     // Calls the function a single time to initialise assignment and student data on startup
     useEffect(() => {
-        if (currentStudent.submissions.size() !== 0) {
+        if (currentStudent.submissions.length !== 0) {
             updateAssignments(currentStudent.submissions);
         }
         updateStudentList(currentSubject.id);
@@ -110,11 +114,17 @@ export default function ProfessorDashboard() {
         
         setCurrentSubject(subjectItems[subject_id]);
         updateStudentList(subject_id);
-        setCurrentStudent(studentItems[subjectItems[subject_id].students[0]]);
-        updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
+        if (subjectItems[subject_id].students.length != 0){
+            setCurrentStudent(studentItems[subjectItems[subject_id].students[0]]);
+            updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
+            setFocusedAnalytics(studentItems[subjectItems[subject_id].students[0]].analytics);
+        } else {
+            setCurrentStudent(null);
+            setFocusedAnalytics(null);
+        }
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
-        setFocusedAnalytics(studentItems[subjectItems[subject_id].students[0]].analytics);
+        reset();
     }
 
     // Handles the page logic after a new student is selected
@@ -127,6 +137,7 @@ export default function ProfessorDashboard() {
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
         setFocusedAnalytics(studentItems[student_id].analytics);
+        reset();
     }
 
     return (
@@ -143,7 +154,7 @@ export default function ProfessorDashboard() {
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
                         <h1 className="custom-instruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
-                        <StudentInfo 
+                        {currentStudent ? (<StudentInfo 
                             subAss={ submittedAssignments }
                             unsubAss={ unsubmittedAssignments }
                             currentSubject={ currentSubject }
@@ -151,17 +162,24 @@ export default function ProfessorDashboard() {
                             compare={ handleCompareButton } 
                             results={ handleResultsButton } 
                             upload={ handleSubmitButton }
-                        />
+                        />) : 
+                        (
+                            <h1 className="custom-instruction-text">There are no students enrolled in this subject.</h1>
+                        )}
+                        
                     </div>
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection 
+                        {focusedAnalytics ? (<AnalysisSection 
                             states={ buttonModesConfig } 
                             currentState={ currentState } 
                             assignment={ focusedAssignment }
                             analytics={ focusedAnalytics }
-                        />
+                            key={seed}
+                        />):(
+                            <h1 className="custom-instruction-text">Nothing to see here &#128064;</h1>
+                        )}
                     </div>
                 </div>
             </main>

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export default function AnalyticsResults({ass}: {ass: any}) {
 
     const [userEmail, setUserEmail] = useState('');
-
+    
     // Reading in the data from the server or the mock data
     const data = (globalThis as any).template_data
     const studentItems = data.studentItems;
