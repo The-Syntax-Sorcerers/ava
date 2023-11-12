@@ -132,7 +132,7 @@
 
     /* This tag applies to the description cards on landing page */
     .custom-descriptioncards {
-        @apply bg-white rounded-3xl shadow-md hover:shadow-lg transition duration-300 ease-in-out custom-card-height;
+        @apply bg-white rounded-3xl shadow-md hover:shadow-lg transition duration-300 ease-in-out;
         /* hover:outline hover:outline-2 hover:outline-teal-500; */
     }
     /* Styles the colour and interactivity of the subject and assignment cards */
