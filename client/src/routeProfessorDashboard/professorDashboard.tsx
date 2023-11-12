@@ -5,7 +5,6 @@ import StudentInfo from '../components/professorDashboardComponents/StudentInfo.
 import AnalysisSection from '../components/professorDashboardComponents/AnalysisSection.tsx'
 import { useState, useEffect } from 'react';
 
-
 // The different modes of the analysis section, controlled by button clicks in the student section
 const buttonModesConfig = {
     idleMode: 'idle',
@@ -33,9 +32,6 @@ export default function ProfessorDashboard() {
     
         setSubmittedAssignments(submittedAssignments);
         setUnsubmittedAssignments(unsubmittedAssignments);
-
-        console.log('subs', submittedAssignments);
-        console.log('unsubs', unsubmittedAssignments);
     }
 
     // Update current assignment based on assignment clicked
@@ -63,10 +59,9 @@ export default function ProfessorDashboard() {
 
     // Reading in the data from the server or the mock data
     const data = (globalThis as any).template_data
-    const subjectItems = data.subjectItems;
-    const subjectItemsArray = Object.values(subjectItems);
+    const subjectItems: { [key: string]: { students: number[] } } = data.subjectItems;
+    const subjectItemsArray: { students: number[] }[] = Object.values(subjectItems).filter((item: { students: number[] }) => item.students.length > 0);
     const studentItems = data.studentItems;
-    console.log("Rendering AdminDash with Data:", data)
 
     // Controls the current state of the analysis section based on which mode has been selected in the student info section
     const [currentState, setCurrentState] = useState(buttonModesConfig.idleMode);
@@ -80,14 +75,20 @@ export default function ProfessorDashboard() {
 
     // Stores the currently selected assignment info
     const [focusedAssignment, setFocusedAssignment]: any = useState(null);
+    const [focusedAnalytics, setFocusedAnalytics]: any = useState(null);
+    const [seed, setSeed] = useState(1);
+    const reset = () => {
+        setSeed(Math.random());
+    }
+       
 
     // Calls the function a single time to initialise assignment and student data on startup
     useEffect(() => {
-        updateAssignments(currentStudent.submissions);
+        if (currentStudent.submissions.length !== 0) {
+            updateAssignments(currentStudent.submissions);
+        }
         updateStudentList(currentSubject.id);
     }, []);
-
-    console.log("EVERYTHING WORKS UP TO HERE", currentSubject, currentStudent, submittedAssignments, unsubmittedAssignments, currentStudents)
 
     // Handles the page logic after the comparrison mode button has been clicked
     const handleCompareButton = () => {
@@ -112,11 +113,18 @@ export default function ProfessorDashboard() {
         const subject_id = event.currentTarget.value;
         
         setCurrentSubject(subjectItems[subject_id]);
-        updateStudentList(subject_id)
-        setCurrentStudent(studentItems[subjectItems[subject_id].students[0]])
-        updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
+        updateStudentList(subject_id);
+        if (subjectItems[subject_id].students.length != 0){
+            setCurrentStudent(studentItems[subjectItems[subject_id].students[0]]);
+            updateAssignments(studentItems[subjectItems[subject_id].students[0]].submissions);
+            setFocusedAnalytics(studentItems[subjectItems[subject_id].students[0]].analytics);
+        } else {
+            setCurrentStudent(null);
+            setFocusedAnalytics(null);
+        }
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
+        reset();
     }
 
     // Handles the page logic after a new student is selected
@@ -128,6 +136,8 @@ export default function ProfessorDashboard() {
         updateAssignments(studentItems[student_id].submissions);
         setFocusedAssignment(null);
         setCurrentState(buttonModesConfig.idleMode);
+        setFocusedAnalytics(studentItems[student_id].analytics);
+        reset();
     }
 
     return (
@@ -144,7 +154,7 @@ export default function ProfessorDashboard() {
                     {/* Current selection info */}
                     <div className="custom-dashboard-section w-2/5">
                         <h1 className="custom-instruction-text">2. Select an Existing Piece of Work or Submit a New One</h1>
-                        <StudentInfo 
+                        {currentStudent ? (<StudentInfo 
                             subAss={ submittedAssignments }
                             unsubAss={ unsubmittedAssignments }
                             currentSubject={ currentSubject }
@@ -152,17 +162,24 @@ export default function ProfessorDashboard() {
                             compare={ handleCompareButton } 
                             results={ handleResultsButton } 
                             upload={ handleSubmitButton }
-                        />
+                        />) : 
+                        (
+                            <h1 className="custom-instruction-text">There are no students enrolled in this subject.</h1>
+                        )}
+                        
                     </div>
                     {/* Result analytics */}
                     <div className="custom-dashboard-section w-2/5 rounded-r-3xl">
                         <h1 className="custom-instruction-text">3. Authorise and View Results</h1>
-                        <AnalysisSection 
+                        {focusedAnalytics ? (<AnalysisSection 
                             states={ buttonModesConfig } 
                             currentState={ currentState } 
                             assignment={ focusedAssignment }
-                            analytics={ currentStudent.analytics }
-                        />
+                            analytics={ focusedAnalytics }
+                            key={seed}
+                        />):(
+                            <h1 className="custom-instruction-text">Nothing to see here &#128064;</h1>
+                        )}
                     </div>
                 </div>
             </main>

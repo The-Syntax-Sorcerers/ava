@@ -30,7 +30,6 @@ export default function AssignmentPage() {
                     <h1 className="text-2xl font-semibold mb-4">{assignment.subject_id} - {assignment.name}</h1>
                     <h2 className="text-lg font-semibold mb-4">Due on: {assignment.due_date}</h2>
                     <p className="text-base mb-4">Description: {assignment.description}</p>
-                    <p className="text-base mb-4">Marks: {assignment.marks}</p>
                 
                     {user_type == "teacher" ? (
                         <>
