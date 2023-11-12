@@ -7,7 +7,6 @@ const routes = [
     ['Admin Dashboard', '/AdminDashboard', "teacher"],
     ['Subjects', '/dashboard', "student"],
     ['Assignments', '/assignments', "student"],
-    // ['Profile', '/profile'],
     ['Log Out', '/logout', 'student']
 ]
 
@@ -21,6 +20,8 @@ function NavBarElement({route}: {route: string[]}) {
     const routeType = route[2];
 
     if(routeType === "teacher" && user_type !== "teacher") {
+        return null;
+    } else if (title == "Assignments" && user_type !== "student"){
         return null;
     }
 

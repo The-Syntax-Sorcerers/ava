@@ -5,8 +5,7 @@ from time import strptime, strftime, sleep
 
 import flask_login
 import flask_wtf.csrf
-
-from flask import Blueprint, request, redirect, url_for, render_template, make_response
+from flask import Blueprint, request, redirect, url_for, render_template, make_response, flash
 from server.extensions import get_and_clear_cookies, supabase_sec, supabase_anon, set_cookies
 from server.models import User, Subject, Assignment, Storage
 
@@ -41,7 +40,6 @@ def subject_page(sub_id):
             "due_date": ass.due_datetime,
             "link": f'/subjects/{ass.subject_id}/{ass.id}'
         }
-
         if ass.due_datetime and ass.due_datetime > datetime.datetime.now(ass.due_datetime.tzinfo):
             template_data['upcoming'].append(temp)
         else:
@@ -58,6 +56,8 @@ def assignment_page(sub_id, ass_id):
     sub = Subject.get_subject(sub_id)
 
     current_ass = Assignment.get_assignment(sub_id, ass_id)
+    if not current_ass:
+        return redirect(url_for('common.dashboard'))
     cookies = get_and_clear_cookies()
 
     template_data = {
@@ -65,12 +65,14 @@ def assignment_page(sub_id, ass_id):
                        "due_date": current_ass.due_datetime, "description": current_ass.description,
                        "marks": "???/100"},
         "user_type": user.user_type,
+        "user_email": user.email,
+        "user_id": user.id,
         "students": [{'name': student.name, 'id': student.id, 'link': ''} for student in sub.get_students()],
         "showSubmitModal": cookies.get('showModal', False),
         "verificationSuccess": cookies.get('verificationSuccess', False)
     }
 
-    return render_template('routeAssignment/index.html', template_data=template_data)
+    return render_template('routeAssignment/index.html', template_data=template_data, csrf=flask_wtf.csrf.generate_csrf())
 
 
 @subjects.route('/<sub_id>/create_assignment', methods=["POST"])
@@ -81,25 +83,26 @@ def create_assignment(sub_id):
 
     if not user.user_type == "teacher":
         print('User is not a teacher')
-        return redirect("/dashboard")
+        return redirect(url_for('common.dashboard'))
 
     flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
 
-    data = {
-        'subject_id': sub_id,
-        'name': request.form.get('name'),
-        'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
-        'description': request.form.get('desc'),
-    }
-    print("Attempting to Create Assignment", data)
-    Assignment.create_assignment(data)
+    # check that these elements of the form are not null
+    if not request.form.get('id') and not request.form.get('name'):
+        return redirect(f"/subjects/{sub_id}")
+    try: 
+        data = {
+            'subject_id': sub_id,
+            'name': request.form.get('name'),
+            'due_datetime': strftime('%Y-%m-%d %H:%M:%S', strptime(request.form.get('duedate'), '%d/%m/%Y')),
+            'description': request.form.get('desc'),
+        }
+        print("Attempting to Create Assignment", data)
+        Assignment.create_assignment(data)
+    except:
+        print("Did not create data correctly")
+        pass
 
-    return redirect(f"/subjects/{sub_id}")
-
-
-@subjects.route('/<sub_id>/add_student', methods=["GET"])
-@flask_login.login_required
-def add_student_subject(sub_id):
     return redirect(f"/subjects/{sub_id}")
 
 
@@ -113,7 +116,39 @@ def create_subject():
         print('User is not a teacher')
         return redirect(url_for('common.dashboard'))
 
-    sub = Subject(request.form.get('id'), request.form.get('desc'), user.email, request.form.get('name'))
+    # check that these elements of the form are not null
+    if not request.form.get('id') and not request.form.get('name'):
+        return redirect(url_for('common.dashboard'))
+
+    sub = Subject(request.form.get('id'), request.form.get(
+        'desc'), user.email, request.form.get('name'))
 
     Subject.create_subject(sub)
     return redirect(url_for('common.dashboard'))
+
+
+@subjects.route('/<sub_id>/add_student', methods=["POST"])
+@flask_login.login_required
+def add_student_subject(sub_id):
+    print("adding student")
+    user: User = flask_login.current_user
+
+    if not user.user_type == "teacher":
+        print('User is not a teacher')
+        return redirect(url_for('common.dashboard'))
+
+    flask_wtf.csrf.validate_csrf(request.form.get('csrf_token'))
+    subject = Subject.get_subject(sub_id)
+    student_email = request.form.get('email')
+    if not student_email or not subject:
+        print(f'this is the url that we are trying: {request.url}')
+        flash('Student did not exist')
+        return redirect(f'/subjects/{sub_id}')
+    stud = User.get_user_with_email(student_email)
+    
+    if not stud or not subject.valid_student(stud.id):
+        print('Student is not valid')
+    else:
+        subject.add_student(stud)
+
+    return redirect(f'/subjects/{sub_id}')

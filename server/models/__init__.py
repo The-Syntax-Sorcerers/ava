@@ -1,8 +1,7 @@
-from time import sleep
-
 from flask_login import UserMixin
 from storage3.utils import StorageException
 import datetime
+import randomcolor
 
 from server.extensions import supabase_anon, supabase_sec
 
@@ -30,9 +29,11 @@ class User(UserMixin):
     def get_subjects(self):
         try:
             if self.user_type == 'student':
-                res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+                res = supabase_sec.table('StudentSubject').select(
+                    'subject_id').eq('student_id', self.id).execute()
             else:
-                res = supabase_sec.table('Subject').select('id').eq('professor_email', self.email).execute()
+                res = supabase_sec.table('Subject').select('id').eq(
+                    'professor_email', self.email).execute()
 
             subjects = []
             for student_dict in res.data:
@@ -43,14 +44,14 @@ class User(UserMixin):
             pass
 
     def get_assignments(self):
-        for i in range(5):
-            res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
-            if res:
-                assigns = []
-                for student_dict in res.data:
-                    assigns += Assignment.get_all_assignments(subject_id=student_dict['subject_id'])
-                return assigns
-            sleep(0.2)
+        res = supabase_sec.table('StudentSubject').select(
+            'subject_id').eq('student_id', self.id).execute()
+        if res:
+            assigns = []
+            for student_dict in res.data:
+                assigns += Assignment.get_all_assignments(
+                    subject_id=student_dict['subject_id'])
+            return assigns
         return None
 
     @staticmethod
@@ -64,15 +65,12 @@ class User(UserMixin):
 
     @staticmethod
     def get_user_with_email(user_email):
-
-        for i in range(5):
-            print("Finding email", user_email)
-            res = supabase_sec.table('User').select('id, email, name, user_type').eq('email', user_email).execute().data
-            print("GET USER RESULT:", res)
-            if res:
-                res = res[0]
-                return User(res['id'], res['email'], res['name'], res['user_type'])
-            sleep(0.2)
+        print("Finding email", user_email)
+        res = supabase_sec.table('User').select(
+            'id, email, name, user_type').eq('email', user_email).execute().data
+        if res:
+            res = res[0]
+            return User(res['id'], res['email'], res['name'], res['user_type'])
         return None
 
     # Deletes a user from the database
@@ -81,10 +79,12 @@ class User(UserMixin):
         # Check if the requesting user is allowed to perform this action
         if requesting_user.is_admin or requesting_user.id == user_id:
             try:
-                res = supabase_sec.table('User').select('*').eq('id', id).execute().data
-                if res['email'] == user_email and res['name'] == user_name:
+                res = supabase_sec.table('User').select(
+                    '*').eq('id', user_id).execute().data
+                if res[0]['email'] == user_email and res[0]['name'] == user_name:
                     # Send a DELETE request to the Supabase table to delete the user by ID
-                    res = supabase_sec.table('User').delete().eq('id', user_id).execute()
+                    res = supabase_sec.table('User').delete().eq(
+                        'id', user_id).execute()
 
                 if res.status_code == 200:
                     return True
@@ -98,10 +98,100 @@ class User(UserMixin):
         else:
             return False
 
+    def get_vectors(self):
+
+        punc_vecs = {
+            'Periods': [],
+            'Commas': [],
+            'Semicolons': [],
+            'Colons': [],
+            'Exclamations': [],
+            'Question Marks': [],
+            'Dashes': [],
+            'Open Parentheses': [],
+            'Close Parentheses': [],
+            'Double Quotes': [],
+            'Apostrophe': [],
+            'Tilda': [],
+            'Forward Slash': [],
+        }
+
+        sentence_vecs = {
+            'Count of Sentences Over Average': [],
+            'Count of Sentences Under Average': [],
+            'Count of Average Sentences': [],
+            'Average Sentence Length': []
+        }
+
+        word_vecs = {
+            'Rare Word Count': [],
+            'Long Word Count': [],
+            'Count Over Average': [],
+            'Count Under Average': [],
+            'Count Average': [],
+            'Average Word Length': [],
+            'Token Type Ratio': []
+        }
+        word_counts = []
+        assignmentLabels = []
+        all_scores = []
+
+        # Query Supabase table
+        response = supabase_sec.table('SubjectAssignmentUser').select(
+            '*').eq('user_id', self.id).order('created_at', desc=False).execute()
+        for res in response.data:
+            assignmentLabels.append(str(res['assignment_id']))
+            punc_vecs['Periods'].append(res['punc_periods'])
+            punc_vecs['Commas'].append(res['punc_commas'])
+            punc_vecs['Semicolons'].append(res['punc_semicolons'])
+            punc_vecs['Colons'].append(res['punc_colons'])
+            punc_vecs['Exclamations'].append(res['punc_exclamations'])
+            punc_vecs['Question Marks'].append(res['punc_questions'])
+            punc_vecs['Dashes'].append(res['punc_dashes'])
+            punc_vecs['Open Parentheses'].append(res['punc_open_par'])
+            punc_vecs['Close Parentheses'].append(res['punc_close_par'])
+            punc_vecs['Double Quotes'].append(res['punc_double_quotes'])
+            punc_vecs['Apostrophe'].append(res['punc_apostrophes'])
+            punc_vecs['Tilda'].append(res['punc_tilda'])
+            punc_vecs['Forward Slash'].append(res['punc_forward_slash'])
+            sentence_vecs['Count of Sentences Over Average'].append(
+                round(res['sent_over_avg'], 1))
+            sentence_vecs['Count of Sentences Under Average'].append(round(
+                res['sent_under_avg'], 1))
+            sentence_vecs['Count of Average Sentences'].append(round(
+                res['sent_count_avg'], 1))
+            sentence_vecs['Average Sentence Length'].append(round(
+                res['sent_avg_length'], 1))
+            word_vecs['Rare Word Count'].append(
+                round(res['word_rare_count'], 1))
+            word_vecs['Long Word Count'].append(
+                round(res['word_long_count'], 1))
+            word_vecs['Count Over Average'].append(
+                round(res['word_over_avg'], 1))
+            word_vecs['Count Under Average'].append(
+                round(res['word_under_avg'], 1))
+            word_vecs['Count Average'].append(round(res['word_count_avg'], 1))
+            word_vecs['Average Word Length'].append(
+                round(res['word_avg_length'], 1))
+            word_vecs['Token Type Ratio'].append(round(res['word_ttr'], 1))
+            word_counts.append(res['word_count'])
+            all_scores.append(round(res['similarity_score'], 2)*100)
+
+        successful = [x for x in all_scores if x > 50]
+        failures = len(all_scores) - len(successful)
+        if len(all_scores) > 0:
+            avg_score = round(sum(all_scores) / len(all_scores))
+        else:
+            avg_score = 0
+
+        return punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
+            all_scores, failures, len(successful), avg_score
+
     @staticmethod
     # Deletes user created during testing
     def delete_test_user():
-        supabase_sec.table('User').delete().eq('email', TEST_USER['email']).execute()
+        supabase_sec.table('User').delete().eq(
+            'email', TEST_USER['email']).execute()
 
     @staticmethod
     # gets test user credentials
@@ -128,20 +218,72 @@ class User(UserMixin):
         print("Signed up:", email)
 
     @staticmethod
+    def user_exists(user_id):
+        try:
+            if supabase_sec.table("User").select('*').eq('id', user_id).execute():
+                return True
+        except:
+            pass
+        print("User does not exist")
+        return False
+
     def get_user_json(user_id):
         u = User.get_user(user_id)
+
         payload = u.get_payload_format()
         payload['submissions'] = u.get_assignments_json()
+        payload['analytics'] = u.get_analysis_json()
+
         return payload
 
     def get_assignments_json(self):
-        res = supabase_sec.table('StudentSubject').select('subject_id').eq('student_id', self.id).execute()
+        res = supabase_sec.table('StudentSubject').select(
+            'subject_id').eq('student_id', self.id).execute()
 
         assigns = []
         for data_dict in res.data:
             sub_id = data_dict['subject_id']
             assigns += Assignment.get_all_assignments_json(sub_id, self.id)
         return assigns
+
+    def get_analysis_json(self):
+        punc_vecs, sentence_vecs, word_vecs, word_counts, assignmentLabels, \
+            all_scores, failures, successful, avg_score = self.get_vectors()
+        linePuncData = []
+        for k, v in punc_vecs.items():
+            color = randomcolor.RandomColor().generate()[0]
+            linePuncData.append({"name": k, "data": v, 'color': color})
+
+        lineSentenceData = []
+        for k, v in sentence_vecs.items():
+            color = randomcolor.RandomColor().generate()[0]
+            lineSentenceData.append({"name": k, "data": v, 'color': color})
+
+        lineWordData = []
+        for k, v in word_vecs.items():
+            color = randomcolor.RandomColor().generate()[0]
+            lineWordData.append({"name": k, "data": v, 'color': color})
+        analysisData = {
+            "allScores": [{
+                "name": "Score",
+                "data": all_scores,
+                "color": randomcolor.RandomColor().generate()[0]
+            }],
+            "wordCounts": [{
+                "name": "Word Count",
+                "data": word_counts,
+                "color": randomcolor.RandomColor().generate()[0]
+            }],
+            "assignmentLabels": assignmentLabels,
+            "avgScore": avg_score,
+            "submissionPie":  [failures, successful],
+            "submissionCategories": ["Failed", "Success"],
+            "linePunctuation": linePuncData,
+            "lineSentences": lineSentenceData,
+            "lineWords": lineWordData
+        }
+
+        return analysisData
 
     def get_payload_format(self):
         return {
@@ -173,23 +315,49 @@ class Subject:
         return students
 
     def get_assignments(self):
-        res = supabase_sec.table('Assignment').select('*').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('Assignment').select(
+            '*').eq('subject_id', self.subject_id).execute()
         assigns = []
         for r in res.data:
             assigns.append(Assignment(
                 r['id'], r['subject_id'], r['name'], r['description'], r['submission_locked'], r['due_datetime']))
         return assigns
 
+    def is_student_in_subject(self, stud_id):
+        try:
+            data = supabase_sec.table('StudentSubject').select(
+                'subject_id').eq('student_id', stud_id).execute().data
+            if {'subject_id': self.subject_id} not in data:
+                print('student is not in the subject')
+                return True
+        except:
+            pass
+        print('student is already in the subject')
+        return False
+
+    def valid_student(self, stud_id):
+        print('tries to validate')
+        if (User.user_exists(stud_id) and self.is_student_in_subject(stud_id)):
+            print("is valid")
+            return True
+        return False
+
+    def add_student(self, student: User):
+        data = {'student_id': student.id, 'subject_id': self.subject_id}
+        print('adds student')
+        try:
+            supabase_sec.table('StudentSubject').insert([data]).execute()
+        except:
+            pass
+
     # Returns a specific subject using a given subject_id
     @staticmethod
     def get_subject(subject_id):
-        for i in range(5):
-            res = supabase_sec.table('Subject').select('*').eq('id', subject_id).execute().data
-            print(res)
-            if res:
-                res = res[0]
-                return Subject(res['id'], res['description'], res['professor_email'], res['name'])
-            sleep(0.2)
+        res = supabase_sec.table('Subject').select(
+            '*').eq('id', subject_id).execute().data
+        if res:
+            res = res[0]
+            return Subject(res['id'], res['description'], res['professor_email'], res['name'])
         return None
 
     # Returns every subject
@@ -205,12 +373,14 @@ class Subject:
     @staticmethod
     def create_subject(temp_sub):
         try:
-            supabase_sec.table('Subject').insert(temp_sub.get_payload_format()).execute()
+            supabase_sec.table('Subject').insert(
+                temp_sub.get_payload_format()).execute()
         except:
             pass
 
     def get_student_ids_list(self):
-        res = supabase_sec.table('StudentSubject').select('student_id').eq('subject_id', self.subject_id).execute()
+        res = supabase_sec.table('StudentSubject').select(
+            'student_id').eq('subject_id', self.subject_id).execute()
         return [student_dict.get('student_id') for student_dict in res.data]
 
     def get_payload_format(self):
@@ -254,15 +424,18 @@ class Assignment:
     # Returns a specific assignment using a given subject_id and assignment_id
     @staticmethod
     def get_assignment(subject_id, assignment_id):
-        res = supabase_sec.table('Assignment').select(
-            '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
-        if not res:
+        try:
             res = supabase_sec.table('Assignment').select(
                 '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
-        if res:
-            res = res[0]
-            return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'],
-                              res['due_datetime'])
+            if not res:
+                res = supabase_sec.table('Assignment').select(
+                    '*').eq('id', assignment_id).eq('subject_id', subject_id).execute().data
+            if res:
+                res = res[0]
+                return Assignment(res['id'], res['subject_id'], res['name'], res['description'], res['submission_locked'],
+                                  res['due_datetime'])
+        except:
+            pass
         return None
 
     @staticmethod
@@ -276,7 +449,8 @@ class Assignment:
     @staticmethod
     def get_all_assignments(subject_id=None):
         if subject_id:
-            res = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+            res = supabase_sec.table('Assignment').select(
+                '*').eq('subject_id', subject_id).execute().data
         else:
             res = supabase_sec.table('Assignment').select('*').execute().data
         if res:
@@ -287,21 +461,63 @@ class Assignment:
     # Returns all assignments using a given subject_id
     @staticmethod
     def get_all_assignments_json(subject_id, user_id):
-        ass = supabase_sec.table('Assignment').select('*').eq('subject_id', subject_id).execute().data
+        ass = supabase_sec.table('Assignment').select(
+            '*').eq('subject_id', subject_id).execute().data
         final_list = []
 
         for a in ass:
-            res = supabase_sec.table('SubjectAssignmentUser').select('similarity_score').eq('subject_id',
-                    subject_id).eq('assignment_id', a['id']).eq('user_id', user_id).execute()
+            res = supabase_sec.table('SubjectAssignmentUser') \
+                .select('*').eq('assignment_id', a['id']) \
+                .eq('user_id', user_id).execute()
+            if res.data:
+                similarity_score = res.data[0]['similarity_score']
+                punc_vec = []
+                punc_vec.append(res.data[0]['punc_periods'])
+                punc_vec.append(res.data[0]['punc_commas'])
+                punc_vec.append(res.data[0]['punc_semicolons'])
+                punc_vec.append(res.data[0]['punc_colons'])
+                punc_vec.append(res.data[0]['punc_exclamations'])
+                punc_vec.append(res.data[0]['punc_questions'])
+                punc_vec.append(res.data[0]['punc_dashes'])
+                punc_vec.append(res.data[0]['punc_open_par'])
+                punc_vec.append(res.data[0]['punc_close_par'])
+                punc_vec.append(res.data[0]['punc_double_quotes'])
+                punc_vec.append(res.data[0]['punc_apostrophes'])
+                punc_vec.append(res.data[0]['punc_tilda'])
+                punc_vec.append(res.data[0]['punc_forward_slash'])
+                sent_vec = []
+                sent_vec.append(round(res.data[0]['sent_over_avg'], 1))
+                sent_vec.append(round(res.data[0]['sent_under_avg'], 1))
+                sent_vec.append(round(res.data[0]['sent_count_avg'], 1))
+                sent_vec.append(round(res.data[0]['sent_avg_length'], 1))
+                word_vec = []
+                word_vec.append(round(res.data[0]['word_rare_count'], 1))
+                word_vec.append(round(res.data[0]['word_long_count'], 1))
+                word_vec.append(round(res.data[0]['word_over_avg'], 1))
+                word_vec.append(round(res.data[0]['word_under_avg'], 1))
+                word_vec.append(round(res.data[0]['word_count_avg'], 1))
+                word_vec.append(round(res.data[0]['word_avg_length'], 1))
+                word_vec.append(round(res.data[0]['word_ttr'], 1))
+                word_count = res.data[0]['word_count']
 
-            similarity_score = res.data[0]['similarity_score'] if res.data else None
+            else:
+                similarity_score = 0
+                punc_vec = []
+                sent_vec = []
+                word_vec = []
+                word_count = 0
+
             final_list.append({
                 "assignment_id": a['id'],
                 "subject_id": subject_id,
                 "user_id": user_id,
                 "description": a['description'],
                 "name": a['name'],
-                "similarity_score": similarity_score
+                "similarity_score": similarity_score,
+                "word_count": word_count,
+                "punc_vec": [{"name": "Punctuation Counts", "data": punc_vec}],
+                "sent_vec": [{"name": "Sentence Analysis", "data": sent_vec}],
+                "word_vec": [{"name": "Word Analysis", "data": word_vec}],
             })
 
         return final_list
@@ -311,9 +527,6 @@ class Storage:
 
     def __init__(self, sec=supabase_sec):
         self.initialised = True
-        self.supabase_sec = sec
-        self.ass_bucket = 'ava-prod-assignments'
-        self.past_ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
     def list_past_assignments(user_email):
@@ -322,7 +535,8 @@ class Storage:
 
         objects = []
         username = user_email.split('@')[0]
-        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(username)
+        res = supabase_sec.storage.from_(
+            PAST_ASSIGNMENTS_BUCKET).list(username)
         for obj in res:
             if obj['name'] != '.emptyFolderPlaceholder':
                 objects.append(obj['name'])
@@ -336,12 +550,15 @@ class Storage:
 
         past_assignments = []
         username = user_email.split('@')[0]
-        res = supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).list(username)
+        res = supabase_sec.storage.from_(
+            PAST_ASSIGNMENTS_BUCKET).list(username)
         for file_object in res:
             try:
                 if file_object['name'] != '.emptyFolderPlaceholder':
-                    path = Storage.construct_path_past(username, file_object['name'])
-                    past_assignments.append(supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path))
+                    path = Storage.construct_path_past(
+                        username, file_object['name'])
+                    past_assignments.append(supabase_sec.storage.from_(
+                        PAST_ASSIGNMENTS_BUCKET).download(path))
             except StorageException:
                 pass
         return past_assignments
@@ -356,7 +573,8 @@ class Storage:
 
     @staticmethod
     def upload_current_assignment(file, subject_id, assignment_id, user_id):
-        path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+        path = Storage.construct_path_current(
+            subject_id, assignment_id, user_id)
         if not Storage.exists_assignment_bool(subject_id, assignment_id, user_id):
             return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).upload(path, file)
         return None
@@ -366,14 +584,16 @@ class Storage:
         # Will return a byte stream.
         # Essentially, it returns file.read(): byteStream in python.
         try:
-            path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+            path = Storage.construct_path_current(
+                subject_id, assignment_id, user_id)
             return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).download(path)
         except StorageException:
             return None
 
     @staticmethod
     def delete_current_assignment(subject_id, assignment_id, user_id):
-        path = Storage.construct_path_current(subject_id, assignment_id, user_id)
+        path = Storage.construct_path_current(
+            subject_id, assignment_id, user_id)
         try:
             supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).remove(path)
         except:
@@ -395,34 +615,39 @@ class Storage:
     def exists_assignment_bool(subject_id, assignment_id, user_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = supabase_sec.storage.from_(
-            CURRENT_ASSIGNMENTS_BUCKET).list(f'{subject_id}/{assignment_id}')
+        res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(
+            f'{subject_id}/{assignment_id}')
         for obj in res:
             if obj['name'] == user_id:
                 return True
         return False
 
-    def cron_get_all_uploaded_assignments(self, subject_id, assignment_id):
+    @staticmethod
+    def cron_get_all_uploaded_assignments(subject_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
         final_dict = {}
         try:
-            res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{subject_id}/{assignment_id}')
+            res = supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).list(
+                f'{subject_id}/{assignment_id}')
             for obj in res:
                 temp_user_id = obj['name']
-                final_dict[temp_user_id] = self.download_current_assignment(subject_id, assignment_id, temp_user_id)
-            self.__cron_delete_entire_assignments_folder(subject_id, assignment_id)
-            self.supabase_sec.table('Assignment').update({'submission_locked': True}).eq('subject_id', subject_id).eq(
-                'id', assignment_id).execute()
+                final_dict[temp_user_id] = Storage.download_current_assignment(
+                    subject_id, assignment_id, temp_user_id)
+            Storage.__cron_delete_entire_assignments_folder(
+                subject_id, assignment_id)
+            supabase_sec.table('Assignment').update({'submission_locked': True}).eq(
+                'subject_id', subject_id).eq('id', assignment_id).execute()
         except:
             pass
 
         return final_dict
 
-    def __cron_delete_entire_assignments_folder(self, subject_id, assignment_id):
+    @staticmethod
+    def __cron_delete_entire_assignments_folder(subject_id, assignment_id):
         try:
             path = f'{subject_id}/{assignment_id}'
-            return self.supabase_sec.storage.from_(self.ass_bucket).remove(path)
+            return supabase_sec.storage.from_(CURRENT_ASSIGNMENTS_BUCKET).remove(path)
         except:
             return None
 
@@ -431,35 +656,47 @@ class PastStorage:
 
     def __init__(self, sec=supabase_sec):
         self.initialised = True
-        self.supabase_sec = sec
-        self.ass_bucket = 'ava-prod-past-assignments'
 
     @staticmethod
-    def construct_path(user_email, subject_id, assignment_id):
+    def construct_path(user_email, assignment_id):
         user_name = user_email.split('@')[0]
-        return f'{user_name}/{subject_id}-{assignment_id}'
+        return f'{user_name}/{assignment_id}'
 
-    def upload_assignment(self, file, user_id, subject_id, assignment_id):
-        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
-        path = self.construct_path(res[0].user_email, subject_id, assignment_id)
-        if not self.exists_assignment(user_id, subject_id, assignment_id):
-            return self.supabase_sec.storage.from_(self.ass_bucket).upload(path, file)
-        return None
+    @staticmethod
+    def upload_assignment(file, user_id, assignment_id):
+        res = supabase_sec.table('User').select(
+            'email').eq('id', user_id).execute().data
+        path = PastStorage.construct_path(res[0]['email'], assignment_id)
 
-    def download_assignment(self, user_id, subject_id, assignment_id):
+        PastStorage.delete_assignment(res[0]['email'], assignment_id)
+        return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).upload(path, file)
+
+    @staticmethod
+    def download_assignment(user_id, assignment_id):
         # Will return a byte stream.
-        res = supabase_sec.table('User').select('user_email').eq('id', user_id).execute()
+        res = supabase_sec.table('User').select(
+            'user_email').eq('id', user_id).execute()
         try:
-            path = self.construct_path(res[0].user_email, subject_id, assignment_id)
-            return self.supabase_sec.storage.from_(self.ass_bucket).download(path)
+            path = PastStorage.construct_path(res[0].user_email, assignment_id)
+            return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).download(path)
         except:
             return None
 
-    def exists_assignment(self, user_id, subject_id, assignment_id):
+    @staticmethod
+    def delete_assignment(user_email, assignment_id):
+        path = PastStorage.construct_path(user_email, assignment_id)
+        try:
+            return supabase_sec.storage.from_(PAST_ASSIGNMENTS_BUCKET).remove(path)
+        except:
+            return
+
+    @staticmethod
+    def exists_assignment(self, user_id, assignment_id):
         # if the folder is empty, db returns 1 element in list[0]
         # as a placeholder
-        res = self.supabase_sec.storage.from_(self.ass_bucket).list(f'{user_id}')
+        res = supabase_sec.storage.from_(
+            PAST_ASSIGNMENTS_BUCKET).list(f'{user_id}')
         for obj in res:
-            if obj['name'] == f'{subject_id}-{assignment_id}':
+            if obj['name'] == f'{assignment_id}':
                 return [obj]
         return []

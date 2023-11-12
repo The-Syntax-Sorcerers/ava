@@ -1,13 +1,15 @@
 import io
+import json
 import os
 
 import flask_login
+import requests
 from flask import Blueprint, redirect, url_for, request, make_response
 
 from werkzeug.datastructures.file_storage import FileStorage
 
-from server.extensions import set_cookies
-from server.models import User, Assignment, Storage
+from server.extensions import set_cookies, supabase_sec
+from server.models import User, Assignment, Storage, PastStorage
 
 submission = Blueprint('submission', __name__, template_folder=os.getcwd() + "/client/dist",
                        static_folder=os.getcwd() + "/client/dist")
@@ -39,8 +41,33 @@ def submit_assignment(sub_id, ass_id, user_id):
         if Storage.upload_current_assignment(file_bytes, sub_id, ass_id, user_id):
             temp_cookies['verificationSuccess'] = True
 
+        # invoke_lambda_function(sub_id, ass_id, user_id)
+        PastStorage.upload_assignment(file_bytes, user_id, ass_id)
+
     set_cookies(temp_cookies)
     return redirect(url_for('subjects.assignment_page', sub_id=sub_id, ass_id=ass_id))
+
+
+def invoke_lambda_function(subject_id, assignment_id, user_id):
+    user_email = supabase_sec.table('User').select('email').eq('id', user_id).execute().data[0]['email']
+
+    base = 'https://venmji33ak3elhyzxs4l7qkahu0nltef.lambda-url.ap-southeast-2.on.aws'
+    params = f'/predict?user_email={user_email}&subject_id={subject_id}&assignment_id={assignment_id}&user_id={user_id}'
+    lambda_url = base + params
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    # Convert payload to JSON format
+    # payload_json = json.dumps(payload)
+
+    # Make a POST request to the Lambda function URL
+    response = requests.get(lambda_url, headers=headers)
+
+    # Return the response from the Lambda function
+    print("lambda Response", response.text)
+    return response.text
 
 
 @submission.route('/fetch_assignment/<sub_id>/<ass_id>/', defaults={'user_id': None}, methods=["GET"])
