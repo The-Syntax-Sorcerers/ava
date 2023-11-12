@@ -139,16 +139,21 @@
     .custom-school-cards {
         @apply bg-white rounded-lg shadow-md p-4 transform border-2 border-accent-primary-50
         hover:bg-accent-primary-300 hover:border-accent-primary-200 hover:scale-105 transition-transform 
-        duration-300 custom-card-height;
+        duration-300;
     }
 
     /* This tag applies to the subject cards on the subjects dashbboard */
     .custom-subject-cards {
-        @apply custom-school-cards;
+        @apply custom-school-cards custom-card-height;
     }
 
     /* This tag applies to the assignment cards on assignments page */
     .custom-assignment-cards {
+        @apply custom-school-cards;
+    }
+
+    /* This tag applies to the assignment cards on assignments page */
+    .custom-student-cards {
         @apply custom-school-cards;
     }
 

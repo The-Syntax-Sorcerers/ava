@@ -7,7 +7,7 @@ export interface studentObj {
 export default function SubjectCard({ stu }: { stu: any}) {
     return (
         <a href={stu.link}>
-        <div className="cursor-pointer custom-subject-cards">
+        <div className="cursor-pointer custom-student-cards">
             <h3 className="text-base font-semibold mb-1">{stu.name}</h3>
         </div>
         </a>
